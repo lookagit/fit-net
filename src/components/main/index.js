@@ -79,7 +79,7 @@ export default () => (
       {/* <base href="http://localhost:8081/" /> */}
     </Helmet>
     <div className={css.hello}>
-      <img src={logo} alt="ReactQL" className={css.logo} />
+      <h1>FIT-NET</h1>
     </div>
     <hr />
     <GraphQLMessage />
@@ -99,12 +99,14 @@ export default () => (
       <Route component={WhenNotFound} />
     </Switch>
     <hr />
-    <ReduxCounter />
-    <hr />
-    <p>Runtime info:</p>
-    <Stats />
-    <hr />
-    <p>Stylesheet examples:</p>
-    <Styles />
+      {  //<ReduxCounter />
+        //<hr />
+
+         //<p>Runtime info:</p>
+          //     <Stats />
+         //     <hr />
+        //              <p>Stylesheet examples:</p>
+       //                   <Styles />
+     }
   </div>
 );

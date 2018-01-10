@@ -25,14 +25,17 @@ import { NotFound } from 'kit/lib/routing';
 
 // We'll display this <Home> component when we're on the / route
 export const Home = () => (
-  <h1>You&apos;re on the home page - click another link above</h1>
+  <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center',}}>
+  <h1 style={{fontSize: '70px'}}>FITNET KIDA...</h1>
+  <h1 style={{fontSize: '50px'}}>TEK CE</h1>
+  </div>
 );
 
 // Helper component that will be conditionally shown when the route matches.
 // This gives you an idea how React Router v4 works -- we have a `match`
 // prop that gives us information on the route we can use within the component
 export const Page = ({ match }) => (
-  <h1>Changed route: {match.params.name}</h1>
+  <h1>DOBRODOSLI NA {match.params.name}</h1>
 );
 
 // Specify PropTypes if the `match` object, which is injected to props by

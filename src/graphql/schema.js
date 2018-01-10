@@ -17,7 +17,8 @@ import {
 // will generally pull from a 'real' data source such as a database
 async function getMessage() {
   return {
-    text: `Hello from the GraphQL server @ ${new Date()}`,
+    text: `SREĆAN POČETAK FIT-NET @ ${new Date()}
+    SVE NAIBOLJE`,
   };
 }
 
