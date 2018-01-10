@@ -86,12 +86,9 @@ export default () => (
     <hr />
     <ul>
       <li><Link to="/">Home</Link></li>
-      <li><Link to="/page/about">About</Link></li>
-      <li><Link to="/page/contact">Contact</Link></li>
-      <li><Link to="/old/path">Redirect from /old/path &#8594; /new/path</Link></li>
+      <li><Link to="/page/about">O nama</Link></li>
+      <li><Link to="/page/contact">Kontakt</Link></li>
     </ul>
-    Change routes anywhere &mdash; <button onClick={changeRoute}>Like here (About)</button>
-    <hr />
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/page/:name" component={Page} />
