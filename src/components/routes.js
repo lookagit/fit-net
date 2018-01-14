@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 
 // NotFound 404 handler for unknown routes
 import { NotFound } from 'kit/lib/routing';
+import About from './about';
 import Uppy from './Uppy';
 // ----------------------
 
@@ -31,7 +32,11 @@ export const Home = () => (
   <Uppy />
   </div>
 );
-
+export const Proba = () => (
+  <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center',}}>
+    jebena proba
+  </div>
+);
 // Helper component that will be conditionally shown when the route matches.
 // This gives you an idea how React Router v4 works -- we have a `match`
 // prop that gives us information on the route we can use within the component
