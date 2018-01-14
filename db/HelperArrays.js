@@ -118,3 +118,4 @@ export const TrainingSkillArr = [
     trainSkillName: 'Sambo',
   },
 ]
+const aa = [1,3]
