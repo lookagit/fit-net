@@ -100,7 +100,7 @@ const PersonCl = new GraphQLObjectType({
           return personCl.imageUrl;
         }
       },
-      skillsArr: {import Sequelize from 'sequelize'
+      skillsArr: {
         type: new GraphQLList(GraphQLInt),
         resolve(personCl) {
           return personCl.skillsArr;
