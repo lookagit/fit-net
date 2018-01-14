@@ -2,7 +2,6 @@
 
 // ----------------------
 // IMPORTS
-import Sequelize from 'sequelize'
 // GraphQL schema library, for building our GraphQL schema
 import {
     GraphQLObjectType,
@@ -101,7 +100,7 @@ const PersonCl = new GraphQLObjectType({
           return personCl.imageUrl;
         }
       },
-      skillsArr: {
+      skillsArr: {import Sequelize from 'sequelize'
         type: new GraphQLList(GraphQLInt),
         resolve(personCl) {
           return personCl.skillsArr;
@@ -119,7 +118,7 @@ const PersonCl = new GraphQLObjectType({
           return await db.models.trainingSkill.findAll({
             where: {
               id: {
-                [Sequelize.Op.or]: personCl.skillsArr,
+                [db.Op.or]: personCl.skillsArr,
               }
             }
           })
