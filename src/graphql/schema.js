@@ -13,6 +13,7 @@ import {
     GraphQLBoolean,
 } from 'graphql';
 import db from '../../db/db';
+console.log("EVO I MENE ", db);
 // ----------------------
 // GraphQL can handle Promises from its `resolve()` calls, so we'll create a
 // simple async function that returns a simple message.  In practice, `resolve()`

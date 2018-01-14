@@ -1,8 +1,8 @@
 import Sequelize from 'sequelize';
-
-const db = new Sequelize('postgres://fitnetmaster:jebemtimater123@fitnetdb.c1xl4fohydwy.us-east-2.rds.amazonaws.com/fitnetdb');
-
 import {TrainingSkillArr} from './HelperArrays';
+const db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r');
+
+console.log("EVO MENE OVDEEE ", db);
 const PersonCl = db.define('personCl', {
   password: {
     type: Sequelize.STRING
