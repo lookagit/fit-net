@@ -15,15 +15,6 @@ import {
 } from 'graphql';
 import db from '../../db/db';
 // ----------------------
-let a = async () => {
-  let ap = await db.models.personTrainingSkill.findAll({
-    where: {
-      trainingSkillId: [3,1],
-    }
-  });
-  ap.map(e => console.log("AAAAAAAAAAAAa ", e.dataValues));
-}
-a();
 // GraphQL can handle Promises from its `resolve()` calls, so we'll create a
 // simple async function that returns a simple message.  In practice, `resolve()`
 // will generally pull from a 'real' data source such as a database
