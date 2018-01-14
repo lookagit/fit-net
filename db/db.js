@@ -1,8 +1,6 @@
 import Sequelize from 'sequelize';
 
-const db = new Sequelize('postgres://fitnetmaster:jebemtimater123@fitnetdb.c1xl4fohydwy.us-east-2.rds.amazonaws.com/fitnetdb', {
-  dialect: 'postgres',
-});
+const db = new Sequelize('postgres://fitnetmaster:jebemtimater123@fitnetdb.c1xl4fohydwy.us-east-2.rds.amazonaws.com/fitnetdb');
 
 import {TrainingSkillArr} from './HelperArrays';
 const PersonCl = db.define('personCl', {
