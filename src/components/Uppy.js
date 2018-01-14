@@ -7,7 +7,7 @@ const uppy = Uppy({
   restrictions: { maxNumberOfFiles: 1 },
   autoProceed: true
 })
-uppy.use(AwsS3, { host: 'https://s3.eu-west-3.amazonaws.com/fitnetbucket' })
+uppy.use(AwsS3, { host: 'https://s3.eu-west-3.amazonaws.com/fitnetbucket' }) 
 uppy.on('complete', (result) => {
   const url = result.successful[0].uploadURL
   console.log("JA SAM RESULT ",result);
