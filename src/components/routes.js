@@ -20,7 +20,6 @@ import PropTypes from 'prop-types';
 
 // NotFound 404 handler for unknown routes
 import { NotFound } from 'kit/lib/routing';
-import About from './about';
 import Uppy from './Uppy';
 // ----------------------
 
