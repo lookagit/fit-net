@@ -11,7 +11,6 @@ export default class S3Uploader extends React.Component {
       url = 'http://localhost:8081/ping/';
     }
      var file = files[0];
-     console.log("JA SAM FILENAME ", file.name, "A JA SAM TYPE ", file.type);
      axios.get(`${url}${file.name}/${file.type}`)
      .then(function (result) {
        console.log(result)
