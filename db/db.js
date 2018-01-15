@@ -1,5 +1,11 @@
 import Sequelize from 'sequelize';
-import {TrainingSkillArr} from './HelperArrays';
+import {
+  TrainingSkillArr,
+  PersonArr,
+  CountyArr,
+  CityArr,
+  PersonTrainingSkillArr
+} from './HelperArrays';
 let sqlUrl = "";
 if(process.env.NODE_ENV === 'production') {
   sqlUrl = 'postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r';
@@ -59,7 +65,6 @@ const PersonCl = db.define('personCl', {
   hasCerificates: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
-
   },
   confirmed: {
     type: Sequelize.BOOLEAN,
@@ -67,8 +72,36 @@ const PersonCl = db.define('personCl', {
   },
   skillsArr: {
     type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
+  countyArr: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
+  score: {
+    type: Sequelize.FLOAT,
+    defaultValue: 0,
   }
 });
+
+const County = db.define('county', {
+  countyName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+const City = db.define('city', {
+  cityName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  }
+})
+
+City.hasMany(County);
+
+const PersonCounty = db.define('personCounty');
+
+PersonCl.hasMany(PersonCounty);
+County.hasMany(PersonCounty);
 
 const Certification = db.define('certification', {
   name: {
@@ -85,88 +118,23 @@ const TrainingSkill = db.define('trainingSkill', {
   trainSkillName: {
     type: Sequelize.STRING,
   },
-})
+});
+
 const PersonTrainingSkill = db.define('personTrainingSkill');
+
 TrainingSkill.hasMany(PersonTrainingSkill);
 PersonCl.hasMany(PersonTrainingSkill);
 
 
-const PersonTrainingSkillArr = [
-  {
-    trainingSkillId: 1,
-    personClId: 1,
-  },
-  {
-    trainingSkillId: 3,
-    personClId: 1,
-  },
-  {
-    trainingSkillId: 5,
-    personClId: 1,
-  },
-  {
-    trainingSkillId: 2,
-    personClId: 2,
-  },
-  {
-    trainingSkillId: 8,
-    personClId: 2,
-  },
-  {
-    trainingSkillId: 9,
-    personClId: 2,
-  },
-  {
-    trainingSkillId: 2,
-    personClId: 3,
-  },
-  {
-    trainingSkillId: 3,
-    personClId: 3,
-  },
-  {
-    trainingSkillId: 6,
-    personClId: 3,
-  },
-
-]
 
 
-const PersonArr = [
-  {
-    password: '2131SDA1',
-    email: 'luka.simjanovic@gma.com',
-    firstName: 'Luki',
-    lastName: 'Muki',
-    cellPhone: '2133123',
-    imageUrl: 'http://www.locale.png.com',
-    skillsArr: [1,3,5],
-    instagramLink: 'https://www.instagram.com/golazohub/',
-    facebookLink: 'https://www.facebook.com/jordanyeohfitness/',
-  },
-  {
-    password: '23!!!23',
-    email: 'simjanovic@gma.com',
-    firstName: 'Tuki',
-    lastName: 'Ruki',
-    cellPhone: '122133123',
-    imageUrl: 'http://www.locale.jbg.com',
-    skillsArr: [2,8,9],
-    instagramLink: 'https://www.instagram.com/heartrunnergirl/',
-    facebookLink: 'https://www.facebook.com/arnold/'
-  },
-  {
-    password: '213#%^11',
-    firstName: 'Zuki',
-    lastName: 'Jang Kuki',
-    cellPhone: '23218123',
-    imageUrl: 'http://www.loasle.png.com',
-    email: 'luka.simjanovic@gmas.com',
-    skillsArr: [2,3,6],
-    instagramLink: 'https://www.instagram.com/scrfitness/',
-    facebookLink: 'https://www.facebook.com/djokovic.official/',
-  },
-]
+const PersonTrainingCost = db.define('peronsTrainingCost', {
+  personalTrainingCost: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  }
+})
+
 db.sync({force: true}).then(() => {
   PersonArr.map(async item => {
     await PersonCl.create(item);
@@ -176,6 +144,12 @@ db.sync({force: true}).then(() => {
   })
   PersonTrainingSkillArr.map(async item => {
     await PersonTrainingSkill.create(item);
+  })
+  CityArr.map(async item => {
+    await City.create(item);
+  });
+  CountyArr.map(async item => {
+    await County.create(item);
   })
 });
 
