@@ -6,7 +6,7 @@ export default class S3Uploader extends React.Component {
   _onDrop = (files) => {
     let url = "";
     if(process.env.NODE_ENV === 'production') {
-      url = 'https://wwww.fit-net.herokuapp.com/ping/'
+      url = 'https://fit-net.herokuapp.com/ping/'
     } else {
       url = 'http://localhost:8081/ping/';
     }
