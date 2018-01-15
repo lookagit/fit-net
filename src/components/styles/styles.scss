@@ -4,10 +4,13 @@ $blue-rgb: rgb(61, 75, 105);
 $blue-rgba: rgba(61, 75, 105, 0.5);
 
 body{
-  max-width: 1440px;
   margin: 0;
   padding: 0;
   font-family: 'Comfortaa', cursive;
+}
+.mainWrapper{
+  max-width: 1440px;
+  margin: 0 auto;
 }
 h1,h2,h3,h4,h5,h6,a,li,ul{
   padding: 0;

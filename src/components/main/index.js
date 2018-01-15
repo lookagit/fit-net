@@ -75,7 +75,7 @@ function changeRoute() {
 }
 
 export default () => (
-  <div>
+  <div className={css.mainWrapper}>
     <Helmet>
       <title>ReactQL application</title>
       <meta name="description" content="ReactQL starter kit app" />
