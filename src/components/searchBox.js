@@ -7,21 +7,28 @@ class SearchBox extends React.Component {
       <div className={css.searchBoxWrapper}>
         <div className={css.searchBox}>
           <form>
-            <div className={css.inputWrapper}>
+            <div className={css.kategorija}>
+              <label>Kategorija</label><br/>
+              <input ref="oblast" placeholder="Izaberite oblast..." type="text"/>
+            </div>
+            <div className={css.sertifikat}>
+              <label>dsada</label><br/>
+              <input className={css.radio} type="radio" name="cert"/>
+              <label>dsada</label><br/>
+              <input className={css.radio} type="radio" name="cert"/>
+            </div>
+            <div className={css.opstina}>
+              <label>dsada</label><br/>
               <input type="text"/>
             </div>
-            <div className={css.inputWrapper}>
-              <input type="radio" name="cert"/>
-              <input type="radio" name="cert"/>
+            <div className={css.treneri}>
+              <label>dsada</label><br/>
+              <input className={css.radio} type="radio" name="coache"/>
+              <label>dsada</label><br/>
+              <input className={css.radio} type="radio" name="coache"/>
             </div>
-            <div className={css.inputWrapper}>
-              <input type="text"/>
-            </div>
-            <div className={css.inputWrapper}>
-              <input className={css.proba} type="radio" name="coache"/>
-              <input type="radio" name="coache"/>
-            </div>
-            <div className={css.inputWrapper}>
+            <div className={css.cena}>
+              <label>dsada</label><br/>
               <input type="text"/>
               <input type="text"/>
               <input type="button"/>

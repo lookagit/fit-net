@@ -101,20 +101,18 @@ a{
 .searchBox{
   background-color: $blue-rgba;
   margin: auto;
-  border-radius: 10px;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 20px;
 }
 .inputWrapper{
   flex: 1;
   margin-bottom: 20px;
+  display: flex;
 }
-.inputWrapper input{
+.kategorija input{
   width: 100%;
+  border: none;
 }
 // END COACHES
-
-.proba{
-  background-color: green;
-}
