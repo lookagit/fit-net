@@ -11,7 +11,11 @@
 
 // For pre-pending a `<!DOCTYPE html>` stream to the server response
 import { PassThrough } from 'stream';
-
+var aws = require('aws-sdk');
+aws.config.update({
+    accessKeyId: 'AKIAJZBUEZUCPUEAG3VA',
+    secretAccessKey: '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'
+});
 // HTTP & SSL servers.  We can use `config.enableSSL|disableHTTP()` to enable
 // HTTPS and disable plain HTTP respectively, so we'll use Node's core libs
 // for building both server types.
@@ -94,7 +98,6 @@ import { getNetworkInterface, createClient } from 'kit/lib/apollo';
 // App settings, which we'll use to customise the server -- must be loaded
 // *after* app.js has been called, so the correct settings have been set
 import config from 'kit/config';
-
 // Import paths.  We'll use this to figure out where our public folder is
 // so we can serve static files
 import PATHS from 'config/paths';
@@ -232,10 +235,26 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
 
 // Build the router, based on our app's settings.  This will define which
 // Koa route handlers
+
 const router = (new KoaRouter())
   // Set-up a general purpose /ping route to check the server is alive
-  .get('/ping', async ctx => {
-    ctx.body = 'pong';
+  .get('/ping/:id/:indi/:type', async ctx => {
+    console.log("AAAA ", ctx.params);
+    var s3 = new aws.S3({
+      signatureVersion: 'v4',
+      region: 'eu-west-3',
+    });
+
+        var params = {
+            Bucket: 'fitnetbucket',
+            Key: ctx.params.id,
+            Expires: 600,
+            ContentType: ctx.params.indi + '/' + ctx.params.type,
+        };
+
+        let asa = await s3.getSignedUrl('putObject', params);
+        console.log("JA SAM ASSAAA ", asa);
+        ctx.body = asa;
   })
 
   // Favicon.ico.  By default, we'll serve this as a 204 No Content.
@@ -248,6 +267,7 @@ const router = (new KoaRouter())
 // as a precursor to handling routes
 const app = new Koa()
   // Adds CORS config
+
   .use(koaCors(config.corsOptions))
 
   // Error wrapper.  If an error manages to slip through the middleware
@@ -345,7 +365,26 @@ if (config.graphQLServer) {
     })),
   );
 }
+router.get('/ping', (ctx) => {
+      //  var s3 = new aws.S3();
+      //  var params = {
+      //    Bucket: 'fitnetbucket',
+      //    Key: ctx.params.filename,
+      //    Expires: 60,
+      //   ContentType: ctx.params.filetype
+      // };
+      //
+      //  s3.getSignedUrl(‘putObject’, params, function(err, data) {
+      //      if (err) {
+      //          console.log(err);
+      //          return err;
+      //      } else {
+      //          return data;
+      //      }
+      //  });
 
+  console.log(ctx.params);
+})
 // Do we need the GraphiQL query interface?  This can be used if we have an
 // internal GraphQL server, or if we're pointing to an external server.  First,
 // we check if `config.graphiql` === `true` to see if we need one...
