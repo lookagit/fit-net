@@ -54,9 +54,12 @@ import { Home, Page, WhenNotFound } from 'components/routes';
 import ReduxCounter from 'components/redux';
 import Stats from 'components/stats';
 import Styles from 'components/styles';
-
+import Header from '../header';
+import Coaches from '../coaches';
+import Fizio from '../fizio';
+import Clubs from '../clubs';
 // Styles
-import css from './main.scss';
+import css from '../styles/styles.scss';
 
 // Get the ReactQL logo.  This is a local .svg file, which will be made
 // available as a string relative to [root]/dist/assets/img/
@@ -72,30 +75,24 @@ function changeRoute() {
 }
 
 export default () => (
-  <div>
+  <div className={css.mainWrapper}>
     <Helmet>
       <title>ReactQL application</title>
       <meta name="description" content="ReactQL starter kit app" />
       {/* <base href="http://localhost:8081/" /> */}
     </Helmet>
-    <div className={css.hello}>
-      <h1>FIT-NET</h1>
-    </div>
-    <hr />
-    <GraphQLMessage />
-    <hr />
-    <ul>
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/page/about">O nama</Link></li>
-      <li><Link to="/page/contact">Kontakt</Link></li>
-    </ul>
+    <div className={css.backgroundImage}>
+    <Header />
+    {/* <GraphQLMessage /> */}
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route path="/page/:name" component={Page} />
+      <Route path="/page/coaches" component={Coaches} />
+      <Route path="/page/fizio" component={Fizio} />
+      <Route path="/page/clubs" component={Clubs} />
       <Redirect from="/old/path" to="/new/path" />
       <Route component={WhenNotFound} />
     </Switch>
-    <hr />
+    </div>
       {  //<ReduxCounter />
         //<hr />
 

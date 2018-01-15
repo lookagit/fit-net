@@ -1,5 +1,118 @@
-$background: #ffc107;
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:300,400,700&subset=cyrillic-ext');
 
-.example {
-  background-color: $background;
+$blue-rgb: rgb(61, 75, 105);
+$blue-rgba: rgba(61, 75, 105, 0.5);
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Comfortaa', cursive;
 }
+.mainWrapper{
+  max-width: 1440px;
+  margin: 0 auto;
+}
+h1,h2,h3,h4,h5,h6,a,li,ul{
+  padding: 0;
+  margin: 0;
+}
+ul{
+  list-style: none;
+}
+a{
+  color: #fff;
+  text-decoration: none;
+}
+.backgroundImage{
+  height: 100vh;
+  background-image: url('../../static/mainBg.jpg');
+  background-position: center center;
+}
+// HEADER
+.header{
+  display: flex;
+  flex-direction: column;
+}
+.headerBox1{
+  flex: 1;
+  display: flex;
+  background-color: rgba(34, 31, 31, 0.7);
+  padding: 20px 0;
+}
+.logoBox{
+  flex: 1;
+  display: flex;
+}
+.logoBox h1{
+  color: blue;
+  margin: auto auto auto 100px;
+}
+.loginBox{
+  flex: 1;
+  display: flex;
+}
+.loginWrapper{
+  margin: auto 50px auto auto;
+  display: flex;
+}
+.loginWrapper>div{
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+.login, .singUp{
+  background-color: $blue-rgb;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: #fff;
+}
+.loginLost, .singUpLost{
+  font-size: 12px;
+  margin-top:10px;
+  color: #fff;
+  cursor: pointer;
+}
+.headerBox2{
+  flex: 1;
+  display: flex;
+  background-color: $blue-rgba;
+  padding: 10px 0;
+}
+.navigation{
+  margin: 0 auto 0 200px;
+}
+.navigation li{
+  display: inline-block;
+  font-size: 24px;
+  margin-right: 100px;
+  color: #fff;
+}
+// END HEADER
+// COACHES
+.coaches{
+  display: flex;
+  padding-top: 50px;
+}
+.searchBoxWrapper, .coachesImgWrapper{
+  flex: 1;
+  display: flex;
+}
+.searchBox{
+  background-color: $blue-rgba;
+  margin: auto;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.inputWrapper{
+  flex: 1;
+  margin-bottom: 20px;
+  display: flex;
+}
+.kategorija input{
+  width: 100%;
+  border: none;
+}
+// END COACHES

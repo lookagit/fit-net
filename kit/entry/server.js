@@ -357,26 +357,7 @@ if (config.graphQLServer) {
     })),
   );
 }
-router.get('/ping', (ctx) => {
-      //  var s3 = new aws.S3();
-      //  var params = {
-      //    Bucket: 'fitnetbucket',
-      //    Key: ctx.params.filename,
-      //    Expires: 60,
-      //   ContentType: ctx.params.filetype
-      // };
-      //
-      //  s3.getSignedUrl(‘putObject’, params, function(err, data) {
-      //      if (err) {
-      //          console.log(err);
-      //          return err;
-      //      } else {
-      //          return data;
-      //      }
-      //  });
 
-  console.log(ctx.params);
-})
 // Do we need the GraphiQL query interface?  This can be used if we have an
 // internal GraphQL server, or if we're pointing to an external server.  First,
 // we check if `config.graphiql` === `true` to see if we need one...
