@@ -237,28 +237,20 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
 // Koa route handlers
 
 const router = (new KoaRouter())
-  // Set-up a general purpose /ping route to check the server is alive
   .get('/ping/:id/:indi/:type', async ctx => {
-    console.log("AAAA ", ctx.params);
     var s3 = new aws.S3({
       signatureVersion: 'v4',
       region: 'eu-west-3',
     });
-
-        var params = {
-            Bucket: 'fitnetbucket',
-            Key: ctx.params.id,
-            Expires: 600,
-            ContentType: ctx.params.indi + '/' + ctx.params.type,
-        };
-
-        let asa = await s3.getSignedUrl('putObject', params);
-        console.log("JA SAM ASSAAA ", asa);
-        ctx.body = asa;
+    var params = {
+      Bucket: 'fitnetbucket',
+      Key: ctx.params.id,
+      Expires: 600,
+      ContentType: ctx.params.indi + '/' + ctx.params.type,
+    };
+    let asa = await s3.getSignedUrl('putObject', params);
+    ctx.body = asa;
   })
-
-  // Favicon.ico.  By default, we'll serve this as a 204 No Content.
-  // If /favicon.ico is available as a static file, it'll try that first
   .get('/favicon.ico', async ctx => {
     ctx.status = 204;
   });
