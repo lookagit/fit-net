@@ -4,7 +4,8 @@ import {
   PersonArr,
   CountyArr,
   CityArr,
-  PersonTrainingSkillArr
+  PersonTrainingSkillArr,
+  PersonCountyHelper,
 } from './HelperArrays';
 let sqlUrl = "";
 if(process.env.NODE_ENV === 'production') {
@@ -61,6 +62,11 @@ const PersonCl = db.define('personCl', {
   },
   birthPlace: {
     type: Sequelize.STRING,
+    allowNull: false,
+  },
+  birthDay: {
+    type: Sequelize.DATE,
+    allowNull: false,
   },
   hasCerificates: {
     type: Sequelize.BOOLEAN,
@@ -98,7 +104,20 @@ const City = db.define('city', {
 
 City.hasMany(County);
 
-const PersonCounty = db.define('personCounty');
+const PersonCounty = db.define('personCounty', {
+  price: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  groupTraining: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+  },
+  address: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
 
 PersonCl.hasMany(PersonCounty);
 County.hasMany(PersonCounty);
@@ -127,29 +146,24 @@ PersonCl.hasMany(PersonTrainingSkill);
 
 
 
-
-const PersonTrainingCost = db.define('peronsTrainingCost', {
-  personalTrainingCost: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  }
-})
-
 db.sync({force: true}).then(() => {
   PersonArr.map(async item => {
     await PersonCl.create(item);
   });
   TrainingSkillArr.map(async item => {
     await TrainingSkill.create(item);
-  })
+  });
   PersonTrainingSkillArr.map(async item => {
     await PersonTrainingSkill.create(item);
-  })
+  });
   CityArr.map(async item => {
     await City.create(item);
   });
   CountyArr.map(async item => {
     await County.create(item);
+  })
+  PersonCountyHelper.map(async item => {
+    await PersonCounty.create(item);
   })
 });
 
