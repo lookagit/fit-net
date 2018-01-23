@@ -365,83 +365,91 @@ const Mutation = new GraphQLObjectType({
   fields() {
     return {
       updateOrCreateUser: {
-        type: Person,
+        type: PersonCl,
         args: {
           email: {
             type: GraphQLString,
           },
           password: {
-            type: 
+            type: GraphQLString,
           },
           firstName: {
             type: GraphQLString,
           },
           lastName: {
             type: GraphQLString,
-          }
-        },
-        async resolve(root,{ email, FBID: facebook_id="", GID: google_id="", firstName, lastName, }) {
-          let create = await db.models.person.findOrCreate({
-            where: {
-              email,
-            }
-          })
-          if(create) {
-            let [user, isCreated] = create;
-            let {dataValues} = user;
-            if(isCreated) {
-              let update = await db.models.person.update({
-                email,
-                firstName,
-                lastName,
-                facebook_id,
-                google_id,
-              }, {
-               where: {
-                 id: dataValues.id,
-               } 
-              })
-              if(update) {
-                return {id: dataValues.id};
-              } 
-            } 
-            return {id: dataValues.id};
-          }
-          
-        }
-      },
-      createProfile: {
-        type: UserProfile,
-        args: {
-          id: {
-            type: GraphQLInt,
+          },
+          facebookLink: {
+            type: GraphQLString,
+          },
+          instagramLink: {
+            type: GraphQLString,
+          },
+          cellPhone: {
+            type: GraphQLString,
+          },
+          birthPlace: {
+            type: GraphQLString,
+          },
+          birthDay: {
+            type: GraphQLString,
+          },
+          hasCerificates: {
+            type: GraphQLBoolean,
+          },
+          about: {
+            type: GraphQLString
           },
           imageUrl: {
             type: GraphQLString,
           },
+          skillsArr: {
+            type: new GraphQLList(GraphQLInt),
+          },
         },
-        async resolve(root, {id, imageUrl}) {
-          let image = await db.models.userProfile.findOne({
+        async resolve(root, {email, ...args}){
+          let findOrCreateUser = await db.models.personCl.findOne({
             where: {
-              personId: id
+              email,
             }
           });
-          if(image) {
-            return image;
+          if(findOrCreateUser) {
+            return {error: "We have user with that email"};
           } else {
-            let createImgProfile = await db.models.userProfile.create({
-              profileImageUrl: imageUrl,
-              location: "",
-              personId: id,
+            let createPersonCl = await db.models.personCl.create({
+              email,
+              ...args,
             });
-            if(createImgProfile) {
-              return {
-                profileImageUrl: imageUrl,
-                location: "",
-              }
-            } 
+            if(createPersonCl) {
+              return createPersonCl;
+            } else {
+              return {error: "Database issue"};
+            }
           }
-        }
+        },
+      },
+      PersonCountyCreate: {
+        type: PersonCounty,
+        args: {
+          price: {
+            type: GraphQLInt,
+          },
+          groupTraining: {
+            type: GraphQLBoolean,
+          },
+          address: {
+            type: GraphQLString,
+          },
+          personClId: {
+            type: GraphQLInt,
+          },
+          countyId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, args) {
+          //TODO create person county :D 
+        },
       },
     }
   }
