@@ -359,6 +359,95 @@ const Query = new GraphQLObjectType({
   },
 });
 
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  description: 'Mutation for fitnet.com',
+  fields() {
+    return {
+      updateOrCreateUser: {
+        type: Person,
+        args: {
+          email: {
+            type: GraphQLString,
+          },
+          password: {
+            type: 
+          },
+          firstName: {
+            type: GraphQLString,
+          },
+          lastName: {
+            type: GraphQLString,
+          }
+        },
+        async resolve(root,{ email, FBID: facebook_id="", GID: google_id="", firstName, lastName, }) {
+          let create = await db.models.person.findOrCreate({
+            where: {
+              email,
+            }
+          })
+          if(create) {
+            let [user, isCreated] = create;
+            let {dataValues} = user;
+            if(isCreated) {
+              let update = await db.models.person.update({
+                email,
+                firstName,
+                lastName,
+                facebook_id,
+                google_id,
+              }, {
+               where: {
+                 id: dataValues.id,
+               } 
+              })
+              if(update) {
+                return {id: dataValues.id};
+              } 
+            } 
+            return {id: dataValues.id};
+          }
+          
+        }
+      },
+      createProfile: {
+        type: UserProfile,
+        args: {
+          id: {
+            type: GraphQLInt,
+          },
+          imageUrl: {
+            type: GraphQLString,
+          },
+        },
+        async resolve(root, {id, imageUrl}) {
+          let image = await db.models.userProfile.findOne({
+            where: {
+              personId: id
+            }
+          });
+          if(image) {
+            return image;
+          } else {
+            let createImgProfile = await db.models.userProfile.create({
+              profileImageUrl: imageUrl,
+              location: "",
+              personId: id,
+            });
+            if(createImgProfile) {
+              return {
+                profileImageUrl: imageUrl,
+                location: "",
+              }
+            } 
+          }
+        }
+      },
+    }
+  }
+});
+
 export default new GraphQLSchema({
   query: Query,
+  mutation: Mutation,
 });
