@@ -13,10 +13,7 @@ import {
     GraphQLBoolean,
 } from 'graphql';
 import db from '../../db/db';
-// ----------------------
-// GraphQL can handle Promises from its `resolve()` calls, so we'll create a
-// simple async function that returns a simple message.  In practice, `resolve()`
-// will generally pull from a 'real' data source such as a database
+
 async function getMessage() {
   return {
     text: `SREĆAN POČETAK FIT-NET @ ${new Date()}
@@ -219,6 +216,33 @@ const PersonCounty = new GraphQLObjectType({
               id: personCounty.countyId,
             },
           });
+        },
+      },
+    }
+  }
+})
+
+const Certification = new GraphQLObjectType({
+  name: 'PersonCertificates',
+  description: 'Person certificates for sport',
+  fields() {
+    return {
+      id: {
+        type: GraphQLString,
+        resolve(personCert) {
+          return personCert.id;
+        },
+      },
+      name: {
+        type: GraphQLString,
+        resolve(personCert) {
+          return personCert.name
+        },
+      },
+      certUrl: {
+        type: GraphQLString,
+        resolve(personCert) {
+          return personCert.certUrl;
         },
       },
     }
@@ -448,9 +472,42 @@ const Mutation = new GraphQLObjectType({
           },
         },
         async resolve(root, args) {
-          //TODO create person county :D 
+          let createCounty = await db.models.personCounty.create({
+            ...args,
+          });
+          if(createCounty) {
+            return createCounty;
+          } else {
+            return { error: "Database issue, check createCounty" };
+          }
         },
       },
+      certificateCreate: {
+        type: Certification,
+        args: {
+          name: {
+            type: GraphQLString,
+          },
+          certUrl: {
+            type: GraphQLString,
+          },
+          personClId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, {name, certUrl, personClId}) {
+          let createCertificate = await db.models.certification.create({
+            name,
+            certUrl,
+            personClId,
+          });
+          if(createCertificate) {
+            return createCertificate;
+          } else {
+            return {error: "Database issue, check createCertificate"};
+          }
+        }
+      },  
     }
   }
 });
