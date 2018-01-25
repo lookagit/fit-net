@@ -111,9 +111,44 @@ a{
   margin-bottom: 20px;
   display: flex;
 }
-.kategorija input{
-  width: 100%;
-  border: none;
-  
+.kategorija{
+  max-height: 200px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.categorie{
+  position: relative;
+}
+.categorieButton{
+  width: 300px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+}
+.categorieModal{
+  top: 100px;
+  left: 50px;
+  position: absolute;
+  z-index: 1000;
+
+}
+.categorieModalWrapper{
+  background-color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 10em;
+  padding: 20px;
+  border-radius: 10px;
+}
+.categorieModalItem{
+  font-size: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+.categorieModalItem:hover{
+  background-color: blue;
 }
 // END COACHES

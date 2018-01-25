@@ -133,13 +133,19 @@ const TrainingSkill = new GraphQLObjectType({
   description: 'Training Skill List',
   fields() {
     return {
+      id: {
+        type: GraphQLInt,
+        resolve(trainingSkill) {
+          return trainingSkill.id;
+        },
+      },
       trainSkillName: {
         type: GraphQLString,
         resolve(trainingSkill) {
           return trainingSkill.trainSkillName;
-        }
-      }
-    }
+        },
+      },
+    };
   },
 })
 
