@@ -12,7 +12,7 @@ class SearchBox extends React.Component {
               <input ref="oblast" placeholder="Izaberite oblast..." type="text"/>
             </div>
             <div className={css.sertifikat}>
-              <label>dsada</label><br/>
+              <label>WHOOOPS</label><br/>
               <input className={css.radio} type="radio" name="cert"/>
               <label>dsada</label><br/>
               <input className={css.radio} type="radio" name="cert"/>
@@ -32,7 +32,7 @@ class SearchBox extends React.Component {
               <input type="text"/>
               <input type="text"/>
               <input type="button"/>
-            </div> 
+            </div>
           </form>
         </div>
       </div>

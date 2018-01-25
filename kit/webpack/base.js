@@ -41,7 +41,10 @@ export default new WebpackConfig().merge({
   resolve: {
     // I tend to use .js exclusively, but .jsx is also allowed
     extensions: ['.js', '.jsx'],
-
+    // "alias": {
+    //   "react": "preact-compat",
+    //   "react-dom": "preact-compat",
+    // },
     // When we do an `import x from 'x'`, webpack will first look in our
     // root folder to try to resolve the package this.  This allows us to
     // short-hand imports without knowing the full/relative path.  If it
