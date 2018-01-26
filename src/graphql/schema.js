@@ -13,158 +13,22 @@ import {
     GraphQLBoolean,
 } from 'graphql';
 import db from '../../db/db';
-// ----------------------
-// GraphQL can handle Promises from its `resolve()` calls, so we'll create a
-// simple async function that returns a simple message.  In practice, `resolve()`
-// will generally pull from a 'real' data source such as a database
+import { 
+  PersonCl, 
+  TrainingSkill, 
+  County, 
+  PersonCounty, 
+  Certification, 
+  TrainingPersonSkill 
+} from './PersonClForSchema';
+
 async function getMessage() {
   return {
-    text: `SREĆAN POČETAK FIT-NET @ ${new Date()}
+    text: `SREĆNA FIZIO I PERSON BAZA  FIT-NET @ ${new Date()}
     SVE NAIBOLJE`,
   };
 }
-const PersonCl = new GraphQLObjectType({
-  name: 'PersonCl',
-  description: 'Client coach or physio',
-  fields() {
-    return {
-      id: {
-        type: GraphQLInt,
-        resolve(personCl) {
-          return personCl.id;
-        },
-      },
-      email: {
-        type: GraphQLString,
-        resolve(personCl) {
-          return personCl.email;
-        }
-      },
-      firstName: {
-        type: GraphQLString,
-        resolve(personCl) {
-          return personCl.firstName;
-        }
-      },
-      lastName: {
-        type: GraphQLString,
-        resolve(personCl) {
-          return personCl.lastName;
-        }
-      },
-      facebookLink: {
-        type: GraphQLString,
-        resolve(personCl) {
-          return personCl.facebookLink;
-        }
-      },
-      instagramLink: {
-        type: GraphQLString,
-        resolve(personCl) {
-          return personCl.instagramLink;
-        }
-      },
-      cellPhone: {
-        type: GraphQLString,
-        resolve(personCl) {
-          return personCl.cellPhone;
-        }
-      },
-      about: {
-        type: GraphQLString,
-        resolve(personCl) {
-          return personCl.about;
-        }
-      },
-      birthPlace: {
-        type: GraphQLString,
-        resolve(personCl) {
-          return personCl.birthPlace;
-        }
-      },
-      hasCerificates: {
-        type: GraphQLBoolean,
-        resolve(personCl) {
-          return personCl.hasCerificates;
-        }
-      },
-      confirmed: {
-        type: GraphQLBoolean,
-        resolve(personCl) {
-          return personCl.confirmed;
-        }
-      },
-      imageUrl: {
-        type: GraphQLString,
-        resolve(personCl) {
-          return personCl.imageUrl;
-        }
-      },
-      skillsArr: {
-        type: new GraphQLList(GraphQLInt),
-        resolve(personCl) {
-          return personCl.skillsArr;
-        }
-      },
-      counter: {
-        type: GraphQLInt,
-        resolve(personCl) {
-          return personCl.counter;
-        }
-      },
-      trainingPersonSkills: {
-        type: new GraphQLList(TrainingPersonSkill),
-        async resolve(personCl) {
-          return await db.models.trainingSkill.findAll({
-            where: {
-              id: {
-                [db.Op.or]: personCl.skillsArr,
-              }
-            }
-          })
-        }
-      }
-    };
-  },
-});
 
-const TrainingSkill = new GraphQLObjectType({
-  name: 'TrainingSkill',
-  description: 'Training Skill List',
-  fields() {
-    return {
-      id: {
-        type: GraphQLInt,
-        resolve(trainingSkill) {
-          return trainingSkill.id;
-        },
-      },
-      trainSkillName: {
-        type: GraphQLString,
-        resolve(trainingSkill) {
-          return trainingSkill.trainSkillName;
-        },
-      },
-    };
-  },
-})
-
-const TrainingPersonSkill = new GraphQLObjectType({
-  name: 'TrainingPersonSkill',
-  description: 'Training Skill for search',
-  fields() {
-    return {
-      trainSkillName: {
-        type: GraphQLString,
-        resolve(trainingPersonSkill) {
-          return trainingPersonSkill.trainSkillName;
-        }
-      }
-    }
-  },
-})
-// Message type.  Imagine this like static type hinting on the 'message'
-// object we're going to throw back to the user
 const Message = new GraphQLObjectType({
   name: 'Message',
   description: 'GraphQL server message',
@@ -180,7 +44,6 @@ const Message = new GraphQLObjectType({
   },
 });
 
-// Root query.  This is our 'public API'.
 const Query = new GraphQLObjectType({
   name: 'Query',
   description: 'Root query object',
@@ -190,6 +53,12 @@ const Query = new GraphQLObjectType({
         type: Message,
         resolve() {
           return getMessage();
+        },
+      },
+      counties: {
+        type: new GraphQLList(County),
+        async resolve(root) {
+          return await db.models.county.findAll();
         },
       },
       trainingCategories: {
@@ -204,6 +73,21 @@ const Query = new GraphQLObjectType({
           skillIds: {
             type: new GraphQLList(GraphQLInt),
           },
+          priceFrom: {
+            type: GraphQLInt,
+          },
+          priceTo: {
+            type: GraphQLInt,
+          },
+          countyId: {
+            type: GraphQLInt,
+          },
+          groupTraining: {
+            type: GraphQLBoolean,
+          },
+          certified: {
+            type: GraphQLBoolean,
+          },
           page: {
             type: GraphQLInt,
           },
@@ -211,19 +95,37 @@ const Query = new GraphQLObjectType({
             type: GraphQLInt,
           }
         },
-        async resolve(root, {id, skillIds, page}) {
+        async resolve(root, {id, skillIds, priceFrom, priceTo, countyId, groupTraining, certified, page}) {
           if(typeof id == 'undefined') {
             const offset = 3;
             let pageLocal = page * offset;
+            let b = await db.models.personCounty.findAll({
+              where: {
+                price: {
+                  [db.Op.gte]: 1000,
+                  [db.Op.lte]: 7000,
+                },
+                countyId: 1,
+                groupTraining: false,
+              }
+            });
+            let ids = b.map(item => {
+              return item.personClId;
+            })
             let findPerson = await db.models.personCl.findAll({
               where: {
-                skillsArr: { $overlap: skillIds}
+                id: {
+                  [db.Op.or]: ids,
+                },
+                hasCerificates: certified,
+                skillsArr: {
+                  $overlap: skillIds
+                }
               },
               order: [
                 ['skillsArr', 'DESC'],
               ]
             });
-
             let addCounterfindPersons = findPerson.map(i => {
               i['counter'] = 0;
               i.skillsArr.map(imp => {
@@ -252,6 +154,136 @@ const Query = new GraphQLObjectType({
   },
 });
 
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  description: 'Mutation for fitnet.com',
+  fields() {
+    return {
+      updateOrCreateUser: {
+        type: PersonCl,
+        args: {
+          email: {
+            type: GraphQLString,
+          },
+          password: {
+            type: GraphQLString,
+          },
+          firstName: {
+            type: GraphQLString,
+          },
+          lastName: {
+            type: GraphQLString,
+          },
+          facebookLink: {
+            type: GraphQLString,
+          },
+          instagramLink: {
+            type: GraphQLString,
+          },
+          cellPhone: {
+            type: GraphQLString,
+          },
+          birthPlace: {
+            type: GraphQLString,
+          },
+          birthDay: {
+            type: GraphQLString,
+          },
+          hasCerificates: {
+            type: GraphQLBoolean,
+          },
+          about: {
+            type: GraphQLString
+          },
+          imageUrl: {
+            type: GraphQLString,
+          },
+          skillsArr: {
+            type: new GraphQLList(GraphQLInt),
+          },
+        },
+        async resolve(root, {email, ...args}){
+          let findOrCreateUser = await db.models.personCl.findOne({
+            where: {
+              email,
+            }
+          });
+          if(findOrCreateUser) {
+            return {error: "We have user with that email"};
+          } else {
+            let createPersonCl = await db.models.personCl.create({
+              email,
+              ...args,
+            });
+            if(createPersonCl) {
+              return createPersonCl;
+            } else {
+              return {error: "Database issue"};
+            }
+          }
+        },
+      },
+      PersonCountyCreate: {
+        type: PersonCounty,
+        args: {
+          price: {
+            type: GraphQLInt,
+          },
+          groupTraining: {
+            type: GraphQLBoolean,
+          },
+          address: {
+            type: GraphQLString,
+          },
+          personClId: {
+            type: GraphQLInt,
+          },
+          countyId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, args) {
+          let createCounty = await db.models.personCounty.create({
+            ...args,
+          });
+          if(createCounty) {
+            return createCounty;
+          } else {
+            return { error: "Database issue, check createCounty" };
+          }
+        },
+      },
+      certificateCreate: {
+        type: Certification,
+        args: {
+          name: {
+            type: GraphQLString,
+          },
+          certUrl: {
+            type: GraphQLString,
+          },
+          personClId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, {name, certUrl, personClId}) {
+          let createCertificate = await db.models.certification.create({
+            name,
+            certUrl,
+            personClId,
+          });
+          if(createCertificate) {
+            return createCertificate;
+          } else {
+            return {error: "Database issue, check createCertificate"};
+          }
+        }
+      },  
+    }
+  }
+});
+
 export default new GraphQLSchema({
   query: Query,
+  mutation: Mutation,
 });

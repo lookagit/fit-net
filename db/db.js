@@ -1,12 +1,13 @@
 import Sequelize from 'sequelize';
-import {TrainingSkillArr} from './HelperArrays';
-let sqlUrl = "";
-console.log("PERRRRRKO ", process.env.NODE_ENV);
-if(process.env.NODE_ENV === 'production') {
-  sqlUrl = 'postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r';
-}else {
-  sqlUrl = 'postgres://fitnetmaster:jebemtimater123@fitnetdb.c1xl4fohydwy.us-east-2.rds.amazonaws.com/fitnetdb';
-}
+import {
+  TrainingSkillArr,
+  PersonArr,
+  CountyArr,
+  CityArr,
+  PersonTrainingSkillArr,
+  PersonCountyHelper,
+} from './HelperArrays';
+
 var db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r', {
   dialect: 'postgres',
   dialectOptions: {
@@ -61,11 +62,15 @@ const PersonCl = db.define('personCl', {
   },
   birthPlace: {
     type: Sequelize.STRING,
+    allowNull: false,
+  },
+  birthDay: {
+    type: Sequelize.DATE,
+    allowNull: false,
   },
   hasCerificates: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
-
   },
   confirmed: {
     type: Sequelize.BOOLEAN,
@@ -73,8 +78,246 @@ const PersonCl = db.define('personCl', {
   },
   skillsArr: {
     type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
+  countyArr: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
+  score: {
+    type: Sequelize.FLOAT,
+    defaultValue: 0,
   }
 });
+
+const County = db.define('county', {
+  countyName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+const City = db.define('city', {
+  cityName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  }
+})
+
+City.hasMany(County);
+
+const PersonCounty = db.define('personCounty', {
+  price: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  groupTraining: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+  },
+  address: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+PersonCl.hasMany(PersonCounty);
+County.hasMany(PersonCounty);
+
+
+const TrainingSkill = db.define('trainingSkill', {
+  trainSkillName: {
+    type: Sequelize.STRING,
+  },
+});
+
+const PersonTrainingSkill = db.define('personTrainingSkill');
+
+TrainingSkill.hasMany(PersonTrainingSkill);
+PersonCl.hasMany(PersonTrainingSkill);
+/**CLUBS TABLES */
+
+const ClubsCl = db.define('clubCl', {
+  name: {
+    type: Sequelize.STRING,
+  },
+  address: {
+    type: Sequelize.STRING,
+  },
+  email: {
+    type: Sequelize.STRING,
+  },
+  phone: {
+    type: Sequelize.STRING,
+  },
+  webAddress: {
+    type: Sequelize.STRING,
+  },
+  facebookLink: {
+    type: Sequelize.STRING,
+  },
+  instagramLink: {
+    type: Sequelize.STRING,
+  },
+  profileImage: {
+    type: Sequelize.STRING,
+  },
+  score: {
+    type: Sequelize.FLOAT,
+  },
+  about: {
+    type: Sequelize.STRING,
+  },
+  skillsArr: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
+  imgsArr: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
+});
+
+County.hasMany(ClubsCl);
+
+const MembershipFees = db.define('membershipFees', {
+  price: {
+    type: Sequelize.FLOAT,
+  },
+});
+
+ClubsCl.hasMany(MembershipFees);
+TrainingSkill.hasMany(MembershipFees);
+
+const Gallery = db.define('gallery', {
+  fileUrl: {
+    type: Sequelize.STRING,
+  },
+})
+
+ClubsCl.hasMany(Gallery);
+
+const WorkingTimeClub = db.define('workingTimeClub', {
+  workDaysFrom: {
+    type: Sequelize.STRING,
+  },
+  workDayTo: {
+    type: Sequelize.STRING,
+  },
+  satFrom: {
+    type: Sequelize.STRING,
+  },
+  satTo: {
+    type: Sequelize.STRING,
+  },
+  sunFrom: {
+    type: Sequelize.STRING,
+  },
+  sunTo: {
+    type: Sequelize.STRING,
+  },
+});
+
+ClubsCl.hasMany(WorkingTimeClub);
+/** CLUBS TABLES */
+
+/**FISIO TABLES */
+const FisioCl = db.define('fisioCl', {
+  password: {
+    type: Sequelize.STRING
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      isEmail: true,
+    },
+    unique: true,
+  },
+  firstName: {
+    type: Sequelize.STRING,
+  },
+  lastName: {
+    type: Sequelize.STRING,
+  },
+  facebookLink: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    validate: {
+      isUrl: true,
+    },
+  },
+  instagramLink: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    validate: {
+      isUrl: true,
+    }
+  },
+  imageUrl: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      isUrl: true,
+    }
+  },
+  cellPhone: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  about: {
+    type: Sequelize.STRING,
+  },
+  birthPlace: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  birthDay: {
+    type: Sequelize.DATE,
+    allowNull: false,
+  },
+  hasCerificates: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+  confirmed: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+  fisioSkillsArr: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
+  countyArr: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
+  comesHome: {
+    type: Sequelize.BOOLEAN,
+  },
+  score: {
+    type: Sequelize.FLOAT,
+    defaultValue: 0,
+  }
+});
+
+const FisioCategories = db.define('fisioCategories', {
+  fisioSkillName: {
+    type: Sequelize.STRING,
+  },
+});
+
+const FisioCounty = db.define('fisioCounty', {
+  price: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  address: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  saloonName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  }
+});
+
+FisioCl.hasMany(FisioCounty);
+FisioCategories.hasMany(FisioCounty);
 
 const Certification = db.define('certification', {
   name: {
@@ -86,102 +329,28 @@ const Certification = db.define('certification', {
 })
 
 PersonCl.hasMany(Certification);
-
-const TrainingSkill = db.define('trainingSkill', {
-  trainSkillName: {
-    type: Sequelize.STRING,
-  },
-})
-const PersonTrainingSkill = db.define('personTrainingSkill');
-TrainingSkill.hasMany(PersonTrainingSkill);
-PersonCl.hasMany(PersonTrainingSkill);
+FisioCl.hasMany(Certification);
 
 
-const PersonTrainingSkillArr = [
-  {
-    trainingSkillId: 1,
-    personClId: 1,
-  },
-  {
-    trainingSkillId: 3,
-    personClId: 1,
-  },
-  {
-    trainingSkillId: 5,
-    personClId: 1,
-  },
-  {
-    trainingSkillId: 2,
-    personClId: 2,
-  },
-  {
-    trainingSkillId: 8,
-    personClId: 2,
-  },
-  {
-    trainingSkillId: 9,
-    personClId: 2,
-  },
-  {
-    trainingSkillId: 2,
-    personClId: 3,
-  },
-  {
-    trainingSkillId: 3,
-    personClId: 3,
-  },
-  {
-    trainingSkillId: 6,
-    personClId: 3,
-  },
 
-]
-
-
-const PersonArr = [
-  {
-    password: '2131SDA1',
-    email: 'luka.simjanovic@gma.com',
-    firstName: 'Luki',
-    lastName: 'Muki',
-    cellPhone: '2133123',
-    imageUrl: 'http://www.locale.png.com',
-    skillsArr: [1,3,5],
-    instagramLink: 'https://www.instagram.com/golazohub/',
-    facebookLink: 'https://www.facebook.com/jordanyeohfitness/',
-  },
-  {
-    password: '23!!!23',
-    email: 'simjanovic@gma.com',
-    firstName: 'Tuki',
-    lastName: 'Ruki',
-    cellPhone: '122133123',
-    imageUrl: 'http://www.locale.jbg.com',
-    skillsArr: [2,8,9],
-    instagramLink: 'https://www.instagram.com/heartrunnergirl/',
-    facebookLink: 'https://www.facebook.com/arnold/'
-  },
-  {
-    password: '213#%^11',
-    firstName: 'Zuki',
-    lastName: 'Jang Kuki',
-    cellPhone: '23218123',
-    imageUrl: 'http://www.loasle.png.com',
-    email: 'luka.simjanovic@gmas.com',
-    skillsArr: [2,3,6],
-    instagramLink: 'https://www.instagram.com/scrfitness/',
-    facebookLink: 'https://www.facebook.com/djokovic.official/',
-  },
-]
 db.sync({force: true}).then(() => {
   PersonArr.map(async item => {
     await PersonCl.create(item);
   });
   TrainingSkillArr.map(async item => {
     await TrainingSkill.create(item);
-  })
+  });
   PersonTrainingSkillArr.map(async item => {
     await PersonTrainingSkill.create(item);
+  });
+  CityArr.map(async item => {
+    await City.create(item);
+  });
+  CountyArr.map(async item => {
+    await County.create(item);
+  })
+  PersonCountyHelper.map(async item => {
+    await PersonCounty.create(item);
   })
 });
 

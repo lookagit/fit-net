@@ -34,17 +34,9 @@ export default new WebpackConfig().extend({
     // Add `webpack-dev-server` polyfills needed to communicate with the browser
 
     conf.entry.browser.unshift(
-      'react-hot-loader/patch',
       `webpack-dev-server/client?${LOCAL}`,
       'webpack/hot/only-dev-server',
     );
-
-    // Add React-specific hot loading
-    conf.module.rules.find(l => l.test.toString() === /\.jsx?$/.toString())
-      .use.unshift({
-        loader: 'react-hot-loader/webpack',
-      });
-
     return conf;
   },
 }, '[root]/dev.js').merge({
