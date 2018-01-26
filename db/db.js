@@ -7,6 +7,7 @@ import {
   PersonTrainingSkillArr,
   PersonCountyHelper,
 } from './HelperArrays';
+import { Certificate } from 'crypto';
 let sqlUrl = "";
 if(process.env.NODE_ENV === 'production') {
   sqlUrl = 'postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r';
@@ -14,6 +15,7 @@ if(process.env.NODE_ENV === 'production') {
   sqlUrl = 'postgres://fitnetmaster:jebemtimater123@fitnetdb.c1xl4fohydwy.us-east-2.rds.amazonaws.com/fitnetdb';
 }
 const db = new Sequelize(sqlUrl);
+
 const PersonCl = db.define('personCl', {
   password: {
     type: Sequelize.STRING
@@ -122,16 +124,6 @@ const PersonCounty = db.define('personCounty', {
 PersonCl.hasMany(PersonCounty);
 County.hasMany(PersonCounty);
 
-const Certification = db.define('certification', {
-  name: {
-    type: Sequelize.STRING,
-  },
-  certUrl: {
-    type: Sequelize.STRING,
-  }
-})
-
-PersonCl.hasMany(Certification);
 
 const TrainingSkill = db.define('trainingSkill', {
   trainSkillName: {
@@ -143,6 +135,199 @@ const PersonTrainingSkill = db.define('personTrainingSkill');
 
 TrainingSkill.hasMany(PersonTrainingSkill);
 PersonCl.hasMany(PersonTrainingSkill);
+/**CLUBS TABLES */
+
+const ClubsCl = db.define('clubCl', {
+  name: {
+    type: Sequelize.STRING,
+  },
+  address: {
+    type: Sequelize.STRING,
+  },
+  email: {
+    type: Sequelize.STRING,
+  },
+  phone: {
+    type: Sequelize.STRING,
+  },
+  webAddress: {
+    type: Sequelize.STRING,
+  },
+  facebookLink: {
+    type: Sequelize.STRING,
+  },
+  instagramLink: {
+    type: Sequelize.STRING,
+  },
+  profileImage: {
+    type: Sequelize.STRING,
+  },
+  score: {
+    type: Sequelize.FLOAT,
+  },
+  about: {
+    type: Sequelize.STRING,
+  },
+  skillsArr: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
+  imgsArr: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
+});
+
+County.hasMany(ClubsCl);
+
+const MembershipFees = db.define('membershipFees', {
+  price: {
+    type: Sequelize.FLOAT,
+  },
+});
+
+ClubsCl.hasMany(MembershipFees);
+TrainingSkill.hasMany(MembershipFees);
+
+const Gallery = db.define('gallery', {
+  fileUrl: {
+    type: Sequelize.STRING,
+  },
+})
+
+ClubsCl.hasMany(Gallery);
+
+const WorkingTimeClub = db.define('workingTimeClub', {
+  workDaysFrom: {
+    type: Sequelize.STRING,
+  },
+  workDayTo: {
+    type: Sequelize.STRING,
+  },
+  satFrom: {
+    type: Sequelize.STRING,
+  },
+  satTo: {
+    type: Sequelize.STRING,
+  },
+  sunFrom: {
+    type: Sequelize.STRING,
+  },
+  sunTo: {
+    type: Sequelize.STRING,
+  },
+});
+
+ClubsCl.hasMany(WorkingTimeClub);
+/** CLUBS TABLES */
+
+/**FISIO TABLES */
+const FisioCl = db.define('fisioCl', {
+  password: {
+    type: Sequelize.STRING
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      isEmail: true,
+    },
+    unique: true,
+  },
+  firstName: {
+    type: Sequelize.STRING,
+  },
+  lastName: {
+    type: Sequelize.STRING,
+  },
+  facebookLink: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    validate: {
+      isUrl: true,
+    },
+  },
+  instagramLink: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    validate: {
+      isUrl: true,
+    }
+  },
+  imageUrl: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      isUrl: true,
+    }
+  },
+  cellPhone: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  about: {
+    type: Sequelize.STRING,
+  },
+  birthPlace: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  birthDay: {
+    type: Sequelize.DATE,
+    allowNull: false,
+  },
+  hasCerificates: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+  confirmed: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+  fisioSkillsArr: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
+  countyArr: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
+  comesHome: {
+    type: Sequelize.BOOLEAN,
+  },
+  score: {
+    type: Sequelize.FLOAT,
+    defaultValue: 0,
+  }
+});
+
+const FisioCategories = db.define('fisioCategories', {
+  fisioSkillName: {
+    type: Sequelize.STRING,
+  },
+});
+
+const FisioCounty = db.define('personCounty', {
+  price: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  address: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+FisioCl.hasMany(FisioCounty);
+FisioCategories.hasMany(FisioCounty);
+
+const Certification = db.define('certification', {
+  name: {
+    type: Sequelize.STRING,
+  },
+  certUrl: {
+    type: Sequelize.STRING,
+  }
+})
+
+PersonCl.hasMany(Certification);
+FisioCl.hasMany(Certification);
 
 
 
