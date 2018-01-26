@@ -76,7 +76,7 @@ if (SERVER) {
   /*
     Uncomment the next two lines to enable SSL!
   */
-
+   console.warn("HEYYYYYY");
   const cert = require('src/cert/self_signed');
   config.enableSSL({ key: cert.key, cert: cert.cert });
 
