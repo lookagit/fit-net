@@ -34,7 +34,6 @@ class SearchBox extends React.Component {
     }
   }
 
-
   handleSkillArr = (gotSkill) => {
     this.props.addToArr(gotSkill)
     this.setState({ click: 'none' })
@@ -43,6 +42,11 @@ class SearchBox extends React.Component {
   openModal() {
     this.setState({
       modal: this.state.modal == 'none' ? 'block' : 'none'
+    })
+  }
+  openModalOpstina() {
+    this.setState({
+      modalOpstina: this.state.modalOpstina == 'none' ? 'block' : 'none'
     })
   }
   render() {
@@ -60,6 +64,7 @@ class SearchBox extends React.Component {
         </div>
       )
     })
+    let opstine = '';
     return(
       <div className={css.searchBoxWrapper}>
         <div className={css.searchBox}>
@@ -82,31 +87,61 @@ class SearchBox extends React.Component {
               </div>
             </div>
             <div className={css.sertifikat}>
-              <label>Da</label><br/>
-              <input 
-                className={css.radio} 
-                type="radio" 
-                name="cert" 
-                checked={this.props.certifiedField}
-                onChange={(val) => this.props.certifiedFunc(true)}  />
-              <label>Ne</label><br/>
-              <input 
-                className={css.radio} 
-                type="radio" 
-                name="cert"
-                onChange={(val) => this.props.certifiedFunc(false)}
-                checked={!this.props.certifiedField} />
+              <div className={css.sertifikatBox1}>
+               <p> SERTIFIKOVANI TRENERI </p>
+              </div>
+              <div className={css.sertifikatBox2}>
+                <div>
+                  <label>Da</label><br />
+                  <input 
+                    className={css.radio} 
+                    type="radio" 
+                    name="cert" 
+                    checked={this.props.certifiedField}
+                    onChange={(val) => this.props.certifiedFunc(true)}  />
+                </div>
+                <div>
+                  <label>Ne</label><br />
+                  <input 
+                    className={css.radio} 
+                    type="radio" 
+                    name="cert"
+                    onChange={(val) => this.props.certifiedFunc(false)}
+                    checked={!this.props.certifiedField} />
+                </div>
+              </div>
             </div>
             <div className={css.opstina}>
-              <div>
+              <div
+                onClick={() => this.openModalOpstina()}
+                className={css.categorieButton}>
                 Izaberite opstinu
               </div>
             </div>
-            <div className={css.treneri}>
-              <label>Grupni</label><br/>
-              <input className={css.radio} type="radio" name="coache"/>
-              <label>Personalni</label><br/>
-              <input className={css.radio} type="radio" name="coache"/>
+            <div  className={css.sertifikat}>
+              <div className={css.sertifikatBox1}>
+                <p>TRENERI</p>
+              </div>
+              <div  className={css.sertifikatBox2}>
+                <div>
+                  <label>Grupni</label><br/>
+                  <input 
+                    className={css.radio}
+                    type="radio"
+                    name="coache"
+                    checked={this.props.groupTraining}
+                    onChange={(val) => this.props.groupTrainingFunc(true)} />
+                </div>
+                <div>
+                  <label>Personalni</label><br/>
+                  <input 
+                    className={css.radio}
+                    type="radio"
+                    name="coache"
+                    checked={!this.props.groupTraining}
+                    onChange={(val) => this.props.groupTrainingFunc(false)} />
+                </div>
+              </div>
             </div>
             <div className={css.cena}>
               <label>Cena</label><br/>

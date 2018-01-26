@@ -62,15 +62,18 @@ class Coaches extends React.Component {
     })
   }
   render() {
-    console.log("OVO JE STATEEE ", this.state);
+    console.log('state', this.state)
     return(
       <div className={css.coaches}>
         <SearchBox 
           certifiedField={this.state.certified}
-          addToArr={this.addToArr}
           certifiedFunc={this.certifiedFunc}
+
+          addToArr={this.addToArr}
+          
           countyFunc={this.countyFunc}
-          groupTraining={this.groupTraining} 
+          groupTraining={this.state.groupTraining}
+          groupTrainingFunc={this.groupTainingFunc}
           priceFromFunc={this.priceFromFunc}
           priceToFunc={this.priceToFunc} />
         <CoachesImg />
