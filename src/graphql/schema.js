@@ -58,6 +58,12 @@ const Query = new GraphQLObjectType({
           return getMessage();
         },
       },
+      counties: {
+        type: new GraphQLList(County),
+        async resolve(root) {
+          return await db.models.county.findAll();
+        },
+      },
       trainingCategories: {
         type: new GraphQLList(TrainingSkill),
         async resolve(root) {

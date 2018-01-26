@@ -210,8 +210,8 @@ export const PersonCounty = new GraphQLObjectType({
 })
 
 export const Certification = new GraphQLObjectType({
-  name: 'Person and Fiso Certificates',
-  description: 'Person certificates for sport',
+  name: 'Certificates',
+  description: 'Person and Fisio certificates for sport',
   fields() {
     return {
       id: {

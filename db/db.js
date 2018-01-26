@@ -303,7 +303,7 @@ const FisioCategories = db.define('fisioCategories', {
   },
 });
 
-const FisioCounty = db.define('personCounty', {
+const FisioCounty = db.define('fisioCounty', {
   price: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -312,6 +312,10 @@ const FisioCounty = db.define('personCounty', {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  saloonName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  }
 });
 
 FisioCl.hasMany(FisioCounty);
