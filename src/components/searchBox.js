@@ -4,6 +4,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Select from 'react-select';
 import CheckboxComp from './CheckboxComp';
+import CheckboxCounties from './CheckboxCounties';
 import _ from 'lodash';
 
 @graphql(gql`
@@ -11,6 +12,10 @@ import _ from 'lodash';
   trainingCategories {
     id
     trainSkillName
+  }
+  counties {
+    id
+    countyName
   }
 }
 `
@@ -22,9 +27,9 @@ class SearchBox extends React.Component {
     this.state = {
       array: [],
       wantedSkill: [],
+      arrayCounties: [],
+      wandetCounties: [],
       modal: 'none',
-      modalWidth: '500px',
-      click: 'auto'
     }
   }
 
@@ -32,11 +37,13 @@ class SearchBox extends React.Component {
     if(nextProps.data.trainingCategories != undefined) {
       this.setState({array: nextProps.data.trainingCategories})
     }
+    if(nextProps.data.counties != undefined) {
+      this.setState({arrayCounties: nextProps.data.counties})
+    }
   }
 
   handleSkillArr = (gotSkill) => {
-    this.props.addToArr(gotSkill)
-    this.setState({ click: 'none' })
+    this.props.addToSkillArr(gotSkill)
   } 
   
   openModal() {
@@ -50,6 +57,7 @@ class SearchBox extends React.Component {
     })
   }
   render() {
+    console.log('ARAADASJD', this.props)
     let category = this.state.array.map((item, key) => {
       return (
         <div 

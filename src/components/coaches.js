@@ -8,6 +8,7 @@ class Coaches extends React.Component {
     super(props);
     this.state = {
       skillArr: [],
+      countyArr: [],
       certified: false,
       county: 0,
       groupTraining: false,
@@ -16,7 +17,7 @@ class Coaches extends React.Component {
     }
   }
 
-  addToArr = (skillId) => {
+  addToSkillArr = (skillId) => {
     let {skillArr} = this.state;
     if (this.state.skillArr.includes(skillId)) {
       let a = this.state.wantedSkill;
@@ -69,8 +70,7 @@ class Coaches extends React.Component {
           certifiedField={this.state.certified}
           certifiedFunc={this.certifiedFunc}
 
-          addToArr={this.addToArr}
-          
+          addToSkillArr={this.addToSkillArr}
           countyFunc={this.countyFunc}
           groupTraining={this.state.groupTraining}
           groupTrainingFunc={this.groupTainingFunc}

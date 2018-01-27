@@ -3,15 +3,7 @@ import css from './styles/styles.scss';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Select from 'react-select';
-@graphql(gql`
-{
-  trainingCategories {
-    id
-    trainSkillName
-  }
-}
-`
- )
+
 
 class CheckboxComp extends React.Component {
   constructor(props){
