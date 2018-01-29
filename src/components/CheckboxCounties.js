@@ -19,7 +19,7 @@ class CheckboxCounties extends React.Component {
   }
   render() {
     return(
-      <div  onClick={()=>this.toggleChange()} style={{width:"100px",height:'50px',backgroundColor:'rgba(0,0,0,.5)'}}>
+      <div  onClick={()=>this.toggleChange()} >
         <label>{this.props.countiesName}</label>
         <input
           type="checkbox"

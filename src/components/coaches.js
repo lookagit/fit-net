@@ -10,10 +10,11 @@ class Coaches extends React.Component {
       skillArr: [],
       countiesId: null,
       certified: false,
-      counties: 0,
       groupTraining: false,
       priceFrom: 0,
       priceTo: 0,
+      categoriesAlert: 'none',
+      countiesAlert: 'none',
     }
   }
 
@@ -60,12 +61,36 @@ class Coaches extends React.Component {
       priceTo,
     })
   }
+  // SUBMIT AND CHECKING SEARCH
+  getParams = () => {
+    if(this.state.skillArr.length < 1 ){
+      this.setState({
+        categoriesAlert: 'block'
+      })
+      if(this.state.countiesId == null){
+        this.setState({
+          countiesAlert: 'block'
+        })
+      }
+    }else{
+      this.setState({
+        skillArr: [],
+        countiesId: null,
+        certified: false,
+        groupTraining: false,
+        priceFrom: 0,
+        priceTo: 0,
+        categoriesAlert: 'none',
+        countiesAlert: 'none',
+      })
+    }
+  }
   render() {
-
-    console.log('state', this.state)
     return(
       <div className={css.coaches}>
         <SearchBox 
+          categoriesAlert={this.state.categoriesAlert}
+          countiesAlert={this.state.countiesAlert}
           certifiedField={this.state.certified}
           certifiedFunc={this.certifiedFunc}
           addToSkillArr={this.addToSkillArr}
@@ -73,7 +98,10 @@ class Coaches extends React.Component {
           groupTraining={this.state.groupTraining}
           groupTrainingFunc={this.groupTainingFunc}
           priceFromFunc={this.priceFromFunc}
-          priceToFunc={this.priceToFunc} />
+          getPriceFrom={this.state.priceFrom}
+          priceToFunc={this.priceToFunc}
+          getPriceTo={this.state.priceTo}
+          getParams={this.getParams} />
         <CoachesImg />
       </div>
     )

@@ -119,12 +119,17 @@ a{
 }
 .categorie{
   position: relative;
+  cursor: pointer;
 }
 .categorieButton{
   width: 300px;
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
+}
+.opstina{
+  position: relative;
+  cursor: pointer;
 }
 .categorieModal{
   transform: translate(-50%,-50%);
@@ -173,5 +178,20 @@ a{
   div{
     flex: 1;
   }
+}
+
+
+.sendParams{
+  height: 30px;
+  width: 80px;
+  background: #fff;
+  border-radius: 10px;
+  text-align: center;
+}
+.categoriesAlert, .countiesAlert{
+  background: red;
+  position: absolute;
+  left: 110%;
+  top: 0;
 }
 // END COACHES
