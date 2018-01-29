@@ -8,9 +8,9 @@ class Coaches extends React.Component {
     super(props);
     this.state = {
       skillArr: [],
-      countyArr: [],
+      countiesId: null,
       certified: false,
-      county: 0,
+      counties: 0,
       groupTraining: false,
       priceFrom: 0,
       priceTo: 0,
@@ -19,8 +19,8 @@ class Coaches extends React.Component {
 
   addToSkillArr = (skillId) => {
     let {skillArr} = this.state;
-    if (this.state.skillArr.includes(skillId)) {
-      let a = this.state.wantedSkill;
+    if (skillArr.includes(skillId)) {
+      let a = this.state.skillArr;
       let b = a.indexOf(skillId);
       a.splice(b, 1);
       this.setState({
@@ -32,17 +32,15 @@ class Coaches extends React.Component {
       })
     }
   }
-
+  addToCountiesArr = (countiesId) => {
+    this.setState({
+      countiesId,
+    })
+  }
   certifiedFunc = (isCert) => {
     this.setState({
       certified: isCert,
     });
-  }
-
-  countyFunc = (countyId) => {
-    this.setState({
-      countyId,
-    })
   }
 
   groupTainingFunc = (isGroup) => {
@@ -63,15 +61,15 @@ class Coaches extends React.Component {
     })
   }
   render() {
+
     console.log('state', this.state)
     return(
       <div className={css.coaches}>
         <SearchBox 
           certifiedField={this.state.certified}
           certifiedFunc={this.certifiedFunc}
-
           addToSkillArr={this.addToSkillArr}
-          countyFunc={this.countyFunc}
+          addToCountiesArr={this.addToCountiesArr}
           groupTraining={this.state.groupTraining}
           groupTrainingFunc={this.groupTainingFunc}
           priceFromFunc={this.priceFromFunc}

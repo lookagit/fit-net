@@ -4,7 +4,6 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Select from 'react-select';
 
-
 class CheckboxComp extends React.Component {
   constructor(props){
     super(props);

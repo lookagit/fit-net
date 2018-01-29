@@ -25,17 +25,16 @@ class SearchBox extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      array: [],
-      wantedSkill: [],
+      arrayCategories: [],
       arrayCounties: [],
-      wandetCounties: [],
-      modal: 'none',
+      modalCategories: 'none',
+      modalCounties: 'none',
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.data.trainingCategories != undefined) {
-      this.setState({array: nextProps.data.trainingCategories})
+      this.setState({arrayCategories: nextProps.data.trainingCategories})
     }
     if(nextProps.data.counties != undefined) {
       this.setState({arrayCounties: nextProps.data.counties})
@@ -44,54 +43,94 @@ class SearchBox extends React.Component {
 
   handleSkillArr = (gotSkill) => {
     this.props.addToSkillArr(gotSkill)
-  } 
-  
-  openModal() {
+  }
+  handleCountiesArr = (gotId) => {
+    this.props.addToCountiesArr(gotId);
+  }
+
+  openModalCategories() {
     this.setState({
-      modal: this.state.modal == 'none' ? 'block' : 'none'
+      modalCategories: this.state.modalCategories == 'none' ? 'block' : 'none'
     })
   }
-  openModalOpstina() {
+  openModalCounties() {
     this.setState({
-      modalOpstina: this.state.modalOpstina == 'none' ? 'block' : 'none'
+      modalCounties: this.state.modalCounties == 'none' ? 'block' : 'none'
     })
   }
+  stopPropagation(e){
+    e.stopPropagation();
+  }
+
   render() {
-    console.log('ARAADASJD', this.props)
-    let category = this.state.array.map((item, key) => {
+    console.log('dasdasd', this.props)
+    let categories = this.state.arrayCategories.map((item, key) => {
       return (
-        <div 
-         key={key}>
         <CheckboxComp
-          updateClick={this.listenClick}
+          key={key}
           updateState={this.handleSkillArr}
           catName={item.trainSkillName}
           catId={item.id}
-          stefan={this.state.click}
         />
-        </div>
       )
-    })
-    let opstine = '';
+    });
+
+    let counties = this.state.arrayCounties.map((item, key) => {
+      return(
+        <CheckboxCounties 
+          updateState={this.handleCountiesArr}
+          key={key}
+          countiesId={item.id}
+          countiesName={item.countyName}
+        />
+      )
+    });
+    let styles = {
+      height:'100%',
+      width:'100%',
+      backgroundColor:'rgba(0,0,0,.5)',
+      position:'absolute',
+      top:'0',
+      left:'0',
+      display: this.state.modalCategories,
+      zIndex: 1001
+    }
+    let styless = {
+      height:'100%',
+      width:'100%',
+      backgroundColor:'rgba(0,0,0,.5)',
+      position:'absolute',
+      top:'0',
+      left:'0',
+      display: this.state.modalCounties,
+      zIndex: 1001
+    }
     return(
       <div className={css.searchBoxWrapper}>
+        <div onClick={() => this.openModalCategories()} style={styles}>
+          <div className={css.categorieModal}>
+            <div onClick={(e) => this.stopPropagation(e)} className={css.categorieModalWrapper}>
+              {categories}
+            </div>
+          </div>
+        </div>
+        <div onClick={() => this.openModalCounties()} style={styless}>
+          <div  className={css.categorieModal}>
+            <div style={{backgroundColor:"white",height:"500px",width:"300px"}} onClick={(e) => this.stopPropagation(e)}>
+              {counties}
+            </div>
+          </div>
+        </div>
+
+
+
+
         <div className={css.searchBox}>
             <div className={css.categorie}>
               <div 
-                onClick={() => this.openModal()}
-                className={css.categorieButton}
-              >
+                onClick={() => this.openModalCategories()}
+                className={css.categorieButton}>
                 Izaberite oblast
-              </div>
-              <div
-                style={{
-                  display:`${this.state.modal}`
-                }}  
-                className={css.categorieModal}
-              >
-                <div className={css.categorieModalWrapper}>
-                    {category}
-                </div>
               </div>
             </div>
             <div className={css.sertifikat}>
@@ -121,7 +160,7 @@ class SearchBox extends React.Component {
             </div>
             <div className={css.opstina}>
               <div
-                onClick={() => this.openModalOpstina()}
+                onClick={() => this.openModalCounties()}
                 className={css.categorieButton}>
                 Izaberite opstinu
               </div>
