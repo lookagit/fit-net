@@ -45,6 +45,100 @@ const Message = new GraphQLObjectType({
   },
 });
 
+const FisioCl = new GraphQLObjectType({
+  name: 'FisioCl',
+  description: 'Query for Fisos',
+  fields() {
+    return {
+      id: {
+        type: GraphQLInt,
+      },
+      password: {
+        type: GraphQLString,
+      },
+      email: {
+        type: GraphQLString,
+      },
+      firstName: {
+        type: GraphQLString,
+      },
+      lastName: {
+        type: GraphQLString,
+      },
+      facebookLink: {
+        type: GraphQLString,
+      },
+      instagramLink: {
+        type: GraphQLString,
+      },
+      imageUrl: {
+        type: GraphQLString,
+      },
+      cellPhone: {
+        type: GraphQLString,
+      },
+      about: {
+        type: GraphQLString,
+      },
+      birthPlace: {
+        type: GraphQLString,
+      },
+      hasCerificates: {
+        type: GraphQLBoolean,
+      },
+      fisioSkillsArr: {
+        type: new GraphQLList(GraphQLInt),
+      },
+      comesHome: {
+        type: GraphQLBoolean,
+      },
+      score: {
+        type: GraphQLFloat,
+      },
+      countyArr: {
+        type: new GraphQLList(GraphQLInt),
+      },
+    }
+  }
+})
+
+const FisioCategories = new GraphQLObjectType({
+  name: 'FisioCategories',
+  description: 'Fisio Categories',
+  fields() {
+    return {
+      id: {
+        type: GraphQLInt,
+      },
+      fisioSkillNmae: {
+        type: GraphQLInt,
+      },
+    };
+  },
+})
+
+const FisioCounty = new GraphQLObjectType({
+  name: 'FisioCounty',
+  description: 'Counties nad prices for fisio',
+  fields() {
+    return {
+      id: {
+        type: GraphQLInt,
+      },
+      price: {
+        type: GraphQLFloat,
+      },
+      address: {
+        type: GraphQLString,
+      },
+      saloonName: {
+        type: GraphQLString,
+      },
+    };
+  },
+})
+
+
 const ClubCl = new GraphQLObjectType({
   name: 'ClubCl',
   description: 'Query struct for clubs',
@@ -511,9 +605,140 @@ const Mutation = new GraphQLObjectType({
             return {error: "Database issue, check createCertificate"};
           }
         }
-      },  
-    }
-  }
+      },
+      updateOrCreateClub: {
+        type: ClubCl,
+        args: {
+          name: {
+            type: GraphQLString
+          },
+          password: {
+            type: GraphQLString,
+          },
+          address: {
+            type: GraphQLString,
+          },
+          email: {
+            type: GraphQLString,
+          },
+          phone: {
+            type: GraphQLString,
+          },
+          webAddress: {
+            type: GraphQLString,
+          },
+          facebookLink: {
+            type: GraphQLString,
+          },
+          instagramLink: {
+            type: GraphQLString,
+          },
+          profileImageUrl: {
+            type: GraphQLString,
+          },
+          score: {
+            type: GraphQLFloat,
+          },
+          about: {
+            type: GraphQLString,
+          },
+          skillsArr: {
+            type: new GraphQLList(GraphQLInt),
+          },
+          imgsArr: {
+            type: new GraphQLList(GraphQLInt),
+          },
+          countyId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, {email, ...args}) {
+          let findOrCreateClub = await db.models.clubCl.findOne({
+            where: {
+              email,
+            }
+          });
+          if(findOrCreateClub) {
+            return {error: "We have club with that email"};
+          } else {
+            let createClubCl = await db.models.clubCl.create({
+              email,
+              ...args,
+            });
+            if(createClubCl) {
+              return createClubCl;
+            } else {
+              return {error: "Database issue"};
+            }
+          }
+        },
+      },
+      createMembershipFees: {
+        type: MemberShip,
+        args: {
+          price: {
+            type: GraphQLFloat,
+          },
+          clubClId: {
+            type: GraphQLInt,
+          },
+          trainingSkillId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, {price, clubClId, trainingSkillId}) {
+          return await db.models.membershipFees.create({
+            price,
+            clubClId,
+            trainingSkillId,
+          });
+        },
+      },
+      createWorkingTimeClub: {
+        type: WorkingTimes,
+        args: {
+          workDayFrom: {
+            type: GraphQLInt,
+          },
+          workDayTo: {
+            type: GraphQLInt,
+          },
+          satFrom: {
+            type: GraphQLInt,
+          },
+          satTo: {
+            type: GraphQLInt,
+          },
+          sunFrom: {
+            type: GraphQLInt,
+          },
+          sunTo: {
+            type: GraphQLInt,
+          },
+          clubClId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, args) {
+          return await db.models.workingTimeClub.create(args);
+        },
+      },
+      addImageInGalleryClub: {
+        type: GalleryImgs,
+        args: {
+          fileUrl: {
+            type: GraphQLString,
+          },
+          clubClId: {
+            type: GraphQLString,
+          },
+        },
+        async resolve(root, args) {
+          return await db.models.gallery.create(args);
+        },
+      }, 
+    };
+  },
 });
 
 export default new GraphQLSchema({
