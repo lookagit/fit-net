@@ -3,6 +3,7 @@ import css from './styles/styles.scss';
 import SearchBox from './searchBox';
 import CoachesImg from './coachesImg';
 import { connect } from 'react-redux';
+import { history } from 'kit/lib/routing';
 
 @connect(state => ({ coaches: state.coaches }))
 
@@ -30,6 +31,7 @@ class Coaches extends React.Component {
       priceFrom: this.state.priceFrom,
       priceTo: this.state.priceTo,
     });
+    history.push('/listofcoaches');
   }
   addToSkillArr = (skillId) => {
     let {skillArr} = this.state;

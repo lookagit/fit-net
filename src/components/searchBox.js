@@ -7,19 +7,6 @@ import CheckboxComp from './CheckboxComp';
 import CheckboxCounties from './CheckboxCounties';
 import _ from 'lodash';
 
-@graphql(gql`
-{
-  trainingCategories {
-    id
-    trainSkillName
-  }
-  counties {
-    id
-    countyName
-  }
-}
-`)
-
 class SearchBox extends React.Component {
   constructor(props){
     super(props);
