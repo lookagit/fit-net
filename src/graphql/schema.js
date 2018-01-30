@@ -144,8 +144,8 @@ const ClubCl = new GraphQLObjectType({
           });
         },
       },
-      county: {
-        type: new GraphQLObjectType(County),
+      clubCounty: {
+        type: County,
         async resolve(clubs) {
           return await db.models.county.findOne({
             where: {
@@ -165,7 +165,7 @@ const ClubCl = new GraphQLObjectType({
           },
         },
       clubWorkingTime: {
-        type: new GraphQLObjectType(WorkingTimes),
+        type: WorkingTimes,
         async resolve(clubs) {
           return await db.models.workingTimeClub.findOne({
             where: {
@@ -185,45 +185,24 @@ const WorkingTimes = new GraphQLObjectType({
     return {
       id: {
         type: GraphQLInt,
-        resolve({id}) {
-          return id;
-        },
       },
       workDaysFrom: {
         type: GraphQLInt,
-        resolve({workDaysFrom}) {
-          return workDaysFrom;
-        },
       },
       workDaysTo: {
         type: GraphQLInt,
-        resolve({workDaysTo}) {
-          return workDaysTo;
-        },
       },
       satFrom: {
         type: GraphQLInt,
-        resolve({satFrom}) {
-          return satFrom;
-        },
       },
       satTo: {
         type: GraphQLInt,
-        resolve({satTo}) {
-          return satTo;
-        },
       },
       sunFrom: {
         type: GraphQLInt,
-        resolve({sunFrom}) {
-          return sunFrom;
-        },
       },
       sunTo: {
         type: GraphQLInt,
-        resolve({sunTo}) {
-          return sunTo;
-        },
       },
     };
   },
@@ -247,7 +226,7 @@ const MemberShip = new GraphQLObjectType({
         },
       },
       trainingSkill: {
-        type: new GraphQLObjectType(TrainingSkill),
+        type: TrainingSkill,
         async resolve(memberShip) {
           return await db.models.trainingSkill.findOne({
             where: {
