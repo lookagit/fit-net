@@ -18,8 +18,7 @@ import _ from 'lodash';
     countyName
   }
 }
-`
- )
+`)
 
 class SearchBox extends React.Component {
   constructor(props){
@@ -66,7 +65,6 @@ class SearchBox extends React.Component {
     this.props.getParams('poslato')
   }
   render() {
-    console.log(this.props.proba)
     let categories = this.state.arrayCategories.map((item, key) => {
       return (
         <CheckboxComp

@@ -2,6 +2,9 @@ import React from 'react';
 import css from './styles/styles.scss';
 import SearchBox from './searchBox';
 import CoachesImg from './coachesImg';
+import { connect } from 'react-redux';
+
+@connect(state => ({ coaches: state.coaches }))
 
 class Coaches extends React.Component {
   constructor(props) {
@@ -17,7 +20,17 @@ class Coaches extends React.Component {
       countiesAlert: 'none',
     }
   }
-
+  sendToRedux = () => {
+    this.props.dispatch({
+      type: "COACHES_FILTRATION",
+      skillArr: this.state.skillArr,
+      countiesId: this.state.countiesId,
+      certified: this.state.certified,
+      groupTraining: this.state.groupTraining,
+      priceFrom: this.state.priceFrom,
+      priceTo: this.state.priceTo,
+    });
+  }
   addToSkillArr = (skillId) => {
     let {skillArr} = this.state;
     if (skillArr.includes(skillId)) {
@@ -83,9 +96,11 @@ class Coaches extends React.Component {
         categoriesAlert: 'none',
         countiesAlert: 'none',
       })
+      this.sendToRedux();
     }
   }
   render() {
+    console.log('REEEEEEDUx', this.props.coaches);
     return(
       <div className={css.coaches}>
         <SearchBox 
