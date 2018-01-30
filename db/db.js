@@ -204,7 +204,7 @@ const Gallery = db.define('gallery', {
 ClubsCl.hasMany(Gallery);
 
 const WorkingTimeClub = db.define('workingTimeClub', {
-  workDaysFrom: {
+  workDayFrom: {
     type: Sequelize.INTEGER,
   },
   workDayTo: {
@@ -328,6 +328,7 @@ const FisioCounty = db.define('fisioCounty', {
 
 FisioCl.hasMany(FisioCounty);
 FisioCategories.hasMany(FisioCounty);
+County.hasMany(FisioCounty);
 
 const Certification = db.define('certification', {
   name: {

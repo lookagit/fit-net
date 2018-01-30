@@ -64,22 +64,22 @@ export const ClubsHelperArr = [
 export const MembershipFeesArr = [
     {
         price: 3300,
-        trainingSkill: 1,
+        trainingSkillId: 1,
         clubClId: 1,
     },
     {
         price: 2300,
-        trainingSkill: 1,
+        trainingSkillId: 1,
         clubClId: 3,
     },
     {
         price: 1300,
-        trainingSkill: 2,
+        trainingSkillId: 2,
         clubClId: 2,
     },
     {
         price: 5300,
-        trainingSkill: 2,
+        trainingSkillId: 2,
         clubClId: 4,
     },
 ]

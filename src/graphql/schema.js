@@ -157,7 +157,7 @@ const ClubCl = new GraphQLObjectType({
       memberShipsFees: {
           type: new GraphQLList(MemberShip),
           async resolve(clubs) {
-            return await db.models.memberShip.findAll({
+            return await db.models.membershipFees.findAll({
               where: {
                 clubClId: clubs.id,
               },
@@ -186,10 +186,10 @@ const WorkingTimes = new GraphQLObjectType({
       id: {
         type: GraphQLInt,
       },
-      workDaysFrom: {
+      workDayFrom: {
         type: GraphQLInt,
       },
-      workDaysTo: {
+      workDayTo: {
         type: GraphQLInt,
       },
       satFrom: {
