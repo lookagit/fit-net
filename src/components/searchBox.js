@@ -7,20 +7,6 @@ import CheckboxComp from './CheckboxComp';
 import CheckboxCounties from './CheckboxCounties';
 import _ from 'lodash';
 
-@graphql(gql`
-{
-  trainingCategories {
-    id
-    trainSkillName
-  }
-  counties {
-    id
-    countyName
-  }
-}
-`
- )
-
 class SearchBox extends React.Component {
   constructor(props){
     super(props);
@@ -29,6 +15,7 @@ class SearchBox extends React.Component {
       arrayCounties: [],
       modalCategories: 'none',
       modalCounties: 'none',
+
     }
   }
 
@@ -61,9 +48,10 @@ class SearchBox extends React.Component {
   stopPropagation(e){
     e.stopPropagation();
   }
-
+  sendParams(){
+    this.props.getParams('poslato')
+  }
   render() {
-    console.log('dasdasd', this.props)
     let categories = this.state.arrayCategories.map((item, key) => {
       return (
         <CheckboxComp
@@ -93,7 +81,7 @@ class SearchBox extends React.Component {
       top:'0',
       left:'0',
       display: this.state.modalCategories,
-      zIndex: 1001
+      zIndex: 1001,
     }
     let styless = {
       height:'100%',
@@ -103,7 +91,7 @@ class SearchBox extends React.Component {
       top:'0',
       left:'0',
       display: this.state.modalCounties,
-      zIndex: 1001
+      zIndex: 1001,
     }
     return(
       <div className={css.searchBoxWrapper}>
@@ -116,7 +104,7 @@ class SearchBox extends React.Component {
         </div>
         <div onClick={() => this.openModalCounties()} style={styless}>
           <div  className={css.categorieModal}>
-            <div style={{backgroundColor:"white",height:"500px",width:"300px"}} onClick={(e) => this.stopPropagation(e)}>
+            <div className={css.categorieModalWrapper} onClick={(e) => this.stopPropagation(e)}>
               {counties}
             </div>
           </div>
@@ -130,8 +118,14 @@ class SearchBox extends React.Component {
               <div 
                 onClick={() => this.openModalCategories()}
                 className={css.categorieButton}>
+                <div 
+                  className={css.categoriesAlert}
+                  style={{display:`${this.props.categoriesAlert}`}}>
+                    Izaberite oblast
+                </div>
                 Izaberite oblast
               </div>
+              
             </div>
             <div className={css.sertifikat}>
               <div className={css.sertifikatBox1}>
@@ -162,6 +156,11 @@ class SearchBox extends React.Component {
               <div
                 onClick={() => this.openModalCounties()}
                 className={css.categorieButton}>
+                <div 
+                  className={css.countiesAlert}
+                  style={{display:`${this.props.countiesAlert}`}}>
+                    Izaberite opstinu
+                </div>
                 Izaberite opstinu
               </div>
             </div>
@@ -192,9 +191,12 @@ class SearchBox extends React.Component {
             </div>
             <div className={css.cena}>
               <label>Cena</label><br/>
-              <input type="text" onChange={(val) => this.props.priceFromFunc(val.target.value)} />
-              <input type="text" onChange={(val) => this.props.priceToFunc(val.target.value)} />
-              <input type="button"/>
+              <input value={this.props.getPriceFrom} type="text" onChange={(val) => this.props.priceFromFunc(val.target.value)} />
+              <input value={this.props.getPriceTo} type="text" onChange={(val) => this.props.priceToFunc(val.target.value)} />
+              <div 
+                className={css.sendParams}
+                onClick={() => this.sendParams()}
+              >Send</div>
             </div> 
         </div>
       </div>

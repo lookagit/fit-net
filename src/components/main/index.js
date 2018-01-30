@@ -58,6 +58,7 @@ import Header from '../header';
 import Coaches from '../coaches';
 import Fizio from '../fizio';
 import Clubs from '../clubs';
+import FilteredCoaches from '../filteredCoaches';
 // Styles
 import css from '../styles/styles.scss';
 
@@ -89,6 +90,7 @@ export default () => (
       <Route path="/page/coaches" component={Coaches} />
       <Route path="/page/fizio" component={Fizio} />
       <Route path="/page/clubs" component={Clubs} />
+      <Route path="/listofcoaches" component={FilteredCoaches} />
       <Redirect from="/old/path" to="/new/path" />
       <Route component={WhenNotFound} />
     </Switch>

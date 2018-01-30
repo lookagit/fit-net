@@ -2,6 +2,10 @@ import React from 'react';
 import css from './styles/styles.scss';
 import SearchBox from './searchBox';
 import CoachesImg from './coachesImg';
+import { connect } from 'react-redux';
+import { history } from 'kit/lib/routing';
+
+@connect(state => ({ coaches: state.coaches }))
 
 class Coaches extends React.Component {
   constructor(props) {
@@ -10,13 +14,25 @@ class Coaches extends React.Component {
       skillArr: [],
       countiesId: null,
       certified: false,
-      counties: 0,
       groupTraining: false,
       priceFrom: 0,
       priceTo: 0,
+      categoriesAlert: 'none',
+      countiesAlert: 'none',
     }
   }
-
+  sendToRedux = () => {
+    this.props.dispatch({
+      type: "COACHES_FILTRATION",
+      skillArr: this.state.skillArr,
+      countiesId: this.state.countiesId,
+      certified: this.state.certified,
+      groupTraining: this.state.groupTraining,
+      priceFrom: this.state.priceFrom,
+      priceTo: this.state.priceTo,
+    });
+    history.push('/listofcoaches');
+  }
   addToSkillArr = (skillId) => {
     let {skillArr} = this.state;
     if (skillArr.includes(skillId)) {
@@ -60,12 +76,38 @@ class Coaches extends React.Component {
       priceTo,
     })
   }
+  // SUBMIT AND CHECKING SEARCH
+  getParams = () => {
+    if(this.state.skillArr.length < 1 ){
+      this.setState({
+        categoriesAlert: 'block'
+      })
+      if(this.state.countiesId == null){
+        this.setState({
+          countiesAlert: 'block'
+        })
+      }
+    }else{
+      this.setState({
+        skillArr: [],
+        countiesId: null,
+        certified: false,
+        groupTraining: false,
+        priceFrom: 0,
+        priceTo: 0,
+        categoriesAlert: 'none',
+        countiesAlert: 'none',
+      })
+      this.sendToRedux();
+    }
+  }
   render() {
-
-    console.log('state', this.state)
+    console.log('REEEEEEDUx', this.props.coaches);
     return(
       <div className={css.coaches}>
         <SearchBox 
+          categoriesAlert={this.state.categoriesAlert}
+          countiesAlert={this.state.countiesAlert}
           certifiedField={this.state.certified}
           certifiedFunc={this.certifiedFunc}
           addToSkillArr={this.addToSkillArr}
@@ -73,7 +115,10 @@ class Coaches extends React.Component {
           groupTraining={this.state.groupTraining}
           groupTrainingFunc={this.groupTainingFunc}
           priceFromFunc={this.priceFromFunc}
-          priceToFunc={this.priceToFunc} />
+          getPriceFrom={this.state.priceFrom}
+          priceToFunc={this.priceToFunc}
+          getPriceTo={this.state.priceTo}
+          getParams={this.getParams} />
         <CoachesImg />
       </div>
     )
