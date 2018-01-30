@@ -8,6 +8,7 @@ import {
     GraphQLString,
     GraphQLSchema,
     GraphQLInt,
+    GraphQLFloat,
     GraphQLList,
     GraphQLNonNull,
     GraphQLBoolean,
@@ -44,6 +45,221 @@ const Message = new GraphQLObjectType({
   },
 });
 
+const ClubCl = new GraphQLObjectType({
+  name: 'ClubCl',
+  description: 'Query struct for clubs',
+  fields() {
+    return {
+      id: {
+        type: GraphQLInt,
+        resolve(clubs) {
+          return clubs.id;
+        },
+      },
+      password: {
+        type: GraphQLString,
+        resolve(clubs) {
+          return clubs.password;
+        },
+      },
+      name: {
+        type: GraphQLString,
+        resolve(clubs) {
+          return clubs.name;
+        }
+      },
+      address: {
+        type: GraphQLString,
+        resolve(clubs) {
+          return clubs.address;
+        }
+      },
+      email: {
+        type: GraphQLString,
+        resolve(clubs) {
+          return clubs.email;
+        }
+      },
+      phone: {
+        type: GraphQLString,
+        resolve(clubs) {
+          return clubs.phone;
+        }
+      },
+      webAddress: {
+        type: GraphQLString,
+        resolve(clubs) {
+          return clubs.webAddress;
+        },
+      },
+      facebookLink: {
+        type: GraphQLString,
+        resolve(clubs) {
+          return clubs.facebookLink;
+        },
+      },
+      instagramLink: {
+        type: GraphQLString,
+        resolve(clubs) {
+          return clubs.instagramLink
+        },
+      },
+      profileImageUrl: {
+        type: GraphQLString,
+        resolve(clubs) {
+          return clubs.profileImageUrl;
+        },
+      },
+      score: {
+        type: GraphQLFloat,
+        resolve(clubs) {
+          return clubs.score;
+        },
+      },
+      about: {
+        type: GraphQLString,
+        resolve(clubs) {
+          return clubs.about;
+        },
+      },
+      skillsArr: {
+        type: new GraphQLList(GraphQLInt),
+        resolve(clubs) {
+          return clubs.skillsArr;
+        },
+      },
+      imgsArr: {
+        type: new GraphQLList(GraphQLInt),
+        resolve(clubs) {
+          return clubs.imgsArr;
+        },
+      },
+      galleryImages: {
+        type: new GraphQLList(GalleryImgs),
+        async resolve(clubs) {
+          return await db.models.gallery.findAll({
+            where: {
+              clubClId: clubs.id,
+            },
+          });
+        },
+      },
+      clubCounty: {
+        type: County,
+        async resolve(clubs) {
+          return await db.models.county.findOne({
+            where: {
+              id: clubs.countyId,
+            },
+          });
+        },
+      },
+      memberShipsFees: {
+          type: new GraphQLList(MemberShip),
+          async resolve(clubs) {
+            return await db.models.membershipFees.findAll({
+              where: {
+                clubClId: clubs.id,
+              },
+            });
+          },
+        },
+      clubWorkingTime: {
+        type: WorkingTimes,
+        async resolve(clubs) {
+          return await db.models.workingTimeClub.findOne({
+            where: {
+              clubClId: clubs.id,
+            },
+          });
+        },
+      },
+    };
+  }
+})
+
+const WorkingTimes = new GraphQLObjectType({
+  name: 'WorkingTimes', 
+  description: 'Working time for clubs',
+  fields() {
+    return {
+      id: {
+        type: GraphQLInt,
+      },
+      workDayFrom: {
+        type: GraphQLInt,
+      },
+      workDayTo: {
+        type: GraphQLInt,
+      },
+      satFrom: {
+        type: GraphQLInt,
+      },
+      satTo: {
+        type: GraphQLInt,
+      },
+      sunFrom: {
+        type: GraphQLInt,
+      },
+      sunTo: {
+        type: GraphQLInt,
+      },
+    };
+  },
+})
+
+const MemberShip = new GraphQLObjectType({
+  name: 'MemberShip',
+  description: 'Memberships for clubs',
+  fields() {
+    return {
+      id: {
+        type: GraphQLInt,
+        resolve(memberShip) {
+          return memberShip.id;
+        },
+      },
+      price: {
+        type: GraphQLFloat,
+        resolve(memberShip) {
+          return memberShip.price;
+        },
+      },
+      trainingSkill: {
+        type: TrainingSkill,
+        async resolve(memberShip) {
+          return await db.models.trainingSkill.findOne({
+            where: {
+              id: memberShip.trainingSkillId,
+            },
+          });
+        },
+      },
+    }
+  }
+})
+
+const GalleryImgs = new GraphQLObjectType({
+  name: 'GalleryImgs',
+  description: 'Images for clubs',
+  fields() {
+    return {
+      id: {
+        type: GraphQLInt,
+        resolve(gallery) {
+          return gallery.id;
+        },
+      },
+      fileUrl: {
+        type: GraphQLString,
+        resolve(gallery) {
+          return gallery.fileUrl;
+        },
+      },
+    }
+  }
+})
+
 const Query = new GraphQLObjectType({
   name: 'Query',
   description: 'Root query object',
@@ -66,6 +282,31 @@ const Query = new GraphQLObjectType({
         async resolve(root) {
           return await db.models.trainingSkill.findAll();
         }
+      },
+      clubCl: {
+        type: new GraphQLList(ClubCl),
+        args: {
+          skillIds: {
+            type: new GraphQLList(GraphQLInt),
+          },
+          countyId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, {skillIds, countyId}) {
+          let findClub = await db.models.clubCl.findAll({
+            where: {
+              skillsArr: {
+                $overlap: skillIds
+              },
+              countyId,
+            },
+            order: [
+              ['score', 'DESC'],
+            ]
+          });
+          return findClub;
+        },
       },
       personCl: {
         type: new GraphQLList(PersonCl),
@@ -102,16 +343,14 @@ const Query = new GraphQLObjectType({
             let b = await db.models.personCounty.findAll({
               where: {
                 price: {
-                  [db.Op.gte]: 1000,
-                  [db.Op.lte]: 7000,
+                  [db.Op.gte]: priceFrom,
+                  [db.Op.lte]: priceTo,
                 },
-                countyId: 1,
-                groupTraining: false,
+                countyId,
+                groupTraining,
               }
             });
-            let ids = b.map(item => {
-              return item.personClId;
-            })
+            let ids = b.map(item => item.personClId);
             let findPerson = await db.models.personCl.findAll({
               where: {
                 id: {
@@ -122,9 +361,6 @@ const Query = new GraphQLObjectType({
                   $overlap: skillIds
                 }
               },
-              order: [
-                ['skillsArr', 'DESC'],
-              ]
             });
             let addCounterfindPersons = findPerson.map(i => {
               i['counter'] = 0;
@@ -135,11 +371,8 @@ const Query = new GraphQLObjectType({
               })
               return i
             })
-
-            let findSort = addCounterfindPersons.sort((a,b) => {
-              return a.counter - b.counter;
-            }).reverse().slice(pageLocal , offset)
-            return findSort;
+            return addCounterfindPersons.sort((a,b) => a.counter - b.counter)
+            .reverse();
           } else {
             let findPerson = await db.models.personCl.findAll({
               where: {

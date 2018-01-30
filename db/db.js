@@ -7,6 +7,12 @@ import {
   PersonTrainingSkillArr,
   PersonCountyHelper,
 } from './HelperArrays';
+import {
+  ClubsHelperArr,
+  MembershipFeesArr,
+  WorkingTimesArr,
+  ClubGalleryArr,
+} from './ClubsHelper';
 
 var db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r', {
   dialect: 'postgres',
@@ -139,11 +145,15 @@ const ClubsCl = db.define('clubCl', {
   name: {
     type: Sequelize.STRING,
   },
+  password: {
+    type: Sequelize.STRING,
+  },
   address: {
     type: Sequelize.STRING,
   },
   email: {
     type: Sequelize.STRING,
+    allowNull: false,
   },
   phone: {
     type: Sequelize.STRING,
@@ -157,7 +167,7 @@ const ClubsCl = db.define('clubCl', {
   instagramLink: {
     type: Sequelize.STRING,
   },
-  profileImage: {
+  profileImageUrl: {
     type: Sequelize.STRING,
   },
   score: {
@@ -194,23 +204,23 @@ const Gallery = db.define('gallery', {
 ClubsCl.hasMany(Gallery);
 
 const WorkingTimeClub = db.define('workingTimeClub', {
-  workDaysFrom: {
-    type: Sequelize.STRING,
+  workDayFrom: {
+    type: Sequelize.INTEGER,
   },
   workDayTo: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
   },
   satFrom: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
   },
   satTo: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
   },
   sunFrom: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
   },
   sunTo: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
   },
 });
 
@@ -318,6 +328,7 @@ const FisioCounty = db.define('fisioCounty', {
 
 FisioCl.hasMany(FisioCounty);
 FisioCategories.hasMany(FisioCounty);
+County.hasMany(FisioCounty);
 
 const Certification = db.define('certification', {
   name: {
@@ -351,6 +362,18 @@ db.sync({force: true}).then(() => {
   })
   PersonCountyHelper.map(async item => {
     await PersonCounty.create(item);
+  })
+  ClubsHelperArr.map(async item => {
+    await ClubsCl.create(item);
+  });
+  MembershipFeesArr.map(async item => {
+    await MembershipFees.create(item);
+  });
+  WorkingTimesArr.map(async item => {
+    await WorkingTimeClub.create(item);
+  });
+  ClubGalleryArr.map(async item => {
+    await Gallery.create(item);
   })
 });
 

@@ -76,12 +76,11 @@ if (SERVER) {
   /*
     Uncomment the next two lines to enable SSL!
   */
-
-  // const cert = require('src/cert/self_signed');
-  // config.enableSSL({ key: cert.key, cert: cert.cert });
+  //const cert = require('src/cert/self_signed');
+  //config.enableSSL({ key: cert.key, cert: cert.cert });
 
   // If wanted, you could also run an *SSL-only* server by uncommenting:
-  // config.disableHTTP();
+  //config.disableHTTP();
 
   // Or, you could automatically redirect non-HTTP traffic to SSL by
   // uncommenting the following: (Note: pass { port: 8081 }) for development
