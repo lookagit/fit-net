@@ -204,7 +204,7 @@ const Gallery = db.define('gallery', {
 ClubsCl.hasMany(Gallery);
 
 const WorkingTimeClub = db.define('workingTimeClub', {
-  workDaysFrom: {
+  workDayFrom: {
     type: Sequelize.INTEGER,
   },
   workDayTo: {
@@ -311,23 +311,24 @@ const FisioCategories = db.define('fisioCategories', {
   },
 });
 
-const FisioCounty = db.define('fisioCounty', {
+const FisioCounty = db.define("fisioCounty", {
   price: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
+    type: Sequelize.FLOAT,
+    allowNull: false
   },
   address: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: false
   },
   saloonName: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: false
   }
 });
 
 FisioCl.hasMany(FisioCounty);
 FisioCategories.hasMany(FisioCounty);
+County.hasMany(FisioCounty);
 
 const Certification = db.define('certification', {
   name: {
