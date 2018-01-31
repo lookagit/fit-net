@@ -102,7 +102,7 @@ class Coaches extends React.Component {
     }
   }
   render() {
-    console.log('REEEEEEDUx', this.props.coaches);
+    console.log('REEEEEEDUx', this.state.skillArr);
     return(
       <div className={css.coaches}>
         <SearchBox 

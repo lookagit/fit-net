@@ -195,3 +195,28 @@ a{
   top: 0;
 }
 // END COACHES
+
+.stexa {
+  +label{
+    &::before {
+			transition: all 250ms cubic-bezier(.4,.25,.3,1);
+			content: "";
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			background-color: blue;
+			border: 0px solid white;
+			font-size: 0;
+			position: absolute;
+			bottom: 275%;
+			left: 50%;
+			transform: translate(-50%, 50%);
+		}
+  }
+}
+
+// .haha{
+//   &::after{
+//     content: ';lalalalla';
+//   }
+// }

@@ -7,6 +7,19 @@ import CheckboxComp from './CheckboxComp';
 import CheckboxCounties from './CheckboxCounties';
 import _ from 'lodash';
 
+@graphql(gql`
+{
+  trainingCategories {
+    id
+    trainSkillName
+  }
+  counties {
+    id
+    countyName
+  }
+}
+`)
+
 class SearchBox extends React.Component {
   constructor(props){
     super(props);
@@ -190,9 +203,15 @@ class SearchBox extends React.Component {
               </div>
             </div>
             <div className={css.cena}>
-              <label>Cena</label><br/>
-              <input value={this.props.getPriceFrom} type="text" onChange={(val) => this.props.priceFromFunc(val.target.value)} />
-              <input value={this.props.getPriceTo} type="text" onChange={(val) => this.props.priceToFunc(val.target.value)} />
+              <label className={css.haha}>Cena</label><br/>
+              <input 
+                value={this.props.getPriceFrom}
+                type="text" 
+                onChange={(val) => this.props.priceFromFunc(val.target.value)} />
+              <input
+                value={this.props.getPriceTo}
+                type="text"
+                onChange={(val) => this.props.priceToFunc(val.target.value)} />
               <div 
                 className={css.sendParams}
                 onClick={() => this.sendParams()}
