@@ -14,7 +14,7 @@ export const ClubsHelperArr = [
         imagesArr: [1,2,3],
         countyId: 2,
     },
-    {  
+    {
         id:2,
         name: 'Djokovic',
         email: 'djokovic.novak@gmail.com',
@@ -29,7 +29,7 @@ export const ClubsHelperArr = [
         imagesArr: [4,5,6],
         countyId: 3,
     },
-    {  
+    {
         id: 3,
         name: 'Postgres',
         email: 'postgres@postyy.com',
@@ -44,7 +44,7 @@ export const ClubsHelperArr = [
         imagesArr: [7,8,9],
         countyId: 3,
     },
-    {  
+    {
         id: 4,
         name: 'Steva',
         email: 'steva@hugoboss.com',
@@ -59,6 +59,21 @@ export const ClubsHelperArr = [
         imagesArr: [10,11,12],
         countyId: 1,
     },
+    {
+        id: 5,
+        name: 'Krcko',
+        email: 'krcko@hugoboss.com',
+        address: 'Stara Kajla 44a',
+        phone: '0653320099',
+        webAddress:  'https://www.krcko.com',
+        facebookLink: 'https://facebook.com/superkrcko',
+        instagramLink: 'https://instagram.com/instakrcko',
+        profileImageUrl: 'https://n6-img-fp.akamaized.net/free-vector/fitness-and-gym-logo_7888-2.jpg?size=338&ext=jpg',
+        score: 6.3,
+        skillsArr: [2],
+        imagesArr: [13,14,15],
+        countyId: 1,
+    },
 ];
 
 export const MembershipFeesArr = [
@@ -66,6 +81,11 @@ export const MembershipFeesArr = [
         price: 3300,
         trainingSkillId: 1,
         clubClId: 1,
+    },
+    {
+        price: 2200,
+        trainingSkillId: 2,
+        clubClId: 5,
     },
     {
         price: 2300,
