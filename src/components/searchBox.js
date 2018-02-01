@@ -152,7 +152,7 @@ class SearchBox extends React.Component {
                     type="radio" 
                     name="cert" 
                     checked={this.props.certifiedField}
-                    onChange={(val) => this.props.certifiedFunc(true)}  />
+                    onChange={(val) => this.props.certifiedFunc(true)} />
                 </div>
                 <div>
                   <label>Ne</label><br />

@@ -63,11 +63,6 @@ class FilteredCoaches extends React.Component {
     return(
       <div>
         {proba}
-        <div>
-          <label>ti si bogat ja sam sama
-          <input type="radio" className={css.stexa} />
-          </label>
-        </div>
       </div>
     )
   }
