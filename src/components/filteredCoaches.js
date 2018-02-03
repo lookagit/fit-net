@@ -2,33 +2,35 @@ import React from 'react';
 import { connect } from 'react-redux';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import css from './styles/styles.scss';
 
 @connect(state => ({ coaches: state.coaches }))
 
 @graphql(gql`
 query personCl(
-        $skillIds: Int,
+        $skillIds: [Int],
         $priceFrom: Int,
         $priceTo: Int,
         $countyId: Int,
-        $groupTraining: boolean,
-        $certified: boolean) {
-        personCl(
-          skillIds: $skillIds
-          priceFrom: $priceFrom,
-          priceTo: $priceTo,
-          countyId: $countyId,
-          groupTraining: $groupTraining,
-          certified: $certified) {
-    firstName
-    lastName
-  }
+        $groupTraining: Boolean,
+        $certified: Boolean) {
+          personCl(
+            skillIds: $skillIds
+            priceFrom: $priceFrom,
+            priceTo: $priceTo,
+            countyId: $countyId,
+            groupTraining: $groupTraining,
+            certified: $certified) {
+      firstName
+      lastName
+    }
 }`,
 {
   options: (props) => {
+    console.log('AJDEBRE SPAVA MI SE', props.coaches.priceFrom)
     return ({
       variables: {
-        skillIds: props.coaches.skillIds,
+        skillIds: props.coaches.skillArr,
         priceFrom: props.coaches.priceFrom,
         priceTo: props.coaches.priceTo,
         countyId: props.coaches.countyId,
@@ -41,11 +43,26 @@ query personCl(
 
 
 class FilteredCoaches extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      people: []
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.data.personCl != undefined) {
+      this.setState({people: nextProps.data.personCl})
+    }
+  }
+
   render() {
-    console.log('POZDRAV IZ NOVE KOMPONENTE', this.props.coaches)
+    console.log('POZDRAV IZ NOVE KOMPONENTE', this.state.people)
+    let proba = this.state.people.map(item=>{
+      return item.firstName
+    })
     return(
       <div>
-        {firstName}
+        {proba}
       </div>
     )
   }

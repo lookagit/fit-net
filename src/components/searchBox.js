@@ -7,6 +7,19 @@ import CheckboxComp from './CheckboxComp';
 import CheckboxCounties from './CheckboxCounties';
 import _ from 'lodash';
 
+@graphql(gql`
+{
+  trainingCategories {
+    id
+    trainSkillName
+  }
+  counties {
+    id
+    countyName
+  }
+}
+`)
+
 class SearchBox extends React.Component {
   constructor(props){
     super(props);
@@ -15,6 +28,7 @@ class SearchBox extends React.Component {
       arrayCounties: [],
       modalCategories: 'none',
       modalCounties: 'none',
+      groupTraining: false,
 
     }
   }
@@ -43,6 +57,11 @@ class SearchBox extends React.Component {
   openModalCounties() {
     this.setState({
       modalCounties: this.state.modalCounties == 'none' ? 'block' : 'none'
+    })
+  }
+  sendGroupTraining(){
+    this.setState({
+      groupTraining: !this.state.groupTraining
     })
   }
   stopPropagation(e){
@@ -134,21 +153,21 @@ class SearchBox extends React.Component {
               <div className={css.sertifikatBox2}>
                 <div>
                   <label>Da</label><br />
-                  <input 
-                    className={css.radio} 
-                    type="radio" 
-                    name="cert" 
-                    checked={this.props.certifiedField}
-                    onChange={(val) => this.props.certifiedFunc(true)}  />
+                  <div
+                    className={css.radio}
+                    onClick={() => this.props.certifiedFunc(true)}>
+                    <div className={`${this.props.certifiedField ? css.radioOff : css.radioOn}`}>
+                    </div>
+                  </div>
                 </div>
                 <div>
                   <label>Ne</label><br />
-                  <input 
-                    className={css.radio} 
-                    type="radio" 
-                    name="cert"
-                    onChange={(val) => this.props.certifiedFunc(false)}
-                    checked={!this.props.certifiedField} />
+                  <div 
+                    className={css.radio}
+                    onClick={() => this.props.certifiedFunc(false)}>
+                    <div className={`${!this.props.certifiedField ? css.radioOff : css.radioOn}`}>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -171,28 +190,40 @@ class SearchBox extends React.Component {
               <div  className={css.sertifikatBox2}>
                 <div>
                   <label>Grupni</label><br/>
-                  <input 
+                  
+                  <div
                     className={css.radio}
-                    type="radio"
-                    name="coache"
-                    checked={this.props.groupTraining}
-                    onChange={(val) => this.props.groupTrainingFunc(true)} />
+                    onClick={() => this.props.groupTrainingFunc(true) }>
+                    <div className={`${!this.props.groupTraining ? css.radioOn : css.radioOff}`}>
+                    </div>
+                  </div>
+
+
+
                 </div>
                 <div>
                   <label>Personalni</label><br/>
-                  <input 
+                  <div
                     className={css.radio}
-                    type="radio"
-                    name="coache"
-                    checked={!this.props.groupTraining}
-                    onChange={(val) => this.props.groupTrainingFunc(false)} />
+                    onClick={() => this.props.groupTrainingFunc(false)}>
+                    <div className={`${this.props.groupTraining ? css.radioOn : css.radioOff}`}>
+                    </div>
+                  </div>
+
+
                 </div>
               </div>
             </div>
             <div className={css.cena}>
-              <label>Cena</label><br/>
-              <input value={this.props.getPriceFrom} type="text" onChange={(val) => this.props.priceFromFunc(val.target.value)} />
-              <input value={this.props.getPriceTo} type="text" onChange={(val) => this.props.priceToFunc(val.target.value)} />
+              <label >Cena</label><br/>
+              <input 
+                value={this.props.getPriceFrom}
+                type="text" 
+                onChange={(val) => this.props.priceFromFunc(val.target.value)} />
+              <input
+                value={this.props.getPriceTo}
+                type="text"
+                onChange={(val) => this.props.priceToFunc(val.target.value)} />
               <div 
                 className={css.sendParams}
                 onClick={() => this.sendParams()}
