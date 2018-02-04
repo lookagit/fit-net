@@ -71,7 +71,7 @@ const PersonCl = db.define('personCl', {
     allowNull: false,
   },
   birthDay: {
-    type: Sequelize.DATE,
+    type: Sequelize.STRING,
     allowNull: false,
   },
   hasCerificates: {

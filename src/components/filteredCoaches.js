@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import css from './styles/styles.scss';
-
+import AfterSearchItemCouch from './AfterSearchItemCouch';
 @connect(state => ({ coaches: state.coaches }))
 
 @graphql(gql`
@@ -28,7 +28,7 @@ query personCl(
         imageUrl
         about
         birthPlace
-        birthDay
+        birthDay 
         trainingPersonSkills {
           trainSkillName
         }
@@ -51,26 +51,34 @@ query personCl(
 
 
 class FilteredCoaches extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      people: []
-    }
-  }
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.data.personCl != undefined) {
-      this.setState({people: nextProps.data.personCl})
-    }
-  }
-
   render() {
-    console.log("OVO SU LJUDI ", this.state.people);
-    let proba = this.state.people.map(item => {
-      return item.firstName
-    });
+    console.log("JA SAM BRT PROPS ", this.props);
     return(
-      <div>
-        {proba}
+      <div 
+        style={{
+          display: 'flex', 
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <div 
+          style={{
+            width: '80%',
+            paddingTop: '50px',
+            maxWidth: '1400px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+          }}>
+          {
+            this.props.data.loading ? <h1>JA SAM LOAD SAD</h1> : 
+            this.props.data.personCl.length ?
+               this.props.data.personCl.map(item => (
+                 <AfterSearchItemCouch couchProp={item} />
+               )) : null
+          }
+        </div>
       </div>
     )
   }
