@@ -21,7 +21,7 @@ import faker from 'faker';
 // })
 export const PersonArr = [
   {
-    password: '2131SDA1',
+    password: '2131SDA1', 
     email: 'luka.simjanovic@gma.com',
     firstName: 'Luki',
     lastName: 'Muki',
