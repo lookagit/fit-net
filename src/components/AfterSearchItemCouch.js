@@ -7,7 +7,8 @@ const AfterSearchItemCouch = ({couchProp}) => (
       width: "100%",
       flexDirection: "row",
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+      padding: '20px',
     }}
   >
     <div
@@ -52,7 +53,7 @@ const AfterSearchItemCouch = ({couchProp}) => (
           {`${couchProp.birthDay}`}
         </h4>
         <h4 style={{ fontSize: "25px", color: "#fff", fontWeight: "700" }}>
-          {`${couchProp.clubFrom}`}
+          {`Fitness klub Agoga`}
         </h4>
         <h4 style={{ fontSize: "25px", color: "#fff", fontWeight: "700" }}>
           Tagovi: Fitnes, MMA, Bodybuilding
