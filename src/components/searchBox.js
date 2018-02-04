@@ -128,31 +128,39 @@ class SearchBox extends React.Component {
             </div>
           </div>
         </div>
-
-
-
-
+        <div style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          minWidth: '1200px',
+          width: '80%',
+        }}>
         <div className={css.searchBox}>
-            <div className={css.categorie}>
+          <div className={css.categorie}>
+            <p style={{marginTop: 0,color: '#fff', fontSize: '17px', fontWeight: 'bold', }}>Kategorija</p>
               <div 
                 onClick={() => this.openModalCategories()}
                 className={css.categorieButton}>
                 <div 
                   className={css.categoriesAlert}
                   style={{display:`${this.props.categoriesAlert}`}}>
-                    Izaberite oblast
                 </div>
-                Izaberite oblast
+                <h3 style={{color: '#a9a9a9', fontWeight: 'bold',}}>Izaberite oblast...</h3>
               </div>
-              
             </div>
             <div className={css.sertifikat}>
               <div className={css.sertifikatBox1}>
                <p> SERTIFIKOVANI TRENERI </p>
               </div>
               <div className={css.sertifikatBox2}>
-                <div>
-                  <label>Da</label><br />
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                  <label className={css.labelStyle}>DA</label>
                   <div
                     className={css.radio}
                     onClick={() => this.props.certifiedFunc(true)}>
@@ -160,8 +168,13 @@ class SearchBox extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div>
-                  <label>Ne</label><br />
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                  <label className={css.labelStyle}>NE</label>
                   <div 
                     className={css.radio}
                     onClick={() => this.props.certifiedFunc(false)}>
@@ -180,7 +193,7 @@ class SearchBox extends React.Component {
                   style={{display:`${this.props.countiesAlert}`}}>
                     Izaberite opstinu
                 </div>
-                Izaberite opstinu
+                <h3 style={{color: '#a9a9a9', fontWeight: 'bold'}}>Izaberite opstinu...</h3>
               </div>
             </div>
             <div  className={css.sertifikat}>
@@ -188,8 +201,13 @@ class SearchBox extends React.Component {
                 <p>TRENERI</p>
               </div>
               <div  className={css.sertifikatBox2}>
-                <div>
-                  <label>Grupni</label><br/>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                  <label className={css.labelStyle}>GRUPNI</label>
                   
                   <div
                     className={css.radio}
@@ -197,38 +215,77 @@ class SearchBox extends React.Component {
                     <div className={`${!this.props.groupTraining ? css.radioOn : css.radioOff}`}>
                     </div>
                   </div>
-
-
-
                 </div>
-                <div>
-                  <label>Personalni</label><br/>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                  <label className={css.labelStyle}>PERSONALNI</label>
                   <div
                     className={css.radio}
                     onClick={() => this.props.groupTrainingFunc(false)}>
                     <div className={`${this.props.groupTraining ? css.radioOn : css.radioOff}`}>
                     </div>
                   </div>
-
-
                 </div>
               </div>
             </div>
-            <div className={css.cena}>
-              <label >Cena</label><br/>
-              <input 
-                value={this.props.getPriceFrom}
-                type="text" 
-                onChange={(val) => this.props.priceFromFunc(val.target.value)} />
-              <input
-                value={this.props.getPriceTo}
-                type="text"
-                onChange={(val) => this.props.priceToFunc(val.target.value)} />
+          <div 
+            style={{
+              display: 'flex',
+              flexDirection: 'column',}}>
+            <div style={{paddingBottom: '10px'}}>
+              <label style={{color: '#fff', fontSize: '17px', fontWeight: '700',}}>CENA</label>
+            </div>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                <input
+                  style={{    
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    boxSizing: 'border-box',
+                    padding: '10px 14px',
+                    width: '48.5%',
+                  }}
+                  placeholder="OD" 
+                  value={this.props.getPriceFrom != 0 ? this.props.getPriceFrom : 'OD'}
+                  type="number" 
+                  onChange={(val) => this.props.priceFromFunc(val.target.value)} />
+                <input
+                  style={{    
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    boxSizing: 'border-box',
+                    padding: '10px 14px',
+                    width: '48.5%',
+                  }}
+                  placeholder="DO" 
+                  value={this.props.getPriceTo != 0  ? this.props.getPriceTo : 'DO'}
+                  type="number"
+                  onChange={(val) => this.props.priceToFunc(val.target.value)} />
+              </div>
               <div 
                 className={css.sendParams}
-                onClick={() => this.sendParams()}
-              >Send</div>
-            </div> 
+                onClick={() => this.sendParams()}>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',}}>
+                  <h3 style={{
+                    color: '#fff',
+                    fontWeight: 'bold',
+                  }}>TRAŽI</h3> 
+                </div>
+              </div>
+            </div>
+          </div> 
+        </div>
+        <div>
+          <h1>DSADASDADS</h1>
+        </div>
         </div>
       </div>
     )

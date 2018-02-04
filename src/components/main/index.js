@@ -82,7 +82,6 @@ export default () => (
       <meta name="description" content="ReactQL starter kit app" />
       {/* <base href="http://localhost:8081/" /> */}
     </Helmet>
-    <div className={css.backgroundImage}>
     <Header />
     {/* <GraphQLMessage /> */}
     <Switch>
@@ -94,15 +93,5 @@ export default () => (
       <Redirect from="/old/path" to="/new/path" />
       <Route component={WhenNotFound} />
     </Switch>
-    </div>
-      {  //<ReduxCounter />
-        //<hr />
-
-         //<p>Runtime info:</p>
-          //     <Stats />
-         //     <hr />
-        //              <p>Stylesheet examples:</p>
-       //                   <Styles />
-     }
   </div>
 );
