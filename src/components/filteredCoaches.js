@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import css from './styles/styles.scss';
 import AfterSearchItemCouch from './AfterSearchItemCouch';
+import Loading from 'react-loading-components';
 @connect(state => ({ coaches: state.coaches }))
 
 @graphql(gql`
@@ -72,7 +73,7 @@ class FilteredCoaches extends React.Component {
             alignItems: 'flex-start',
           }}>
           {
-            this.props.data.loading ? <h1>JA SAM LOAD SAD</h1> : 
+            this.props.data.loading ? <Loading type='puff' width={150} height={150} fill='#f44242' /> : 
             this.props.data.personCl.length ?
                this.props.data.personCl.map(item => (
                  <AfterSearchItemCouch couchProp={item} />
