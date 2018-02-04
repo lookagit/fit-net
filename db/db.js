@@ -14,12 +14,7 @@ import {
   ClubGalleryArr,
 } from './ClubsHelper';
 
-var db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r', {
-  dialect: 'postgres',
-  dialectOptions: {
-    ssl: true
-  }
-});
+var db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r');
 const PersonCl = db.define('personCl', {
   password: {
     type: Sequelize.STRING
