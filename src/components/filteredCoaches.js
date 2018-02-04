@@ -8,26 +8,33 @@ import css from './styles/styles.scss';
 
 @graphql(gql`
 query personCl(
-        $skillIds: [Int],
-        $priceFrom: Int,
-        $priceTo: Int,
-        $countyId: Int,
-        $groupTraining: Boolean,
-        $certified: Boolean) {
-          personCl(
-            skillIds: $skillIds
-            priceFrom: $priceFrom,
-            priceTo: $priceTo,
-            countyId: $countyId,
-            groupTraining: $groupTraining,
-            certified: $certified) {
-      firstName
-      lastName
+  $skillIds: [Int],
+  $priceFrom: Int,
+  $priceTo: Int,
+  $countyId: Int,
+  $groupTraining: Boolean,
+  $certified: Boolean) {
+    personCl(
+      skillIds: $skillIds
+      priceFrom: $priceFrom,
+      priceTo: $priceTo,
+      countyId: $countyId,
+      groupTraining: $groupTraining,
+      certified: $certified) {
+        firstName
+        lastName
+        facebookLink
+        instagramLink
+        imageUrl
+        about
+        birthPlace
+        trainingPersonSkills {
+          trainSkillName
+        }
     }
-}`,
+  }`,
 {
   options: (props) => {
-    console.log('AJDEBRE SPAVA MI SE', props.coaches.priceFrom)
     return ({
       variables: {
         skillIds: props.coaches.skillArr,
@@ -56,10 +63,10 @@ class FilteredCoaches extends React.Component {
   }
 
   render() {
-    console.log('POZDRAV IZ NOVE KOMPONENTE', this.state.people)
-    let proba = this.state.people.map(item=>{
+    console.log("OVO SU LJUDI ", this.state.people);
+    let proba = this.state.people.map(item => {
       return item.firstName
-    })
+    });
     return(
       <div>
         {proba}
