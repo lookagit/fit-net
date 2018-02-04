@@ -28,6 +28,7 @@ query personCl(
         imageUrl
         about
         birthPlace
+        birthDay
         trainingPersonSkills {
           trainSkillName
         }

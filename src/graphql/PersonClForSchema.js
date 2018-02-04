@@ -44,6 +44,12 @@ export const PersonCl = new GraphQLObjectType({
           return personCl.facebookLink;
         },
       },
+      birthDay: {
+        type: GraphQLString,
+        resolve(personCl) {
+          return personCl.birthDay;
+        }
+      },
       instagramLink: {
         type: GraphQLString,
         resolve(personCl) {
