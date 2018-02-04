@@ -158,10 +158,24 @@ a{
   font-size: 10px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 5px;
+  background-color: rgba(61, 75, 105, 0.3);
+  margin: 10px;
+  border:  #28a7e9 solid 1px;
+  border-radius: 2px;
+  label {
+    font-size: 15px;
+    font-weight: 700;
+  }
 }
 .categorieModalItem:hover{
-  background-color: blue;
+  background-color:  rgba(61, 75, 105, 0.8);
+  label {
+    font-size: 15;
+    font-weight: 700;
+    color: #fff;
+  }
 }
 .sertifikat{
   display: flex;
