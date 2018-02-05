@@ -6,7 +6,12 @@ import Select from 'react-select';
 import CheckboxComp from './CheckboxComp';
 import CheckboxCounties from './CheckboxCounties';
 import _ from 'lodash';
-
+import Categorie from './SearchDumb/categorie';
+import Sertifikat from './SearchDumb/sertifikat';
+import Countie from './SearchDumb/countie';
+import GroupTrening from './SearchDumb/groupTrening';
+import Prices from './SearchDumb/prices';
+import SearchClubs from './SearchDumb/searchClubs';
 @graphql(gql`
 {
   trainingCategories {
@@ -43,18 +48,26 @@ class SearchBox extends React.Component {
   }
 
   handleSkillArr = (gotSkill) => {
-    this.props.addToSkillArr(gotSkill)
+    if(this.props.clubs) {
+      this.props.selectCategories(parseInt(gotSkill));
+    }else {
+      this.props.addToSkillArr(gotSkill)
+    }
   }
   handleCountiesArr = (gotId) => {
-    this.props.addToCountiesArr(gotId);
+    if(this.props.clubs) {
+      this.props.selectCounties(gotId);
+    }else {
+      this.props.addToCountiesArr(gotId);
+    }
   }
 
-  openModalCategories() {
+  openModalCategories = () => {
     this.setState({
       modalCategories: this.state.modalCategories == 'none' ? 'block' : 'none'
     })
   }
-  openModalCounties() {
+  openModalCounties = () => {
     this.setState({
       modalCounties: this.state.modalCounties == 'none' ? 'block' : 'none'
     })
@@ -67,7 +80,7 @@ class SearchBox extends React.Component {
   stopPropagation(e){
     e.stopPropagation();
   }
-  sendParams(){
+  sendParams = () => {
     this.props.getParams('poslato')
   }
   render() {
@@ -92,7 +105,7 @@ class SearchBox extends React.Component {
         />
       )
     });
-    let styles = {
+    let modalCategoriesClass = {
       height:'100%',
       width:'100%',
       backgroundColor:'rgba(0,0,0,.5)',
@@ -102,7 +115,7 @@ class SearchBox extends React.Component {
       display: this.state.modalCategories,
       zIndex: 1001,
     }
-    let styless = {
+    let modalCountiesClass = {
       height:'100%',
       width:'100%',
       backgroundColor:'rgba(0,0,0,.5)',
@@ -114,14 +127,14 @@ class SearchBox extends React.Component {
     }
     return(
       <div className={css.searchBoxWrapper}>
-        <div onClick={() => this.openModalCategories()} style={styles}>
+        <div onClick={() => this.openModalCategories()} style={modalCategoriesClass}>
           <div className={css.categorieModal}>
             <div onClick={(e) => this.stopPropagation(e)} className={css.categorieModalWrapper}>
               {categories}
             </div>
           </div>
         </div>
-        <div onClick={() => this.openModalCounties()} style={styless}>
+        <div onClick={() => this.openModalCounties()} style={modalCountiesClass}>
           <div  className={css.categorieModal}>
             <div className={css.categorieModalWrapper} onClick={(e) => this.stopPropagation(e)}>
               {counties}
@@ -135,157 +148,49 @@ class SearchBox extends React.Component {
           alignItems: 'center',
           minWidth: '1200px',
           width: '80%',
-        }}>
-        <div className={css.searchBox}>
-          <div className={css.categorie}>
-            <p style={{marginTop: 0,color: '#fff', fontSize: '17px', fontWeight: 'bold', }}>Kategorija</p>
-              <div 
-                onClick={() => this.openModalCategories()}
-                className={css.categorieButton}>
-                <div 
-                  className={css.categoriesAlert}
-                  style={{display:`${this.props.categoriesAlert}`}}>
-                </div>
-                <h3 style={{color: '#a9a9a9', fontWeight: 'bold',}}>Izaberite oblast...</h3>
-              </div>
-            </div>
-            <div className={css.sertifikat}>
-              <div className={css.sertifikatBox1}>
-               <p> SERTIFIKOVANI TRENERI </p>
-              </div>
-              <div className={css.sertifikatBox2}>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                  <label className={css.labelStyle}>DA</label>
-                  <div
-                    className={css.radio}
-                    onClick={() => this.props.certifiedFunc(true)}>
-                    <div className={`${this.props.certifiedField ? css.radioOff : css.radioOn}`}>
-                    </div>
-                  </div>
-                </div>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                  <label className={css.labelStyle}>NE</label>
-                  <div 
-                    className={css.radio}
-                    onClick={() => this.props.certifiedFunc(false)}>
-                    <div className={`${!this.props.certifiedField ? css.radioOff : css.radioOn}`}>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className={css.opstina}>
-              <div
-                onClick={() => this.openModalCounties()}
-                className={css.categorieButton}>
-                <div 
-                  className={css.countiesAlert}
-                  style={{display:`${this.props.countiesAlert}`}}>
-                    Izaberite opstinu
-                </div>
-                <h3 style={{color: '#a9a9a9', fontWeight: 'bold'}}>Izaberite opstinu...</h3>
-              </div>
-            </div>
-            <div  className={css.sertifikat}>
-              <div className={css.sertifikatBox1}>
-                <p>TRENERI</p>
-              </div>
-              <div  className={css.sertifikatBox2}>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                  <label className={css.labelStyle}>GRUPNI</label>
-                  
-                  <div
-                    className={css.radio}
-                    onClick={() => this.props.groupTrainingFunc(true) }>
-                    <div className={`${!this.props.groupTraining ? css.radioOn : css.radioOff}`}>
-                    </div>
-                  </div>
-                </div>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                  <label className={css.labelStyle}>PERSONALNI</label>
-                  <div
-                    className={css.radio}
-                    onClick={() => this.props.groupTrainingFunc(false)}>
-                    <div className={`${this.props.groupTraining ? css.radioOn : css.radioOff}`}>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <div 
-            style={{
-              display: 'flex',
-              flexDirection: 'column',}}>
-            <div style={{paddingBottom: '10px'}}>
-              <label style={{color: '#fff', fontSize: '17px', fontWeight: '700',}}>CENA</label>
-            </div>
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <input
-                  style={{    
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    boxSizing: 'border-box',
-                    padding: '10px 14px',
-                    width: '48.5%',
-                  }}
-                  placeholder="OD" 
-                  value={this.props.getPriceFrom != 0 ? this.props.getPriceFrom : 'OD'}
-                  type="number" 
-                  onChange={(val) => this.props.priceFromFunc(val.target.value)} />
-                <input
-                  style={{    
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    boxSizing: 'border-box',
-                    padding: '10px 14px',
-                    width: '48.5%',
-                  }}
-                  placeholder="DO" 
-                  value={this.props.getPriceTo != 0  ? this.props.getPriceTo : 'DO'}
-                  type="number"
-                  onChange={(val) => this.props.priceToFunc(val.target.value)} />
-              </div>
-              <div 
-                className={css.sendParams}
-                onClick={() => this.sendParams()}>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',}}>
-                  <h3 style={{
-                    color: '#fff',
-                    fontWeight: 'bold',
-                  }}>TRAŽI</h3> 
-                </div>
-              </div>
-            </div>
-          </div> 
-        </div>
-        <div>
-          <h1>DSADASDADS</h1>
-        </div>
+          }}>
+          <div className={css.searchBox}>
+            {
+            this.props.categories?
+              <Categorie openModal={this.openModalCategories} categoriesAlert={this.props.categoriesAlert}/>
+            : null
+            }
+            {
+            this.props.sertifikat?
+              <Sertifikat setCertificat={this.props.certifiedFunc} certifiedField={this.props.certifiedField} />
+            :<div style={{height: '20px', width: '100%'}}></div>
+            }
+            {
+            this.props.counties?
+            <Countie openModal={this.openModalCounties} countiesAlert={this.props.countiesAlert} />
+            :null
+            }
+            {
+            this.props.group?
+              <GroupTrening setTrening={this.props.groupTrainingFunc} groupTraining={this.props.groupTraining}/>
+            : null
+            }
+            {
+            this.props.prices?
+            <Prices 
+              priceFromFunc={this.props.priceFromFunc} 
+              getPriceFrom={this.props.priceFrom} 
+              priceToFunc={this.props.priceToFunc} 
+              getPriceTo={this.props.priceTo} 
+              getParams={this.props.getParams}
+              sendParams={this.sendParams}
+            />
+            : null
+            }
+            {
+              this.props.searchClubs?
+              <SearchClubs sendParams={this.props.runActionForRedux} />
+              : null
+            }
+          </div>
+          <div>
+            <h1 style={{color: 'white'}}>PRONACI SLIKU KOJA TREBA DA SE POSTAVI</h1>
+          </div>
         </div>
       </div>
     )

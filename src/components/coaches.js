@@ -105,6 +105,11 @@ class Coaches extends React.Component {
     return(
       <div className={css.coaches}>
         <SearchBox 
+          categories={true}
+          sertifikat={true}
+          counties={true}
+          group={true}
+          prices={true}
           categoriesAlert={this.state.categoriesAlert}
           countiesAlert={this.state.countiesAlert}
           certifiedField={this.state.certified}
