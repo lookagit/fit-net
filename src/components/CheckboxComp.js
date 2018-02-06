@@ -12,7 +12,7 @@ class CheckboxComp extends React.Component {
     }
   }
   toggleChange = () => {
-    this.props.updateState(this.props.catId);
+    this.props.updateState(this.props.catId, this.props.catName);
     this.setState({
       checked: !this.state.checked,
     });

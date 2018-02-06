@@ -12,7 +12,7 @@ class CheckboxCounties extends React.Component {
     }
   }
   toggleChange = () => {
-    this.props.updateState(this.props.countiesId);
+    this.props.updateState(this.props.countiesId, this.props.countiesName);
     this.setState({
       checked: !this.state.checked,
     });

@@ -12,6 +12,7 @@ import Countie from './SearchDumb/countie';
 import GroupTrening from './SearchDumb/groupTrening';
 import Prices from './SearchDumb/prices';
 import SearchClubs from './SearchDumb/searchClubs';
+import ComingHome from './SearchDumb/comingHome';
 @graphql(gql`
 {
   trainingCategories {
@@ -34,7 +35,8 @@ class SearchBox extends React.Component {
       modalCategories: 'none',
       modalCounties: 'none',
       groupTraining: false,
-
+      nameInCategorie: [],
+      nameInCounties: [],
     }
   }
 
@@ -47,18 +49,49 @@ class SearchBox extends React.Component {
     }
   }
 
-  handleSkillArr = (gotSkill) => {
+  handleSkillArr = (gotSkill, gotName) => {
+      let {nameInCategorie} = this.state;
+      if (nameInCategorie.includes(gotName)) {
+        let a = this.state.nameInCategorie;
+        let b = a.indexOf(nameInCategorie);
+        a.splice(b, 1);
+        this.setState({
+          nameInCategorie: a
+        })
+      } else {
+        this.setState({
+          nameInCategorie: [...nameInCategorie, gotName],
+        })
+      }
     if(this.props.clubs) {
       this.props.selectCategories(parseInt(gotSkill));
-    }else {
-      this.props.addToSkillArr(gotSkill)
+    }else if(this.props.coaches){
+      this.props.addToSkillArr(gotSkill);
+    }else if(this.props.fizio){
+      // OVO JE PRIVREMENO!! TREBA MASSAGETYPE
+      this.props.fizioCategories(gotSkill);
     }
   }
-  handleCountiesArr = (gotId) => {
+  handleCountiesArr = (gotId, gotName) => {
+    let {nameInCounties} = this.state;
+    if (nameInCounties.includes(gotName)) {
+      let a = this.state.nameInCounties;
+      let b = a.indexOf(nameInCounties);
+      a.splice(b, 1);
+      this.setState({
+        nameInCounties: a
+      })
+    } else {
+      this.setState({
+        nameInCounties: [gotName],
+      })
+    }
     if(this.props.clubs) {
       this.props.selectCounties(gotId);
-    }else {
+    }else if(this.props.coaches){
       this.props.addToCountiesArr(gotId);
+    }else if(this.props.fizio){
+      this.props.fizioCounties(gotId);
     }
   }
 
@@ -80,9 +113,9 @@ class SearchBox extends React.Component {
   stopPropagation(e){
     e.stopPropagation();
   }
-  sendParams = () => {
-    this.props.getParams('poslato')
-  }
+  // sendParams = () => {
+  //   this.props.getParams('poslato')
+  // }
   render() {
     let categories = this.state.arrayCategories.map((item, key) => {
       return (
@@ -152,23 +185,41 @@ class SearchBox extends React.Component {
           <div className={css.searchBox}>
             {
             this.props.categories?
-              <Categorie openModal={this.openModalCategories} categoriesAlert={this.props.categoriesAlert}/>
+              <Categorie 
+                openModal={this.openModalCategories}
+                categoriesAlert={this.props.categoriesAlert}
+                nameInCategorie={this.state.nameInCategorie}/>
             : null
             }
             {
             this.props.sertifikat?
-              <Sertifikat setCertificat={this.props.certifiedFunc} certifiedField={this.props.certifiedField} />
+              <Sertifikat
+                switchTitle={this.props.coaches}
+                setCertificat={this.props.certifiedFunc}
+                certifiedField={this.props.certifiedField} />
             :<div style={{height: '20px', width: '100%'}}></div>
             }
             {
             this.props.counties?
-            <Countie openModal={this.openModalCounties} countiesAlert={this.props.countiesAlert} />
+            <Countie
+              openModal={this.openModalCounties}
+              countiesAlert={this.props.countiesAlert}
+              nameInCounties={this.state.nameInCounties} />
             :null
             }
             {
             this.props.group?
-              <GroupTrening setTrening={this.props.groupTrainingFunc} groupTraining={this.props.groupTraining}/>
+              <GroupTrening 
+                setTrening={this.props.groupTrainingFunc}
+                groupTraining={this.props.groupTraining}/>
             : null
+            }
+            {
+              this.props.fizio?
+              <ComingHome 
+                sendParams={this.props.comingHomeParams} 
+                comingHome={this.props.comingHomeFunc} />
+              : null
             }
             {
             this.props.prices?
@@ -177,8 +228,7 @@ class SearchBox extends React.Component {
               getPriceFrom={this.props.priceFrom} 
               priceToFunc={this.props.priceToFunc} 
               getPriceTo={this.props.priceTo} 
-              getParams={this.props.getParams}
-              sendParams={this.sendParams}
+              sendParams={this.props.getParams}
             />
             : null
             }

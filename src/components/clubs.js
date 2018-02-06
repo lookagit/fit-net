@@ -43,6 +43,7 @@ class Clubs extends React.Component {
           categories={true}
           counties={true}
           searchClubs={true}
+
           categoriesAlert={this.state.categoriesAlert}
           countiesAlert={this.state.countiesAlert}
           selectCategories={this.selectCategories}

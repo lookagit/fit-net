@@ -6,6 +6,14 @@ class Countie extends React.Component {
     constructor(props) {
         super(props);
     }
+    inputHolder = () => {
+      let name = this.props.nameInCounties;
+      if(this.props.nameInCounties.length === 0){
+        return 'Izaberite opstinu...';
+      }else{
+        return name;
+      }
+    }
     render() {
         return (
           <div className={css.opstina}>
@@ -17,7 +25,7 @@ class Countie extends React.Component {
                 style={{display:`${this.props.countiesAlert}`}}>
                   Izaberite opstinu
               </div>
-              <h3 style={{color: '#a9a9a9', fontWeight: 'bold'}}>Izaberite opstinu...</h3>
+              <h3 style={{color: '#a9a9a9', fontWeight: 'bold'}}>{this.inputHolder()}</h3>
             </div>
           </div>
         );

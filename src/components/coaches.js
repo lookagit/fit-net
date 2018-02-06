@@ -104,7 +104,8 @@ class Coaches extends React.Component {
   render() {
     return(
       <div className={css.coaches}>
-        <SearchBox 
+        <SearchBox
+          coaches={true}
           categories={true}
           sertifikat={true}
           counties={true}
