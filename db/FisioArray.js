@@ -112,6 +112,4 @@ export const FisioCategoriesArr = [
     {
         fisioSkillName: 'Kineska terapija kupiranjem',
     },
-
-
 ]
