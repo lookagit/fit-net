@@ -16,5 +16,102 @@ const FisoArr = [
         comesHome: false,
         score: 1.6,
     },
+]
+
+export const FisioCategoriesArr = [
+    {
+        fisioSkillName: 'Relax masaža',
+    },
+    {
+        fisioSkillName: 'Sportska masaža',
+    },
+    {
+        fisioSkillName: 'Shiatsu masaža',
+    },
+    {
+        fisioSkillName: 'Sportska vulkanskim kamenjem',
+    },
+    {
+        fisioSkillName: 'Aromaterapija',
+    },
+    {
+        fisioSkillName: 'Anticelulit masaža',
+    },
+    {
+        fisioSkillName: 'Ayrveda',
+    },
+    {
+        fisioSkillName: 'Refleksologija stopala',
+    },
+    {
+        fisioSkillName: 'Limfna drenaža',
+    },
+    {
+        fisioSkillName: 'Kraljevska masaža',
+    },
+    {
+        fisioSkillName: 'Holistička masaža',
+    },
+    {
+        fisioSkillName: 'Tantrička masaža',
+    },
+    {
+        fisioSkillName: 'Mehanička terapija',
+    },
+    {
+        fisioSkillName: 'Higijenska masaža',
+    },
+    {
+        fisioSkillName: 'Medicinska masaža',
+    },
+    {
+        fisioSkillName: 'Balansiranje energetskih centara',
+    },
+    {
+        fisioSkillName: 'Antidepresiv masaža',
+    },
+    {
+        fisioSkillName: 'Tajlandska masaža',
+    },
+    {
+        fisioSkillName: 'Hidroterapija',
+    },
+    {
+        fisioSkillName: 'Toplotna terapija',
+    },
+    {
+        fisioSkillName: 'Terapija lekovitim blatom',
+    },
+    {
+        fisioSkillName: 'Elektro terapija',
+    },
+    {
+        fisioSkillName: 'Fizikalna terapija',
+    },
+    {
+        fisioSkillName: 'Laserska terapija',
+    },
+    {
+        fisioSkillName: 'Terapija hiperbaricnom komorom',
+    },
+    {
+        fisioSkillName: 'Akupresura',
+    },
+    {
+        fisioSkillName: 'Kiropraktika',
+    },
+    {
+        fisioSkillName: 'Terapija ledom - Krioterapija',
+    },
+    {
+        fisioSkillName: 'Crylet terapija',
+    },
+    {
+        fisioSkillName: 'Akupunktura',
+    },
+    {
+        fisioSkillName: 'Kineska terapija kupiranjem',
+    },
+
 
 ]

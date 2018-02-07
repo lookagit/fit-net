@@ -13,8 +13,20 @@ import {
   WorkingTimesArr,
   ClubGalleryArr,
 } from './ClubsHelper';
+import {
+  FisioCategoriesArr
+} from './FisioArray';
 
-var db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r');
+if(process.env.NODE_ENV == 'production') {
+  var db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r');
+} else {
+  var db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r', {
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: true
+    }
+  });
+}
 const PersonCl = db.define('personCl', {
   password: {
     type: Sequelize.STRING
@@ -369,6 +381,9 @@ db.sync({force: true}).then(() => {
   });
   ClubGalleryArr.map(async item => {
     await Gallery.create(item);
+  })
+  FisioCategoriesArr.map(async item => {
+    await FisioCategories.create(item);
   })
 });
 

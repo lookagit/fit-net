@@ -25,7 +25,7 @@ import SearchClubs from './SearchDumb/searchClubs';
 }
 `)
 
-class SearchBox extends React.Component {
+class FisioSearchBox extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -196,4 +196,4 @@ class SearchBox extends React.Component {
     )
   }
 }
-export default SearchBox;
+export default FisioSearchBox;

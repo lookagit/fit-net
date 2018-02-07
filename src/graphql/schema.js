@@ -120,8 +120,8 @@ const FisioCategories = new GraphQLObjectType({
             id: {
                 type: GraphQLInt,
             },
-            fisioSkillNmae: {
-                type: GraphQLInt,
+            fisioSkillName: {
+                type: GraphQLString,
             },
         };
     },
@@ -394,6 +394,12 @@ const Query = new GraphQLObjectType({
                 resolve() {
                     return getMessage();
                 },
+            },
+            fisioCategories: {
+                type: new GraphQLList(FisioCategories),
+                async resolve(root) {
+                    return await db.models.fisioCategories.findAll();
+                }
             },
             counties: {
                 type: new GraphQLList(County),
