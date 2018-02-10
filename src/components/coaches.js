@@ -102,6 +102,11 @@ class Coaches extends React.Component {
     }
   }
   render() {
+    let stylez = {
+      flex: '1',
+      height:'100px',
+      background: 'red'
+    }
     return(
       <div className={css.coaches}>
         <SearchBox

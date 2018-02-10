@@ -23,6 +23,10 @@ import ComingHome from './SearchDumb/comingHome';
     id
     countyName
   }
+  fisioCategories{
+    id
+    fisioSkillName
+  }
 }
 `)
 
@@ -30,6 +34,7 @@ class SearchBox extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      arrayFizio: [],
       arrayCategories: [],
       arrayCounties: [],
       modalCategories: 'none',
@@ -46,6 +51,9 @@ class SearchBox extends React.Component {
     }
     if(nextProps.data.counties != undefined) {
       this.setState({arrayCounties: nextProps.data.counties})
+    }
+    if(nextProps.data.fisioCategories != undefined) {
+      this.setState({arrayFizio: nextProps.data.fisioCategories})
     }
   }
 
@@ -117,6 +125,16 @@ class SearchBox extends React.Component {
   //   this.props.getParams('poslato')
   // }
   render() {
+    let fizio = this.state.arrayFizio.map((item, key) => {
+      return (
+        <CheckboxComp
+        key={key}
+        updateState={this.handleSkillArr}
+        catName={item.fisioSkillName}
+        catId={item.id}
+      />
+      )
+    })
     let categories = this.state.arrayCategories.map((item, key) => {
       return (
         <CheckboxComp
@@ -163,7 +181,7 @@ class SearchBox extends React.Component {
         <div onClick={() => this.openModalCategories()} style={modalCategoriesClass}>
           <div className={css.categorieModal}>
             <div onClick={(e) => this.stopPropagation(e)} className={css.categorieModalWrapper}>
-              {categories}
+              {this.props.fizio ? fizio : categories}
             </div>
           </div>
         </div>
@@ -174,14 +192,7 @@ class SearchBox extends React.Component {
             </div>
           </div>
         </div>
-        <div style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          minWidth: '1200px',
-          width: '80%',
-          }}>
+        <div>
           <div className={css.searchBox}>
             {
             this.props.categories?
@@ -237,9 +248,6 @@ class SearchBox extends React.Component {
               <SearchClubs sendParams={this.props.runActionForRedux} />
               : null
             }
-          </div>
-          <div>
-            <h1 style={{color: 'white'}}>PRONACI SLIKU KOJA TREBA DA SE POSTAVI</h1>
           </div>
         </div>
       </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import css from '../styles/styles.scss';
 
-
 class Countie extends React.Component {
     constructor(props) {
         super(props);

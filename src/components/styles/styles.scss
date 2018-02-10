@@ -95,14 +95,22 @@ a{
 .coaches{
   margin: 0 auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   padding-top: 50px;
 }
-.searchBoxWrapper, .coachesImgWrapper{
+.searchBoxWrapper{
   flex: 1;
   display: flex;
+}
+
+
+.coachesImgWrapper{
+  flex: 1;
+  display: flex;
+  background: green;
+  height: 100px;
 }
 .searchBox{
   background-color: $blue-rgba;
@@ -127,7 +135,7 @@ a{
 .categorie{
   position: relative;
   cursor: pointer;
-  width: 100%;
+  width: 50%;
 }
 .categorieButton{
   background-color: #fff;
