@@ -1,39 +1,58 @@
 import React from 'react';
 import css from './styles/styles.scss';
-import FisioSearchBox from './FisioSearchBox';
+import SearchBox from './searchBox';
 import CoachesImg from './coachesImg';
 import { connect } from 'react-redux';
 import { history } from 'kit/lib/routing';
 
-@connect(state => ({ coaches: state.coaches }))
+@connect(state => ({ clubs: state.clubs }))
 
-class Fisio extends React.Component {
+class Fizio extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      categoriesAlert: 'none',
+      countiesAlert: 'none',
       skillArr: [],
       countiesId: null,
       certified: false,
-      groupTraining: false,
+      comingHome: false,
       priceFrom: 0,
-      priceTo: 0,
-      categoriesAlert: 'none',
-      countiesAlert: 'none',
+      priceTo: 0, 
     }
   }
   sendToRedux = () => {
     this.props.dispatch({
-      type: "COACHES_FILTRATION",
+      type: "FIZIO_FILTRATION",
       skillArr: this.state.skillArr,
       countiesId: this.state.countiesId,
       certified: this.state.certified,
-      groupTraining: this.state.groupTraining,
+      comingHome: this.state.comingHome,
       priceFrom: this.state.priceFrom,
       priceTo: this.state.priceTo,
     });
-    history.push('/listofcoaches');
+    history.push('/listoffizio');
   }
-  addToSkillArr = (skillId) => {
+  getParams = () => {
+    // Send in redux and reset state
+    this.setState({
+      skillArr: [],
+      countiesId: null,
+      certified: false,
+      comingHome: false,
+      priceFrom: 0,
+      priceTo: 0,
+      categoriesAlert: 'none',
+      countiesAlert: 'none',
+    })
+    this.sendToRedux();
+  }
+  fizioCounties = (countiesId) => {
+    this.setState({
+      countiesId,
+    })
+  }
+  fizioCategories = (skillId) => {
     let {skillArr} = this.state;
     if (skillArr.includes(skillId)) {
       let a = this.state.skillArr;
@@ -48,23 +67,6 @@ class Fisio extends React.Component {
       })
     }
   }
-  addToCountiesArr = (countiesId) => {
-    this.setState({
-      countiesId,
-    })
-  }
-  certifiedFunc = (isCert) => {
-    this.setState({
-      certified: isCert,
-    });
-  }
-
-  groupTainingFunc = (isGroup) => {
-    this.setState({
-      groupTraining: isGroup,
-    })
-  }
-
   priceFromFunc = (priceFrom) => {
     this.setState({
       priceFrom,
@@ -76,57 +78,59 @@ class Fisio extends React.Component {
       priceTo,
     })
   }
-  // SUBMIT AND CHECKING SEARCH
-  getParams = () => {
-    if(this.state.skillArr.length < 1 ){
-      this.setState({
-        categoriesAlert: 'block'
-      })
-      if(this.state.countiesId == null){
-        this.setState({
-          countiesAlert: 'block'
-        })
-      }
-    }else{
-      this.setState({
-        skillArr: [],
-        countiesId: null,
-        certified: false,
-        groupTraining: false,
-        priceFrom: 0,
-        priceTo: 0,
-        categoriesAlert: 'none',
-        countiesAlert: 'none',
-      })
-      this.sendToRedux();
-    }
+  comingHome = (comingHome) => {
+    this.setState({
+      comingHome,
+    })
+  }
+  certifiedFunc = (certified) => {
+    this.setState({
+      certified,
+    })
   }
   render() {
+    console.log('IZ FIZIA', this.state)
+
     return(
       <div className={css.coaches}>
-        <FisioSearchBox
+        <SearchBox
+          fizio={true}
           categories={true}
-          sertifikat={true}
           counties={true}
-          group={true}
+          sertifikat={true}
           prices={true}
           categoriesAlert={this.state.categoriesAlert}
           countiesAlert={this.state.countiesAlert}
-          certifiedField={this.state.certified}
-          certifiedFunc={this.certifiedFunc}
-          addToSkillArr={this.addToSkillArr}
-          addToCountiesArr={this.addToCountiesArr}
-          groupTraining={this.state.groupTraining}
-          groupTrainingFunc={this.groupTainingFunc}
+          fizioCounties={this.fizioCounties}
+          fizioCategories={this.fizioCategories}
           priceFromFunc={this.priceFromFunc}
           getPriceFrom={this.state.priceFrom}
           priceToFunc={this.priceToFunc}
           getPriceTo={this.state.priceTo}
-          getParams={this.getParams} />
+          getParams={this.getParams}
+          comingHomeFunc={this.comingHome}
+          comingHomeParams={this.state.comingHome}
+          certifiedField={this.state.certified}
+          certifiedFunc={this.certifiedFunc}
+        />
       </div>
     )
   }
 }
-export default Fisio;
+export default Fizio;
+// 
+// categoriesAlert={this.state.categoriesAlert}
+// countiesAlert={this.state.countiesAlert}
+// certifiedField={this.state.certified}
+// certifiedFunc={this.certifiedFunc}
+// addToSkillArr={this.addToSkillArr}
+// addToCountiesArr={this.addToCountiesArr}
 
+// comingHome={this.state.comingHome}
+// comingHomeFunc={this.comingHomeFunc}
 
+// priceFromFunc={this.priceFromFunc}
+// getPriceFrom={this.state.priceFrom}
+// priceToFunc={this.priceToFunc}
+// getPriceTo={this.state.priceTo}
+// getParams={this.getParams} />

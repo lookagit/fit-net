@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+
 import {
   TrainingSkillArr,
   PersonArr,
@@ -7,26 +8,32 @@ import {
   PersonTrainingSkillArr,
   PersonCountyHelper,
 } from './HelperArrays';
+
 import {
   ClubsHelperArr,
   MembershipFeesArr,
   WorkingTimesArr,
   ClubGalleryArr,
 } from './ClubsHelper';
+
 import {
-  FisioCategoriesArr
+  FisioCategoriesArr,
+  FisioArr,
+  FisioCountyArr,
 } from './FisioArray';
+var db;
 
 if(process.env.NODE_ENV == 'production') {
-  var db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r');
+  db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r');
 } else {
-  var db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r', {
+  db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r', {
     dialect: 'postgres',
     dialectOptions: {
       ssl: true
     }
   });
 }
+
 const PersonCl = db.define('personCl', {
   password: {
     type: Sequelize.STRING
@@ -366,10 +373,10 @@ db.sync({force: true}).then(() => {
   });
   CountyArr.map(async item => {
     await County.create(item);
-  })
+  });
   PersonCountyHelper.map(async item => {
     await PersonCounty.create(item);
-  })
+  });
   ClubsHelperArr.map(async item => {
     await ClubsCl.create(item);
   });
@@ -384,7 +391,13 @@ db.sync({force: true}).then(() => {
   })
   FisioCategoriesArr.map(async item => {
     await FisioCategories.create(item);
-  })
+  });
+  FisioArr.map(async item => {
+    await FisioCl.create(item);
+  });
+  FisioCountyArr.map(async item => {
+    await FisioCounty.create(item);
+  });
 });
 
 export default db;
