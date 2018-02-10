@@ -251,4 +251,13 @@ a{
   transition: 400ms;
 }
 
-
+@media all 
+and (min-width : 320px) 
+and (max-width : 480px) {
+  .navigation{
+    margin: 0 auto;
+    ul li {
+      margin-right: 20px;
+    }
+  }
+}
