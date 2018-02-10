@@ -208,7 +208,7 @@ class SearchBox extends React.Component {
                 switchTitle={this.props.coaches}
                 setCertificat={this.props.certifiedFunc}
                 certifiedField={this.props.certifiedField} />
-            :<div style={{height: '20px', width: '100%'}}></div>
+            :<div ></div>
             }
             {
             this.props.counties?
