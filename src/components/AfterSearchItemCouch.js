@@ -19,7 +19,6 @@ const AfterSearchItemCouch = ({couchProp}) => {
     >
       <div
         style={{
-          flex: 1.5,
           backgroundImage: `url(${couchProp.imageUrl})`,
           backgroundPosition: "center",
           backgroundSize: "cover",

@@ -76,7 +76,7 @@ class FilteredCoaches extends React.Component {
             this.props.data.loading ? <Loading type='puff' width={150} height={150} fill='#f44242' /> : 
             this.props.data.personCl.length ?
                this.props.data.personCl.map((item, key) => (
-                 <AfterSearchItemCouch key={key} couchProp={item} />
+                 <AfterSearchItemCouch couchProp={item} key={key} />
                )) : null
           }
         </div>

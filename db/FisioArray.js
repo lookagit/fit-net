@@ -10,7 +10,7 @@ export const FisioArr = [
         cellPhone: '0612223311',
         about: 'sadasdsdsasad stakl aslkdjsalkdj alkdn saldnsa lknalsknlsak nslk nl',
         birthPlace: 'Belgrade Serbia',
-        birthDay: 'Slippery',
+        birthDay: '1999-08-09 04:05:02',
         fisioSkillsArr: [1,3,5],
         countyArr: [1,2],
         comesHome: false,
@@ -28,7 +28,7 @@ export const FisioArr = [
         cellPhone: '0692224443',
         about: 'asdkalsjdkahdf klahdakjbsd wkbqlqw eqe qwe wq wqw qe trry  42 13 re fa vsf bs gs',
         birthPlace: 'Belgrade Serbia',
-        birthDay: '19.12.1999',
+        birthDay: '1999-08-09 04:05:02',
         fisioSkillsArr: [1],
         countyArr: [1],
         comesHome: true,
@@ -46,7 +46,7 @@ export const FisioArr = [
         cellPhone: '06922212343',
         about: 'asdkalsjdkahdf sadjl flksad;kjsadl n kasdnsajnd dasjflanklahdakjbsd wkbqlqw eqe qwe wq wqw qe trry  42 13 re fa vsf bs gs',
         birthPlace: 'Pancevo Serbia',
-        birthDay: '19.12.1988',
+        birthDay: '1999-08-09 04:05:02',
         fisioSkillsArr: [2],
         countyArr: [2],
         comesHome: false,
@@ -64,7 +64,7 @@ export const FisioArr = [
         cellPhone: '06924543',
         about: 'sf;djksgjk lkanan a sa sa sad sa r wea wr ar awaw a waw aawwwaawa we  yr rt r4r',
         birthPlace: 'Vrsac Serbia',
-        birthDay: '09.11.1978',
+        birthDay: '1999-08-09 04:05:02',
         fisioSkillsArr: [2, 7],
         countyArr: [3, 5],
         comesHome: true,
@@ -82,7 +82,7 @@ export const FisioArr = [
         cellPhone: '069211111',
         about: 'sf;djksgjk lkasadaslkdhaskd ksa bsdkbsa bdsb asdkb sabd ksa bdaksnan a sa sa sad sa r wea wr ar awaw a waw aawwwaawa we  yr rt r4r',
         birthPlace: 'Beograd Serbia',
-        birthDay: '09.11.1978',
+        birthDay: '1999-08-09 04:05:02',
         fisioSkillsArr: [ 5, 7],
         countyArr: [3, 5],
         comesHome: true,
@@ -166,3 +166,99 @@ export const FisioArr = [
         countyId: 5,
     },
  ]
+
+ export const FisioCategoriesArr = [
+    {
+        fisioSkillName: 'Relax masaža',
+    },
+    {
+        fisioSkillName: 'Sportska masaža',
+    },
+    {
+        fisioSkillName: 'Shiatsu masaža',
+    },
+    {
+        fisioSkillName: 'Sportska vulkanskim kamenjem',
+    },
+    {
+        fisioSkillName: 'Aromaterapija',
+    },
+    {
+        fisioSkillName: 'Anticelulit masaža',
+    },
+    {
+        fisioSkillName: 'Ayrveda',
+    },
+    {
+        fisioSkillName: 'Refleksologija stopala',
+    },
+    {
+        fisioSkillName: 'Limfna drenaža',
+    },
+    {
+        fisioSkillName: 'Kraljevska masaža',
+    },
+    {
+        fisioSkillName: 'Holistička masaža',
+    },
+    {
+        fisioSkillName: 'Tantrička masaža',
+    },
+    {
+        fisioSkillName: 'Mehanička terapija',
+    },
+    {
+        fisioSkillName: 'Higijenska masaža',
+    },
+    {
+        fisioSkillName: 'Medicinska masaža',
+    },
+    {
+        fisioSkillName: 'Balansiranje energetskih centara',
+    },
+    {
+        fisioSkillName: 'Antidepresiv masaža',
+    },
+    {
+        fisioSkillName: 'Tajlandska masaža',
+    },
+    {
+        fisioSkillName: 'Hidroterapija',
+    },
+    {
+        fisioSkillName: 'Toplotna terapija',
+    },
+    {
+        fisioSkillName: 'Terapija lekovitim blatom',
+    },
+    {
+        fisioSkillName: 'Elektro terapija',
+    },
+    {
+        fisioSkillName: 'Fizikalna terapija',
+    },
+    {
+        fisioSkillName: 'Laserska terapija',
+    },
+    {
+        fisioSkillName: 'Terapija hiperbaricnom komorom',
+    },
+    {
+        fisioSkillName: 'Akupresura',
+    },
+    {
+        fisioSkillName: 'Kiropraktika',
+    },
+    {
+        fisioSkillName: 'Terapija ledom - Krioterapija',
+    },
+    {
+        fisioSkillName: 'Crylet terapija',
+    },
+    {
+        fisioSkillName: 'Akupunktura',
+    },
+    {
+        fisioSkillName: 'Kineska terapija kupiranjem',
+    },
+]

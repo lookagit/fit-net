@@ -129,7 +129,6 @@ class Coaches extends React.Component {
           priceToFunc={this.priceToFunc}
           getPriceTo={this.state.priceTo}
           getParams={this.getParams} />
-        <CoachesImg />
       </div>
     )
   }

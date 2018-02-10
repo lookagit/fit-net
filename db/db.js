@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+
 import {
   TrainingSkillArr,
   PersonArr,
@@ -7,6 +8,7 @@ import {
   PersonTrainingSkillArr,
   PersonCountyHelper,
 } from './HelperArrays';
+
 import {
   ClubsHelperArr,
   MembershipFeesArr,
@@ -15,10 +17,12 @@ import {
 } from './ClubsHelper';
 
 import {
+  FisioCategoriesArr,
   FisioArr,
   FisioCountyArr,
 } from './FisioArray';
 var db;
+
 if(process.env.NODE_ENV == 'production') {
   db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r');
 } else {
@@ -388,6 +392,11 @@ db.sync({force: true}).then(() => {
   FisioArr.map(async item => {
     await FisioCl.create(item);
   });
+  
+  FisioCategoriesArr.map(async item => {
+    await FisioCategories.create(item);
+  });
+  
   FisioCountyArr.map(async item => {
     await FisioCounty.create(item);
   });
