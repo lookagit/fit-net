@@ -388,13 +388,15 @@ db.sync({force: true}).then(() => {
   });
   ClubGalleryArr.map(async item => {
     await Gallery.create(item);
-  })
-  FisioCategoriesArr.map(async item => {
-    await FisioCategories.create(item);
   });
   FisioArr.map(async item => {
     await FisioCl.create(item);
   });
+  
+  FisioCategoriesArr.map(async item => {
+    await FisioCategories.create(item);
+  });
+  
   FisioCountyArr.map(async item => {
     await FisioCounty.create(item);
   });
