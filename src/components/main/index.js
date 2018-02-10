@@ -61,6 +61,7 @@ import Clubs from '../clubs';
 import FilteredCoaches from '../filteredCoaches';
 import FilteredClubs from '../filteredClubs';
 import FilteredFizio from '../filteredFizio';
+import Proba from '../proba';
 // Styles
 import css from '../styles/styles.scss';
 
@@ -94,6 +95,7 @@ export default () => (
       <Route path="/listofcoaches" component={FilteredCoaches} />
       <Route path="/listOfClubs" component={FilteredClubs} />
       <Route path="/listOfFizio" component={FilteredFizio} />
+      <Route path="/proba" component={Proba} />
       <Redirect from="/old/path" to="/new/path" />
       <Route component={WhenNotFound} />
     </Switch>
