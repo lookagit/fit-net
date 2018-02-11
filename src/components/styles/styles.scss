@@ -264,6 +264,12 @@ a{
 }
 
 @media screen and (max-width: 425px){
+  .searchBox {
+    padding: 10px;
+  }
+  .headerBox1 {
+    padding: 10px 0;
+  }
   .navigationItem{
     margin-right: 30px;
   }
@@ -303,8 +309,8 @@ a{
     margin: 0 auto;
   }
   .coaches {
-    padding: 15px;
-    padding-top: 30px;
+    padding: 0;
+    padding-top: 2px;
   }
   .categorieTitle {
     font-family: Comfortaa, cursive;
@@ -326,6 +332,7 @@ a{
     padding-left: 20px;
     h1 {
       margin: 0;
+      font-size: 20px;
     }
   }
   
@@ -348,5 +355,6 @@ a{
 @media screen and (max-width: 1024px){
   .coaches{
     flex-direction: column;
+    height: 100%;
   }
 }
