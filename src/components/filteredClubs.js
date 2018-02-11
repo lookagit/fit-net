@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import css from './styles/styles.scss';
-
+import Loading from 'react-loading-components';
+import AfterSearchItemClub from './AfterSearchItemClub';
 @connect(state => ({ clubs: state.clubs }))
 
 @graphql(gql`
@@ -43,25 +44,34 @@ query clubCl(
 class FilteredClubs extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
-      clubCl: []
-    }
   }
-  componentWillReceiveProps(nextProps) {
-      console.log('ovo je nextProps', nextProps)
-    if(nextProps.data.clubCl != undefined) {
-      this.setState({clubCl: nextProps.data.clubCl})
-    }
-  }
-
   render() {
-    console.log("OVO SU klubovi ", this.state.clubCl);
-    // let proba = this.state.people.map(item => {
-    //   return item.firstName
-    // });
     return(
-      <div>
-        blblalbbsaa
+      <div 
+        style={{
+          display: 'flex', 
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <div 
+          style={{
+            width: '80%',
+            paddingTop: '50px',
+            maxWidth: '1400px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+          }}>
+          {
+            this.props.data.loading ? <Loading type='puff' width={150} height={150} fill='#f44242' /> : 
+            this.props.data.clubCl.length ?
+               this.props.data.clubCl.map((item, key) => (
+                 <AfterSearchItemClub clubs={item} key={key} />
+               )) : null
+          }
+          </div>
       </div>
     )
   }
