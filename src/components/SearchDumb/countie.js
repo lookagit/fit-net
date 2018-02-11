@@ -16,6 +16,9 @@ class Countie extends React.Component {
     render() {
         return (
           <div className={css.opstina}>
+            <div className={css.countieTitle}>
+              <p className={css.countiePTag}>OPŠTINA</p>
+            </div>
             <div
               onClick={() => this.props.openModal()}
               className={css.categorieButton}>

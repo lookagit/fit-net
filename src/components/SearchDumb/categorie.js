@@ -19,17 +19,19 @@ class Categorie extends React.Component {
   render() {
     return (
       <div className={css.categorie}>
-        <p style={{marginTop: 0,color: '#fff', fontSize: '17px', fontWeight: 'bold', }}>Kategorija</p>
+        <div className={css.categorieTitle}>
+          <p style={{marginTop: 0,color: '#fff', fontSize: '17px', fontWeight: 'bold', }}>KATEGORIJA</p>
+        </div>
+        <div 
+          onClick={() => this.props.openModal()}
+          className={css.categorieButton}>
           <div 
-            onClick={() => this.props.openModal()}
-            className={css.categorieButton}>
-            <div 
-              className={css.categoriesAlert}
-              style={{display:`${this.props.categoriesAlert}`}}>
-              Izaberite kategoriju
-            </div>
-            <h3 style={{color: '#a9a9a9', fontWeight: 'bold',}}>{this.inputHolder()}</h3>
+            className={css.categoriesAlert}
+            style={{display:`${this.props.categoriesAlert}`}}>
+            Izaberite kategoriju
           </div>
+          <h3 style={{color: '#a9a9a9', fontWeight: 'bold',}}>{this.inputHolder()}</h3>
+        </div>
       </div>
     );
   }
