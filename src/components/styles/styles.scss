@@ -17,7 +17,7 @@ html, body{
   background-size: cover;
 
 }
-h1,h2,h3,h4,h5,h6,a,li,ul{
+h1,h2,h3,h4,h5,h6,a,li,ul,p{
   padding: 0;
   margin: 0;
 }
@@ -76,19 +76,21 @@ a{
   cursor: pointer;
 }
 .headerBox2{
-  flex: 1;
   display: flex;
   background-color: $blue-rgba;
   padding: 10px 0;
 }
 .navigation{
-  margin: 0 auto 0 200px;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto 0 10%;
 }
-.navigation li{
-  display: inline-block;
-  font-size: 24px;
-  margin-right: 100px;
+.navigationItem{
+  margin-right: 75px;
   color: #fff;
+}
+.navigationItem p{
+  font-size: 24px;
 }
 // END HEADER
 // COACHES
@@ -127,6 +129,7 @@ a{
 //   flex-wrap: wrap;
 // }
 .categorie{
+  margin-bottom: 10px;
   position: relative;
   cursor: pointer;
 }
@@ -259,17 +262,14 @@ a{
   justify-content: space-between;
   align-items: center;
 }
-@media all 
-and (min-width : 320px) 
-and (max-width : 480px) {
-  .navigation{
-    margin: 0 auto;
-    ul li {
-      margin-right: 20px;
-    }
-  }
-}
+
 @media screen and (max-width: 425px){
+  .navigationItem{
+    margin-right: 30px;
+  }
+  .navigationItem p{
+    font-size: 16px;
+  }
   .pricesInputHolder{
     flex-direction: column;
   }

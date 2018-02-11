@@ -6,11 +6,9 @@ class Navigation extends React.Component {
   render() {
     return(
       <div className={css.navigation}>
-        <ul>
-          <li><Link to="/page/coaches">Treneri</Link></li>
-					<li><Link to="/page/clubs">Klubovi</Link></li>
-					<li><Link to="/page/fizio">Fizio</Link></li>
-        </ul>
+        <div className={css.navigationItem}><Link to="/page/coaches"><p>Treneri</p></Link></div>
+				<div className={css.navigationItem}><Link to="/page/clubs"><p>Klubovi</p></Link></div>
+				<div className={css.navigationItem}><Link to="/page/fizio"><p>Fizio</p></Link></div>
       </div>
     )
   }

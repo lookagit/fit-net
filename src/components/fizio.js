@@ -89,7 +89,6 @@ class Fizio extends React.Component {
     })
   }
   render() {
-    console.log('IZ FIZIA', this.state)
 
     return(
       <div className={css.coaches}>
@@ -113,6 +112,7 @@ class Fizio extends React.Component {
           certifiedField={this.state.certified}
           certifiedFunc={this.certifiedFunc}
         />
+        <CoachesImg />
       </div>
     )
   }
