@@ -15,21 +15,21 @@ class Countie extends React.Component {
     }
     render() {
         return (
-          <div className={css.opstina}>
-            <div className={css.countieTitle}>
-              <p className={css.countiePTag}>OPŠTINA</p>
-            </div>
-            <div
-              onClick={() => this.props.openModal()}
-              className={css.categorieButton}>
-              <div 
-                className={css.countiesAlert}
-                style={{display:`${this.props.countiesAlert}`}}>
-                  Izaberite opstinu
-              </div>
-              <h3 style={{color: '#a9a9a9', fontWeight: 'bold'}}>{this.inputHolder()}</h3>
-            </div>
+        <div className={css.categorie}>
+          <div className={css.categorieTitle}>
+            <p style={{marginTop: 0,color: '#fff', fontSize: '17px', fontWeight: 'bold', }}>OPŠTINA</p>
           </div>
+          <div 
+            onClick={() => this.props.openModal()}
+            className={css.categorieButton}>
+            <div 
+              className={css.categoriesAlert}
+              style={{display:`${this.props.countiesAlert}`}}>
+              Izaberite opstinu
+            </div>
+            <h3 style={{color: '#a9a9a9', fontWeight: 'bold',}}>{this.inputHolder()}</h3>
+          </div>
+        </div>
         );
     }
 }

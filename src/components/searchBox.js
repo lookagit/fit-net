@@ -174,9 +174,7 @@ class SearchBox extends React.Component {
           className={css.modalCountiesClass}>
           <div  className={css.categorieModal}>
             <div className={css.categorieModalWrapper} onClick={(e) => this.stopPropagation(e)}>
-              <div style={{background:"green"}}>
-                {counties}
-              </div>
+              {counties}
             </div>
           </div>
         </div>

@@ -170,11 +170,13 @@ a{
 .categorieModalWrapper{
   display: flex;
   padding: 20px;
-  background-color: #fff;
+  justify-content: center;
   flex-wrap: wrap;
   flex-direction: row;
   border-radius: 10px;
   max-height: 400px;
+  overflow-y: scroll;//treba se staviti u potrebnom media query-ju
+  background-color: #fff;
 }
 .categorieModalItem{
   width: 200px;
