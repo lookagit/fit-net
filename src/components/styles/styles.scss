@@ -95,30 +95,23 @@ a{
 .coaches{
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   padding: 50px;
+  height: calc(100vh-250px);
 }
 .coachesImgWrapper{
   flex: 1;
   display: flex;
-  background: green;
   height: 100px;
 }
 .searchBoxWrapper{
   flex: 1;
-  display: flex;
-  background: red;
 }
-
-
 .searchBox{
-  flex: 1;
+  margin: 0 auto;
+  max-width: 700px;
   background-color: $blue-rgba;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   padding: 20px;
   // min-width: 600px;
 }
@@ -152,6 +145,7 @@ a{
   left: 50%;
   position: relative;
   padding: 0 200px;
+  max-width: 1200px;
 }
 .categorieModalWrapper{
   background-color: #fff;
@@ -223,6 +217,7 @@ a{
   background: $blue;
   border-radius: 5px;
   text-align: center;
+  margin-left: 10px;
 }
 .categoriesAlert, .countiesAlert{
   background: red;
@@ -244,11 +239,12 @@ a{
 }
 .radioOn{
   width: 100%;
-  height: 100%;
+  // height: 100%;
   background: $blue;
   border-radius: 100%;
   opacity: 0;
   transition: 400ms;
+  height: 20px;
 }
 .radioOff{
   width: 100%;
@@ -258,7 +254,12 @@ a{
   opacity: 1;
   transition: 400ms;
 }
-
+.pricesInputHolder{
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 @media all 
 and (min-width : 320px) 
 and (max-width : 480px) {
@@ -268,4 +269,19 @@ and (max-width : 480px) {
       margin-right: 20px;
     }
   }
+}
+@media screen and (max-width: 425px){
+  .pricesInputHolder{
+    flex-direction: column;
+  }
+  .sendParams{
+    margin-top: 10px;
+  }
+
+}
+@media screen and (max-width: 1024px){
+  .coaches{
+    flex-direction: column;
+  }
+
 }

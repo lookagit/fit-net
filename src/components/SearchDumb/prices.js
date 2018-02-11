@@ -12,7 +12,7 @@ class Prices extends React.Component {
             <div style={{paddingBottom: '10px'}}>
               <label style={{color: '#fff', fontSize: '17px', fontWeight: '700',}}>CENA</label>
             </div>
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+            <div className={css.pricesInputHolder}>
               <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <input
                   style={{    
