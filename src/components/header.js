@@ -11,9 +11,10 @@ class Header extends React.Component {
           <div className={css.logoBox}>
             <h1>Fit Net</h1>
           </div>
-          <div className={css.loginBox}>
+
+          {/* COMING SOON <div className={css.loginBox}>
             <Login />
-          </div>
+          </div> */}
         </div>
         <div className={css.headerBox2}>
           <Navigation />

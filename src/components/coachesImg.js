@@ -6,7 +6,6 @@ class CoachesImg extends React.Component {
     return(
       <div className={css.coachesImgWrapper}>
         <div className={css.coachesImg}> 
-
         </div>
       </div>
     )
