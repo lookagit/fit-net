@@ -10,7 +10,7 @@ class GroupTrening extends React.Component {
         return (
             <div  className={css.sertifikat}>
               <div className={css.sertifikatBox1}>
-                <p>TRENERI</p>
+                <p>TRENINZI</p>
               </div>
               <div  className={css.sertifikatBox2}>
                 <div style={{

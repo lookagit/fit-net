@@ -275,7 +275,7 @@ export const CityArr = [
 ]
 export const CountyArr = [
   {
-    countyName: 'Mirijevo',
+    countyName: 'Zvezdara',
     cityId: 1,
   },
   {
@@ -283,25 +283,49 @@ export const CountyArr = [
     cityId: 1,
   },
   {
-    countyName: 'Zvezdara',
+    countyName: 'Voždovac',
     cityId: 1,
   },
   {
-    countyName: 'Cukarica',
+    countyName: 'Vračar',
     cityId: 1,
   },
   {
-    countyName: 'Borca',
+    countyName: 'Grocka',
     cityId: 1,
   },
   {
-    countyName: 'Jerkovic',
+    countyName: 'Zemun',
+    cityId: 1,
+  },
+  {
+    countyName: 'Mladenovac',
+    cityId: 1,
+  },
+  {
+    countyName: 'Novi Beograd',
     cityId: 1,
   },
   {
     countyName: 'Palilula',
     cityId: 1,
-  }
+  },
+  {
+    countyName: 'Rakovica',
+    cityId: 1,
+  },
+  {
+    countyName: 'Stari grad',
+    cityId: 1,
+  },
+  {
+    countyName: 'Surčin',
+    cityId: 1,
+  },
+  {
+    countyName: 'Čukarica',
+    cityId: 1,
+  },
 ];
 export const PersonCountyHelper = [
   {
