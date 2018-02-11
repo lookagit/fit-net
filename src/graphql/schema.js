@@ -457,8 +457,11 @@ const Query = new GraphQLObjectType({
                     comesHome: {
                         type: GraphQLBoolean,
                     },
+                    hasCerificates: {
+                        type: GraphQLBoolean,
+                    },
                 },
-                async resolve(root, {skillIds, priceFrom, priceTo, countyId, comesHome}) {
+                async resolve(root, {skillIds, priceFrom, priceTo, countyId, comesHome, hasCerificates}) {
                     let  fisioQuery = await db.models.fisioCounty.findAll({
                         where: {
                             price: {
@@ -468,19 +471,20 @@ const Query = new GraphQLObjectType({
                             countyId,
                         }
                     });
-                    let findedIds = fisioQery.map(item => item.fisioClId);
+                    let findedIds = fisioQuery.map(item => item.fisioClId);
                     let findFisio = await db.models.fisioCl.findAll({
                         where: {
                             id: {
                                 [db.Op.or]: findedIds
                             },
                             comesHome,
+                            hasCerificates,
                             fisioSkillsArr: {
                                 $overlap: skillIds,
                             },
                         },
                     });
-                    if(findedFisio.length) {
+                    if(findFisio.length) {
                         let addCounterfindFisio = findFisio.map(i => {
                             i['counter'] = 0;
                             i.fisioSkillsArr.map(imp => {
@@ -493,7 +497,7 @@ const Query = new GraphQLObjectType({
                         return addCounterfindFisio.sort((a,b) => a.counter - b.counter)
                         .reverse();
                     } else {
-                        return findedFisio;
+                        return findFisio;
                     }
                 },
             },
