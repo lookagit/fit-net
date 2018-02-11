@@ -16,6 +16,7 @@ export const FisioArr = [
         comesHome: false,
         score: 1.6,
         confirmed: true,
+        hasCerificates: true,
     },
     {
         password: 'a;kwop110',
@@ -34,6 +35,7 @@ export const FisioArr = [
         comesHome: true,
         score: 4.6,
         confirmed: true,
+        hasCerificates: true,
     },
     {
         password: 'a;kasp110',
@@ -52,6 +54,7 @@ export const FisioArr = [
         comesHome: false,
         score: 9.0,
         confirmed: true,
+        hasCerificates: true,
     },
     {
         password: 'asap@p110',
@@ -70,6 +73,7 @@ export const FisioArr = [
         comesHome: true,
         score: 9.9,
         confirmed: true,
+        hasCerificates: true,
     },
     {
         password: 'asapsone@p110',
@@ -88,6 +92,7 @@ export const FisioArr = [
         comesHome: true,
         score: 9.0,
         confirmed: true,
+        hasCerificates: true,
 
     },
  ]
