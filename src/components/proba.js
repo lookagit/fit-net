@@ -5,11 +5,34 @@ class Proba extends React.Component{
     return(
       <div style={{
         display:"flex",
-        height:'200px',
         background:'yellow',
-        flexDirection:'column'
+        flexDirection:'row',
+        flexWrap:'wrap',
+        padding: '0 200px'
+
+      
       }}>
-        <div style={{height:'50px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        <div style={{height:'50px',width:'200px',background:'green'}}></div>
+        
 
         
       </div>

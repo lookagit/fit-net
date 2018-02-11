@@ -142,30 +142,46 @@ a{
   position: relative;
   cursor: pointer;
 }
+.modalCategoriesClass{
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+}
+.modalCountiesClass{
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1001
+}
 .categorieModal{
   transform: translate(-50%,-50%);
   top: 50%;
   left: 50%;
   position: relative;
   padding: 0 200px;
-  max-width: 1200px;
 }
 .categorieModalWrapper{
-  background-color: #fff;
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  max-height: 300px;
   padding: 20px;
+  background-color: #fff;
+  flex-wrap: wrap;
+  flex-direction: row;
   border-radius: 10px;
 }
 .categorieModalItem{
+  width: 200px;
   font-size: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
-  background-color: rgba(61, 75, 105, 0.3);
   margin: 10px;
   border:  #28a7e9 solid 1px;
   border-radius: 2px;
@@ -175,7 +191,7 @@ a{
   }
 }
 .categorieModalItem:hover{
-  background-color:  rgba(61, 75, 105, 0.8);
+  background-color:  rgba(61, 75, 105, 0.8)!important;
   label {
     font-size: 15;
     font-weight: 700;
@@ -263,6 +279,11 @@ a{
   align-items: center;
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 @media screen and (max-width: 425px){
   .navigationItem{
     margin-right: 30px;
@@ -276,7 +297,6 @@ a{
   .sendParams{
     margin-top: 10px;
   }
-
 }
 @media screen and (max-width: 1024px){
   .coaches{

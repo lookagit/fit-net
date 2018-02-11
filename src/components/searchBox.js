@@ -156,39 +156,27 @@ class SearchBox extends React.Component {
         />
       )
     });
-    let modalCategoriesClass = {
-      height:'100%',
-      width:'100%',
-      backgroundColor:'rgba(0,0,0,.5)',
-      position:'absolute',
-      top:'0',
-      left:'0',
-      display: this.state.modalCategories,
-      zIndex: 1001,
-    }
-    let modalCountiesClass = {
-      height:'100%',
-      width:'100%',
-      backgroundColor:'rgba(0,0,0,.5)',
-      position:'absolute',
-      top:'0',
-      left:'0',
-      display: this.state.modalCounties,
-      zIndex: 1001,
-    }
     return(
       <div className={css.searchBoxWrapper}>
-        <div onClick={() => this.openModalCategories()} style={modalCategoriesClass}>
+        <div
+          style={{display: this.state.modalCategories}}
+          onClick={() => this.openModalCategories()}
+          className={css.modalCategoriesClass}>
           <div className={css.categorieModal}>
             <div onClick={(e) => this.stopPropagation(e)} className={css.categorieModalWrapper}>
               {this.props.fizio ? fizio : categories}
             </div>
           </div>
         </div>
-        <div onClick={() => this.openModalCounties()} style={modalCountiesClass}>
+        <div 
+          style={{display: this.state.modalCounties}}
+          onClick={() => this.openModalCounties()}
+          className={css.modalCountiesClass}>
           <div  className={css.categorieModal}>
             <div className={css.categorieModalWrapper} onClick={(e) => this.stopPropagation(e)}>
-              {counties}
+              <div style={{background:"green"}}>
+                {counties}
+              </div>
             </div>
           </div>
         </div>
