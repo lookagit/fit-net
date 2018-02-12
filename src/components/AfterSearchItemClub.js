@@ -22,14 +22,14 @@ export default class AfterSearchItemClub extends React.Component {
                   backgroundImage: `url(${this.props.clubs.profileImageUrl})`,
                   backgroundPosition: "center",
                   backgroundSize: "cover",
-                  width: "300px",
-                  height: "300px",
+                  width: "27%",
+                  height: "100%",
                   borderRadius: "5px"
                 }}
               />
               <div
                 style={{
-                  flex: 2.3,
+                  width: '33%',
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
@@ -48,17 +48,17 @@ export default class AfterSearchItemClub extends React.Component {
                     paddingLeft: "10px"
                   }}
                 >
-                <h3 style={{ fontSize: "40px", color: "#2a87e9", fontWeight: "700" }}>
-                  Naziv: {`${this.props.clubs.name}`}
-                </h3>
-                <h4 style={{ fontSize: "25px", color: "#fff", fontWeight: "700" }}>
-                  Adresa: {`${this.props.clubs.address}`}
-                </h4>
+                  <h3 style={{ fontSize: "40px", color: "#2a87e9", fontWeight: "700" }}>
+                    Naziv: {`${this.props.clubs.name}`}
+                  </h3>
                   <h4 style={{ fontSize: "25px", color: "#fff", fontWeight: "700" }}>
-                  Telefon: {`${this.props.clubs.phone}`}
+                    Adresa: {`${this.props.clubs.address}`}
                   </h4>
                   <h4 style={{ fontSize: "25px", color: "#fff", fontWeight: "700" }}>
-                   Email: {`${this.props.clubs.email}`}
+                    Telefon: {`${this.props.clubs.phone}`}
+                  </h4>
+                  <h4 style={{ fontSize: "25px", color: "#fff", fontWeight: "700" }}>
+                    Email: {`${this.props.clubs.email}`}
                   </h4>
                   <h4 style={{ fontSize: "18px", color: "#fff", fontWeight: "700" }}>
                     Ocena: {`${this.props.clubs.score}`}
@@ -67,7 +67,7 @@ export default class AfterSearchItemClub extends React.Component {
               </div>
               <div
                 style={{
-                  flex: 3,
+                  width: '33%',
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "flex-end",
@@ -87,10 +87,12 @@ export default class AfterSearchItemClub extends React.Component {
                 <div 
                   style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    justifyContent: 'center',
                     width: '100%',
-                    display: 'flex'
+                    display: 'flex',
+                    flexWrap: 'wrap',
                   }}>
+                  <h5 style={{ width: '100%', fontSize: 18, color: 'white', textAlign: 'center'}}>Drustvene mreze:</h5>
                   <a href={this.props.clubs.facebookLink} >
                     <img style={{
                       height: "30px",
@@ -114,7 +116,7 @@ export default class AfterSearchItemClub extends React.Component {
                       justifyContent: "center",
                       alignItems: "center",
                       backgroundColor: "rgb(42, 135, 233)",
-                      width: "135px",
+                      width: "100%",
                       borderRadius: "10px",
                       padding: "13px"
                     }}
