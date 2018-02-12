@@ -272,7 +272,87 @@ a{
   justify-content: space-between;
   align-items: center;
 }
-
+.searchedItemWraper {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff4d;
+  border-radius: 10px;
+}
+.searchedItemImage {
+  width: 27%;
+  height: 100%;
+  border-radius: 5px;
+  background-size: contain;
+  width: 23%;
+  background-repeat: no-repeat;
+}
+.searchedItemAbout {
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 300px;
+  align-items: flex-start;
+  padding-left: 10px;
+}
+.searchedItemAboutInside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 250px;
+  align-items: flex-start;
+  padding-left: 10px;
+}
+.searchedItemTitle {
+  font-size: 40px;
+  color: #2a87e9; 
+  font-weight: 700;
+}
+.searchedItemLabels {
+  font-size: 25px;
+  color: #fff;
+  font-weight: 700;
+}
+.searchedItemRating{
+  font-size: 18px;
+  color: #fff;
+  font-weight: 700;
+}
+.searchedItemLast {
+  width: 41%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  height: 300px;
+}
+.searchedItemLastVertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 250px;
+}
+.searchedItemSocial {
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.searchedItemButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(42, 135, 233);
+  width: 100%;
+  border-radius: 10px;
+  padding: 13px;
+}
 @media screen and (max-width: 425px){
   .searchBox {
     padding: 10px;
@@ -348,7 +428,89 @@ a{
       font-size: 20px;
     }
   }
-  
+  //baki css
+  .searchedItemWraper {
+    display: flex;
+    width: 80%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff4d;
+    border-radius: 10px;
+    flex-wrap: wrap;
+    height: 550px;
+
+  }
+  .searchedItemImage {
+    width: 100%;
+    height: 40%;
+    border-radius: 5px;
+    background-repeat: no-repeat;
+    background-size: contain,
+  }
+  .searchedItemAbout {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 150px;
+    align-items: center;
+    padding-left: 10px;
+  }
+  .searchedItemAboutInside {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    height: 150px;
+  }
+  .searchedItemTitle {
+    font-size: 25px;
+    color: #2a87e9; 
+    font-weight: 700;
+    padding-top: 10px;
+  }
+  .searchedItemLabels {
+    font-size: 20px;
+    color: #fff;
+    font-weight: 700;
+  }
+  .searchedItemRating{
+    font-size: 18px;
+    color: #fff;
+    font-weight: 700;
+  }
+  .searchedItemLast {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 240px;
+  }
+  .searchedItemLastVertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+  }
+  .searchedItemSocial {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .searchedItemButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(42, 135, 233);
+    width: 88%;
+    border-radius: 10px;
+    padding: 13px;
+  }
 }
 .categorieTitle {
   font-family: Comfortaa, cursive;

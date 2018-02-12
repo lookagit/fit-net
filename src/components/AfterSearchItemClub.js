@@ -1,5 +1,5 @@
 import React from 'react';
-
+import css from './styles/styles.scss'
 export default class AfterSearchItemClub extends React.Component {
     constructor(props) {
         super(props);
@@ -8,90 +8,47 @@ export default class AfterSearchItemClub extends React.Component {
       console.log('evo ti props', this.props.clubs)
         return(
             <div
-              style={{
-                display: "flex",
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: '20px',
-              }}
+            className={css.searchedItemWraper}
             >
               <div
                 style={{
                   backgroundImage: `url(${this.props.clubs.profileImageUrl})`,
                   backgroundPosition: "center",
-                  backgroundSize: "cover",
-                  width: "27%",
-                  height: "100%",
-                  borderRadius: "5px"
                 }}
+                className={css.searchedItemImage}
               />
               <div
-                style={{
-                  width: '33%',
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  height: "300px",
-                  alignItems: "flex-start",
-                  paddingLeft: "10px"
-                }}
+                className={css.searchedItemAbout}
               >
                 <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    height: "250px",
-                    alignItems: "flex-start",
-                    paddingLeft: "10px"
-                  }}
+                  className={css.searchedItemAboutInside}
                 >
-                  <h3 style={{ fontSize: "40px", color: "#2a87e9", fontWeight: "700" }}>
+                  <h3 className={css.searchedItemTitle}>
                     Naziv: {`${this.props.clubs.name}`}
                   </h3>
-                  <h4 style={{ fontSize: "25px", color: "#fff", fontWeight: "700" }}>
+                  <h4 className={css.searchedItemLabels}>
                     Adresa: {`${this.props.clubs.address}`}
                   </h4>
-                  <h4 style={{ fontSize: "25px", color: "#fff", fontWeight: "700" }}>
+                  <h4 className={css.searchedItemLabels}>
                     Telefon: {`${this.props.clubs.phone}`}
                   </h4>
-                  <h4 style={{ fontSize: "25px", color: "#fff", fontWeight: "700" }}>
+                  <h4 className={css.searchedItemLabels}>
                     Email: {`${this.props.clubs.email}`}
                   </h4>
-                  <h4 style={{ fontSize: "18px", color: "#fff", fontWeight: "700" }}>
+                  <h4 className={css.searchedItemRating}>
                     Ocena: {`${this.props.clubs.score}`}
                   </h4>
                 </div>
               </div>
               <div
-                style={{
-                  width: '33%',
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-end",
-                  alignItems: "flex-end",
-                  height: "300px"
-                }}
+                className={css.searchedItemLast}
               >
                 <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    height: "250px"
-                  }}
+                  className={css.searchedItemVertical}
                 >
                 <div 
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    width: '100%',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                  }}>
+                  className={css.searchedItemSocial}
+                  >
                   <h5 style={{ width: '100%', fontSize: 18, color: 'white', textAlign: 'center'}}>Drustvene mreze:</h5>
                   <a href={this.props.clubs.facebookLink} >
                     <img style={{
@@ -111,15 +68,7 @@ export default class AfterSearchItemClub extends React.Component {
                   </a>
                 </div>
                   <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: "rgb(42, 135, 233)",
-                      width: "100%",
-                      borderRadius: "10px",
-                      padding: "13px"
-                    }}
+                    className={css.searchedItemButton}
                   >
                     <h3 style={{ fontSize: "18px", color: "#fff", fontWeight: "700" }}>
                       VIŠE
