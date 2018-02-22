@@ -19,9 +19,24 @@ class CheckboxComp extends React.Component {
   }
   render() {
     return(
-      <div style={{background:`rgba(61, 75, 105,${this.state.checked ? 0.8 : 0.3})`}}  onClick={()=>this.toggleChange()} className={css.categorieModalItem}>
-        <label>{this.props.catName}</label>
+      <div 
+        style={{pointerEvents:`${this.props.clickCount > 4 &&
+                                 this.state.checked ==
+                                 false ? 'none' : 'auto'}`,
+                background:`${this.state.checked ? 'rgba(61, 75, 105, .8)' : 'rgba(61, 75, 105, .3)'}`}}
+        onClick={()=>this.toggleChange()}
+        className={css.categorieModalItem}>
+
+        <label 
+          style={{
+                  cursor:'pointer',
+                  color:`${this.state.checked ? '#fff' :
+                  !this.state.checked && this.props.clickCount > 4 ? 'rgba(61, 75, 105, .3)' :
+                  '#000'}`}}>
+          {this.props.catName}
+        </label>
         <input 
+          disabled={this.props.clickCount > 4 && this.state.checked == false ? true : false}
           type="checkbox" 
           checked={this.state.checked}
         />

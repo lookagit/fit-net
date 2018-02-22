@@ -42,6 +42,8 @@ class SearchBox extends React.Component {
       groupTraining: false,
       nameInCategorie: [],
       nameInCounties: [],
+      clickCount: 0,
+      clickCountie: 0,
     }
   }
 
@@ -64,11 +66,13 @@ class SearchBox extends React.Component {
         let b = a.indexOf(nameInCategorie);
         a.splice(b, 1);
         this.setState({
-          nameInCategorie: a
+          nameInCategorie: a,
+          clickCount: this.state.clickCount - 1
         })
       } else {
         this.setState({
           nameInCategorie: [...nameInCategorie, gotName],
+          clickCount: this.state.clickCount + 1
         })
       }
     if(this.props.clubs) {
@@ -87,11 +91,13 @@ class SearchBox extends React.Component {
       let b = a.indexOf(nameInCounties);
       a.splice(b, 1);
       this.setState({
-        nameInCounties: a
+        nameInCounties: a,
+        clickCountie: this.state.clickCountie - 1
       })
     } else {
       this.setState({
         nameInCounties: [gotName],
+        clickCountie: this.state.clickCountie + 1
       })
     }
     if(this.props.clubs) {
@@ -128,6 +134,7 @@ class SearchBox extends React.Component {
     let fizio = this.state.arrayFizio.map((item, key) => {
       return (
         <CheckboxComp
+        clickCount={this.state.clickCount}
         key={key}
         updateState={this.handleSkillArr}
         catName={item.fisioSkillName}
@@ -138,6 +145,7 @@ class SearchBox extends React.Component {
     let categories = this.state.arrayCategories.map((item, key) => {
       return (
         <CheckboxComp
+          clickCount={this.state.clickCount}
           key={key}
           updateState={this.handleSkillArr}
           catName={item.trainSkillName}
@@ -149,6 +157,7 @@ class SearchBox extends React.Component {
     let counties = this.state.arrayCounties.map((item, key) => {
       return(
         <CheckboxCounties 
+          clickCount={this.state.clickCountie}
           updateState={this.handleCountiesArr}
           key={key}
           countiesId={item.id}
