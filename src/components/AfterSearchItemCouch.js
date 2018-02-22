@@ -1,32 +1,49 @@
 import React from "react";
+import css from './styles/styles.scss';
 
-const AfterSearchItemCouch = ({couchProp}) => {
-  
-  let {trainingPersonSkills} = couchProp;
-  let letsSplice = [...trainingPersonSkills].splice(0,3);
-  let giveMeSkills = letsSplice.map(item => item.trainSkillName);
-  let joinedSkills = giveMeSkills.join(', ');
+class AfterSearchItemCouch extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      imgHover: 'none'
+    }
+  }
+  imgHoverOn(){
+    this.setState({
+      imgHover: 'block',
+    })
+  }
+  imgHoverOff(){
+    this.setState({
+      imgHover: 'none',
+    })
+  }
+  render(){
+    let couchProp = this.props.couchProp
+    let {trainingPersonSkills} = couchProp;
+    let letsSplice = [...trainingPersonSkills].splice(0,3);
+    let giveMeSkills = letsSplice.map(item => item.trainSkillName);
+    let joinedSkills = giveMeSkills.join(', ');
   return (
-    <div
-      style={{
-        display: "flex",
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: '20px',
-      }}
-    >
+    <div className={css.filteredCoaches}>
       <div
+        onMouseOver={()=>this.imgHoverOn()}
+        onMouseOut={()=>this.imgHoverOff()}
+        style={{backgroundImage: `url(${couchProp.imageUrl})`}}
+        className={css.filteredCoachesImgWrapper}
+      >
+        <div 
         style={{
-          backgroundImage: `url(${couchProp.imageUrl})`,
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          width: "300px",
-          height: "300px",
-          borderRadius: "5px"
-        }}
-      />
+          display: `${this.state.imgHover}`,
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          top: '0',
+          background: 'rgba(0, 0, 0, .5)'
+        }}>
+        OVO JE HOVER
+      </div>
+      </div>
       <div
         style={{
           flex: 2.3,
@@ -106,5 +123,6 @@ const AfterSearchItemCouch = ({couchProp}) => {
       </div>
     </div>
   )
-} 
+}
+}
 export default AfterSearchItemCouch;
