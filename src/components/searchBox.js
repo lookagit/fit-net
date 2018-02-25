@@ -63,8 +63,8 @@ class SearchBox extends React.Component {
       let {nameInCategorie} = this.state;
       if (nameInCategorie.includes(gotName)) {
         let a = this.state.nameInCategorie;
-        let b = a.indexOf(nameInCategorie);
-        a.splice(b, 1);
+        let b = a.indexOf(gotName);
+        a.splice(b, 1)
         this.setState({
           nameInCategorie: a,
           clickCount: this.state.clickCount - 1
@@ -88,7 +88,7 @@ class SearchBox extends React.Component {
     let {nameInCounties} = this.state;
     if (nameInCounties.includes(gotName)) {
       let a = this.state.nameInCounties;
-      let b = a.indexOf(nameInCounties);
+      let b = a.indexOf(gotName);
       a.splice(b, 1);
       this.setState({
         nameInCounties: a,
@@ -131,6 +131,7 @@ class SearchBox extends React.Component {
   //   this.props.getParams('poslato')
   // }
   render() {
+    console.log('name', this.state.nameInCategorie)
     let fizio = this.state.arrayFizio.map((item, key) => {
       return (
         <CheckboxComp
