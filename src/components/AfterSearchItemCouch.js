@@ -1,5 +1,6 @@
 import React from "react";
 import css from './styles/styles.scss';
+import { Link } from 'react-router-dom';
 
 class AfterSearchItemCouch extends React.Component{
   constructor(props){
@@ -20,6 +21,7 @@ class AfterSearchItemCouch extends React.Component{
   }
   render(){
     let couchProp = this.props.couchProp
+    console.log("JA SAM COUCH ",couchProp);
     let {trainingPersonSkills} = couchProp;
     let letsSplice = [...trainingPersonSkills].splice(0,3);
     let giveMeSkills = letsSplice.map(item => item.trainSkillName);
@@ -104,21 +106,24 @@ class AfterSearchItemCouch extends React.Component{
           <h5 style={{ fontSize: "22px", color: "#fff", fontWeight: "700" }}>
             {`${couchProp.about}`}
           </h5>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "rgb(42, 135, 233)",
-              width: "135px",
-              borderRadius: "10px",
-              padding: "13px"
-            }}
-          >
-            <h3 style={{ fontSize: "18px", color: "#fff", fontWeight: "700" }}>
-              VIŠE
-            </h3>
-          </div>
+          <Link
+            to={`/coaches-one/${couchProp.id}`}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "rgb(42, 135, 233)",
+                width: "135px",
+                borderRadius: "10px",
+                padding: "13px"
+              }}
+            >
+              <h3 style={{ fontSize: "18px", color: "#fff", fontWeight: "700" }}>
+                VIŠE
+              </h3>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
