@@ -386,6 +386,10 @@ a{
 
 
 @media screen and (max-width: 425px){
+  .coaches{
+    flex-direction: column;
+    height: 100%;
+  }
   .searchBox {
     padding: 10px 0;
   }
@@ -455,7 +459,20 @@ a{
       font-size: 20px;
     }
   }
-  
+  .filteredCoaches{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .filteredCoachesImgWrapper{
+    margin-bottom: 10px;
+  }  
+  .infoProfileWrapper{
+    margin-bottom: 10px;
+    padding: 0;
+  }
+  .infoProfileHolder{
+    padding: 0;
+  }
 }
 .categorieTitle {
   font-family: Comfortaa, cursive;
@@ -472,12 +489,82 @@ a{
   color: #fff;
   font-weight: bold;
 }
-@media screen and (max-width: 1024px){
+@media screen and (min-width: 426px) and (max-width: 768px){
+  .coaches{
+    flex-direction: column;
+    height: 100%;
+  }
+  .filteredCoaches{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .filteredCoachesImgWrapper{
+    margin-bottom: 10px;
+  }
+  .infoProfileWrapper{
+    margin-bottom: 10px;
+    padding: 0;
+  }
+  .infoProfileHolder{
+    padding: 0;
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 1024px){
   .categorieModal{
     padding: 0 20px;
   }
   .coaches{
     flex-direction: column;
     height: 100%;
+  }
+  .filteredCoaches{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .filteredCoachesImgWrapper{
+    margin-bottom: 10px;
+  }
+  .infoProfileWrapper{
+    margin-bottom: 10px;
+    padding: 0;
+  }
+  .infoProfileHolder{
+    padding: 0;
+  }
+}
+@media screen and (max-width: 1440px){
+  .filteredCoachesImgWrapper{
+    width: 230px;    
+    height: 230px;
+  }
+  .infoProfileWrapper{
+    height: 200px;
+  }
+  .infoProfileHolder{
+    height: 200px;
+  }
+  .coacheName{
+    font-size: 24px;
+  }
+  .coacheBirthPlace{
+    font-size: 16px;
+  }
+  .coacheBday{
+    font-size: 16px;
+  }
+  .coacheClub{
+    font-size: 16px;
+  }
+  .coacheTags{
+    font-size: 12px;
+  }
+  .profileAboutWrapper{
+    height: 230px;
+  }
+  .profileAboutHolder{
+    height: 230px;
+  }
+  .coacheAbout{
+    font-size: 16px;
   }
 }

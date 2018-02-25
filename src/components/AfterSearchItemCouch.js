@@ -62,7 +62,7 @@ class AfterSearchItemCouch extends React.Component{
           <h5 className={css.coacheAbout}>
             {`${couchProp.about}`}
           </h5>
-          <div className={css.coacheButtonMore}>
+          <div className={css.coacheMoreButton}>
             <h3 className={css.coacheButton}>
               VIŠE
             </h3>
