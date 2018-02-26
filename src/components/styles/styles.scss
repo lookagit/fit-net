@@ -17,6 +17,12 @@ html, body{
   background-size: cover;
 
 }
+.priceLabel {
+  color: #fff; 
+  font-size: 17px; 
+  fontWeight: 700;
+}
+
 h1,h2,h3,h4,h5,h6,a,li,ul,p{
   padding: 0;
   margin: 0;
@@ -381,6 +387,13 @@ a{
   color: #fff; 
   font-weight: 700;
 }
+.priceContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -389,11 +402,24 @@ a{
   .coaches{
     flex-direction: column;
     height: 100%;
+  .priceContainer {
+    width: 95%;
+  }
+  .priceLabel {
+    padding-left: 10px;
   }
   .searchBox {
     padding: 10px 0;
   }
-  .navigationItem{
+  .categorie {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .categorieButton {
+    width: 85%;
   }
   .navigationItem p{
   }
@@ -401,7 +427,7 @@ a{
     flex-direction: column;
   }
   .sendParams{
-    width: 95%;
+    width: 91%;
     margin-top: 10px;
     margin-left: 0;
   }

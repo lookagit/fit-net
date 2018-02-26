@@ -22,6 +22,7 @@ query personCl(
       countyId: $countyId,
       groupTraining: $groupTraining,
       certified: $certified) {
+        id
         firstName
         lastName
         facebookLink

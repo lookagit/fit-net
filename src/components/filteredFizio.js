@@ -20,6 +20,7 @@ import Loading from 'react-loading-components';
 //       countyId: $countyId,
 //       groupTraining: $groupTraining,
 //       certified: $certified) {
+//         id
 //         firstName
 //         lastName
 //         facebookLink
@@ -27,7 +28,7 @@ import Loading from 'react-loading-components';
 //         imageUrl
 //         about
 //         birthPlace
-//         birthDay 
+//         birthDay
 //         trainingPersonSkills {
 //           trainSkillName
 //         }
