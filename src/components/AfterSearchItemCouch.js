@@ -33,89 +33,37 @@ class AfterSearchItemCouch extends React.Component{
         className={css.filteredCoachesImgWrapper}
       >
         <div 
-        style={{
-          display: `${this.state.imgHover}`,
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          top: '0',
-          background: 'rgba(0, 0, 0, .5)'
-        }}>
+        style={{display: `${this.state.imgHover}`}}
+        className={css.socialWrapper}>
         OVO JE HOVER
       </div>
       </div>
-      <div
-        style={{
-          flex: 2.3,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          height: "300px",
-          alignItems: "flex-start",
-          paddingLeft: "10px"
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            height: "250px",
-            alignItems: "flex-start",
-            paddingLeft: "10px"
-          }}
-        >
-        <h3 style={{ fontSize: "40px", color: "#2a87e9", fontWeight: "700" }}>
+      <div className={css.infoProfileWrapper}>
+        <div className={css.infoProfileHolder}>
+        <h3 className={css.coacheName}>
           {`${couchProp.firstName} ${couchProp.lastName}`}
         </h3>
-        <h4 style={{ fontSize: "25px", color: "#fff", fontWeight: "700" }}>
+        <h4 className={css.coacheBirthPlace}>
           {`${couchProp.birthPlace}`}
         </h4>
-          <h4 style={{ fontSize: "25px", color: "#fff", fontWeight: "700" }}>
+          <h4 className={css.coacheBday}>
             {`${couchProp.birthDay}`}
           </h4>
-          <h4 style={{ fontSize: "25px", color: "#fff", fontWeight: "700" }}>
+          <h4 className={css.coacheClub}>
             {`Fitness klub Agoga`}
           </h4>
-          <h4 style={{ fontSize: "18px", color: "#fff", fontWeight: "700" }}>
+          <h4 className={css.coacheTags}>
             {`Tagovi: ${joinedSkills}`}
           </h4>
         </div>
       </div>
-      <div
-        style={{
-          flex: 3,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
-          alignItems: "flex-end",
-          height: "300px"
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            height: "250px"
-          }}
-        >
-          <h5 style={{ fontSize: "22px", color: "#fff", fontWeight: "700" }}>
+      <div className={css.profileAboutWrapper}>
+        <div className={css.profileAboutHolder}>
+          <h5 className={css.coacheAbout}>
             {`${couchProp.about}`}
           </h5>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "rgb(42, 135, 233)",
-              width: "135px",
-              borderRadius: "10px",
-              padding: "13px"
-            }}
-          >
-            <h3 style={{ fontSize: "18px", color: "#fff", fontWeight: "700" }}>
+          <div className={css.coacheMoreButton}>
+            <h3 className={css.coacheButton}>
               VIŠE
             </h3>
           </div>
