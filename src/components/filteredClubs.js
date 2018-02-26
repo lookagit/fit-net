@@ -14,7 +14,8 @@ query clubCl(
     clubCl(
       skillIds: $skillIds
       countyId: $countyId,) 
-      {
+      { 
+        id,
         name,
         phone,
         email,

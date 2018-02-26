@@ -22,6 +22,7 @@ query personCl(
       countyId: $countyId,
       groupTraining: $groupTraining,
       certified: $certified) {
+        id
         firstName
         lastName
         facebookLink
@@ -53,25 +54,9 @@ query personCl(
 
 class FilteredCoaches extends React.Component {
   render() {
-    console.log("JA SAM BRT PROPS ", this.props);
     return(
-      <div 
-        style={{
-          display: 'flex', 
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <div 
-          style={{
-            width: '80%',
-            paddingTop: '50px',
-            maxWidth: '1400px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-          }}>
+      <div className={css.coachesWrapper}>
+        <div className={css.coachesHolder}>
           {
             this.props.data.loading ? <Loading type='puff' width={150} height={150} fill='#f44242' /> : 
             this.props.data.personCl.length ?

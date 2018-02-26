@@ -103,7 +103,7 @@ export const FisioArr = [
          address: 'Visnjicka 5a',
          saloonName: 'Gotk klub',
          fisioClId: 1,
-         fisioCategoriesId: 1,
+         fisioCategoryId: 1,
          countyId: 1,
      },
      {
@@ -111,7 +111,7 @@ export const FisioArr = [
         address: 'Svetosavska 21',
         saloonName: 'Rokanje klub',
         fisioClId: 1,
-        fisioCategoriesId: 3,
+        fisioCategoryId: 3,
         countyId: 2,
     },
     {
@@ -119,7 +119,7 @@ export const FisioArr = [
         address: 'Visnjicka 5a',
         saloonName: 'Gotk klub',
         fisioClId: 1,
-        fisioCategoriesId: 5,
+        fisioCategoryId: 5,
         countyId: 2,
     },
     {
@@ -127,7 +127,7 @@ export const FisioArr = [
         address: 'Visnjicka 5a',
         saloonName: 'Gotk klub',
         fisioClId: 2,
-        fisioCategoriesId: 1,
+        fisioCategoryId: 1,
         countyId: 1,
     },
     {
@@ -135,7 +135,7 @@ export const FisioArr = [
         address: 'Plug 5a',
         saloonName: 'Gwwww klub',
         fisioClId: 3,
-        fisioCategoriesId: 2,
+        fisioCategoryId: 2,
         countyId: 2,
     },
     {
@@ -143,7 +143,7 @@ export const FisioArr = [
         address: 'Drop that 5a',
         saloonName: 'Gotk klub',
         fisioClId: 4,
-        fisioCategoriesId: 2,
+        fisioCategoryId: 2,
         countyId: 3,
     },
     {
@@ -151,7 +151,7 @@ export const FisioArr = [
         address: 'Drop that 5a',
         saloonName: 'Gotk klub',
         fisioClId: 4,
-        fisioCategoriesId: 7,
+        fisioCategoryId: 7,
         countyId: 5,
     },
     {
@@ -159,7 +159,7 @@ export const FisioArr = [
         address: 'Drop that 5a',
         saloonName: 'Gotk klub',
         fisioClId: 5,
-        fisioCategoriesId: 5,
+        fisioCategoryId: 5,
         countyId: 3,
     },
     {
@@ -167,7 +167,7 @@ export const FisioArr = [
         address: 'Drop that 5a',
         saloonName: 'Gotk klub',
         fisioClId: 5,
-        fisioCategoriesId: 7,
+        fisioCategoryId: 7,
         countyId: 5,
     },
  ]

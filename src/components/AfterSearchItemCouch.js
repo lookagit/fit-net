@@ -1,8 +1,9 @@
 import React from "react";
 import css from './styles/styles.scss';
+import { Link } from 'react-router-dom';
 
-class AfterSearchItemCouch extends React.Component{
-  constructor(props){
+class AfterSearchItemCouch extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
       imgHover: 'none'
@@ -20,6 +21,7 @@ class AfterSearchItemCouch extends React.Component{
   }
   render(){
     let couchProp = this.props.couchProp
+    console.log("JA SAM COUCH ",couchProp);
     let {trainingPersonSkills} = couchProp;
     let letsSplice = [...trainingPersonSkills].splice(0,3);
     let giveMeSkills = letsSplice.map(item => item.trainSkillName);
@@ -62,11 +64,13 @@ class AfterSearchItemCouch extends React.Component{
           <h5 className={css.coacheAbout}>
             {`${couchProp.about}`}
           </h5>
-          <div className={css.coacheMoreButton}>
-            <h3 className={css.coacheButton}>
-              VIŠE
-            </h3>
-          </div>
+          <Link to={`/coaches-one/${couchProp.id}`}>
+            <div className={css.coacheMoreButton}>
+              <h3 className={css.coacheButton}>
+                VIŠE
+              </h3>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

@@ -17,6 +17,12 @@ html, body{
   background-size: cover;
 
 }
+.priceLabel {
+  color: #fff; 
+  font-size: 17px; 
+  font-weight: 700;
+}
+
 h1,h2,h3,h4,h5,h6,a,li,ul,p{
   padding: 0;
   margin: 0;
@@ -282,6 +288,21 @@ a{
   justify-content: space-between;
   align-items: center;
 }
+.coachesWrapper{
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.coachesHolder{
+  width: 80%;
+  padding-top: 50px;
+  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .filteredCoaches{
   display: flex;
   width: 100%;
@@ -381,6 +402,13 @@ a{
   color: #fff; 
   font-weight: 700;
 }
+.priceContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -390,18 +418,30 @@ a{
     flex-direction: column;
     height: 100%;
   }
+  .priceContainer {
+    width: 95%;
+  }
+  .priceLabel {
+    padding-left: 10px;
+  }
   .searchBox {
     padding: 10px 0;
   }
-  .navigationItem{
+  .categorie {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
-  .navigationItem p{
+  .categorieButton {
+    width: 85%;
   }
   .pricesInputHolder{
     flex-direction: column;
   }
   .sendParams{
-    width: 95%;
+    width: 91%;
     margin-top: 10px;
     margin-left: 0;
   }
@@ -461,7 +501,6 @@ a{
   }
   .filteredCoaches{
     flex-direction: column;
-    align-items: flex-start;
   }
   .filteredCoachesImgWrapper{
     margin-bottom: 10px;
@@ -473,21 +512,21 @@ a{
   .infoProfileHolder{
     padding: 0;
   }
-}
-.categorieTitle {
-  font-family: Comfortaa, cursive;
-  padding-top: 0;
-  padding: 10px;
-}
-.countieTitle {
-  font-family: Comfortaa, cursive;
-  padding-top: 0 !important;
-  padding: 10px;
-  padding-left: 0;
-}
-.countiePTag {
-  color: #fff;
-  font-weight: bold;
+  .categorieTitle {
+    font-family: Comfortaa, cursive;
+    padding-top: 0;
+    padding: 10px;
+  }
+  .countieTitle {
+    font-family: Comfortaa, cursive;
+    padding-top: 0 !important;
+    padding: 10px;
+    padding-left: 0;
+  }
+  .countiePTag {
+    color: #fff;
+    font-weight: bold;
+  }
 }
 @media screen and (min-width: 426px) and (max-width: 768px){
   .coaches{
@@ -496,6 +535,7 @@ a{
   }
   .filteredCoaches{
     flex-direction: column;
+    align-items: center;
   }
   .filteredCoachesImgWrapper{
     margin-bottom: 10px;
@@ -518,7 +558,7 @@ a{
   }
   .filteredCoaches{
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
   .filteredCoachesImgWrapper{
     margin-bottom: 10px;
@@ -532,6 +572,9 @@ a{
   }
 }
 @media screen and (max-width: 1440px){
+  .filteredCoaches{
+    margin-bottom: 50px;
+  }
   .filteredCoachesImgWrapper{
     width: 230px;    
     height: 230px;
@@ -561,7 +604,8 @@ a{
     height: 230px;
   }
   .profileAboutHolder{
-    height: 230px;
+    height: 200px;
+    align-items: center;
   }
   .coacheAbout{
     font-size: 16px;
