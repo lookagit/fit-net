@@ -1,7 +1,8 @@
 import React from "react";
 import css from './styles/styles.scss';
 import { Link } from 'react-router-dom';
-
+import facebookIco from '../../static/facebook.png';
+import instagramIco from '../../static/instagram.png';
 class AfterSearchItemCouch extends React.Component {
   constructor(props) {
     super(props);
@@ -9,7 +10,6 @@ class AfterSearchItemCouch extends React.Component {
       imgHover: 'none',
     };
   }
-
   imgHoverOn() {
     this.setState({
       imgHover: 'block',
@@ -38,7 +38,44 @@ class AfterSearchItemCouch extends React.Component {
         >
           <div
             style={{display: `${this.state.imgHover}`}}
-            className={css.socialWrapper} />
+            className={css.socialWrapper} >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  width: '50%',
+                  height: '100%',
+                }}
+              >
+                <a href={`${couchProp.instagramLink}`} target="_blank">
+                  <img
+                    alt="instagram link"
+                    src={instagramIco}
+                    width="50"
+                    height="50"
+                  />
+                </a>
+                <a href={`${couchProp.facebookLink}`} target="_blank">
+                  <img
+                    alt="facebook link"
+                    src={facebookIco}
+                    width="50"
+                    height="50"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
         <div className={css.infoProfileWrapper}>
           <div className={css.infoProfileHolder}>
