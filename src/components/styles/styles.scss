@@ -414,7 +414,7 @@ a{
 }
 .loginModalWrapper{
   position: absolute;
-  background: rgba(255, 255, 255, .5);
+  background: rgba(0, 0, 0, .5);
   height: 100%;
   width: 100%;
   z-index: 1000;
@@ -426,9 +426,12 @@ a{
   left: 50%;
   height: 600px;
   width: 400px;
-  background: $blue-rgba;
+  background: skyblue;
   border-radius: 10px;
-
+}
+.modalClass{
+  display: flex;
+  height: 100%;
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////

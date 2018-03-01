@@ -2,9 +2,33 @@ import React from 'react';
 import css from './styles/styles.scss';
 import Navigation from './navigation';
 import Login from './login';
+import ModalClass from './SearchDumb/modalClass';
 
 class Header extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      modal: false,
+      modalClass: null,
+    }
+  }
+  modalOn = (e) => {
+    this.setState({
+      modal: true,
+      modalClass: e,
+    })
+    console.log('sssssssssss', e)
+  }
+  modalOff = () => {
+    this.setState({
+      modal: false
+    })
+  }
+  stopProp = (e) => {
+    e.stopPropagation();
+  }
   render() {
+    console.log('IZ HEADERA', this.props)
     return(
       <div className={css.header}>
         <div className={css.headerBox1}>
@@ -12,19 +36,24 @@ class Header extends React.Component {
             <h1>Fit Net</h1>
           </div>
           <div className={css.loginBox}>
-            <Login />
+            <Login modalOn={this.modalOn}/>
           </div>
         </div>
         <div className={css.headerBox2}>
           <Navigation />
         </div>
-        {/* <div className={css.loginModalWrapper}>
-          <div className={css.loginModalHolder}>
-
+        <div
+          onClick={() => this.modalOff()}
+          style={{display:`${this.state.modal ? 'block' : 'none'}`}}
+          className={css.loginModalWrapper}>
+          <div 
+            onClick={(e) => this.stopProp(e)}
+            className={css.loginModalHolder}>
+              <ModalClass name={this.state.modalClass}/>
           </div>
-        </div> */}
+        </div>
       </div>
-    )
+    );
   }
 }
 export default Header;
