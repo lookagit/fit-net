@@ -412,7 +412,24 @@ a{
   justify-content: space-between;
   align-items: center;
 }
+.loginModalWrapper{
+  position: absolute;
+  background: rgba(255, 255, 255, .5);
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+}
+.loginModalHolder{
+  transform: translate(-50%, -50%);
+  position: relative;
+  top: 50%;
+  left: 50%;
+  height: 600px;
+  width: 400px;
+  background: $blue-rgba;
+  border-radius: 10px;
 
+}
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
