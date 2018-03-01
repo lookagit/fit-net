@@ -1,6 +1,7 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import faker from 'faker';
+import { withRouter } from 'react-router-dom';
 import gql from 'graphql-tag';
 import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
@@ -8,6 +9,7 @@ import RegisterInput from './RegisterInput';
 
 const axios = require('axios');
 
+@withRouter
 @graphql(gql`
   mutation updateOrCreateUser(
     $email: String,
@@ -254,8 +256,8 @@ class RegisterPerson extends React.Component {
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex',flexDirection: 'row', justifyContent: 'center'}}>
           <button onClick={() => {
-            console.log('state i props na register me', this.state, this.props)
-            this.newUser();
+
+            //this.newUser();
           }}
           >REGISTER ME</button>
         </div>
