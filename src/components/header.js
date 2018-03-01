@@ -18,11 +18,11 @@ class Header extends React.Component {
         <div className={css.headerBox2}>
           <Navigation />
         </div>
-        <div className={css.loginModalWrapper}>
+        {/* <div className={css.loginModalWrapper}>
           <div className={css.loginModalHolder}>
 
           </div>
-        </div>
+        </div> */}
       </div>
     )
   }

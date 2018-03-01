@@ -1,8 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import css from './styles/styles.scss';
 import SearchBox from './searchBox';
 import CoachesImg from './coachesImg';
-import { connect } from 'react-redux';
 import { history } from 'kit/lib/routing';
 
 @connect(state => ({ coaches: state.coaches }))
@@ -19,7 +19,7 @@ class Coaches extends React.Component {
       priceTo: 0,
       categoriesAlert: 'none',
       countiesAlert: 'none',
-    }
+    };
   }
   sendToRedux = () => {
     this.props.dispatch({
@@ -33,61 +33,61 @@ class Coaches extends React.Component {
     });
     history.push('/listofcoaches');
   }
-  addToSkillArr = (skillId) => {
-    let {skillArr} = this.state;
+  addToSkillArr = skillId => {
+    const { skillArr } = this.state;
     if (skillArr.includes(skillId)) {
-      let a = this.state.skillArr;
-      let b = a.indexOf(skillId);
+      const a = this.state.skillArr;
+      const b = a.indexOf(skillId);
       a.splice(b, 1);
       this.setState({
-        skillArr: a
-      })
+        skillArr: a,
+      });
     } else {
       this.setState({
-        skillArr: [...skillArr, skillId]
-      })
+        skillArr: [...skillArr, skillId],
+      });
     }
   }
-  addToCountiesArr = (countiesId) => {
+  addToCountiesArr = countiesId => {
     this.setState({
       countiesId,
-    })
+    });
   }
-  certifiedFunc = (isCert) => {
+  certifiedFunc = isCert => {
     this.setState({
       certified: isCert,
     });
   }
 
-  groupTainingFunc = (isGroup) => {
+  groupTainingFunc = isGroup => {
     this.setState({
       groupTraining: isGroup,
-    })
+    });
   }
 
-  priceFromFunc = (priceFrom) => {
+  priceFromFunc = priceFrom => {
     this.setState({
       priceFrom,
-    })
+    });
   }
 
-  priceToFunc = (priceTo) => {
+  priceToFunc = priceTo => {
     this.setState({
       priceTo,
-    })
+    });
   }
   // SUBMIT AND CHECKING SEARCH
   getParams = () => {
-    if(this.state.skillArr.length < 1 ){
+    if (this.state.skillArr.length < 1) {
       this.setState({
-        categoriesAlert: 'block'
-      })
-      if(this.state.countiesId == null){
+        categoriesAlert: 'block',
+      });
+      if (this.state.countiesId == null) {
         this.setState({
-          countiesAlert: 'block'
-        })
+          countiesAlert: 'block',
+        });
       }
-    }else{
+    } else {
       this.setState({
         skillArr: [],
         countiesId: null,
@@ -97,25 +97,20 @@ class Coaches extends React.Component {
         priceTo: 0,
         categoriesAlert: 'none',
         countiesAlert: 'none',
-      })
+      });
       this.sendToRedux();
     }
   }
   render() {
-    let stylez = {
-      flex: '1',
-      height:'100px',
-      background: 'red'
-    }
-    return(
+    return (
       <div className={css.coaches}>
         <SearchBox
-          coaches={true}
-          categories={true}
-          sertifikat={true}
-          counties={true}
-          group={true}
-          prices={true}
+          coaches
+          categories
+          sertifikat
+          counties
+          group
+          prices
           categoriesAlert={this.state.categoriesAlert}
           countiesAlert={this.state.countiesAlert}
           certifiedField={this.state.certified}
@@ -131,7 +126,7 @@ class Coaches extends React.Component {
           getParams={this.getParams} />
         <CoachesImg />
       </div>
-    )
+    );
   }
 }
 export default Coaches;

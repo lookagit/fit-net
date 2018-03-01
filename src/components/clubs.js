@@ -1,9 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import css from './styles/styles.scss';
 import SearchBox from './searchBox';
 import CoachesImg from './coachesImg';
-import { connect } from 'react-redux';
-import { history } from 'kit/lib/routing';
 
 @connect(state => ({ clubs: state.clubs }))
 
@@ -13,9 +12,9 @@ class Clubs extends React.Component {
     this.state = {
       categoriesAlert: 'none',
       countiesAlert: 'none',
-      categoriesId : null,
+      categoriesId: null,
       countiesId: null,
-    }
+    };
   }
   runActionForRedux = () => {
     this.props.dispatch({
@@ -25,33 +24,32 @@ class Clubs extends React.Component {
     });
     this.props.history.push('/listOfClubs');
   }
-  selectCategories = (categoriesId) => {
+  selectCategories = categoriesId => {
     this.setState({
-      categoriesId
+      categoriesId,
     });
   }
-  selectCounties = (countiesId) => {
+  selectCounties = countiesId => {
     this.setState({
-      countiesId
+      countiesId,
     });
   }
   render() {
-    return(
+    return (
       <div className={css.coaches}>
         <SearchBox
-          clubs={true}
-          categories={true}
-          counties={true}
-          searchClubs={true}
+          clubs
+          categories
+          counties
+          searchClubs
           categoriesAlert={this.state.categoriesAlert}
           countiesAlert={this.state.countiesAlert}
           selectCategories={this.selectCategories}
           selectCounties={this.selectCounties}
-          runActionForRedux={this.runActionForRedux}
-        />
+          runActionForRedux={this.runActionForRedux} />
         <CoachesImg />
       </div>
-    )
+    );
   }
 }
 export default Clubs;
