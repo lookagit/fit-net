@@ -1,18 +1,13 @@
 import React from 'react';
 import { validateEmail } from './validationFuncs';
 
-const InputFine = ({placeHolder, type, updateFunc, setWarning}) => (
+const InputFine = ({placeHolder, type, updateFunc, setWarning, value}) => (
   <input 
     placeholder={placeHolder} 
     type={type ? type : 'text'}
+    value={value}
     onChange={e => {
-        if (validateEmail(e.target.value)) {
-            updateFunc(e);
-        } else {
-            console.log("NIJE DOBROOOOOOOO");
-            //setWarning();
-        }
-        
+        updateFunc(e);
     }}
   />
 );

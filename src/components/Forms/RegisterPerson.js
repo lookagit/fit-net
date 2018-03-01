@@ -2,10 +2,20 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import faker from 'faker';
 import gql from 'graphql-tag';
+import DatePicker from 'react-datepicker';
+import Moment from 'moment-timezone';
 import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
 import RegisterInput from './RegisterInput';
-
+import {
+  validateStringNames,
+  validateEmail,
+  validatePassword,
+  validatePhone,
+  validateBirthPlace,
+  validateUrl,
+  validateAbout,
+} from './validationFuncs';
 const axios = require('axios');
 
 @graphql(gql`
@@ -53,65 +63,18 @@ class RegisterPerson extends React.Component {
       email: '',
       password: '',
       birthPlace: '',
+      dateSelected: Moment(),
       date: '',
       about: '',
       facebookLink: '',
       instagramLink: '',
-      phone: '',
+      phone: '+381',
       hasCerificates: false,
       file: null,
       imgUrl: 'https://google.com',
     }
   }
 
-  getValue = (field, e) => {
-    switch(field) {
-      case 'lastName':
-        this.setState({
-          lastName: e.target.value,
-        });
-        break;
-      case 'email':
-        this.setState({
-          email: e.target.value,
-        });
-        break;
-      case 'password':
-        this.setState({
-          password: e.target.value,
-        });
-        break;
-      case 'facebookLink':
-        this.setState({
-          facebookLink: e.target.value,
-        });
-       break;
-      case 'instagramLink':
-        this.setState({
-          instagramLink: e.target.value,
-        });
-       break;
-      case 'birthPlace':
-       this.setState({
-         birthPlace: e.target.value,
-       });
-        break;
-      case 'phone': 
-        this.setState({
-          phone: e.target.value,
-        });
-        break;
-      case 'date': 
-        this.setState({
-          date: e.target.value,
-        });
-        break;
-      case 'about':
-        this.setState({
-          about: e.target.value,
-        });
-    }
-  }
   newUser = async () => {
     let url = '';
     const { file } = this.state;
@@ -161,6 +124,14 @@ class RegisterPerson extends React.Component {
       console.log('prsoo', mutation);
     }
   }
+  handleChange = (date) => {
+    let d1 = Moment(date._d).format();
+    let dateformated = d1.slice(0,10);
+    this.setState({
+      date: dateformated,
+      dateSelected: date,
+    });
+  }
   render() {
     console.log(this.state);
     return( 
@@ -169,24 +140,43 @@ class RegisterPerson extends React.Component {
           <div>
             <label className={css.labelsRegister}>First name</label>
             <RegisterInput
-              placeholder="First name"
+              placeHolder="First name"
               type="text"
-              updateFunc={(e) => this.setState({firstName: e.target.value})}
+              updateFunc={(e) => {
+                if (validateStringNames(e.target.value)) {
+                  console.log('ime je ok!!')
+                   this.setState({firstName: e.target.value})
+                } else {
+                  console.warn('nije ok ime!')
+                }
+              }}
             />
           </div>
           <div>
             <label className={css.labelsRegister}>Last name</label>
-            <input placeholder="Last name" type="text"
-              onChange={(e) => {
-                this.getValue('lastName', e)
+            <RegisterInput
+              placeHolder="Last name"
+              type="text"
+              updateFunc={(e) => {
+                if (validateStringNames(e.target.value)) {
+                   this.setState({lastName: e.target.value})
+                } else {
+                  console.warn('nije ok prezime!')
+                }
               }}
             />
           </div>
           <div>
             <label className={css.labelsRegister}>Email</label>
-            <input placeholder="Email" type="text"
-              onChange={(e) => {
-                this.getValue('email',e)
+            <RegisterInput
+              placeHolder="Email"
+              type="text"
+              updateFunc={(e) => {
+                if (validateEmail(e.target.value)) {
+                   this.setState({email: e.target.value})
+                } else {
+                  console.warn('nije ok email!')
+                }
               }}
             />
           </div>
@@ -194,25 +184,44 @@ class RegisterPerson extends React.Component {
         <div style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
           <div>
             <label className={css.labelsRegister}>Password</label>
-            <input placeholder="Password" type="text"
-              onChange={(e) => {
-                this.getValue('password',e)
+            <RegisterInput
+              placeHolder="Password"
+              type="text"
+              updateFunc={(e) => {
+                if (validatePassword(e.target.value)) {
+                   this.setState({password: e.target.value})
+                } else {
+                  console.warn('nije ok password!')
+                }
               }}
             />
           </div>
           <div>
             <label className={css.labelsRegister}>Phone</label>
-            <input placeholder="Phone" type="text"
-              onKeyPress={(e) => {
-                this.getValue('phone',e)
+            <RegisterInput
+              placeHolder="Phone"
+              type="text"
+              value={this.state.phone}
+              updateFunc={(e) => {
+                if (validatePhone(e.target.value)) {
+                   this.setState({phone: e.target.value})
+                } else {
+                  console.warn('nije ok phone!')
+                }
               }}
             />
           </div>
           <div>
             <label className={css.labelsRegister}>Birtday Place</label>
-            <input placeholder="Birtday Place" type="text"
-              onChange={(e) => {
-                this.getValue('birthPlace',e)
+            <RegisterInput
+              placeHolder="Birthday Place"
+              type="text"
+              updateFunc={(e) => {
+                if (validateBirthPlace(e.target.value)) {
+                   this.setState({birthPlace: e.target.value})
+                } else {
+                  console.warn('nije ok birthday place!')
+                }
               }}
             />
           </div>
@@ -220,25 +229,36 @@ class RegisterPerson extends React.Component {
         <div style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
           <div>
             <label className={css.labelsRegister}>Birtday Date</label>
-            <input placeholder="Birthday Date" type="text"
-              onChange={(e) => {
-                this.getValue('date',e)
-              }}
+            <DatePicker
+              selected={this.state.dateSelected}
+              onChange={this.handleChange}
             />
           </div>
           <div>
             <label className={css.labelsRegister}>Facebook Link</label>
-            <input placeholder="Facebook Link" type="text"
-              onChange={(e) => {
-                this.getValue('facebookLink',e)
+            <RegisterInput
+              placeHolder="Facebook Link"
+              type="text"
+              updateFunc={(e) => {
+                if (validateUrl(e.target.value)) {
+                   this.setState({facebookLink: e.target.value})
+                } else {
+                  console.warn('nije ok link facebooka!')
+                }
               }}
             />
           </div>
           <div>
             <label className={css.labelsRegister}>Instagram Link</label>
-            <input placeholder="Instagram Link" type="text"
-              onChange={(e) => {
-                this.getValue('instagramLink',e)
+            <RegisterInput
+              placeHolder="Instagram Link"
+              type="text"
+              updateFunc={(e) => {
+                if (validateUrl(e.target.value)) {
+                   this.setState({instagramLink: e.target.value})
+                } else {
+                  console.warn('nije ok link instagram!')
+                }
               }}
             />
           </div>
@@ -246,9 +266,17 @@ class RegisterPerson extends React.Component {
         <div style={{margin: '0 auto', width: '50%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
         <div>
           <label className={css.labelsRegister}>About</label>
-          <input placeholder="About" type="text"
-            onChange={(e) => this.getValue('about',e)}
-          />
+          <RegisterInput
+            placeHolder="About"
+            type="text"
+            updateFunc={(e) => {
+              if (validateAbout(e.target.value)) {
+                 this.setState({about: e.target.value})
+              } else {
+                console.warn('nije ok about!')
+              }
+            }}
+            />
           </div>
           <Uppy setRegister={injectFile => this.setState({file: injectFile })} />
         </div>
