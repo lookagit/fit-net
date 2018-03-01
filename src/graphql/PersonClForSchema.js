@@ -238,9 +238,15 @@ export const Certification = new GraphQLObjectType({
           return cert.certUrl;
         },
       },
-    }
-  }
-})
+      personClId: {
+        type: GraphQLInt,
+        resolve(cert) {
+          return cert.personClId;
+        },
+      },
+    };
+  },
+});
 
 export const TrainingPersonSkill = new GraphQLObjectType({
   name: 'TrainingPersonSkill',

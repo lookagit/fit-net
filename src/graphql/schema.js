@@ -394,6 +394,13 @@ const Query = new GraphQLObjectType({
           return getMessage();
         },
       },
+      allCertificates: {
+        type: new GraphQLList(Certification),
+        async resolve(root) {
+          const certificates = await db.models.certification.findAll();
+          return certificates;
+        },
+      },
       oneFisioCl: {
         type: FisioCl,
         args: {
