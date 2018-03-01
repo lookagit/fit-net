@@ -1,20 +1,49 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
+import faker from 'faker';
 import gql from 'graphql-tag';
 import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
+import RegisterInput from './RegisterInput';
+
+const axios = require('axios');
 
 @graphql(gql`
-  mutation updateOrCreateUser($email: String, $password: String, $firstName: String, $lastName: String, $facebookLink: String, $instagramLink: String, $cellPhone: String, $birthPlace: String, $birthDay: String, $hasCertificates: Boolean, $about: String, $imageUrl: String) {
-    updateOrCreateUser(email: $email, password: $password, firstName: $firstName, lastName: $lastName, facebookLink: $facebookLink, instagramLink: $instagramLink, cellPhone: $cellPhone, birthPlace: $birthPlace, birthDay: $birthDay, hasCertificates: $hasCertificates, about: $about, imageUrl: $imageUrl) {
+  mutation updateOrCreateUser(
+    $email: String,
+    $password: String,
+    $firstName: String,
+    $lastName: String,
+    $facebookLink: String,
+    $instagramLink: String,
+    $cellPhone: String,
+    $birthPlace: String,
+    $birthDay: String,
+    $hasCerificates: Boolean,
+    $about: String,
+    $imageUrl: String
+  ) {
+    updateOrCreateUser(
+      email: $email,
+      password: $password,
+      firstName: $firstName,
+      lastName: $lastName,
+      facebookLink: $facebookLink,
+      instagramLink: $instagramLink,
+      cellPhone: $cellPhone,
+      birthPlace: $birthPlace,
+      birthDay: $birthDay,
+      hasCerificates: $hasCerificates,
+      about: $about,
+      imageUrl: $imageUrl
+    ) {
       id
     }
   }`,
   {
     name: 'registerMe',
-  }
+  },
 )
-
 class RegisterPerson extends React.Component {
   constructor(props) {
     super(props);
@@ -29,44 +58,14 @@ class RegisterPerson extends React.Component {
       facebookLink: '',
       instagramLink: '',
       phone: '',
-      hasCertificates: false,
-      imgUrl: 'https://google.com'
+      hasCerificates: false,
+      file: null,
+      imgUrl: 'https://google.com',
     }
   }
-  newUser = async () => {
-    console.log('kreni',this.props);
-    let mutation = await this.props.registerMe(
-      {
-        variables: {
-          email: this.state.email,
-          password: this.state.password,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          facebookLink: this.state.facebookLink,
-          instagramLink: this.state.instagramLink,
-          cellPhone: this.state.phone,
-          birthPlace: this.state.birthPlace,
-          birthDay: this.state.date,
-          hasCertificates: this.state.hasCertificates,
-          about: this.state.about,
-          imageUrl: this.state.imgUrl
-        }
-      }
-    )
-    console.log("resp:",mutation);
-    if (mutation) {
-      console.log('prosaooo', mutation);
-    } else {
-      console.log('prsoo', mutation);
-    }
-  }
+
   getValue = (field, e) => {
     switch(field) {
-      case 'firstName':
-        this.setState({
-          firstName: e.target.value,
-        });
-        break;
       case 'lastName':
         this.setState({
           lastName: e.target.value,
@@ -113,17 +112,66 @@ class RegisterPerson extends React.Component {
         });
     }
   }
+  newUser = async () => {
+    let url = '';
+    const { file } = this.state;
+    const fakerUuid = faker.random.uuid();
+    const fileType = file.type.split('/').pop();
+    const uniqueNameForImg = `${fakerUuid}.${fileType}`;
+    if (process.env.NODE_ENV === 'production') {
+      url = 'https://fit-net.herokuapp.com/ping/';
+    } else {
+      url = 'http://localhost:8081/ping/';
+    }
+    const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${file.type}`);
+    if (axiosStuff) {
+      const signedUrl = axiosStuff.data;
+      const options = {
+        'Content-Type': file.type,
+      };
+      const putOnServer = await axios.put(signedUrl, file, options);
+      if (putOnServer) {
+        console.log("JA SAM NA SERVERU BATICEEEEE 0", putOnServer);
+      } else {
+        console.log("IZDUVASMO GA BATICE ", putOnServer);
+      }
+    }
+    const mutation = await this.props.registerMe(
+      {
+        variables: {
+          email: this.state.email,
+          password: this.state.password,
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          facebookLink: this.state.facebookLink,
+          instagramLink: this.state.instagramLink,
+          cellPhone: this.state.phone,
+          birthPlace: this.state.birthPlace,
+          birthDay: this.state.date,
+          hasCertificates: this.state.hasCertificates,
+          about: this.state.about,
+          imageUrl: `https://fitnetbucket.s3.eu-west-3.amazonaws.com/${uniqueNameForImg}`,
+        },
+      },
+    );
+    console.log("resp:",mutation);
+    if (mutation) {
+      console.log('prosaooo', mutation);
+    } else {
+      console.log('prsoo', mutation);
+    }
+  }
   render() {
-    console.log(this.props)
+    console.log(this.state);
     return( 
       <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
           <div>
             <label className={css.labelsRegister}>First name</label>
-            <input placeholder="First name" type="text"
-              onChange={(e) => {
-                this.getValue('firstName', e);
-              }}
+            <RegisterInput
+              placeholder="First name"
+              type="text"
+              updateFunc={(e) => this.setState({firstName: e.target.value})}
             />
           </div>
           <div>
@@ -197,14 +245,12 @@ class RegisterPerson extends React.Component {
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
         <div>
-            <label className={css.labelsRegister}>About</label>
-            <input placeholder="About" type="text"
-              onChange={(e) => {
-                this.getValue('about',e)
-              }}
-            />
+          <label className={css.labelsRegister}>About</label>
+          <input placeholder="About" type="text"
+            onChange={(e) => this.getValue('about',e)}
+          />
           </div>
-          <Uppy />
+          <Uppy setRegister={injectFile => this.setState({file: injectFile })} />
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex',flexDirection: 'row', justifyContent: 'center'}}>
           <button onClick={() => {

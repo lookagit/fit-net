@@ -35,7 +35,8 @@ a{
   text-decoration: none;
 }
 .backgroundImage{
-  height: 100vh;}
+  height: 100vh;
+}
 // HEADER
 .header{
   display: flex;
@@ -400,6 +401,8 @@ a{
 .labelsRegister {
   color: white !important; 
   font-size: 17;
+
+}
 .socialWrapper{
   position: absolute;
   width: 100%;
@@ -501,7 +504,7 @@ a{
   }
   .priceLabel {
     padding-left: 10px;
-
+  }
     .coaches{
     flex-direction: column;
     height: 100%;
@@ -518,8 +521,6 @@ a{
   }
   .categorieButton {
     width: 85%;
-  }
-  .navigationItem p{
   }
   .pricesInputHolder{
     flex-direction: column;
@@ -577,7 +578,6 @@ a{
     font-weight: bold;
   }
   .logoBox {
-    padding-left: 20px;
     h1 {
       margin: 0;
       font-size: 20px;
@@ -655,6 +655,7 @@ a{
     padding: 0;
   }
 }
+
 @media screen and (max-width: 1440px){
   .filteredCoachesImgWrapper{
     width: 230px;    
