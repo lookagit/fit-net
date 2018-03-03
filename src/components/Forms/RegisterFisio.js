@@ -1,12 +1,12 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
-import faker from 'faker';
 import gql from 'graphql-tag';
 import DatePicker from 'react-datepicker';
 import Moment from 'moment-timezone';
 import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
 import RegisterInput from './RegisterInput';
+import faker from 'faker';
 import {
   validateStringNames,
   validateEmail,
@@ -16,10 +16,11 @@ import {
   validateUrl,
   validateAbout,
 } from './validationFuncs';
-const axios = require('axios');
+import { defaultCipherList } from 'constants';
 
+const axios = require('axios');
 @graphql(gql`
-  mutation updateOrCreateUser(
+  mutation updateOrCreateFisio(
     $email: String,
     $password: String,
     $firstName: String,
@@ -33,7 +34,7 @@ const axios = require('axios');
     $about: String,
     $imageUrl: String
   ) {
-    updateOrCreateUser(
+    updateOrCreateFisio(
       email: $email,
       password: $password,
       firstName: $firstName,
@@ -51,10 +52,10 @@ const axios = require('axios');
     }
   }`,
   {
-    name: 'registerMe',
+    name: 'registerNewFisio',
   },
 )
-class RegisterPerson extends React.Component {
+class RegisterFisio extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -74,68 +75,70 @@ class RegisterPerson extends React.Component {
       imgUrl: 'https://google.com',
     }
   }
-
-  newUser = async () => {
-    let url = '';
-    const { file } = this.state;
-    const fakerUuid = faker.random.uuid();
-    const fileType = file.type.split('/').pop();
-    const uniqueNameForImg = `${fakerUuid}.${fileType}`;
-    if (process.env.NODE_ENV === 'production') {
-      url = 'https://fit-net.herokuapp.com/ping/';
-    } else {
-      url = 'http://localhost:8081/ping/';
-    }
-    const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${file.type}`);
-    if (axiosStuff) {
-      const signedUrl = axiosStuff.data;
-      const options = {
-        'Content-Type': file.type,
-      };
-      const putOnServer = await axios.put(signedUrl, file, options);
-      if (putOnServer) {
-        console.log("JA SAM NA SERVERU BATICEEEEE 0", putOnServer);
+    newFisio = async () => {
+      // let url = '';
+      // const { file } = this.state;
+      // const fakerUuid = faker.random.uuid();
+      // const fileType = file.type.split('/').pop();
+      // const uniqueNameForImg = `${fakerUuid}.${fileType}`;
+      // if (process.env.NODE_ENV === 'production') {
+      //   url = 'https://fit-net.herokuapp.com/ping/';
+      // } else {
+      //   url = 'http://localhost:8081/ping/';
+      // }
+      // const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${file.type}`);
+      // if (axiosStuff) {
+      //   const signedUrl = axiosStuff.data;
+      //   const options = {
+      //     'Content-Type': file.type,
+      //   };
+      //   const putOnServer = await axios.put(signedUrl, file, options);
+      //   if (putOnServer) {
+      //     console.log("JA SAM NA SERVERU BATICEEEEE 0", putOnServer);
+      //   } else {
+      //     console.log("IZDUVASMO GA BATICE ", putOnServer);
+      //   }
+      // }
+      const mutation = await this.props.registerNewFisio(
+        {
+          variables: {
+            email: this.state.email,
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            facebookLink: this.state.facebookLink,
+            instagramLink: this.state.instagramLink,
+            cellPhone: this.state.phone,
+            birthPlace: this.state.birthPlace,
+            birthDay: this.state.date,
+            hasCertificates: this.state.hasCerificates,
+            about: this.state.about,
+            imageUrl: `https://fitnetbucket.s3.eu-west-3.amazonaws.com/`,
+          },
+        },
+      );
+      console.log("resp:",mutation);
+      if (mutation) {
+        console.log('prosaooo', mutation);
       } else {
-        console.log("IZDUVASMO GA BATICE ", putOnServer);
+        console.log('prsoo', mutation);
       }
     }
-    const mutation = await this.props.registerMe(
-      {
-        variables: {
-          email: this.state.email,
-          password: this.state.password,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          facebookLink: this.state.facebookLink,
-          instagramLink: this.state.instagramLink,
-          cellPhone: this.state.phone,
-          birthPlace: this.state.birthPlace,
-          birthDay: this.state.date,
-          hasCertificates: this.state.hasCertificates,
-          about: this.state.about,
-          imageUrl: `https://fitnetbucket.s3.eu-west-3.amazonaws.com/${uniqueNameForImg}`,
-        },
-      },
-    );
-    console.log("resp:",mutation);
-    if (mutation) {
-      console.log('prosaooo', mutation);
-    } else {
-      console.log('prsoo', mutation);
+
+    handleChange = (date) => {
+      let d1 = Moment(date._d).format();
+      let dateformated = d1.slice(0,10);
+      this.setState({
+        date: dateformated,
+        dateSelected: date,
+      });
     }
-  }
-  handleChange = (date) => {
-    let d1 = Moment(date._d).format();
-    let dateformated = d1.slice(0,10);
-    this.setState({
-      date: dateformated,
-      dateSelected: date,
-    });
-  }
+  
   render() {
-    return( 
+    return(
       <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
+          <h3>Fizio</h3>
           <div>
             <label className={css.labelsRegister}>First name</label>
             <RegisterInput
@@ -263,31 +266,31 @@ class RegisterPerson extends React.Component {
           </div>
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-        <div>
-          <label className={css.labelsRegister}>About</label>
-          <RegisterInput
-            placeHolder="About"
-            type="text"
-            updateFunc={(e) => {
-              if (validateAbout(e.target.value)) {
-                 this.setState({about: e.target.value})
-              } else {
-                console.warn('nije ok about!')
-              }
-            }}
-            />
+          <div>
+            <label className={css.labelsRegister}>About</label>
+            <RegisterInput
+              placeHolder="About"
+              type="text"
+              updateFunc={(e) => {
+                if (validateAbout(e.target.value)) {
+                   this.setState({about: e.target.value})
+                } else {
+                  console.warn('nije ok about!')
+                }
+              }}
+              />
           </div>
           <Uppy setRegister={injectFile => this.setState({file: injectFile })} />
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex',flexDirection: 'row', justifyContent: 'center'}}>
           <button onClick={() => {
-            console.log('state i props na register me', this.state, this.props)
-            this.newUser();
+            console.log('state i props na register fisio', this.state, this.props)
+            this.newFisio();
           }}
-          >REGISTER ME</button>
+          >REGISTER FISIO</button>
         </div>
-      </div>
+        </div>
     );
   }
-} 
-export default RegisterPerson;
+}
+export default RegisterFisio

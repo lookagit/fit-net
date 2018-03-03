@@ -64,6 +64,7 @@ import FilteredFizio from '../filteredFizio';
 import CoachesOne from '../CoachesOne';
 import Proba from '../proba';
 import RegisterPerson from '../Forms/RegisterPerson';
+import RegisterFisio from '../Forms/RegisterFisio';
 // Styles
 import css from '../styles/styles.scss';
 
@@ -100,6 +101,7 @@ export default () => (
       <Route path="/coaches-one/:id" component={CoachesOne} />
       <Route path="/proba" component={Proba} />
       <Route path="/register" component={RegisterPerson} />
+      <Route path="/registerFisio" component={RegisterFisio} />
       <Redirect from="/old/path" to="/new/path" />
       <Route component={WhenNotFound} />
     </Switch>
