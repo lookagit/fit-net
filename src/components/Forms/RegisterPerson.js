@@ -7,6 +7,7 @@ import Moment from 'moment-timezone';
 import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
 import RegisterInput from './RegisterInput';
+import { connect } from 'react-redux'
 import {
   validateStringNames,
   validateEmail,
@@ -17,7 +18,7 @@ import {
   validateAbout,
 } from './validationFuncs';
 const axios = require('axios');
-
+import SearchBox from '../searchBox'; 
 @graphql(gql`
   mutation updateOrCreateUser(
     $email: String,
@@ -31,7 +32,8 @@ const axios = require('axios');
     $birthDay: String,
     $hasCerificates: Boolean,
     $about: String,
-    $imageUrl: String
+    $imageUrl: String,
+    $skillsArr: [Int]
   ) {
     updateOrCreateUser(
       email: $email,
@@ -45,7 +47,8 @@ const axios = require('axios');
       birthDay: $birthDay,
       hasCerificates: $hasCerificates,
       about: $about,
-      imageUrl: $imageUrl
+      imageUrl: $imageUrl,
+      skillsArr: $skillsArr
     ) {
       id
     }
@@ -72,33 +75,38 @@ class RegisterPerson extends React.Component {
       hasCerificates: false,
       file: null,
       imgUrl: 'https://google.com',
+      arrayFizio: [],
+      arrayCategories: [],
+      arrayCounties: [],
+      countiesId: null,
+      skillArr: [],
     }
   }
 
   newUser = async () => {
-    let url = '';
-    const { file } = this.state;
-    const fakerUuid = faker.random.uuid();
-    const fileType = file.type.split('/').pop();
-    const uniqueNameForImg = `${fakerUuid}.${fileType}`;
-    if (process.env.NODE_ENV === 'production') {
-      url = 'https://fit-net.herokuapp.com/ping/';
-    } else {
-      url = 'http://localhost:8081/ping/';
-    }
-    const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${file.type}`);
-    if (axiosStuff) {
-      const signedUrl = axiosStuff.data;
-      const options = {
-        'Content-Type': file.type,
-      };
-      const putOnServer = await axios.put(signedUrl, file, options);
-      if (putOnServer) {
-        console.log("JA SAM NA SERVERU BATICEEEEE 0", putOnServer);
-      } else {
-        console.log("IZDUVASMO GA BATICE ", putOnServer);
-      }
-    }
+    // let url = '';
+    // const { file } = this.state;
+    // const fakerUuid = faker.random.uuid();
+    // const fileType = file.type.split('/').pop();
+    // const uniqueNameForImg = `${fakerUuid}.${fileType}`;
+    // if (process.env.NODE_ENV === 'production') {
+    //   url = 'https://fit-net.herokuapp.com/ping/';
+    // } else {
+    //   url = 'http://localhost:8081/ping/';
+    // }
+    // const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${file.type}`);
+    // if (axiosStuff) {
+    //   const signedUrl = axiosStuff.data;
+    //   const options = {
+    //     'Content-Type': file.type,
+    //   };
+    //   const putOnServer = await axios.put(signedUrl, file, options);
+    //   if (putOnServer) {
+    //     console.log("JA SAM NA SERVERU BATICEEEEE 0", putOnServer);
+    //   } else {
+    //     console.log("IZDUVASMO GA BATICE ", putOnServer);
+    //   }
+    // }
     const mutation = await this.props.registerMe(
       {
         variables: {
@@ -111,9 +119,10 @@ class RegisterPerson extends React.Component {
           cellPhone: this.state.phone,
           birthPlace: this.state.birthPlace,
           birthDay: this.state.date,
-          hasCertificates: this.state.hasCertificates,
+          hasCerificates: this.state.hasCerificates,
           about: this.state.about,
-          imageUrl: `https://fitnetbucket.s3.eu-west-3.amazonaws.com/${uniqueNameForImg}`,
+          imageUrl: `https://fitnetbucket.s3.eu-west-3.amazonaws.com/`,
+          skillsArr: this.state.skillArr,
         },
       },
     );
@@ -122,6 +131,21 @@ class RegisterPerson extends React.Component {
       console.log('prosaooo', mutation);
     } else {
       console.log('prsoo', mutation);
+    }
+  }
+  addToSkillArr = (skillId) => {
+    let {skillArr} = this.state;
+    if (skillArr.includes(skillId)) {
+      let a = this.state.skillArr;
+      let b = a.indexOf(skillId);
+      a.splice(b, 1);
+      this.setState({
+        skillArr: a,
+      })
+    } else {
+      this.setState({
+        skillArr: [...skillArr, parseInt(skillId)]
+      })
     }
   }
   handleChange = (date) => {
@@ -133,6 +157,7 @@ class RegisterPerson extends React.Component {
     });
   }
   render() {
+    console.log('sdasdsadad-------------------',this.state)
     return( 
       <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
@@ -286,6 +311,14 @@ class RegisterPerson extends React.Component {
           }}
           >REGISTER ME</button>
         </div>
+        <div style={{margin: '0 auto', width: '50%', display: 'flex',flexDirection: 'row', justifyContent: 'center'}}>
+          <SearchBox 
+            coaches
+            categories
+            addToSkillArr={this.addToSkillArr}
+          />
+        </div>
+        
       </div>
     );
   }

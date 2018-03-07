@@ -17,8 +17,13 @@ import {
   validateAbout,
 } from './validationFuncs';
 import { defaultCipherList } from 'constants';
-
+import { connect } from 'react-redux'
+import SearchBox from '../searchBox';
 const axios = require('axios');
+@connect(state => ({ 
+  fizio: state.fizio,
+  coaches: state.coaches,
+}))
 @graphql(gql`
   mutation updateOrCreateFisio(
     $email: String,
@@ -32,7 +37,8 @@ const axios = require('axios');
     $birthDay: String,
     $hasCerificates: Boolean,
     $about: String,
-    $imageUrl: String
+    $imageUrl: String,
+    $fisioSkillsArr: [Int]
   ) {
     updateOrCreateFisio(
       email: $email,
@@ -46,7 +52,8 @@ const axios = require('axios');
       birthDay: $birthDay,
       hasCerificates: $hasCerificates,
       about: $about,
-      imageUrl: $imageUrl
+      imageUrl: $imageUrl,
+      fisioSkillsArr: $fisioSkillsArr
     ) {
       id
     }
@@ -73,6 +80,8 @@ class RegisterFisio extends React.Component {
       hasCerificates: false,
       file: null,
       imgUrl: 'https://google.com',
+      skillArr: [],
+      
     }
   }
     newFisio = async () => {
@@ -114,6 +123,7 @@ class RegisterFisio extends React.Component {
             hasCertificates: this.state.hasCerificates,
             about: this.state.about,
             imageUrl: `https://fitnetbucket.s3.eu-west-3.amazonaws.com/`,
+            fisioSkillsArr: this.state.skillArr,
           },
         },
       );
@@ -125,6 +135,23 @@ class RegisterFisio extends React.Component {
       }
     }
 
+    fizioCategories = (skillId) => {
+      let {skillArr} = this.state;
+      if (skillArr.includes(skillId)) {
+        let a = this.state.skillArr;
+        let b = a.indexOf(skillId);
+        a.splice(b, 1);
+        this.setState({
+          skillArr: a
+        })
+      } else {
+        this.setState({
+          skillArr: [...skillArr, parseInt(skillId)]
+        })
+      }
+    }
+    
+
     handleChange = (date) => {
       let d1 = Moment(date._d).format();
       let dateformated = d1.slice(0,10);
@@ -135,6 +162,7 @@ class RegisterFisio extends React.Component {
     }
   
   render() {
+    console.log('evee ti state iz register fizio',this.state);
     return(
       <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
@@ -288,6 +316,13 @@ class RegisterFisio extends React.Component {
             this.newFisio();
           }}
           >REGISTER FISIO</button>
+        </div>
+        <div style={{margin: '0 auto', width: '50%', display: 'flex',flexDirection: 'row', justifyContent: 'center'}}>
+          <SearchBox 
+            fizio
+            categories
+            fizioCategories={this.fizioCategories}
+          />
         </div>
         </div>
     );
