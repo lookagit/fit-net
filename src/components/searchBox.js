@@ -131,7 +131,7 @@ class SearchBox extends React.Component {
   //   this.props.getParams('poslato')
   // }
   render() {
-    console.log('name', this.state.nameInCategorie)
+    console.log('SVE KATEGORIJE', this.state.arrayCategories)
     let fizio = this.state.arrayFizio.map((item, key) => {
       return (
         <CheckboxComp

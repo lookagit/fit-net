@@ -3,14 +3,23 @@ import css from './styles/styles.scss';
 
 class Login extends React.Component {
   render() {
+    console.log('IZ LOGINA', this.props)
     return(
       <div className={css.loginWrapper}>
         <div>
-          <div className={css.login}>Uloguj se</div>
+          <div
+            onClick={() => this.props.modalOn('login')}
+            className={css.login}>
+            <p>Uloguj se</p>
+          </div>
           <div className={css.loginLost}>Zaboravio si sifru?</div>
         </div>
         <div>
-          <div className={css.singUp}>Prijavi se</div>
+          <div 
+            onClick={() => this.props.modalOn('singUp')}
+            className={css.singUp}>
+            <p>Prijavi se</p>
+          </div>
           <div className={css.singUpLost}>Zaboravio si mejl?</div>
         </div>
       </div>

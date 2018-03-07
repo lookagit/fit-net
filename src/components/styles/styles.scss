@@ -20,7 +20,7 @@ html, body{
 .priceLabel {
   color: #fff; 
   font-size: 17px; 
-  fontWeight: 700;
+  font-weight: 700;
 }
 
 h1,h2,h3,h4,h5,h6,a,li,ul,p{
@@ -289,6 +289,21 @@ a{
   justify-content: space-between;
   align-items: center;
 }
+.coachesWrapper{
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.coachesHolder{
+  width: 80%;
+  padding-top: 50px;
+  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .filteredCoaches{
   display: flex;
   width: 100%;
@@ -397,6 +412,27 @@ a{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+.loginModalWrapper{
+  position: absolute;
+  background: rgba(0, 0, 0, .5);
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+}
+.loginModalHolder{
+  transform: translate(-50%, -50%);
+  position: relative;
+  top: 50%;
+  left: 50%;
+  height: 600px;
+  width: 400px;
+  background: skyblue;
+  border-radius: 10px;
+}
+.modalClass{
+  display: flex;
+  height: 100%;
 }
 .labelsRegister {
   color: white !important; 
@@ -585,7 +621,6 @@ a{
   }
   .filteredCoaches{
     flex-direction: column;
-    align-items: flex-start;
   }
   .filteredCoachesImgWrapper{
     margin-bottom: 10px;
@@ -597,21 +632,21 @@ a{
   .infoProfileHolder{
     padding: 0;
   }
-}
-.categorieTitle {
-  font-family: Comfortaa, cursive;
-  padding-top: 0;
-  padding: 10px;
-}
-.countieTitle {
-  font-family: Comfortaa, cursive;
-  padding-top: 0 !important;
-  padding: 10px;
-  padding-left: 0;
-}
-.countiePTag {
-  color: #fff;
-  font-weight: bold;
+  .categorieTitle {
+    font-family: Comfortaa, cursive;
+    padding-top: 0;
+    padding: 10px;
+  }
+  .countieTitle {
+    font-family: Comfortaa, cursive;
+    padding-top: 0 !important;
+    padding: 10px;
+    padding-left: 0;
+  }
+  .countiePTag {
+    color: #fff;
+    font-weight: bold;
+  }
 }
 @media screen and (min-width: 426px) and (max-width: 768px){
   .coaches{
@@ -620,6 +655,7 @@ a{
   }
   .filteredCoaches{
     flex-direction: column;
+    align-items: center;
   }
   .filteredCoachesImgWrapper{
     margin-bottom: 10px;
@@ -642,7 +678,7 @@ a{
   }
   .filteredCoaches{
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
   .filteredCoachesImgWrapper{
     margin-bottom: 10px;
@@ -657,6 +693,9 @@ a{
 }
 
 @media screen and (max-width: 1440px){
+  .filteredCoaches{
+    margin-bottom: 50px;
+  }
   .filteredCoachesImgWrapper{
     width: 230px;    
     height: 230px;
@@ -686,7 +725,8 @@ a{
     height: 230px;
   }
   .profileAboutHolder{
-    height: 230px;
+    height: 200px;
+    align-items: center;
   }
   .coacheAbout{
     font-size: 16px;

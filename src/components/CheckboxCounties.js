@@ -1,15 +1,12 @@
 import React from 'react';
 import css from './styles/styles.scss';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
-import Select from 'react-select';
 
 class CheckboxCounties extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       checked: false,
-    }
+    };
   }
   toggleChange = () => {
     this.props.updateState(this.props.countiesId, this.props.countiesName);
@@ -18,7 +15,7 @@ class CheckboxCounties extends React.Component {
     });
   }
   render() {
-    return(
+    return (
       <div
         style={{
           pointerEvents:`${this.props.clickCount == 1 &&
@@ -37,12 +34,12 @@ class CheckboxCounties extends React.Component {
           {this.props.countiesName}
         </label>
         <input
-          disabled={this.props.clickCount == 1 && this.state.checked == false ? true : false}
+          disabled={this.props.clickCount === 1 && this.state.checked === false}
           type="checkbox"
           checked={this.state.checked}
         />
       </div>
-    )
+    );
   }
 }
 export default CheckboxCounties;
