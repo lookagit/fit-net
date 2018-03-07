@@ -1,6 +1,5 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
-import faker from 'faker';
 import { withRouter } from 'react-router-dom';
 import gql from 'graphql-tag';
 import DatePicker from 'react-datepicker';
@@ -85,29 +84,6 @@ class RegisterPerson extends React.Component {
   }
 
   newUser = async () => {
-    // let url = '';
-    // const { file } = this.state;
-    // const fakerUuid = faker.random.uuid();
-    // const fileType = file.type.split('/').pop();
-    // const uniqueNameForImg = `${fakerUuid}.${fileType}`;
-    // if (process.env.NODE_ENV === 'production') {
-    //   url = 'https://fit-net.herokuapp.com/ping/';
-    // } else {
-    //   url = 'http://localhost:8081/ping/';
-    // }
-    // const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${file.type}`);
-    // if (axiosStuff) {
-    //   const signedUrl = axiosStuff.data;
-    //   const options = {
-    //     'Content-Type': file.type,
-    //   };
-    //   const putOnServer = await axios.put(signedUrl, file, options);
-    //   if (putOnServer) {
-    //     console.log("JA SAM NA SERVERU BATICEEEEE 0", putOnServer);
-    //   } else {
-    //     console.log("IZDUVASMO GA BATICE ", putOnServer);
-    //   }
-    // }
     const mutation = await this.props.registerMe(
       {
         variables: {
@@ -127,31 +103,29 @@ class RegisterPerson extends React.Component {
         },
       },
     );
-    console.log("resp:",mutation);
     if (mutation) {
-      console.log('prosaooo', mutation);
-    } else {
-      console.log('prsoo', mutation);
+      const { id } = mutation.data.updateOrCreateUser;
+      this.props.history.push(`/register-certificate/${id}`);
     }
   }
-  addToSkillArr = (skillId) => {
-    let {skillArr} = this.state;
+  addToSkillArr = skillId => {
+    const { skillArr } = this.state;
     if (skillArr.includes(skillId)) {
-      let a = this.state.skillArr;
-      let b = a.indexOf(skillId);
+      const a = this.state.skillArr;
+      const b = a.indexOf(skillId);
       a.splice(b, 1);
       this.setState({
         skillArr: a,
-      })
+      });
     } else {
       this.setState({
         skillArr: [...skillArr, parseInt(skillId)]
-      })
+      });
     }
   }
-  handleChange = (date) => {
-    let d1 = Moment(date._d).format();
-    let dateformated = d1.slice(0,10);
+  handleChange = date => {
+    const d1 = Moment(date._d).format();
+    const dateformated = d1.slice(0,10);
     this.setState({
       date: dateformated,
       dateSelected: date,
@@ -167,7 +141,7 @@ class RegisterPerson extends React.Component {
             <RegisterInput
               placeHolder="First name"
               type="text"
-              updateFunc={(e) => {
+              updateFunc={e => {
                 if (validateStringNames(e.target.value)) {
                   console.log('ime je ok!!')
                    this.setState({firstName: e.target.value})
@@ -182,7 +156,7 @@ class RegisterPerson extends React.Component {
             <RegisterInput
               placeHolder="Last name"
               type="text"
-              updateFunc={(e) => {
+              updateFunc={e => {
                 if (validateStringNames(e.target.value)) {
                    this.setState({lastName: e.target.value})
                 } else {
@@ -196,7 +170,7 @@ class RegisterPerson extends React.Component {
             <RegisterInput
               placeHolder="Email"
               type="text"
-              updateFunc={(e) => {
+              updateFunc={e => {
                 if (validateEmail(e.target.value)) {
                    this.setState({email: e.target.value})
                 } else {
@@ -212,7 +186,7 @@ class RegisterPerson extends React.Component {
             <RegisterInput
               placeHolder="Password"
               type="text"
-              updateFunc={(e) => {
+              updateFunc={e => {
                 if (validatePassword(e.target.value)) {
                    this.setState({password: e.target.value})
                 } else {
@@ -227,7 +201,7 @@ class RegisterPerson extends React.Component {
               placeHolder="Phone"
               type="text"
               value={this.state.phone}
-              updateFunc={(e) => {
+              updateFunc={e => {
                 if (validatePhone(e.target.value)) {
                    this.setState({phone: e.target.value})
                 } else {
@@ -241,7 +215,7 @@ class RegisterPerson extends React.Component {
             <RegisterInput
               placeHolder="Birthday Place"
               type="text"
-              updateFunc={(e) => {
+              updateFunc={e => {
                 if (validateBirthPlace(e.target.value)) {
                    this.setState({birthPlace: e.target.value})
                 } else {
@@ -264,7 +238,7 @@ class RegisterPerson extends React.Component {
             <RegisterInput
               placeHolder="Facebook Link"
               type="text"
-              updateFunc={(e) => {
+              updateFunc={e => {
                 if (validateUrl(e.target.value)) {
                    this.setState({facebookLink: e.target.value})
                 } else {
@@ -278,7 +252,7 @@ class RegisterPerson extends React.Component {
             <RegisterInput
               placeHolder="Instagram Link"
               type="text"
-              updateFunc={(e) => {
+              updateFunc={e => {
                 if (validateUrl(e.target.value)) {
                    this.setState({instagramLink: e.target.value})
                 } else {
@@ -289,31 +263,32 @@ class RegisterPerson extends React.Component {
           </div>
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-        <div>
-          <label className={css.labelsRegister}>About</label>
-          <RegisterInput
-            placeHolder="About"
-            type="text"
-            updateFunc={(e) => {
-              if (validateAbout(e.target.value)) {
-                 this.setState({about: e.target.value})
-              } else {
-                console.warn('nije ok about!')
-              }
-            }}
+          <div>
+            <label className={css.labelsRegister}>About</label>
+            <RegisterInput
+              placeHolder="About"
+              type="text"
+              updateFunc={e => {
+                if (validateAbout(e.target.value)) {
+                  this.setState({about: e.target.value})
+                } else {
+                  console.warn('nije ok about!')
+                }
+              }}
             />
           </div>
           <Uppy setRegister={injectFile => this.setState({file: injectFile })} />
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex',flexDirection: 'row', justifyContent: 'center'}}>
           <button onClick={() => {
-
-            //this.newUser();
+            this.newUser();
           }}
-          >REGISTER ME</button>
+          >
+            REGISTER ME
+          </button>
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex',flexDirection: 'row', justifyContent: 'center'}}>
-          <SearchBox 
+          <SearchBox
             coaches
             categories
             addToSkillArr={this.addToSkillArr}

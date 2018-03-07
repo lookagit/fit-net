@@ -6,7 +6,6 @@ import Moment from 'moment-timezone';
 import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
 import RegisterInput from './RegisterInput';
-import faker from 'faker';
 import {
   validateStringNames,
   validateEmail,
@@ -16,7 +15,6 @@ import {
   validateUrl,
   validateAbout,
 } from './validationFuncs';
-import { defaultCipherList } from 'constants';
 import { connect } from 'react-redux'
 import SearchBox from '../searchBox';
 const axios = require('axios');
@@ -85,29 +83,6 @@ class RegisterFisio extends React.Component {
     }
   }
     newFisio = async () => {
-      // let url = '';
-      // const { file } = this.state;
-      // const fakerUuid = faker.random.uuid();
-      // const fileType = file.type.split('/').pop();
-      // const uniqueNameForImg = `${fakerUuid}.${fileType}`;
-      // if (process.env.NODE_ENV === 'production') {
-      //   url = 'https://fit-net.herokuapp.com/ping/';
-      // } else {
-      //   url = 'http://localhost:8081/ping/';
-      // }
-      // const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${file.type}`);
-      // if (axiosStuff) {
-      //   const signedUrl = axiosStuff.data;
-      //   const options = {
-      //     'Content-Type': file.type,
-      //   };
-      //   const putOnServer = await axios.put(signedUrl, file, options);
-      //   if (putOnServer) {
-      //     console.log("JA SAM NA SERVERU BATICEEEEE 0", putOnServer);
-      //   } else {
-      //     console.log("IZDUVASMO GA BATICE ", putOnServer);
-      //   }
-      // }
       const mutation = await this.props.registerNewFisio(
         {
           variables: {

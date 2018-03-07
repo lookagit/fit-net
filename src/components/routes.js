@@ -14,7 +14,6 @@
 
 // React
 import React from 'react';
-import PropTypes from 'prop-types';
 
 /* ReactQL */
 
@@ -42,14 +41,6 @@ export const Proba = () => (
 export const Page = ({ match }) => (
   <h1>DOBRODOSLI NA {match.params.name}</h1>
 );
-
-// Specify PropTypes if the `match` object, which is injected to props by
-// the <Route> component
-Page.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.object,
-  }).isRequired,
-};
 
 // Create a route that will be displayed when the code isn't found
 export const WhenNotFound = () => (

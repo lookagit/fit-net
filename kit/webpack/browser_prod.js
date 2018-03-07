@@ -21,8 +21,6 @@ import WebpackConfig from 'webpack-config';
 // that can be called from our final HTML.  This plugin does the heavy lifting
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
-// Compression plugin for generating `.gz` static files
-import ZopfliPlugin from 'zopfli-webpack-plugin';
 
 // Generate .br files, using the Brotli compression algorithm
 import BrotliPlugin from 'brotli-webpack-plugin';
@@ -124,14 +122,6 @@ export default new WebpackConfig().extend({
     new webpack.optimize.AggressiveMergingPlugin(),
 
     // Compress assets into .gz files, so that our Koa static handler can
-    // serve those instead of the full-sized version
-    new ZopfliPlugin({
-      // Use Zopfli compression
-      algorithm: 'zopfli',
-      // Overwrite the default 80% compression-- anything is better than
-      // nothing
-      minRatio: 0.99,
-    }),
 
     // Also generate .br files, with Brotli compression-- often significantly
     // smaller than the gzip equivalent, but not yet universally supported

@@ -5,7 +5,7 @@
 // ----------------------
 // IMPORTS
 import React from 'react';
-import PropTypes from 'prop-types';
+
 
 // ----------------------
 
@@ -38,13 +38,5 @@ const Html = ({ helmet, scripts, window, css, children }) => (
     </body>
   </html>
 );
-
-Html.propTypes = {
-  helmet: PropTypes.object.isRequired,
-  window: PropTypes.object.isRequired,
-  scripts: PropTypes.arrayOf(PropTypes.string).isRequired,
-  css: PropTypes.string.isRequired,
-  children: PropTypes.element.isRequired,
-};
 
 export default Html;

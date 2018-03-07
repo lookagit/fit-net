@@ -10,7 +10,7 @@
 /* NPM */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+
 
 // GraphQL
 import { graphql } from 'react-apollo';
@@ -30,14 +30,6 @@ import allMessages from 'src/graphql/queries/all_messages.gql';
 // lib, which is used on the server-side to initially define the schema
 @graphql(allMessages)
 export default class GraphQLMessage extends React.PureComponent {
-  static propTypes = {
-    data: PropTypes.shape({
-      message: PropTypes.shape({
-        text: PropTypes.string,
-      }),
-    }),
-  }
-
   static defaultProps = {
     data: {
       message: {

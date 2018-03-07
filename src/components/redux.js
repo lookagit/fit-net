@@ -7,7 +7,6 @@
 
 /* NPM */
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // HOC/decorator to listen to Redux store state
 import { connect } from 'react-redux';
@@ -19,17 +18,6 @@ import { connect } from 'react-redux';
 // we're listening to `state.counter`, which we can show inside the component
 @connect(state => ({ counter: state.counter }))
 export default class ReduxCounter extends React.PureComponent {
-  static propTypes = {
-    counter: PropTypes.shape({
-      count: PropTypes.number.isRequired,
-    }),
-  };
-
-  static defaultProps = {
-    counter: {
-      count: 0,
-    },
-  }
 
   // Trigger the `INCREMENT_COUNTER` action in Redux, to add 1 to the total.
   // Note: by using the `= () {}` format, we're implicitly binding the component
