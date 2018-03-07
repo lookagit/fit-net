@@ -166,9 +166,9 @@ class RegisterFisio extends React.Component {
     return(
       <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
-          <h3>Fizio</h3>
+          {/* <h3>Fizio</h3> */}
           <div>
-            <label className={css.labelsRegister}>First name</label>
+            {/* <label className={css.labelsRegister}>First name</label> */}
             <RegisterInput
               placeHolder="First name"
               type="text"
@@ -183,7 +183,7 @@ class RegisterFisio extends React.Component {
             />
           </div>
           <div>
-            <label className={css.labelsRegister}>Last name</label>
+            {/* <label className={css.labelsRegister}>Last name</label> */}
             <RegisterInput
               placeHolder="Last name"
               type="text"
@@ -197,7 +197,7 @@ class RegisterFisio extends React.Component {
             />
           </div>
           <div>
-            <label className={css.labelsRegister}>Email</label>
+            {/* <label className={css.labelsRegister}>Email</label> */}
             <RegisterInput
               placeHolder="Email"
               type="text"
@@ -213,7 +213,7 @@ class RegisterFisio extends React.Component {
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
           <div>
-            <label className={css.labelsRegister}>Password</label>
+            {/* <label className={css.labelsRegister}>Password</label> */}
             <RegisterInput
               placeHolder="Password"
               type="text"
@@ -227,7 +227,7 @@ class RegisterFisio extends React.Component {
             />
           </div>
           <div>
-            <label className={css.labelsRegister}>Phone</label>
+            {/* <label className={css.labelsRegister}>Phone</label> */}
             <RegisterInput
               placeHolder="Phone"
               type="text"
@@ -242,7 +242,7 @@ class RegisterFisio extends React.Component {
             />
           </div>
           <div>
-            <label className={css.labelsRegister}>Birtday Place</label>
+            {/* <label className={css.labelsRegister}>Birtday Place</label> */}
             <RegisterInput
               placeHolder="Birthday Place"
               type="text"
@@ -258,14 +258,14 @@ class RegisterFisio extends React.Component {
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
           <div>
-            <label className={css.labelsRegister}>Birtday Date</label>
+            {/* <label className={css.labelsRegister}>Birtday Date</label> */}
             <DatePicker
               selected={this.state.dateSelected}
               onChange={this.handleChange}
             />
           </div>
           <div>
-            <label className={css.labelsRegister}>Facebook Link</label>
+            {/* <label className={css.labelsRegister}>Facebook Link</label> */}
             <RegisterInput
               placeHolder="Facebook Link"
               type="text"
@@ -279,7 +279,7 @@ class RegisterFisio extends React.Component {
             />
           </div>
           <div>
-            <label className={css.labelsRegister}>Instagram Link</label>
+            {/* <label className={css.labelsRegister}>Instagram Link</label> */}
             <RegisterInput
               placeHolder="Instagram Link"
               type="text"
@@ -295,7 +295,7 @@ class RegisterFisio extends React.Component {
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
           <div>
-            <label className={css.labelsRegister}>About</label>
+            {/* <label className={css.labelsRegister}>About</label> */}
             <RegisterInput
               placeHolder="About"
               type="text"

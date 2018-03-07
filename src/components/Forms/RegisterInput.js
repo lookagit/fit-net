@@ -1,8 +1,10 @@
 import React from 'react';
 import { validateEmail } from './validationFuncs';
+import css from '../styles/styles.scss';
 
 const InputFine = ({placeHolder, type, updateFunc, setWarning, value}) => (
-  <input 
+  <input
+    className={css.registerInput}
     placeholder={placeHolder} 
     type={type ? type : 'text'}
     value={value}
