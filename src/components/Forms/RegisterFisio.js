@@ -1,14 +1,12 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
-import faker from 'faker';
-import { withRouter } from 'react-router-dom';
 import gql from 'graphql-tag';
 import DatePicker from 'react-datepicker';
 import Moment from 'moment-timezone';
 import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
 import RegisterInput from './RegisterInput';
-import SearchBox from '../searchBox';
+import faker from 'faker';
 import {
   validateStringNames,
   validateEmail,
@@ -18,10 +16,16 @@ import {
   validateUrl,
   validateAbout,
 } from './validationFuncs';
-
-@withRouter
+import { defaultCipherList } from 'constants';
+import { connect } from 'react-redux'
+import SearchBox from '../searchBox';
+const axios = require('axios');
+@connect(state => ({ 
+  fizio: state.fizio,
+  coaches: state.coaches,
+}))
 @graphql(gql`
-  mutation updateOrCreateUser(
+  mutation updateOrCreateFisio(
     $email: String,
     $password: String,
     $firstName: String,
@@ -34,9 +38,9 @@ import {
     $hasCerificates: Boolean,
     $about: String,
     $imageUrl: String,
-    $skillsArr: [Int]
+    $fisioSkillsArr: [Int]
   ) {
-    updateOrCreateUser(
+    updateOrCreateFisio(
       email: $email,
       password: $password,
       firstName: $firstName,
@@ -49,16 +53,16 @@ import {
       hasCerificates: $hasCerificates,
       about: $about,
       imageUrl: $imageUrl,
-      skillsArr: $skillsArr
+      fisioSkillsArr: $fisioSkillsArr
     ) {
       id
     }
   }`,
   {
-    name: 'registerMe',
+    name: 'registerNewFisio',
   },
 )
-class RegisterPerson extends React.Component {
+class RegisterFisio extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -76,92 +80,93 @@ class RegisterPerson extends React.Component {
       hasCerificates: false,
       file: null,
       imgUrl: 'https://google.com',
-      arrayFizio: [],
-      arrayCategories: [],
-      arrayCounties: [],
-      countiesId: null,
       skillArr: [],
+      
     }
   }
-
-  newUser = async () => {
-    // let url = '';
-    // const { file } = this.state;
-    // const fakerUuid = faker.random.uuid();
-    // const fileType = file.type.split('/').pop();
-    // const uniqueNameForImg = `${fakerUuid}.${fileType}`;
-    // if (process.env.NODE_ENV === 'production') {
-    //   url = 'https://fit-net.herokuapp.com/ping/';
-    // } else {
-    //   url = 'http://localhost:8081/ping/';
-    // }
-    // const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${file.type}`);
-    // if (axiosStuff) {
-    //   const signedUrl = axiosStuff.data;
-    //   const options = {
-    //     'Content-Type': file.type,
-    //   };
-    //   const putOnServer = await axios.put(signedUrl, file, options);
-    //   if (putOnServer) {
-    //     console.log("JA SAM NA SERVERU BATICEEEEE 0", putOnServer);
-    //   } else {
-    //     console.log("IZDUVASMO GA BATICE ", putOnServer);
-    //   }
-    // }
-    const mutation = await this.props.registerMe(
-      {
-        variables: {
-          email: this.state.email,
-          password: this.state.password,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          facebookLink: this.state.facebookLink,
-          instagramLink: this.state.instagramLink,
-          cellPhone: this.state.phone,
-          birthPlace: this.state.birthPlace,
-          birthDay: this.state.date,
-          hasCerificates: this.state.hasCerificates,
-          about: this.state.about,
-          imageUrl: `https://fitnetbucket.s3.eu-west-3.amazonaws.com/`,
-          skillsArr: this.state.skillArr,
+    newFisio = async () => {
+      // let url = '';
+      // const { file } = this.state;
+      // const fakerUuid = faker.random.uuid();
+      // const fileType = file.type.split('/').pop();
+      // const uniqueNameForImg = `${fakerUuid}.${fileType}`;
+      // if (process.env.NODE_ENV === 'production') {
+      //   url = 'https://fit-net.herokuapp.com/ping/';
+      // } else {
+      //   url = 'http://localhost:8081/ping/';
+      // }
+      // const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${file.type}`);
+      // if (axiosStuff) {
+      //   const signedUrl = axiosStuff.data;
+      //   const options = {
+      //     'Content-Type': file.type,
+      //   };
+      //   const putOnServer = await axios.put(signedUrl, file, options);
+      //   if (putOnServer) {
+      //     console.log("JA SAM NA SERVERU BATICEEEEE 0", putOnServer);
+      //   } else {
+      //     console.log("IZDUVASMO GA BATICE ", putOnServer);
+      //   }
+      // }
+      const mutation = await this.props.registerNewFisio(
+        {
+          variables: {
+            email: this.state.email,
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            facebookLink: this.state.facebookLink,
+            instagramLink: this.state.instagramLink,
+            cellPhone: this.state.phone,
+            birthPlace: this.state.birthPlace,
+            birthDay: this.state.date,
+            hasCertificates: this.state.hasCerificates,
+            about: this.state.about,
+            imageUrl: `https://fitnetbucket.s3.eu-west-3.amazonaws.com/`,
+            fisioSkillsArr: this.state.skillArr,
+          },
         },
-      },
-    );
-    console.log("resp:",mutation);
-    if (mutation) {
-      console.log('prosaooo', mutation);
-    } else {
-      console.log('prsoo', mutation);
+      );
+      console.log("resp:",mutation);
+      if (mutation) {
+        console.log('prosaooo', mutation);
+      } else {
+        console.log('prsoo', mutation);
+      }
     }
-  }
-  addToSkillArr = (skillId) => {
-    let {skillArr} = this.state;
-    if (skillArr.includes(skillId)) {
-      let a = this.state.skillArr;
-      let b = a.indexOf(skillId);
-      a.splice(b, 1);
-      this.setState({
-        skillArr: a,
-      })
-    } else {
-      this.setState({
-        skillArr: [...skillArr, parseInt(skillId)]
-      })
+
+    fizioCategories = (skillId) => {
+      let {skillArr} = this.state;
+      if (skillArr.includes(skillId)) {
+        let a = this.state.skillArr;
+        let b = a.indexOf(skillId);
+        a.splice(b, 1);
+        this.setState({
+          skillArr: a
+        })
+      } else {
+        this.setState({
+          skillArr: [...skillArr, parseInt(skillId)]
+        })
+      }
     }
-  }
-  handleChange = (date) => {
-    let d1 = Moment(date._d).format();
-    let dateformated = d1.slice(0,10);
-    this.setState({
-      date: dateformated,
-      dateSelected: date,
-    });
-  }
+    
+
+    handleChange = (date) => {
+      let d1 = Moment(date._d).format();
+      let dateformated = d1.slice(0,10);
+      this.setState({
+        date: dateformated,
+        dateSelected: date,
+      });
+    }
+  
   render() {
-    console.log('sdasdsadad-------------------',this.state)
-    return( 
+    console.log('evee ti state iz register fizio',this.state);
+    return(
       <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
+          <h3>Fizio</h3>
           <div>
             <label className={css.labelsRegister}>First name</label>
             <RegisterInput
@@ -289,39 +294,38 @@ class RegisterPerson extends React.Component {
           </div>
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-        <div>
-          <label className={css.labelsRegister}>About</label>
-          <RegisterInput
-            placeHolder="About"
-            type="text"
-            updateFunc={(e) => {
-              if (validateAbout(e.target.value)) {
-                 this.setState({about: e.target.value})
-              } else {
-                console.warn('nije ok about!')
-              }
-            }}
-            />
+          <div>
+            <label className={css.labelsRegister}>About</label>
+            <RegisterInput
+              placeHolder="About"
+              type="text"
+              updateFunc={(e) => {
+                if (validateAbout(e.target.value)) {
+                   this.setState({about: e.target.value})
+                } else {
+                  console.warn('nije ok about!')
+                }
+              }}
+              />
           </div>
           <Uppy setRegister={injectFile => this.setState({file: injectFile })} />
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex',flexDirection: 'row', justifyContent: 'center'}}>
           <button onClick={() => {
-
-            //this.newUser();
+            console.log('state i props na register fisio', this.state, this.props)
+            this.newFisio();
           }}
-          >REGISTER ME</button>
+          >REGISTER FISIO</button>
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex',flexDirection: 'row', justifyContent: 'center'}}>
           <SearchBox 
-            coaches
+            fizio
             categories
-            addToSkillArr={this.addToSkillArr}
+            fizioCategories={this.fizioCategories}
           />
         </div>
-        
-      </div>
+        </div>
     );
   }
-} 
-export default RegisterPerson;
+}
+export default RegisterFisio

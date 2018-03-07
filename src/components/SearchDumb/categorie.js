@@ -25,11 +25,11 @@ class Categorie extends React.Component {
         <div 
           onClick={() => this.props.openModal()}
           className={css.categorieButton}>
-          <div 
+          {/* <div 
             className={css.categoriesAlert}
             style={{display:`${this.props.categoriesAlert}`}}>
             Izaberite kategoriju
-          </div>
+          </div> */}
           <h3 style={{color: '#a9a9a9', fontWeight: 'bold',}}>{this.inputHolder()}</h3>
         </div>
       </div>

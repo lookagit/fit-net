@@ -49,11 +49,8 @@ import { Redirect, history } from 'kit/lib/routing';
 // Child React components. Note:  We can either export one main React component
 // per file, or in the case of <Home>, <Page> and <WhenFound>, we can group
 // multiple components per file where it makes sense to do so
-import GraphQLMessage from 'components/graphql';
-import { Home, Page, WhenNotFound } from 'components/routes';
-import ReduxCounter from 'components/redux';
-import Stats from 'components/stats';
-import Styles from 'components/styles';
+import { Home, WhenNotFound } from 'components/routes';
+
 import Header from '../header';
 import Coaches from '../coaches';
 import Fizio from '../fizio';
@@ -65,6 +62,7 @@ import CoachesOne from '../CoachesOne';
 import Proba from '../proba';
 import RegisterPerson from '../Forms/RegisterPerson';
 import UploadCertificates from '../Forms/UploadCertificates';
+import RegisterFisio from '../Forms/RegisterFisio';
 // Styles
 import css from '../styles/styles.scss';
 
@@ -102,6 +100,7 @@ export default () => (
       <Route path="/proba" component={Proba} />
       <Route path="/register" component={RegisterPerson} />
       <Route path="/register-certificate/:userId" component={UploadCertificates} />
+      <Route path="/registerFisio" component={RegisterFisio} />
       <Redirect from="/old/path" to="/new/path" />
       <Route component={WhenNotFound} />
     </Switch>
