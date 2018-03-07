@@ -28,7 +28,7 @@ class UploadCertificates extends React.Component {
   }
   certsUpload = async () => {
     let url = '';
-    const { files } = this.state;
+    const { files } = this.state; 
     if (files.length) {
       const filesUpload = files.map(async item => {
         const fakerUuid = faker.random.uuid();

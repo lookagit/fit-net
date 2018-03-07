@@ -46,7 +46,7 @@ export default class S3Uploader extends React.Component {
         </div>
         <Dropzone onDrop={this.onDrop} size={150}>
           <div>
-            Drop some files here!
+            Prebacite slike
           </div>
         </Dropzone>
       </div>
