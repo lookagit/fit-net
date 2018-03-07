@@ -350,13 +350,11 @@ const Certification = db.define('certification', {
   },
   certUrl: {
     type: Sequelize.STRING,
-  }
-})
+  },
+});
 
 PersonCl.hasMany(Certification);
 FisioCl.hasMany(Certification);
-
-
 
 db.sync({force: true}).then(() => {
   PersonArr.map(async item => {
