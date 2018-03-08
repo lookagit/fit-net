@@ -164,8 +164,9 @@ class RegisterFisio extends React.Component {
   render() {
     console.log('evee ti state iz register fizio',this.state);
     return(
-      <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
-        <div style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
+      <div className={css.registerFisioWrapper}>
+        <div>
+        <div className={css.stefan} style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
           {/* <h3>Fizio</h3> */}
           <div>
             {/* <label className={css.labelsRegister}>First name</label> */}
@@ -310,19 +311,33 @@ class RegisterFisio extends React.Component {
           </div>
           <Uppy setRegister={injectFile => this.setState({file: injectFile })} />
         </div>
-        <div style={{margin: '0 auto', width: '50%', display: 'flex',flexDirection: 'row', justifyContent: 'center'}}>
-          <button onClick={() => {
-            console.log('state i props na register fisio', this.state, this.props)
-            this.newFisio();
-          }}
-          >REGISTER FISIO</button>
         </div>
+
+
+
+
+
+
+        
         <div style={{margin: '0 auto', width: '50%', display: 'flex',flexDirection: 'row', justifyContent: 'center'}}>
           <SearchBox 
             fizio
             categories
             fizioCategories={this.fizioCategories}
           />
+        </div>
+
+
+
+
+
+
+        <div style={{margin: '0 auto', width: '50%', display: 'flex',flexDirection: 'row', justifyContent: 'center'}}>
+          <button onClick={() => {
+            console.log('state i props na register fisio', this.state, this.props)
+            this.newFisio();
+          }}
+          >REGISTER FISIO</button>
         </div>
         </div>
     );

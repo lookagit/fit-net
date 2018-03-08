@@ -27,8 +27,11 @@ import server, { createReactHandler, staticMiddleware } from './server';
 // ----------------------
 
 // Read in manifest files
-const [manifest, chunkManifest] = ['manifest', 'chunk-manifest']
+// const [manifest, chunkManifest] = ['manifest', 'chunk-manifest']
+//   .map(name => JSON.parse(readFileSync(path.resolve(PATHS.dist, `${name}.json`), 'utf8')));
+const [manifest] = ['manifest']
   .map(name => JSON.parse(readFileSync(path.resolve(PATHS.dist, `${name}.json`), 'utf8')));
+const chunkManifest = {};
 
 // Get manifest values
 const css = manifest['browser.css'];
