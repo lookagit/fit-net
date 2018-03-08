@@ -153,7 +153,7 @@ a{
   height: 100%;
   width: 100%;
   background-color: rgba(0,0,0,.5);
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 1001;
@@ -541,8 +541,20 @@ a{
 .registerInput::placeholder{
   font-size: 18px;
 }
-.stefan{
-  font-size: 18px;
+.registerFisio{
+
+}
+.registerFisioOne{
+  width: 700px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  background: rgba(61, 75, 105, .7);
+  padding: 20px;
+}
+.registerFisioOne:nth-child(1){
+  margin-top: 20px;
 }
 // REGISTER FISIO INPUT END
 /////////////////////////////////////////////////////////////////////////////////////////////////

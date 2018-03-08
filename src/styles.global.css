@@ -855,6 +855,15 @@ html {
   position: relative;
   display: inline-block;
 }
+.react-datepicker__input-container input{
+  border: none;
+  padding-left: 42px;
+  height: 40px;
+  width: 270px;
+  outline: none;
+  border-radius: 5px;
+  color: red;
+}
 
 .react-datepicker__year-read-view,
 .react-datepicker__month-read-view,
