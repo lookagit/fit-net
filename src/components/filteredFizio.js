@@ -2,61 +2,79 @@ import React from 'react';
 import { connect } from 'react-redux';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import css from './styles/styles.scss';
 import Loading from 'react-loading-components';
-@connect(state => ({ fizio: state.fizio }))
-// @graphql(gql`
-// query personCl(
-//   $skillIds: [Int],
-//   $priceFrom: Int,
-//   $priceTo: Int,
-//   $countyId: Int,
-//   $groupTraining: Boolean,
-//   $certified: Boolean) {
-//     personCl(
-//       skillIds: $skillIds
-//       priceFrom: $priceFrom,
-//       priceTo: $priceTo,
-//       countyId: $countyId,
-//       groupTraining: $groupTraining,
-//       certified: $certified) {
-//         id
-//         firstName
-//         lastName
-//         facebookLink
-//         instagramLink
-//         imageUrl
-//         about
-//         birthPlace
-//         birthDay
-//         trainingPersonSkills {
-//           trainSkillName
-//         }
-//     }
-//   }`,
-// {
-//   options: (props) => {
-//     return ({
-//       variables: {
-//         skillIds: props.coaches.skillArr,
-//         priceFrom: props.coaches.priceFrom,
-//         priceTo: props.coaches.priceTo,
-//         countyId: props.coaches.countyId,
-//         groupTraining: props.coaches.groupTraining,
-//         certified: props.coaches.certified
-//       }
-//     })
-//   },
-// })
+import css from './styles/styles.scss';
+import AfterSearchItemFisio from './AfterSearchItemFisio';
 
-class FilteredFizio extends React.Component{
-  render(){
-    console.log('OVO SI TRAZIO', this.props)
-    return(
-      <div>
-         FIZIO
+@connect(state => ({ fizio: state.fizio }))
+@graphql(
+  gql`
+  query fisoCl(
+    $skillIds: [Int],
+    $priceFrom: Int,
+    $priceTo: Int,
+    $countyId: Int,
+    $comesHome: Boolean,
+    $hasCerificates: Boolean
+  ) {
+    fisoCl(
+      skillIds: $skillIds,
+      priceFrom: $priceFrom,
+      priceTo: $priceTo,
+      countyId: $countyId,
+      comesHome: $comesHome,
+      hasCerificates: $hasCerificates
+    ) {
+      id
+      firstName
+      lastName
+      facebookLink
+      instagramLink
+      imageUrl
+      about
+      birthPlace
+      birthDay
+    }
+  }
+  `,
+  {
+    options: props => ({
+      variables: {
+        skillIds: props.fizio.skillArr,
+        priceFrom: props.fizio.priceFrom,
+        priceTo: props.fizio.priceTo,
+        countyId: props.fizio.countyId,
+        comesHome: props.fizio.comesHome,
+        hasCerificates: props.fizio.certified,
+      },
+    }),
+  },
+)
+class FilteredFizio extends React.Component {
+  render() {
+    /** TODO MAKE ONE FISO COMPONENT */
+    return (
+      <div className={css.coachesWrapper}>
+        <div className={css.coachesHolder}>
+          {
+            this.props.data.loading ? 
+              <Loading 
+                type='puff' 
+                width={150} 
+                height={150} 
+                fill='#f44242' 
+              /> : 
+              this.props.data.fisoCl.length ?
+                this.props.data.fisoCl.map((item, key) => (
+                  <AfterSearchItemFisio
+                    couchProp={item}
+                    key={key} 
+                  />
+                )) : null
+          }
+        </div>
       </div>
-    )
+    );
   }
 }
 export default FilteredFizio;

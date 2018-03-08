@@ -49,17 +49,12 @@ class FilteredClubs extends React.Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-      console.log('ovo je nextProps', nextProps)
     if(nextProps.data.clubCl != undefined) {
       this.setState({clubCl: nextProps.data.clubCl})
     }
   }
 
   render() {
-    console.log("OVO SU klubovi ", this.state.clubCl);
-    // let proba = this.state.people.map(item => {
-    //   return item.firstName
-    // });
     return(
       <div>
         blblalbbsaa

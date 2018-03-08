@@ -57,7 +57,6 @@ class UploadCertificates extends React.Component {
                 personClId: parseInt(this.props.match.params.userId),
               },
             });
-            console.log("JA SAM LETS MUTATE ", letsMutate);
           } else {
             console.log("IZDUVASMO GA BATICE ", putOnServer);
           }
@@ -66,7 +65,6 @@ class UploadCertificates extends React.Component {
     }
   }
   render() {
-    console.log("E JA NESTO RENDERUJEM RI{ ", this.props);
     return (
       <div    
         style={{

@@ -41,7 +41,6 @@ query onePresonCl($personClId: Int) {
 )
 class CoachesOne extends React.Component {
   render() {
-    console.log("AJDE  ", this.props);
     return(
       <div>
         {

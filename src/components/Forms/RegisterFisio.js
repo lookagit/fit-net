@@ -102,7 +102,6 @@ class RegisterFisio extends React.Component {
           },
         },
       );
-      console.log("resp:",mutation);
       if (mutation) {
         console.log('prosaooo', mutation);
       } else {
@@ -137,7 +136,6 @@ class RegisterFisio extends React.Component {
     }
   
   render() {
-    console.log('evee ti state iz register fizio',this.state);
     return(
       <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
@@ -149,7 +147,6 @@ class RegisterFisio extends React.Component {
               type="text"
               updateFunc={(e) => {
                 if (validateStringNames(e.target.value)) {
-                  console.log('ime je ok!!')
                    this.setState({firstName: e.target.value})
                 } else {
                   console.warn('nije ok ime!')
@@ -287,7 +284,6 @@ class RegisterFisio extends React.Component {
         </div>
         <div style={{margin: '0 auto', width: '50%', display: 'flex',flexDirection: 'row', justifyContent: 'center'}}>
           <button onClick={() => {
-            console.log('state i props na register fisio', this.state, this.props)
             this.newFisio();
           }}
           >REGISTER FISIO</button>

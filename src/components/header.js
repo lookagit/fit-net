@@ -17,7 +17,6 @@ class Header extends React.Component {
       modal: true,
       modalClass: e,
     })
-    console.log('sssssssssss', e)
   }
   modalOff = () => {
     this.setState({
@@ -28,7 +27,6 @@ class Header extends React.Component {
     e.stopPropagation();
   }
   render() {
-    console.log('IZ HEADERA', this.props)
     return(
       <div className={css.header}>
         <div className={css.headerBox1}>

@@ -16,25 +16,25 @@ class Fizio extends React.Component {
       skillArr: [],
       countiesId: null,
       certified: false,
-      comingHome: false,
+      comesHome: false,
       priceFrom: 0,
-      priceTo: 0, 
-    }
+      priceTo: 0,
+    };
   }
+
   sendToRedux = () => {
     this.props.dispatch({
       type: "FIZIO_FILTRATION",
       skillArr: this.state.skillArr,
       countiesId: this.state.countiesId,
       certified: this.state.certified,
-      comingHome: this.state.comingHome,
+      comesHome: this.state.comesHome,
       priceFrom: this.state.priceFrom,
       priceTo: this.state.priceTo,
     });
     history.push('/listoffizio');
   }
   getParams = () => {
-    // Send in redux and reset state
     this.setState({
       skillArr: [],
       countiesId: null,
@@ -44,60 +44,65 @@ class Fizio extends React.Component {
       priceTo: 0,
       categoriesAlert: 'none',
       countiesAlert: 'none',
-    })
+    });
     this.sendToRedux();
   }
-  fizioCounties = (countiesId) => {
+
+  fizioCounties = countiesId => {
     this.setState({
       countiesId,
-    })
+    });
   }
-  fizioCategories = (skillId) => {
-    let {skillArr} = this.state;
+
+  fizioCategories = skillId => {
+    const { skillArr } = this.state;
     if (skillArr.includes(skillId)) {
       let a = this.state.skillArr;
       let b = a.indexOf(skillId);
       a.splice(b, 1);
       this.setState({
         skillArr: a
-      })
+      });
     } else {
       this.setState({
         skillArr: [...skillArr, skillId]
-      })
+      });
     }
   }
-  priceFromFunc = (priceFrom) => {
+
+  priceFromFunc = priceFrom => {
     this.setState({
       priceFrom,
-    })
+    });
   }
 
-  priceToFunc = (priceTo) => {
+  priceToFunc = priceTo => {
     this.setState({
       priceTo,
-    })
+    });
   }
-  comingHome = (comingHome) => {
+
+  comesHome = comesHome => {
     this.setState({
-      comingHome,
-    })
+      comesHome,
+    });
   }
-  certifiedFunc = (certified) => {
+
+  certifiedFunc = certified => {
     this.setState({
       certified,
-    })
+    });
   }
-  render() {
 
-    return(
+  render() {
+    return (
       <div className={css.coaches}>
         <SearchBox
-          fizio={true}
-          categories={true}
-          counties={true}
-          sertifikat={true}
-          prices={true}
+          fizio
+          categories
+          counties
+          sertifikat
+          prices
           categoriesAlert={this.state.categoriesAlert}
           countiesAlert={this.state.countiesAlert}
           fizioCounties={this.fizioCounties}
@@ -107,14 +112,14 @@ class Fizio extends React.Component {
           priceToFunc={this.priceToFunc}
           getPriceTo={this.state.priceTo}
           getParams={this.getParams}
-          comingHomeFunc={this.comingHome}
+          comingHomeFunc={this.comesHome}
           comingHomeParams={this.state.comingHome}
           certifiedField={this.state.certified}
           certifiedFunc={this.certifiedFunc}
         />
         <CoachesImg />
       </div>
-    )
+    );
   }
 }
 export default Fizio;

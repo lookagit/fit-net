@@ -138,6 +138,9 @@ const FisioCl = new GraphQLObjectType({
       birthPlace: {
         type: GraphQLString,
       },
+      birthDay: {
+        type: GraphQLString,
+      },
       hasCerificates: {
         type: GraphQLBoolean,
       },

@@ -132,7 +132,6 @@ class RegisterPerson extends React.Component {
     });
   }
   render() {
-    console.log('sdasdsadad-------------------',this.state)
     return( 
       <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
@@ -143,7 +142,6 @@ class RegisterPerson extends React.Component {
               type="text"
               updateFunc={e => {
                 if (validateStringNames(e.target.value)) {
-                  console.log('ime je ok!!')
                    this.setState({firstName: e.target.value})
                 } else {
                   console.warn('nije ok ime!')

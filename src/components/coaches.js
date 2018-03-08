@@ -102,7 +102,6 @@ class Coaches extends React.Component {
     }
   }
   render() {
-    console.log('iz KOCESA', this.props)
     return (
       <div className={css.coaches}>
         <SearchBox

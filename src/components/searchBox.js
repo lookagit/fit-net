@@ -11,6 +11,7 @@ import GroupTrening from './SearchDumb/groupTrening';
 import Prices from './SearchDumb/prices';
 import SearchClubs from './SearchDumb/searchClubs';
 import ComingHome from './SearchDumb/comingHome';
+
 @graphql(gql`
 {
   trainingCategories {
@@ -29,7 +30,7 @@ import ComingHome from './SearchDumb/comingHome';
 `)
 
 class SearchBox extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       arrayFizio: [],
@@ -42,106 +43,104 @@ class SearchBox extends React.Component {
       nameInCounties: [],
       clickCount: 0,
       clickCountie: 0,
-    }
+    };
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.data.trainingCategories != undefined) {
-      this.setState({arrayCategories: nextProps.data.trainingCategories})
+    if (typeof nextProps.data.trainingCategories !== 'undefined') {
+      this.setState({ arrayCategories: nextProps.data.trainingCategories });
     }
-    if(nextProps.data.counties != undefined) {
-      this.setState({arrayCounties: nextProps.data.counties})
+    if (typeof nextProps.data.counties !== 'undefined') {
+      this.setState({ arrayCounties: nextProps.data.counties });
     }
-    if(nextProps.data.fisioCategories != undefined) {
-      this.setState({arrayFizio: nextProps.data.fisioCategories})
+    if (typeof nextProps.data.fisioCategories !== 'undefined') {
+      this.setState({ arrayFizio: nextProps.data.fisioCategories });
     }
   }
 
   handleSkillArr = (gotSkill, gotName) => {
-      let {nameInCategorie} = this.state;
-      if (nameInCategorie.includes(gotName)) {
-        let a = this.state.nameInCategorie;
-        let b = a.indexOf(gotName);
-        a.splice(b, 1)
-        this.setState({
-          nameInCategorie: a,
-          clickCount: this.state.clickCount - 1
-        })
-      } else {
-        this.setState({
-          nameInCategorie: [...nameInCategorie, gotName],
-          clickCount: this.state.clickCount + 1
-        })
-      }
-    if(this.props.clubs) {
+    const { nameInCategorie } = this.state;
+    if (nameInCategorie.includes(gotName)) {
+      const a = this.state.nameInCategorie;
+      const b = a.indexOf(gotName);
+      a.splice(b, 1);
+      this.setState({
+        nameInCategorie: a,
+        clickCount: this.state.clickCount - 1
+      });
+    } else {
+      this.setState({
+        nameInCategorie: [...nameInCategorie, gotName],
+        clickCount: this.state.clickCount + 1,
+      });
+    }
+    if (this.props.clubs) {
       this.props.selectCategories(parseInt(gotSkill));
-    }else if(this.props.coaches){
+    } else if (this.props.coaches) {
       this.props.addToSkillArr(gotSkill);
-    }else if(this.props.fizio){
-      // OVO JE PRIVREMENO!! TREBA MASSAGETYPE
+    } else if (this.props.fizio) {
       this.props.fizioCategories(gotSkill);
     }
   }
   handleCountiesArr = (gotId, gotName) => {
-    let {nameInCounties} = this.state;
+    const { nameInCounties } = this.state;
     if (nameInCounties.includes(gotName)) {
-      let a = this.state.nameInCounties;
-      let b = a.indexOf(gotName);
+      const a = this.state.nameInCounties;
+      const b = a.indexOf(gotName);
       a.splice(b, 1);
       this.setState({
         nameInCounties: a,
         clickCountie: this.state.clickCountie - 1
-      })
+      });
     } else {
       this.setState({
         nameInCounties: [gotName],
         clickCountie: this.state.clickCountie + 1
-      })
+      });
     }
-    if(this.props.clubs) {
+    if (this.props.clubs) {
       this.props.selectCounties(gotId);
-    }else if(this.props.coaches){
+    } else if (this.props.coaches) {
       this.props.addToCountiesArr(gotId);
-    }else if(this.props.fizio){
+    } else if (this.props.fizio) {
       this.props.fizioCounties(gotId);
     }
   }
 
   openModalCategories = () => {
     this.setState({
-      modalCategories: this.state.modalCategories == 'none' ? 'block' : 'none'
-    })
+      modalCategories: this.state.modalCategories === 'none' ? 'block' : 'none',
+    });
   }
   openModalCounties = () => {
     this.setState({
-      modalCounties: this.state.modalCounties == 'none' ? 'block' : 'none'
-    })
+      modalCounties: this.state.modalCounties === 'none' ? 'block' : 'none',
+    });
   }
-  sendGroupTraining(){
+  sendGroupTraining() {
     this.setState({
       groupTraining: !this.state.groupTraining
-    })
+    });
   }
-  stopPropagation(e){
+  stopPropagation = e => {
     e.stopPropagation();
   }
   // sendParams = () => {
   //   this.props.getParams('poslato')
   // }
   render() {
-    console.log('SVE KATEGORIJE', this.state.arrayCategories)
-    let fizio = this.state.arrayFizio.map((item, key) => {
+    const fizio = this.state.arrayFizio.map((item, key) => {
       return (
         <CheckboxComp
-        clickCount={this.state.clickCount}
-        key={key}
-        updateState={this.handleSkillArr}
-        catName={item.fisioSkillName}
-        catId={item.id}
-      />
-      )
-    })
-    let categories = this.state.arrayCategories.map((item, key) => {
+          clickCount={this.state.clickCount}
+          key={key}
+          updateState={this.handleSkillArr}
+          catName={item.fisioSkillName}
+          catId={item.id}
+        />
+      );
+    });
+    const categories = this.state.arrayCategories.map((item, key) => {
       return (
         <CheckboxComp
           clickCount={this.state.clickCount}
@@ -150,21 +149,19 @@ class SearchBox extends React.Component {
           catName={item.trainSkillName}
           catId={item.id}
         />
-      )
+      );
     });
 
-    let counties = this.state.arrayCounties.map((item, key) => {
-      return(
-        <CheckboxCounties 
-          clickCount={this.state.clickCountie}
-          updateState={this.handleCountiesArr}
-          key={key}
-          countiesId={item.id}
-          countiesName={item.countyName}
-        />
-      )
-    });
-    return(
+    const counties = this.state.arrayCounties.map((item, key) => (
+      <CheckboxCounties 
+        clickCount={this.state.clickCountie}
+        updateState={this.handleCountiesArr}
+        key={key}
+        countiesId={item.id}
+        countiesName={item.countyName}
+      />
+    ));
+    return (
       <div className={css.searchBoxWrapper}>
         <div
           style={{display: this.state.modalCategories}}
@@ -189,63 +186,70 @@ class SearchBox extends React.Component {
         <div>
           <div className={css.searchBox}>
             {
-            this.props.categories?
+            this.props.categories ?
               <Categorie 
                 openModal={this.openModalCategories}
                 categoriesAlert={this.props.categoriesAlert}
-                nameInCategorie={this.state.nameInCategorie}/>
+                nameInCategorie={this.state.nameInCategorie}
+              />
             : null
             }
             {
-            this.props.sertifikat?
+            this.props.sertifikat ?
               <Sertifikat
                 switchTitle={this.props.coaches}
                 setCertificat={this.props.certifiedFunc}
-                certifiedField={this.props.certifiedField} />
-            :<div ></div>
-            }
-            {
-            this.props.counties?
-            <Countie
-              openModal={this.openModalCounties}
-              countiesAlert={this.props.countiesAlert}
-              nameInCounties={this.state.nameInCounties} />
-            :null
-            }
-            {
-            this.props.group?
-              <GroupTrening 
-                setTrening={this.props.groupTrainingFunc}
-                groupTraining={this.props.groupTraining}/>
+                certifiedField={this.props.certifiedField} 
+              />
             : null
             }
             {
-              this.props.fizio?
-              <ComingHome 
-                sendParams={this.props.comingHomeParams} 
-                comingHome={this.props.comingHomeFunc} />
+              this.props.counties ?
+                <Countie
+                  openModal={this.openModalCounties}
+                  countiesAlert={this.props.countiesAlert}
+                  nameInCounties={this.state.nameInCounties} 
+                />
               : null
             }
             {
-            this.props.prices?
-            <Prices 
-              priceFromFunc={this.props.priceFromFunc} 
-              getPriceFrom={this.props.priceFrom} 
-              priceToFunc={this.props.priceToFunc} 
-              getPriceTo={this.props.priceTo} 
-              sendParams={this.props.getParams}
-            />
-            : null
+              this.props.group ?
+                <GroupTrening 
+                  setTrening={this.props.groupTrainingFunc}
+                  groupTraining={this.props.groupTraining}
+                />
+              : null
             }
             {
-              this.props.searchClubs?
-              <SearchClubs sendParams={this.props.runActionForRedux} />
+              this.props.fizio ?
+                <ComingHome
+                  sendParams={this.props.comingHomeParams}
+                  comingHome={this.props.comingHomeFunc}
+                />
+              : null
+            }
+            {
+              this.props.prices ?
+                <Prices
+                  priceFromFunc={this.props.priceFromFunc}
+                  getPriceFrom={this.props.priceFrom}
+                  priceToFunc={this.props.priceToFunc}
+                  getPriceTo={this.props.priceTo}
+                  sendParams={this.props.getParams}
+                />
+              : null
+            }
+            {
+              this.props.searchClubs ?
+                <SearchClubs
+                  sendParams={this.props.runActionForRedux} 
+                />
               : null
             }
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 export default SearchBox;

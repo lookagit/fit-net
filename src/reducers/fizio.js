@@ -4,7 +4,7 @@ export default function reducer(state, action) {
       skillArr: action.skillArr,
       countiesId: action.countiesId,
       certified: action.certified,
-      groupTraining: action.groupTraining,
+      comesHome: action.comesHome,
       priceFrom: action.priceFrom,
       priceTo: action.priceTo,
     });

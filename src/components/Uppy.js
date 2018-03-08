@@ -25,21 +25,6 @@ export default class S3Uploader extends React.Component {
     if (this.props.setRegister) {
       this.props.setRegister(files[0]);
     }
-    console.log('JA SAM FAJLIC HEHE ', file);
-    // axios.get(`${url}${file.name}/${file.type}`).then(result => {
-    //   console.log(result)
-    //   let signedUrl = result.data;
-    //   let options = {
-    //     headers: {
-    //       'Content-Type': file.type
-    //     },
-    //   };
-    //   return axios.put(signedUrl, file, options);
-    // }).then(result => {
-    //   console.log(result);
-    // }).catch(err => {
-    //   console.log(err);
-    // });
   }
   render() {
     return (

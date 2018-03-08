@@ -3,7 +3,6 @@ import css from './styles/styles.scss';
 
 class Login extends React.Component {
   render() {
-    console.log('IZ LOGINA', this.props)
     return(
       <div className={css.loginWrapper}>
         <div>

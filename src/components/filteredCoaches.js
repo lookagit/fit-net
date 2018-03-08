@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import Loading from 'react-loading-components';
 import css from './styles/styles.scss';
 import AfterSearchItemCouch from './AfterSearchItemCouch';
-import Loading from 'react-loading-components';
-@connect(state => ({ coaches: state.coaches }))
 
+@connect(state => ({ coaches: state.coaches }))
 @graphql(gql`
 query personCl(
   $skillIds: [Int],
@@ -37,7 +37,7 @@ query personCl(
     }
   }`,
 {
-  options: (props) => {
+  options: props => {
     return ({
       variables: {
         skillIds: props.coaches.skillArr,
@@ -45,9 +45,9 @@ query personCl(
         priceTo: props.coaches.priceTo,
         countyId: props.coaches.countyId,
         groupTraining: props.coaches.groupTraining,
-        certified: props.coaches.certified
-      }
-    })
+        certified: props.coaches.certified,
+      },
+    });
   },
 })
 
@@ -58,7 +58,8 @@ class FilteredCoaches extends React.Component {
       <div className={css.coachesWrapper}>
         <div className={css.coachesHolder}>
           {
-            this.props.data.loading ? <Loading type='puff' width={150} height={150} fill='#f44242' /> : 
+            this.props.data.loading ? 
+             <Loading type='puff' width={150} height={150} fill='#f44242' /> : 
             this.props.data.personCl.length ?
                this.props.data.personCl.map((item, key) => (
                  <AfterSearchItemCouch couchProp={item} key={key} />

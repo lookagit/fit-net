@@ -17,7 +17,6 @@ export default class S3Uploader extends React.Component {
     }
     const prevAndReal = this.state.prevArray.length + files.length;
     if (files.length <= 5 && prevAndReal <= 5) {
-      console.log("EVO MEEEE ", files);
       this.setState({
         prevArray: [...this.state.prevArray, ...files],
       });
