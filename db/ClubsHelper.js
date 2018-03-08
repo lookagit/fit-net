@@ -17,7 +17,7 @@ export const ClubsHelperArr = [
     {
         id:2,
         name: 'Djokovic',
-        email: 'djokovic.novak@gmail.com',
+        email: 'djokov ic.novak@gmail.com',
         address: '2',
         phone: '3211155',
         webAddress:  'https://www.crvenazvezda.com',
