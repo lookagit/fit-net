@@ -13,14 +13,6 @@ class Login extends React.Component {
           </div>
           <div className={css.loginLost}>Zaboravio si sifru?</div>
         </div>
-        <div>
-          <div 
-            onClick={() => this.props.modalOn('singUp')}
-            className={css.singUp}>
-            <p>Prijavi se</p>
-          </div>
-          <div className={css.singUpLost}>Zaboravio si mejl?</div>
-        </div>
       </div>
     )
   }

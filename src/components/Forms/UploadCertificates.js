@@ -1,15 +1,16 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import UppyCertificates from '../UppyCertificates';
 import faker from 'faker';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import UppyCertificates from '../UppyCertificates';
+
 const axios = require('axios');
 
 @graphql(
   gql`
-  mutation certificateCreate($name: String, $certUrl: String, $personClId: Int) {
-    certificateCreate(name: $name, certUrl: $certUrl, personClId: $personClId) {
+  mutation certificateCreate($name: String, $certUrl: String, $fisioClId: Int) {
+    certificateCreate(name: $name, certUrl: $certUrl, fisioClId: $fisioClId) {
       name
       certUrl
     }
