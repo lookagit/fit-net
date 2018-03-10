@@ -30,7 +30,7 @@ class UploadCertificates extends React.Component {
     let url = '';
     const { files } = this.state;
     if (files.length) {
-      const filesUpload = files.map(async item => {
+      files.map(async item => {
         const fakerUuid = faker.random.uuid();
         const fileType = item.type.split('/').pop();
         const uniqueNameForImg = `${fakerUuid}.${fileType}`;

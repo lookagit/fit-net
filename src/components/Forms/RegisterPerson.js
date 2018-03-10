@@ -98,7 +98,7 @@ class RegisterPerson extends React.Component {
           birthDay: this.state.date,
           hasCerificates: this.state.hasCerificates,
           about: this.state.about,
-          imageUrl: `https://fitnetbucket.s3.eu-west-3.amazonaws.com/`,
+          imageUrl: 'https://fitnetbucket.s3.eu-west-3.amazonaws.com/',
           skillsArr: this.state.skillArr,
         },
       },
@@ -132,8 +132,8 @@ class RegisterPerson extends React.Component {
     });
   }
   render() {
-    return( 
-      <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
+    return (
+      <div style={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
         <div style={{margin: '0 auto', width: '50%', display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
           <div>
             <label className={css.labelsRegister}>First name</label>

@@ -536,7 +536,8 @@ a{
   border: none;
   outline: none;
   font-size: 18px;
-  padding-left: 50px;
+  padding-left: 20px;
+  width: 320px;
 }
 .registerInput::placeholder{
   font-size: 18px;
@@ -552,6 +553,9 @@ a{
   flex-direction: row;
   background: rgba(61, 75, 105, .7);
   padding: 20px;
+}
+.inputWrapperForm {
+  width: 340px;
 }
 .registerFisioOne:nth-child(1){
   margin-top: 20px;

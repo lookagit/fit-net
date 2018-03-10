@@ -43,15 +43,17 @@ export default class S3Uploader extends React.Component {
         <Dropzone 
           onDrop={this.onDrop}
           style={{
-            display:'flex',
-            justifyContent:'center',
-            alignItems:'center',
-            height:'100px',
-            width:"700px",
-            border:'2px red dashed'
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100px',
+            width: '700px',
+            border: '3px white dashed',
         }}>
           <div>
-            Drop some files here!
+            <h3 style={{ color: '#fff' }}>
+              Postavite profilnu sliku
+            </h3>
           </div>
         </Dropzone>
       </div>

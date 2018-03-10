@@ -1,12 +1,14 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { connect } from 'react-redux';
+import faker from 'faker';
+import { withRouter } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import Moment from 'moment-timezone';
 import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
 import RegisterInput from './RegisterInput';
-import faker from 'faker';
 import {
   validateStringNames,
   validateEmail,
@@ -16,11 +18,12 @@ import {
   validateUrl,
   validateAbout,
 } from './validationFuncs';
-import { defaultCipherList } from 'constants';
-import { connect } from 'react-redux'
 import SearchBox from '../searchBox';
+
 const axios = require('axios');
-@connect(state => ({ 
+
+@withRouter
+@connect(state => ({
   fizio: state.fizio,
   coaches: state.coaches,
 }))
@@ -57,11 +60,9 @@ const axios = require('axios');
     ) {
       id
     }
-  }`,
-  {
-    name: 'registerNewFisio',
-  },
-)
+  }`, {
+  name: 'registerNewFisio',
+})
 class RegisterFisio extends React.Component {
   constructor(props) {
     super(props);
@@ -84,6 +85,31 @@ class RegisterFisio extends React.Component {
     };
   }
   newFisio = async () => {
+    const { file } = this.state;
+    let uniqueNameForImg = '';
+    let fileOk = false;
+    if (this.state.file) {
+      let url;
+      const fakerUuid = faker.random.uuid();
+      const fileType = file.type.split('/').pop();
+      uniqueNameForImg = `${fakerUuid}.${fileType}`;
+      if (process.env.NODE_ENV === 'production') {
+        url = 'https://fit-net.herokuapp.com/ping/';
+      } else {
+        url = 'http://localhost:8081/ping/';
+      }
+      const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${file.type}`);
+      if (axiosStuff) {
+        const signedUrl = axiosStuff.data;
+        const options = {
+          'Content-Type': file.type,
+        };
+        const putOnServer = await axios.put(signedUrl, file, options);
+        if (putOnServer) {
+          fileOk = true;
+        }
+      }
+    }
     const mutation = await this.props.registerNewFisio(
       {
         variables: {
@@ -98,13 +124,14 @@ class RegisterFisio extends React.Component {
           birthDay: this.state.date,
           hasCertificates: this.state.hasCerificates,
           about: this.state.about,
-          imageUrl: `https://fitnetbucket.s3.eu-west-3.amazonaws.com/`,
+          imageUrl: fileOk ? `https://fitnetbucket.s3.eu-west-3.amazonaws.com/${uniqueNameForImg}` : 'https://placeholder.com',
           fisioSkillsArr: this.state.skillArr,
         },
       },
     );
     if (mutation) {
-      console.log('prosaooo', mutation);
+      const { id } = mutation.data.updateOrCreateFisio;
+      this.props.history.push(`/register-certificate/${id}`);
     } else {
       console.log('prsoo', mutation);
     }
@@ -128,20 +155,20 @@ class RegisterFisio extends React.Component {
 
   handleChange = date => {
     const d1 = Moment(date._d).format();
-    const dateformated = d1.slice(0, 10);
     this.setState({
-      date: dateformated,
+      date: d1,
       dateSelected: date,
     });
   }
 
   render() {
+    console.log("JA SAM STATE ", this.state);
     return (
       <div className={css.registerFisioWrapper}>
         <div className={css.registerFisio}>
           <div className={css.registerFisioOne}>
             {/* <h3>Fizio</h3> */}
-            <div>
+            <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>First name</label> */}
               <RegisterInput
                 placeHolder="First name"
@@ -150,12 +177,12 @@ class RegisterFisio extends React.Component {
                   if (validateStringNames(e.target.value)) {
                      this.setState({ firstName: e.target.value });
                   } else {
-                    console.warn('nije ok ime!')
+                    console.warn('nije ok ime!');
                   }
                 }}
               />
             </div>
-            <div>
+            <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>Last name</label> */}
               <RegisterInput
                 placeHolder="Last name"
@@ -164,14 +191,14 @@ class RegisterFisio extends React.Component {
                   if (validateStringNames(e.target.value)) {
                      this.setState({ lastName: e.target.value });
                   } else {
-                    console.warn('nije ok prezime!')
+                    console.warn('nije ok prezime!');
                   }
                 }}
               />
             </div>
           </div>
           <div className={css.registerFisioOne}>
-            <div>
+            <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>Email</label> */}
               <RegisterInput
                 placeHolder="Email"
@@ -180,12 +207,12 @@ class RegisterFisio extends React.Component {
                   if (validateEmail(e.target.value)) {
                      this.setState({ email: e.target.value });
                   } else {
-                    console.warn('nije ok email!')
+                    console.warn('nije ok email!');
                   }
                 }}
               />
             </div>
-            <div>
+            <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>Password</label> */}
               <RegisterInput
                 placeHolder="Password"
@@ -194,14 +221,14 @@ class RegisterFisio extends React.Component {
                   if (validatePassword(e.target.value)) {
                      this.setState({ password: e.target.value });
                   } else {
-                    console.warn('nije ok password!')
+                    console.warn('nije ok password!');
                   }
                 }}
               />
             </div>
           </div>
           <div className={css.registerFisioOne}>
-            <div>
+            <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>Phone</label> */}
               <RegisterInput
                 placeHolder="Phone"
@@ -211,12 +238,12 @@ class RegisterFisio extends React.Component {
                   if (validatePhone(e.target.value)) {
                      this.setState({ phone: e.target.value });
                   } else {
-                    console.warn('nije ok phone!')
+                    console.warn('nije ok phone!');
                   }
                 }}
               />
             </div>
-            <div>
+            <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>Birtday Place</label> */}
               <RegisterInput
                 placeHolder="Birthday Place"
@@ -232,7 +259,7 @@ class RegisterFisio extends React.Component {
             </div>
           </div>
           <div className={css.registerFisioOne}>
-            <div>
+            <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>Facebook Link</label> */}
               <RegisterInput
                 placeHolder="Facebook Link"
@@ -246,7 +273,7 @@ class RegisterFisio extends React.Component {
                 }}
               />
             </div>
-            <div>
+            <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>Instagram Link</label> */}
               <RegisterInput
                 placeHolder="Instagram Link"
@@ -262,7 +289,7 @@ class RegisterFisio extends React.Component {
             </div>
           </div>
           <div className={css.registerFisioOne}>
-            <div>
+            <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>About</label> */}
               <RegisterInput
                 placeHolder="About"
@@ -276,7 +303,7 @@ class RegisterFisio extends React.Component {
                 }}
                 />
             </div>
-            <div>
+            <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>Birtday Date</label> */}
               <DatePicker
                 selected={this.state.dateSelected}
@@ -297,16 +324,34 @@ class RegisterFisio extends React.Component {
             fizioCategories={this.fizioCategories}
           />
         </div>
-        <div className={css.registerFisioOne}>
-          <button onClick={() => {
-            this.newFisio();
-          }}
+        <div className={css.registerFisioOne} style={{ justifyContent: 'center' }}>
+          <div
+            onClick={() => {
+              this.newFisio();
+            }}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '35%',
+              height: '50px',
+              borderRadius: '10px',
+              backgroundColor: '#28a7e9'
+            }}
           >
-            REGISTER FISIO
-          </button>
+            <h3
+              style={{
+                color: '#fff',
+                fontWeight: 'bold',
+             }}
+            >
+              REGISTRUJTE SE
+            </h3>
+          </div>
         </div>
       </div>
-      );
-    }
+    );
+  }
 }
 export default RegisterFisio
