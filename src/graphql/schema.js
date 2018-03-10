@@ -166,6 +166,18 @@ const FisioCl = new GraphQLObjectType({
           });
         },
       },
+      fisioSkillsNames: {
+        type: new GraphQLList(FisioCategories),
+        async resolve(fisioCl) {
+          return db.models.fisioCategories.findAll({
+            where: {
+              id: {
+                [db.Op.or]: fisioCl.fisioSkillsArr,
+              },
+            },
+          });
+        },
+      },
     };
   },
 });
