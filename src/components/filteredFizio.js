@@ -34,6 +34,9 @@ import AfterSearchItemFisio from './AfterSearchItemFisio';
       about
       birthPlace
       birthDay
+      fisioSkillsNames {
+        fisioSkillName
+      }
     }
   }
   `,
@@ -43,7 +46,7 @@ import AfterSearchItemFisio from './AfterSearchItemFisio';
         skillIds: props.fizio.skillArr,
         priceFrom: props.fizio.priceFrom,
         priceTo: props.fizio.priceTo,
-        countyId: props.fizio.countyId,
+        countyId: props.fizio.countiesId,
         comesHome: props.fizio.comesHome,
         hasCerificates: props.fizio.certified,
       },
@@ -53,6 +56,7 @@ import AfterSearchItemFisio from './AfterSearchItemFisio';
 class FilteredFizio extends React.Component {
   render() {
     /** TODO MAKE ONE FISO COMPONENT */
+    console.log("JA SAM PROPS ", this.props.data);
     return (
       <div className={css.coachesWrapper}>
         <div className={css.coachesHolder}>

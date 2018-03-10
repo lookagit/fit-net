@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import css from './styles/styles.scss';
 import facebookIco from '../../static/facebook.png';
 import instagramIco from '../../static/instagram.png';
+import DumbDate from '../components/DumbDate';
 
 class AfterSearchItemCouch extends React.Component {
   constructor(props) {
@@ -22,12 +23,13 @@ class AfterSearchItemCouch extends React.Component {
     });
   }
   render() {
-    console.log("JAO  ", this.props);
     const { couchProp } = this.props;
-    const { trainingPersonSkills } = couchProp;
-    const letsSplice = [...trainingPersonSkills].splice(0,3);
-    const giveMeSkills = letsSplice.map(item => item.trainSkillName);
+    const { fisioSkillsNames } = couchProp;
+    console.dir(fisioSkillsNames);
+    const letsSplice = [...fisioSkillsNames].splice(0, 3);
+    const giveMeSkills = letsSplice.map(item => item.fisioSkillName);
     const joinedSkills = giveMeSkills.join(', ');
+
     return (
       <div className={css.filteredCoaches}>
         <div
@@ -87,19 +89,13 @@ class AfterSearchItemCouch extends React.Component {
             <h4 className={css.coacheBirthPlace}>
               {`${couchProp.birthPlace}`}
             </h4>
-            <h4 className={css.coacheBday}>
-              {`${couchProp.birthDay}`}
-            </h4>
+            <DumbDate date={couchProp.birthDay} />
             <h4 className={css.coacheClub}>
-              {`Fitness klub Agoga`}
+              {'Fitness klub Agoga'}
             </h4>
-            {
-              /*
-                <h4 className={css.coacheTags}>
-                  {`Tagovi: ${joinedSkills}`}
-                </h4>
-              */
-            }
+            <h4 className={css.coacheTags}>
+              {`Tagovi: ${joinedSkills}`}
+            </h4>
           </div>
         </div>
         <div className={css.profileAboutWrapper}>
@@ -108,7 +104,7 @@ class AfterSearchItemCouch extends React.Component {
               {`${couchProp.about}`}
             </h5>
             <Link
-              to={`/coaches-one/${couchProp.id}`}
+              to={`/fisio-one/${couchProp.id}`}
             >
               <div className={css.coacheMoreButton}>
                 <h3 className={css.coacheButton}>

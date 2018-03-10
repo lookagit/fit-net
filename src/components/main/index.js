@@ -59,6 +59,7 @@ import FilteredCoaches from '../filteredCoaches';
 import FilteredClubs from '../filteredClubs';
 import FilteredFizio from '../filteredFizio';
 import CoachesOne from '../CoachesOne';
+import FisioOne from '../FisioOne';
 import Proba from '../proba';
 import RegisterPerson from '../Forms/RegisterPerson';
 import UploadCertificates from '../Forms/UploadCertificates';
@@ -97,6 +98,7 @@ export default () => (
       <Route path="/listOfClubs" component={FilteredClubs} />
       <Route path="/listOfFizio" component={FilteredFizio} />
       <Route path="/coaches-one/:id" component={CoachesOne} />
+      <Route path="/fisio-one/:id" component={FisioOne} />
       <Route path="/proba" component={Proba} />
       <Route path="/register" component={RegisterPerson} />
       <Route path="/register-certificate/:userId" component={UploadCertificates} />
