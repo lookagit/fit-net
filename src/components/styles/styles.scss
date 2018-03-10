@@ -153,7 +153,7 @@ a{
   height: 100%;
   width: 100%;
   background-color: rgba(0,0,0,.5);
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 1001;
@@ -262,7 +262,6 @@ a{
   border-radius: 100%;
   border: 2px solid $blue;
   cursor: pointer;
-  transition: 1s;
   padding: 3px;
   overflow: hidden;
   margin-top: 5px;
@@ -437,7 +436,6 @@ a{
 .labelsRegister {
   color: white !important; 
   font-size: 17;
-
 }
 .socialWrapper{
   position: absolute;
@@ -526,6 +524,39 @@ a{
   color: #fff; 
   font-weight: 700;
 }
+// REGISTER FISIO INPUT
+.registerFisioWrapper{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+.registerInput{
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  padding-left: 50px;
+}
+.registerInput::placeholder{
+  font-size: 18px;
+}
+.registerFisio{
+
+}
+.registerFisioOne{
+  width: 700px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  background: rgba(61, 75, 105, .7);
+  padding: 20px;
+}
+.registerFisioOne:nth-child(1){
+  margin-top: 20px;
+}
+// REGISTER FISIO INPUT END
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -411,7 +411,7 @@ const Query = new GraphQLObjectType({
       },
       allCertificates: {
         type: new GraphQLList(Certification),
-        async resolve(root) {
+        async resolve() {
           const certificates = await db.models.certification.findAll();
           return certificates;
         },
@@ -456,19 +456,19 @@ const Query = new GraphQLObjectType({
       },
       fisioCategories: {
         type: new GraphQLList(FisioCategories),
-        async resolve(root) {
+        async resolve() {
           return db.models.fisioCategories.findAll();
         },
       },
       counties: {
         type: new GraphQLList(County),
-        async resolve(root) {
+        async resolve() {
           return db.models.county.findAll();
         },
       },
       trainingCategories: {
         type: new GraphQLList(TrainingSkill),
-        async resolve(root) {
+        async resolve() {
           return db.models.trainingSkill.findAll();
         },
       },
@@ -509,56 +509,61 @@ const Query = new GraphQLObjectType({
           priceTo: {
             type: GraphQLInt,
           },
-                 countyId: {
-                     type: GraphQLInt,
-                 },
-                 comesHome: {
-                     type: GraphQLBoolean,
-                 },
-                 hasCerificates: {
-                     type: GraphQLBoolean,
-                 },
-             },
-             async resolve(root, {skillIds, priceFrom, priceTo, countyId, comesHome, hasCerificates}) {
-                 let  fisioQuery = await db.models.fisioCounty.findAll({
-                     where: {
-                         price: {
-                             [db.Op.gte]: priceFrom,
-                             [db.Op.lte]: priceTo,
-                         },
-                         countyId,
-                     }
-                 });
-                 let findedIds = fisioQuery.map(item => item.fisioClId);
-                 let findFisio = await db.models.fisioCl.findAll({
-                     where: {
-                         id: {
-                             [db.Op.or]: findedIds
-                         },
-                         comesHome,
-                         hasCerificates,
-                         fisioSkillsArr: {
-                             $overlap: skillIds,
-                         },
-                     },
-                 });
-                 if(findFisio.length) {
-                     let addCounterfindFisio = findFisio.map(i => {
-                         i['counter'] = 0;
-                         i.fisioSkillsArr.map(imp => {
-                             if(skillIds.includes(imp)) {
-                                 i['counter'] += 1;
-                             }
-                         })
-                         return i
-                     })
-                     return addCounterfindFisio.sort((a,b) => a.counter - b.counter)
-                     .reverse();
-                 } else {
-                     return findFisio;
-                 }
-             },
-         },
+          countyId: {
+            type: GraphQLInt,
+          },
+          comesHome: {
+            type: GraphQLBoolean,
+          },
+          hasCerificates: {
+            type: GraphQLBoolean,
+          },
+        },
+        async resolve(root, {
+          skillIds,
+          priceFrom,
+          priceTo,
+          countyId,
+          comesHome,
+          hasCerificates,
+        }) {
+          const fisioQuery = await db.models.fisioCounty.findAll({
+            where: {
+              price: {
+                [db.Op.gte]: priceFrom,
+                [db.Op.lte]: priceTo,
+              },
+              countyId,
+            },
+          });
+          const findedIds = fisioQuery.map(item => item.fisioClId);
+          const findFisio = await db.models.fisioCl.findAll({
+            where: {
+              id: {
+                [db.Op.or]: findedIds,
+              },
+              comesHome,
+              hasCerificates,
+              fisioSkillsArr: {
+                $overlap: skillIds,
+              },
+            },
+          });
+          if (findFisio.length) {
+            let addCounterfindFisio = findFisio.map(i => {
+              i['counter'] = 0;
+              i.fisioSkillsArr.map(imp => {
+                if (skillIds.includes(imp)) {
+                  i['counter'] += 1;
+                }
+              });
+              return i;
+            });
+            return addCounterfindFisio.sort((a,b) => a.counter - b.counter).reverse();
+          }
+          return findFisio;           
+        },
+      },
          personCl: {
              type: new GraphQLList(PersonCl),
              args: {
