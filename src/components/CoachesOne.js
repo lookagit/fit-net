@@ -31,24 +31,71 @@ query onePresonCl($personClId: Int) {
       }
     }
   }`,
-  {
-    options: props => ({
-      variables: {
-        personClId: props.match.params.id,
-      },
-    }),
-  },
-)
+{
+  options: props => ({
+    variables: {
+      personClId: props.match.params.id,
+    },
+  }),
+})
 class CoachesOne extends React.Component {
   render() {
-    return(
+    return (
       <div>
         {
           this.props.data.loading ? <h3>LOADING</h3> :
           <div>
+            <div style={{ width: '100%', display: 'flex', paddingTop: '40px' }}>
+              <div
+                style={{ maxWidth: '1350px', margin: '0 auto', display: 'flex', flexDirection: 'row' }}
+              >
+                <div>
+                  <img
+                    src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
+                    alt="Smiley face"
+                    height="280"
+                    width="260"
+                  />
+                </div>
+                <div
+                  style={{ marginLeft: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center' }}
+                >
+                  <div
+                    style={{ display: 'flex', flexDirection: 'row', width: '80%', justifyContent: 'space-between', alignItems: 'space-between', paddingBottom: '15px' }}
+                  >
+                    <img
+                      src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
+                      alt="Smiley face"
+                      height="90"
+                      width="90"
+                    />
+                    <img
+                      src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
+                      alt="Smiley face"
+                      height="90"
+                      width="90"
+                    />
+                    <img
+                      src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
+                      alt="Smiley face"
+                      height="90"
+                      width="90"
+                    />
+                    <img
+                      src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
+                      alt="Smiley face"
+                      height="90"
+                      width="90"
+                    />
+                  </div>
+                  <div>
+                    <h3 style={{ color: '#fff', fontSize: '25px' }}>{`O nama: ${this.props.data.onePresonCl.about}`}</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
             <h1 style={{ color: '#fff' }}>{`Ime i prezime: ${this.props.data.onePresonCl.firstName} ${this.props.data.onePresonCl.lastName}`}</h1>
             <h1 style={{ color: '#fff' }}>{`Broj telefona: ${this.props.data.onePresonCl.cellPhone}`}</h1>
-            <h1 style={{ color: '#fff' }}>{`O nama: ${this.props.data.onePresonCl.about}`}</h1>
             <h1 style={{ color: '#fff' }}>Radim na lokacijama</h1>
             <div style={{ margin: '20px' }}>
               {
@@ -75,7 +122,7 @@ class CoachesOne extends React.Component {
           </div>
         }
       </div>
-    )
+    );
   }
 }
 export default CoachesOne;
