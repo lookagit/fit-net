@@ -162,7 +162,6 @@ class RegisterFisio extends React.Component {
   }
 
   render() {
-    console.log("JA SAM STATE ", this.state);
     return (
       <div className={css.registerFisioWrapper}>
         <div className={css.registerFisio}>
@@ -317,7 +316,7 @@ class RegisterFisio extends React.Component {
             setRegister={injectFile => this.setState({ file: injectFile })} 
           />
         </div>
-        <div >
+        <div>
           <SearchBox
             fizio
             categories

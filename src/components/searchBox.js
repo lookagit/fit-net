@@ -214,7 +214,7 @@ class SearchBox extends React.Component {
             }
             {
               this.props.group ?
-                <GroupTrening 
+                <GroupTrening
                   setTrening={this.props.groupTrainingFunc}
                   groupTraining={this.props.groupTraining}
                 />

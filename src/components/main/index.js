@@ -64,6 +64,7 @@ import Proba from '../proba';
 import RegisterPerson from '../Forms/RegisterPerson';
 import UploadCertificates from '../Forms/UploadCertificates';
 import RegisterFisio from '../Forms/RegisterFisio';
+import RegisterMoreSkills from '../Forms/RegisterMoreSkills';
 // Styles
 import css from '../styles/styles.scss';
 
@@ -103,6 +104,7 @@ export default () => (
       <Route path="/register" component={RegisterPerson} />
       <Route path="/register-certificate/:userId" component={UploadCertificates} />
       <Route path="/registerFisio" component={RegisterFisio} />
+      <Route path="/moreSkills" component={RegisterMoreSkills} />
       <Redirect from="/old/path" to="/new/path" />
       <Route component={WhenNotFound} />
     </Switch>
