@@ -57,7 +57,7 @@ class SearchBox extends React.Component {
       this.setState({ arrayFizio: nextProps.data.fisioCategories });
     }
   }
-
+   
   handleSkillArr = (gotSkill, gotName) => {
     const { nameInCategorie } = this.state;
     if (nameInCategorie.includes(gotName)) {
@@ -128,6 +128,7 @@ class SearchBox extends React.Component {
   // sendParams = () => {
   //   this.props.getParams('poslato')
   // }
+
   render() {
     const fizio = this.state.arrayFizio.map((item, key) => {
       return (

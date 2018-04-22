@@ -84,7 +84,7 @@ function changeRoute() {
 export default () => (
   <div className={css.mainWrapper}>
     <Helmet>
-      <title>ReactQL application</title>
+      <title>Fit Net</title>
       <meta name="description" content="ReactQL starter kit app" />
       {/* <base href="http://localhost:8081/" /> */}
     </Helmet>
