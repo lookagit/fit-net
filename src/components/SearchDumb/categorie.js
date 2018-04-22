@@ -20,7 +20,7 @@ class Categorie extends React.Component {
     return (
       <div className={css.categorie}>
         <div className={css.categorieTitle}>
-          <p style={{marginTop: 0,color: '#fff', fontSize: '17px', fontWeight: 'bold', }}>KATEGORIJA</p>
+          <p style={{marginTop: 0,color: '#fff', fontSize: '17px', fontWeight: '600', }}>KATEGORIJA</p>
         </div>
         <div 
           onClick={() => this.props.openModal()}

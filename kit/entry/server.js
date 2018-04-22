@@ -240,10 +240,10 @@ const router = (new KoaRouter())
   .get('/ping/:id/:indi/:type', async ctx => {
     var s3 = new aws.S3({
       signatureVersion: 'v4',
-      region: 'eu-west-3',
+      region: 'eu-central-1',
     });
     var params = {
-      Bucket: 'fitnetbucket',
+      Bucket: 'zaluku',
       Key: ctx.params.id,
       Expires: 600,
       ContentType: ctx.params.indi + '/' + ctx.params.type,

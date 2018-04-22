@@ -18,7 +18,7 @@ export default class S3Uploader extends React.Component {
     } else {
       url = 'http://localhost:8081/ping/';
     }
-    let file = files[0];
+    const file = files[0];
     this.setState({
       prev: file.preview,
     });
@@ -33,7 +33,7 @@ export default class S3Uploader extends React.Component {
           this.state.prev ?
             <img
               
-              alt="jojo"
+              alt="fit-net-placeholder"
               width="130"
               height="130"
               src={this.state.prev}
