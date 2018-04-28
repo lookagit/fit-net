@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import RegisterInput from './RegisterInput';
 import css from '../styles/styles.scss';
 import SearchBox from '../searchBox';
 import { validatePrice } from './validationFuncs';
 import AddMore from '../../../static/add.png';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 
 @graphql(gql`
 {
@@ -76,7 +76,7 @@ class RegisterMoreSkills extends React.Component {
 
   addToSkillArr = skillId => {
     const { skillArr } = this.state;
-    if (skillArr.includes(parseInt(skillId))) {
+    if (skillArr.includes(skillId)) {
       const a = this.state.skillArr;
       const b = a.indexOf(skillId);
       a.splice(b, 1);
@@ -85,7 +85,7 @@ class RegisterMoreSkills extends React.Component {
       });
     } else {
       this.setState({
-        skillArr: [...skillArr, parseInt(skillId)], //eslint-disable-line
+        skillArr: [...skillArr, skillId], //eslint-disable-line
       });
     }
   }
@@ -94,19 +94,30 @@ class RegisterMoreSkills extends React.Component {
     const { price, skillArr, countiesId, groupTraining } = this.state;
     const obj = {};
     obj.price = price;
-    obj.skillArr = skillArr;
+    const filteredName = [];
+    skillArr.map(item => {
+      this.state.arrayCategories.map(bla => {
+        if (bla.id === item) {
+          filteredName.push(bla);
+        }
+      });
+    });
+    const [filteredNameCounties] = this.state.arrayCounties.filter(item => (
+      item.id === countiesId
+    ));
+    obj.skillArr = filteredName;
     obj.groupTraining = groupTraining;
-    obj.countiesId = countiesId;
+    obj.counties = { ...filteredNameCounties };
     this.setState({
       price: '',
       countiesId: '',
       groupTraining: false,
-      skillArr: [],
     });
     this.items.push(obj);
   }
-  
+
   render() {
+    console.log('evo ti state', this.state);
     return (
       <div>
         <OneItem
@@ -122,7 +133,7 @@ class RegisterMoreSkills extends React.Component {
             this.items.map((item, k) => (
               <DisabledBox
                 trening={item.groupTraining}
-                counti={item.countiesId}
+                counti={item.counties}
                 skill={item.skillArr}
                 prices={item.price}
               />
@@ -165,9 +176,20 @@ const OneItem = ({ handleSkillArr, handleCounties, handleTraning, groupTraining,
         groupTraining={groupTraining}
         groupTrainingFunc={handleTraning}
       />
-      <div className={css.registerFisioOne}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          padding: 20,
+          width: 700,
+          backgroundColor: 'rgba(61, 75, 105, .7)',
+          margin: '0 auto',
+        }}
+      >
+        <h1 className={css.labelStyle}>
+          CENA
+        </h1>
         <RegisterInput
-          styles={{ width: '100%' }}
           placeHolder="Cena"
           type="text"
           updateFunc={e => {
@@ -193,7 +215,7 @@ const DisabledBox = ({ trening, skill, counti, prices }) => (
           </div>
           <div
             className={css.categorieButton}>
-            <h3 style={{ color: '#a9a9a9', fontWeight: 'bold' }}>{skill}</h3>
+            <h3 style={{ color: '#a9a9a9', fontWeight: 'bold' }}>{skill.map((item, key) => ( `${item.trainSkillName + ' '}`))}</h3> 
           </div>
         </div>
         <div className={css.categorie}>
@@ -202,7 +224,7 @@ const DisabledBox = ({ trening, skill, counti, prices }) => (
           </div>
           <div
             className={css.categorieButton}>
-            <h3 style={{ color: '#a9a9a9', fontWeight: 'bold' }}>{counti}</h3>
+            <h3 style={{ color: '#a9a9a9', fontWeight: 'bold' }}>{counti.countyName}</h3>
           </div>
         </div>
         <div className={css.sertifikat}>
@@ -247,6 +269,12 @@ const DisabledBox = ({ trening, skill, counti, prices }) => (
           </div>
         </div>
         <div style={{ paddingRight: 20 }}>
+          <h1
+            className={css.labelStyle}
+          >
+            CENA
+          </h1>
+          <br />
           <input
             style={{
               border: 'none',
@@ -257,7 +285,7 @@ const DisabledBox = ({ trening, skill, counti, prices }) => (
               paddingLeft: 20,
               width: '100%',
             }}
-            value={prices}
+            value={`${prices + ' RSD'}`} //eslint-disable-line
           />
         </div>
       </div>
