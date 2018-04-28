@@ -22,7 +22,7 @@ async function userLogin(args) {
         user.token = token;
         return user;
       }
-      const userId = await db.models.userCl.findOne({ where: { facebook_id: fbId.id } });
+      const userId = await db.models.userCl.findOne({ where: { fbId: fbId.id } });
       if (userId) {
         const payload = {
           id: userId.id,
