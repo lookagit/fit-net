@@ -36,7 +36,12 @@ async function userLogin(args) {
         return userId;
       }
       const profileImage = await socialApi.fbGetProfileImage(fbId.id);
-      const personProfile = await db.models.userCl.create({ profileImageUrl: profileImage.data.url });
+      const personProfile = await db.models.userCl.create({
+        profileImageUrl: profileImage.data.url,
+        email: fbInfo.email,
+        lastName: fbInfo.last_name,
+        firstName: fbInfo.first_name,
+      });
       if (personProfile) {
         const payload = {
           id: personProfile.id,
