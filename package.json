@@ -119,7 +119,7 @@
     "webpack-node-externals": "^1.6.0"
   },
   "engines": {
-    "node": ">=7",
+    "node": "8.11.1",
     "npm": ">=4"
   }
 }
