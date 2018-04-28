@@ -1,25 +1,69 @@
 import React from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { GoogleLogin } from 'react-google-login';
+import { connect } from 'react-redux';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import css from '../styles/styles.scss';
 
-class ModalClass extends React.Component{
-  responseFacebook = (response) => {
-    console.log('JA SAM RESPOJNNSE ', response);
+@connect(state => ({ login: state.login }))
+@graphql(gql`
+  query userLogin($fbToken: String) 
+  {
+    userLogin(fbToken: $fbToken) { 
+      id,
+      lastName,
+      firstName,
+      email,
+      imageUrl,
+    }
+  }`,
+{
+  options: props => ({
+    variables: {
+      fbToken: props.login.accessToken,
+    },
+  }),
+})
+class ModalClass extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      accessToken: null,
+    };
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log('MI SMO NEXT ', nextProps);
+  }
+  responseFacebook = response => {
+    if (response.accessToken) {
+      const { accessToken } = response;
+      console.log('JAAA SAM PROPS ', this.props);
+      this.props.dispatch({ type: 'FACEBOOK_LOGIN', accessToken });
+    }
   }
 
-  componentClicked = () => console.log('click');
-  
-  responseGoogle = (response) => console.log(response)
-  render(){
-    return(
+  componentClicked = renderProps => console.log('click', renderProps.onClick());
+
+  responseGoogle = response => console.log(response);
+
+  render() {
+    return (
       <div className={css.modalClass}>
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
-          <div style={{textAlign: 'center', margin: '0 auto', marginBottom: '35px'}}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
+          <div style={{ textAlign: 'center', margin: '0 auto', marginBottom: '35px' }}>
             <h2
               style={{
                 color: 'white',
-                fontSize: '35px'
+                fontSize: '35px',
               }}
             >
               Login
@@ -30,10 +74,11 @@ class ModalClass extends React.Component{
                 color: 'white',
               }}
             >
-              Zbog bezbednosnih razloga FIT-NET trenutno podrzava login preko drustvenih mreza. Hvala na razumevanju.
+             Zbog bezbednosnih razloga FIT-NET trenutno podrzava
+             login preko drustvenih mreza. Hvala na razumevanju.
             </h3>
           </div>
-          <div 
+          <div
             style={{
               textAlign: 'center',
               margin: '0 auto',
@@ -45,29 +90,35 @@ class ModalClass extends React.Component{
           >
             <FacebookLogin
               appId="1900315403334325"
-              autoLoad={true}
               className={css.sendParams}
               fields="name,email,picture"
               callback={this.responseFacebook}
               render={renderProps => (
                 <div 
+                  style={{
+                    background: '#28a7e9',
+                    padding: '20px',
+                    borderRadius: '5px'
+                  }}
+                  onClick={() => this.componentClicked(renderProps)}>
+                  <div
                     style={{
-                      background: '#28a7e9',
-                      padding: '20px',
-                      borderRadius: '5px'
-                    }}
-                    onClick={() => this.componentClicked()}>
-                    <div style={{
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'center',
-                      alignItems: 'center',}}>
-                      <h3 style={{
+                      alignItems: 'center',
+                    }}
+                  >
+                    <h3
+                      style={{
                         color: '#fff',
                         fontWeight: 'bold',
-                      }}>FACEBOOK LOGIN</h3> 
-                    </div>
+                      }}
+                    >
+                      FACEBOOK LOGIN
+                    </h3>
                   </div>
+                </div>
               )}
             />
             <GoogleLogin
@@ -76,30 +127,36 @@ class ModalClass extends React.Component{
               disabledStyle
               onSuccess={this.responseGoogle}
               onFailure={this.responseGoogle}>
-              <div 
+              <div
                 style={{
                   background: '#28a7e9',
                   padding: '20px',
-                  borderRadius: '5px'
-                }}>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',}}>
-                  <h3 style={{
-                    color: '#fff',
-                    fontWeight: 'bold',
-                  }}>GOOGLE LOGIN</h3> 
+                  borderRadius: '5px',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <h3
+                    style={{
+                      color: '#fff',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    GOOGLE LOGIN
+                  </h3>
                 </div>
               </div>
             </GoogleLogin>
           </div>
         </div>
-        
-        
       </div>
-    )
+    );
   }
 }
 export default ModalClass;

@@ -35,6 +35,36 @@ if (process.env.NODE_ENV == 'production') {
   });
 }
 
+const UserCl = db.define('userCl', {
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      isEmail: true,
+    },
+    unique: true,
+  },
+  fbId: {
+    type: Sequelize.STRING,
+  },
+  gmailId: {
+    type: Sequelize.STRING,
+  },
+  firstName: {
+    type: Sequelize.STRING,
+  },
+  lastName: {
+    type: Sequelize.STRING,
+  },
+  imageUrl: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    validate: {
+      isUrl: true,
+    },
+  },
+});
+
 const PersonCl = db.define('personCl', {
   password: {
     type: Sequelize.STRING,
@@ -65,14 +95,14 @@ const PersonCl = db.define('personCl', {
     allowNull: true,
     validate: {
       isUrl: true,
-    }
+    },
   },
   imageUrl: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
       isUrl: true,
-    }
+    },
   },
   cellPhone: {
     type: Sequelize.STRING,
@@ -106,7 +136,7 @@ const PersonCl = db.define('personCl', {
   score: {
     type: Sequelize.FLOAT,
     defaultValue: 0,
-  }
+  },
 });
 
 const County = db.define('county', {
@@ -120,8 +150,8 @@ const City = db.define('city', {
   cityName: {
     type: Sequelize.STRING,
     allowNull: false,
-  }
-})
+  },
+});
 
 City.hasMany(County);
 
@@ -214,7 +244,7 @@ const Gallery = db.define('gallery', {
   fileUrl: {
     type: Sequelize.STRING,
   },
-})
+});
 
 ClubsCl.hasMany(Gallery);
 
@@ -326,19 +356,19 @@ const FisioCategories = db.define('fisioCategories', {
   },
 });
 
-const FisioCounty = db.define("fisioCounty", {
+const FisioCounty = db.define('fisioCounty', {
   price: {
     type: Sequelize.FLOAT,
-    allowNull: false
+    allowNull: false,
   },
   address: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   saloonName: {
     type: Sequelize.STRING,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
 
 FisioCl.hasMany(FisioCounty);
@@ -357,7 +387,7 @@ const Certification = db.define('certification', {
 PersonCl.hasMany(Certification);
 FisioCl.hasMany(Certification);
 
-db.sync({force: true}).then(() => {
+db.sync({ force: true }).then(() => {
   PersonArr.map(async item => {
     await PersonCl.create(item);
   });
@@ -391,11 +421,11 @@ db.sync({force: true}).then(() => {
   FisioArr.map(async item => {
     await FisioCl.create(item);
   });
-  
+
   FisioCategoriesArr.map(async item => {
     await FisioCategories.create(item);
   });
-  
+
   FisioCountyArr.map(async item => {
     await FisioCounty.create(item);
   });

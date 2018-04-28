@@ -25,6 +25,7 @@ import counterReducer from 'reducers/counter';
 import Coaches from 'reducers/coaches';
 import Clubs from 'reducers/clubs';
 import Fizio from 'reducers/fizio';
+import Login from 'reducers/login';
 
 // Main component -- i.e. the 'root' React component in our app
 import Main from 'components/main';
@@ -45,6 +46,7 @@ config.addReducer('counter', counterReducer, { count: 0 });
 config.addReducer('coaches', Coaches);
 config.addReducer('clubs', Clubs);
 config.addReducer('fizio', Fizio);
+config.addReducer('login', Login);
 
 /* GRAPHQL */
 

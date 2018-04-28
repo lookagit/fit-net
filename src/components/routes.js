@@ -24,14 +24,12 @@ import Uppy from './Uppy';
 
 // We'll display this <Home> component when we're on the / route
 export const Home = () => (
-  <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center',}}>
-  <h1 style={{fontSize: '70px'}}>FITNET KIDA...</h1>
-  <h1 style={{fontSize: '50px'}}>TEK CE</h1>
-  <Uppy />
+  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center' }}>
+    <h1 style={{ fontSize: '70px' }}>FITNET KIDA...</h1>
   </div>
 );
 export const Proba = () => (
-  <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center',}}>
+  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center' }}>
     jebena proba
   </div>
 );

@@ -13,8 +13,8 @@
 import { PassThrough } from 'stream';
 var aws = require('aws-sdk');
 aws.config.update({
-    accessKeyId: 'AKIAJZBUEZUCPUEAG3VA',
-    secretAccessKey: '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'
+  accessKeyId: 'AKIAJWJPWC6HGBPXQ4AQ',
+  secretAccessKey: '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',
 });
 // HTTP & SSL servers.  We can use `config.enableSSL|disableHTTP()` to enable
 // HTTPS and disable plain HTTP respectively, so we'll use Node's core libs

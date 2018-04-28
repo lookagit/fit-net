@@ -21,6 +21,7 @@ import {
   Certification,
   // TrainingPersonSkill,
 } from './PersonClForSchema';
+import userControll from './userLoginFunctions';
 
 async function getMessage() {
   return {
@@ -398,6 +399,45 @@ const ClubCl = new GraphQLObjectType({
   },
 });
 
+const UserCl = new GraphQLObjectType({
+  name: 'UserCl',
+  description: 'User Type',
+  fields() {
+    return {
+      id: {
+        type: GraphQLInt,
+        resolve(userCl) {
+          return userCl.id;
+        },
+      },
+      firstName: {
+        type: GraphQLString,
+        resolve(userCl) {
+          return userCl.lastName;
+        },
+      },
+      lastName: {
+        type: GraphQLString,
+        resolve(userCl) {
+          return userCl.lastName;
+        },
+      },
+      imageUrl: {
+        type: GraphQLString,
+        resolve(userCl) {
+          return userCl.imageUrl;
+        },
+      },
+      email: {
+        type: GraphQLString,
+        resolve(userCl) {
+          return userCl.email;
+        },
+      },
+    };
+  },
+});
+
 const Query = new GraphQLObjectType({
   name: 'Query',
   description: 'Root query object',
@@ -407,6 +447,26 @@ const Query = new GraphQLObjectType({
         type: Message,
         resolve() {
           return getMessage();
+        },
+      },
+      userLogin: {
+        type: UserCl,
+        args: {
+          email: {
+            type: GraphQLString,
+          },
+          password: {
+            type: GraphQLString,
+          },
+          fbToken: {
+            type: GraphQLString,
+          },
+          gToken: {
+            type: GraphQLString,
+          },
+        },
+        resolve(parrentValue, args) {
+          return userControll.userLogin(args);
         },
       },
       allCertificates: {
