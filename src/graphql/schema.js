@@ -434,6 +434,12 @@ const UserCl = new GraphQLObjectType({
           return userCl.email;
         },
       },
+      token: {
+        type: GraphQLString,
+        resolve(userCl) {
+          return userCl.token;
+        },
+      },
     };
   },
 });
