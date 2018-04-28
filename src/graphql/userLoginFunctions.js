@@ -5,10 +5,8 @@ import db from '../../db/db';
 async function userLogin(args) {
   if (args.fbToken) {
     const fbId = await socialApi.checkSocialToken('facebook', args.fbToken);
-    console.log('FBIIDDD ', fbId);
     if (fbId.success) {
       const fbInfo = await socialApi.fbGetInfo(fbId.id, args.fbToken);
-      console.log('JA SAM FB INFO ', fbInfo);
       const user = await db.models.userCl.findOne({ where: { email: fbInfo.email } });
       if (user) {
         const payload = {
@@ -36,6 +34,7 @@ async function userLogin(args) {
         return userId;
       }
       const profileImage = await socialApi.fbGetProfileImage(fbId.id);
+      console.log('JA SAM IMAGE ', profileImage);
       const personProfile = await db.models.userCl.create({
         profileImageUrl: profileImage.data.url,
         email: fbInfo.email,

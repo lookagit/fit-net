@@ -387,48 +387,50 @@ const Certification = db.define('certification', {
 PersonCl.hasMany(Certification);
 FisioCl.hasMany(Certification);
 
-db.sync({ force: true }).then(() => {
-  PersonArr.map(async item => {
-    await PersonCl.create(item);
-  });
-  TrainingSkillArr.map(async item => {
-    await TrainingSkill.create(item);
-  });
-  PersonTrainingSkillArr.map(async item => {
-    await PersonTrainingSkill.create(item);
-  });
-  CityArr.map(async item => {
-    await City.create(item);
-  });
-  CountyArr.map(async item => {
-    await County.create(item);
-  });
-  PersonCountyHelper.map(async item => {
-    await PersonCounty.create(item);
-  });
-  ClubsHelperArr.map(async item => {
-    await ClubsCl.create(item);
-  });
-  MembershipFeesArr.map(async item => {
-    await MembershipFees.create(item);
-  });
-  WorkingTimesArr.map(async item => {
-    await WorkingTimeClub.create(item);
-  });
-  ClubGalleryArr.map(async item => {
-    await Gallery.create(item);
-  });
-  FisioArr.map(async item => {
-    await FisioCl.create(item);
-  });
+if (process.env.NODE_ENV === 'production') {
+  db.sync({ force: true }).then(() => {
+    PersonArr.map(async item => {
+      await PersonCl.create(item);
+    });
+    TrainingSkillArr.map(async item => {
+      await TrainingSkill.create(item);
+    });
+    PersonTrainingSkillArr.map(async item => {
+      await PersonTrainingSkill.create(item);
+    });
+    CityArr.map(async item => {
+      await City.create(item);
+    });
+    CountyArr.map(async item => {
+      await County.create(item);
+    });
+    PersonCountyHelper.map(async item => {
+      await PersonCounty.create(item);
+    });
+    ClubsHelperArr.map(async item => {
+      await ClubsCl.create(item);
+    });
+    MembershipFeesArr.map(async item => {
+      await MembershipFees.create(item);
+    });
+    WorkingTimesArr.map(async item => {
+      await WorkingTimeClub.create(item);
+    });
+    ClubGalleryArr.map(async item => {
+      await Gallery.create(item);
+    });
+    FisioArr.map(async item => {
+      await FisioCl.create(item);
+    });
 
-  FisioCategoriesArr.map(async item => {
-    await FisioCategories.create(item);
-  });
+    FisioCategoriesArr.map(async item => {
+      await FisioCategories.create(item);
+    });
 
-  FisioCountyArr.map(async item => {
-    await FisioCounty.create(item);
+    FisioCountyArr.map(async item => {
+      await FisioCounty.create(item);
+    });
   });
-});
+}
 
 export default db;
