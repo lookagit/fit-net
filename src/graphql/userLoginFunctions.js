@@ -47,7 +47,7 @@ async function userLogin(args) {
           id: personProfile.id,
           name: personProfile.firstName,
           email: personProfile.email,
-        };
+        }
         const token = jwt.sign(payload, 'nasasifra');
         personProfile.token = token;
         return personProfile;
