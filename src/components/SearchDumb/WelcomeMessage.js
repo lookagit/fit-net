@@ -16,15 +16,6 @@ const WelcomeMessage = props => (
       width="185px"
       height="90px"
     />
-    <h3
-      style={{
-        color: '#fff',
-        fontSize: '22px',
-        textAlign: 'center',
-      }}
-    >
-      {`Dobrodosli ${props.firstName}`}
-    </h3>
     <img
       alt="Fit net user"
       src={props.imageUrl}
@@ -32,8 +23,19 @@ const WelcomeMessage = props => (
       height="150px"
       style={{
         borderRadius: '50%',
+        marginTop: '-15px',
       }}
     />
+    <h3
+      style={{
+        color: '#fff',
+        fontSize: '22px',
+        textAlign: 'center',
+        marginTop: '5px',
+      }}
+    >
+      {`Dobrodosli ${props.firstName}`}
+    </h3>
   </div>
 );
 export default WelcomeMessage;

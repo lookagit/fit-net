@@ -444,6 +444,27 @@ const UserCl = new GraphQLObjectType({
   },
 });
 
+const City = new GraphQLObjectType({
+  name: 'City',
+  description: 'City Type',
+  fields() {
+    return {
+      id: {
+        type: GraphQLInt,
+        resolve(city) {
+          return city.id;
+        },
+      },
+      cityName: {
+        type: GraphQLString,
+        resolve(city) {
+          return city.cityName;
+        },
+      },
+    };
+  },
+});
+
 const Query = new GraphQLObjectType({
   name: 'Query',
   description: 'Root query object',
@@ -453,6 +474,13 @@ const Query = new GraphQLObjectType({
         type: Message,
         resolve() {
           return getMessage();
+        },
+      },
+      getCities: {
+        type: new GraphQLList(City),
+        async resolve() {
+          const cities = await db.models.city.findAll();
+          return cities;
         },
       },
       getCounties: {
