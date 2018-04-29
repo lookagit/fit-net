@@ -34,9 +34,8 @@ async function userLogin(args) {
         return userId;
       }
       const profileImage = await socialApi.fbGetProfileImage(fbId.id);
-      console.log('JA SAM IMAGE ', profileImage);
       const personProfile = await db.models.userCl.create({
-        profileImageUrl: profileImage.data.url,
+        imageUrl: profileImage.data.url,
         email: fbInfo.email,
         lastName: fbInfo.last_name,
         firstName: fbInfo.first_name,
@@ -46,7 +45,8 @@ async function userLogin(args) {
           id: personProfile.id,
           name: personProfile.firstName,
           email: personProfile.email,
-        }
+          imageUrl: personProfile.imageUrl,
+        };
         const token = jwt.sign(payload, 'nasasifra');
         personProfile.token = token;
         return personProfile;
