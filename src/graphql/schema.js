@@ -173,7 +173,7 @@ const FisioCl = new GraphQLObjectType({
           return db.models.fisioCategories.findAll({
             where: {
               id: {
-                [db.Op.or]: fisioCl.fisioSkillsArr,
+                [db.Op.or]: fisioCl.fisioSkillsArr,cityId
               },
             },
           });
@@ -453,6 +453,23 @@ const Query = new GraphQLObjectType({
         type: Message,
         resolve() {
           return getMessage();
+        },
+      },
+      getCounties: {
+        type: new GraphQLList(County),
+        args: {
+          cityId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, args) {
+          const { cityId } = args;
+          const counties = await db.models.county.findAll({
+            where: {
+              cityId,
+            },
+          });
+          return counties;
         },
       },
       userLogin: {
