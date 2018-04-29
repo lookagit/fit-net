@@ -173,7 +173,7 @@ const FisioCl = new GraphQLObjectType({
           return db.models.fisioCategories.findAll({
             where: {
               id: {
-                [db.Op.or]: fisioCl.fisioSkillsArr,cityId
+                [db.Op.or]: fisioCl.fisioSkillsArr,
               },
             },
           });

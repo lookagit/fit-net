@@ -7,6 +7,7 @@ class GroupTrening extends React.Component {
         super(props);
     }
     render() {
+      console.log('NI SMO PROSP ', this.props);
         return (
             <div  className={css.sertifikat}>
               <div className={css.sertifikatBox1}>
@@ -23,8 +24,9 @@ class GroupTrening extends React.Component {
                   
                   <div
                     className={css.radio}
-                    onClick={() => this.props.comingHome(true) }>
-                    <div className={`${!this.props.sendParams ? css.radioOn : css.radioOff}`}>
+                    onClick={() => this.props.comingHomeFunc(true) }
+                  >
+                    <div className={`${!this.props.comingHomeParams ? css.radioOn : css.radioOff}`}>
                     </div>
                   </div>
                 </div>
@@ -37,8 +39,8 @@ class GroupTrening extends React.Component {
                   <label className={css.labelStyle}>NE</label>
                   <div
                     className={css.radio}
-                    onClick={() => this.props.comingHome(false)}>
-                    <div className={`${this.props.sendParams ? css.radioOn : css.radioOff}`}>
+                    onClick={() => this.props.comingHomeFunc(false)}>
+                    <div className={`${this.props.comingHomeParams ? css.radioOn : css.radioOff}`}>
                     </div>
                   </div>
                 </div>

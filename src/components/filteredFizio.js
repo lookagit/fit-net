@@ -44,8 +44,8 @@ import AfterSearchItemFisio from './AfterSearchItemFisio';
     options: props => ({
       variables: {
         skillIds: props.fizio.skillArr,
-        priceFrom: props.fizio.priceFrom,
-        priceTo: props.fizio.priceTo,
+        priceFrom: parseInt(props.fizio.priceFrom),
+        priceTo: parseInt(props.fizio.priceTo),
         countyId: props.fizio.countiesId,
         comesHome: props.fizio.comesHome,
         hasCerificates: props.fizio.certified,

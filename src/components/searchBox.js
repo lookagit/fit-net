@@ -223,8 +223,8 @@ class SearchBox extends React.Component {
             {
               this.props.fizio ?
                 <ComingHome
-                  sendParams={this.props.comingHomeParams}
-                  comingHome={this.props.comingHomeFunc}
+                  comingHomeParams={this.props.comingHomeParams}
+                  comingHomeFunc={this.props.comingHomeFunc}
                 />
               : null
             }

@@ -8,7 +8,10 @@ import name from '../../static/name.png';
 import phone from '../../static/phone.png';
 import email from '../../static/email.png';
 
-@connect(state => ({ clubs: state.clubs }))
+@connect(state => ({
+  clubs: state.clubs,
+  login: state.login,
+}))
 @graphql(gql`
 query onePresonCl($personClId: Int) {
     onePresonCl(personClId: $personClId) { 
@@ -44,8 +47,22 @@ query onePresonCl($personClId: Int) {
   }),
 })
 class CoachesOne extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: null,
+    };
+  }
   render() {
     const [birthDay] = !this.props.data.loading ? this.props.data.onePresonCl.birthDay.split('-') : '';
+    const cellPhone = !this.props.data.loading ? 
+      typeof this.props.login.accessToken !== 'undefined' ? 
+      this.props.data.onePresonCl.cellPhone : 
+      this.props.data.onePresonCl.cellPhone.slice(0, this.props.data.onePresonCl.cellPhone.length - 3) + 'xxx' : '';
+    const emailConst = !this.props.data.loading ? 
+      typeof this.props.login.accessToken !== 'undefined' ? 
+      this.props.data.onePresonCl.email : 
+      "xxx" + this.props.data.onePresonCl.email.slice(3, this.props.data.onePresonCl.email.length - 3) + 'xxx' : '';
     return (
       <div>
         {
@@ -101,7 +118,7 @@ class CoachesOne extends React.Component {
                           marginRight: '10px',
                         }}
                       />
-                      <h4 style={{ color: '#fff' }}>{` ${this.props.data.onePresonCl.cellPhone}`}</h4>
+                      <h4 style={{ color: '#fff' }}>{` ${cellPhone}`}</h4>
                     </div>
                     <div
                       style={{
@@ -121,7 +138,7 @@ class CoachesOne extends React.Component {
                           marginRight: '10px',
                         }}
                       />
-                      <h4 style={{ color: '#fff' }}>{` ${this.props.data.onePresonCl.email}`}</h4>
+                      <h4 style={{ color: '#fff' }}>{` ${emailConst}`}</h4>
                     </div>
                     <div
                       style={{
@@ -256,7 +273,7 @@ class CoachesOne extends React.Component {
                             </th>
                           </tr>
                         </thead>
-                        <tbody class="table-hover">
+                        <tbody className="table-hover">
                           {
                             this.props.data.onePresonCl.personCounties.map((item, key) => (  
                               <tr>

@@ -94,6 +94,8 @@ class Fizio extends React.Component {
     });
   }
 
+  comingHomeFunc = comingHome => this.setState({ comingHome });
+
   render() {
     return (
       <div className={css.coaches}>
@@ -112,7 +114,7 @@ class Fizio extends React.Component {
           priceToFunc={this.priceToFunc}
           getPriceTo={this.state.priceTo}
           getParams={this.getParams}
-          comingHomeFunc={this.comesHome}
+          comingHomeFunc={this.comingHomeFunc}
           comingHomeParams={this.state.comingHome}
           certifiedField={this.state.certified}
           certifiedFunc={this.certifiedFunc}
