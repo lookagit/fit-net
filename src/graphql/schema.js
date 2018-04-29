@@ -413,7 +413,7 @@ const UserCl = new GraphQLObjectType({
       firstName: {
         type: GraphQLString,
         resolve(userCl) {
-          return userCl.lastName;
+          return userCl.firstName;
         },
       },
       lastName: {

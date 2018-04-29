@@ -38,8 +38,15 @@ class Header extends React.Component {
           </div>
           <div className={css.loginBox}>
             {
-              typeof this.props.login.accessToken !== 'undefined' ? <h1>LOL</h1> :
-              <Login modalOn={this.modalOn} />
+              typeof this.props.login.accessToken !== 'undefined' ?
+                <div className={css.loginWrapper}>
+                  <div>
+                    <div className={css.loginLost}>
+                      <h3>{`${this.props.login.accessToken.firstName} ${this.props.login.accessToken.lastName}`}</h3>
+                    </div>
+                  </div>
+                </div> :
+                <Login modalOn={this.modalOn} />
             }
           </div>
         </div>

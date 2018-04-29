@@ -6,14 +6,16 @@ const WelcomeMessage = props => (
       style={{
         color: '#fff',
         fontSize: '22px',
+        textAlign: 'center',
       }}
     >
-      {`Dobrodosli ${props.lastName} zeli vam vas`}
+      {`Dobrodosli ${props.firstName} zeli vam vas`}
     </h3>
     <h3
       style={{
         color: '#fff',
         fontSize: '25px',
+        textAlign: 'center',
       }}
     >
       FIT-NET

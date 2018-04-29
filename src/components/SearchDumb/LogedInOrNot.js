@@ -21,7 +21,7 @@ class LogedInOrNot extends React.Component {
         >
           {
               typeof login.accessToken !== 'undefined' ?
-                <WelcomeMessage firstName={login.accessToken.lastName} /> :
+                <WelcomeMessage firstName={login.accessToken.firstName} /> :
                 <ModalClass name={this.props.name} />
           }
         </div>
