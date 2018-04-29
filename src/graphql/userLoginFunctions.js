@@ -11,10 +11,9 @@ async function userLogin(args) {
       if (user) {
         const payload = {
           id: user.id,
-          name: user.firstName,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
-          userType: user.userTypeId,
-          channel: user.channel,
         };
         const token = jwt.sign(payload, 'nasasifra');
         user.token = token;
@@ -24,10 +23,10 @@ async function userLogin(args) {
       if (userId) {
         const payload = {
           id: userId.id,
-          name: userId.firstName,
+          firstName: userId.firstName,
+          lastName: userId.lastName,
           email: userId.email,
           userType: user.userTypeId,
-          channel: user.channel,
         };
         const token = jwt.sign(payload, 'nasasifra');
         userId.token = token;
@@ -43,7 +42,8 @@ async function userLogin(args) {
       if (personProfile) {
         const payload = {
           id: personProfile.id,
-          name: personProfile.firstName,
+          firstName: personProfile.firstName,
+          lastName: personProfile.lastName,
           email: personProfile.email,
           imageUrl: personProfile.imageUrl,
         };

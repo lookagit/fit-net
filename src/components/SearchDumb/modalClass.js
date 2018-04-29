@@ -16,6 +16,7 @@ import css from '../styles/styles.scss';
       firstName,
       email,
       imageUrl,
+      token,
     }
   }`,
 {
@@ -32,14 +33,22 @@ class ModalClass extends React.Component {
       accessToken: null,
     };
   }
+
   componentWillReceiveProps(nextProps) {
     console.log('MI SMO NEXT ', nextProps);
   }
-  responseFacebook = response => {
+
+  responseFacebook = async response => {
     if (response.accessToken) {
       const { accessToken } = response;
-      console.log('JAAA SAM PROPS ', this.props);
-      this.props.dispatch({ type: 'FACEBOOK_LOGIN', accessToken });
+      const getUser = await this.props.data.refetch({
+        fbToken: accessToken,
+      });
+      const { token, id } = getUser.data.userLogin;
+      if (id) {
+        this.props.dispatch({ type: 'FACEBOOK_LOGIN', accessToken: { ...getUser.data.userLogin } });
+        window.localStorage.setItem('fbToken', token);
+      }
     }
   }
 

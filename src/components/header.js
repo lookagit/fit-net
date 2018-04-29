@@ -1,40 +1,46 @@
+
 import React from 'react';
+import { connect } from 'react-redux';
 import css from './styles/styles.scss';
 import Navigation from './navigation';
 import Login from './login';
-import ModalClass from './SearchDumb/modalClass';
+import LogedInOrNot from './SearchDumb/LogedInOrNot';
 
+@connect(state => ({ login: state.login }))
 class Header extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       modal: false,
       modalClass: null,
-    }
+    };
   }
-  modalOn = (e) => {
+  modalOn = e => {
     this.setState({
       modal: true,
       modalClass: e,
-    })
+    });
   }
   modalOff = () => {
     this.setState({
-      modal: false
-    })
+      modal: false,
+    });
   }
-  stopProp = (e) => {
+  stopProp = e => {
     e.stopPropagation();
   }
   render() {
-    return(
+    return (
       <div className={css.header}>
         <div className={css.headerBox1}>
           <div className={css.logoBox}>
             <h1>Fit Net</h1>
           </div>
           <div className={css.loginBox}>
-            <Login modalOn={this.modalOn}/>
+            {
+              typeof this.props.login.accessToken !== 'undefined' ? <h1>LOL</h1> :
+              <Login modalOn={this.modalOn} />
+            }
           </div>
         </div>
         <div className={css.headerBox2}>
@@ -47,7 +53,7 @@ class Header extends React.Component {
           <div 
             onClick={(e) => this.stopProp(e)}
             className={css.loginModalHolder}>
-              <ModalClass name={this.state.modalClass}/>
+              <LogedInOrNot name={this.state.modalClass}/>
           </div>
         </div>
       </div>
