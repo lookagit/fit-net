@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import css from '../styles/styles.scss';
+import logoBright from '../../../static/logoBright.png';
 
 @connect(state => ({ login: state.login }))
 @graphql(gql`
@@ -47,7 +48,7 @@ class ModalClass extends React.Component {
       const { token, id } = getUser.data.userLogin;
       if (id) {
         this.props.dispatch({ type: 'FACEBOOK_LOGIN', accessToken: { ...getUser.data.userLogin } });
-        window.localStorage.setItem('fbToken', token);
+        window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...getUser.data.userLogin } }));
       }
     }
   }
@@ -69,14 +70,12 @@ class ModalClass extends React.Component {
           }}
         >
           <div style={{ textAlign: 'center', margin: '0 auto', marginBottom: '35px' }}>
-            <h2
-              style={{
-                color: 'white',
-                fontSize: '35px',
-              }}
-            >
-              Login
-            </h2>
+            <img
+              alt="FIT-NET Logo"
+              src={logoBright}
+              width="185px"
+              height="90px"
+            />
             <h3
               style={{
                 marginTop: '14px',
@@ -95,6 +94,7 @@ class ModalClass extends React.Component {
               flexDirection: 'row',
               justifyContent: 'space-between',
               width: '35%',
+              height: '40px',
             }}
           >
             <FacebookLogin
@@ -103,64 +103,22 @@ class ModalClass extends React.Component {
               fields="name,email,picture"
               callback={this.responseFacebook}
               render={renderProps => (
-                <div 
-                  style={{
-                    background: '#28a7e9',
-                    padding: '20px',
-                    borderRadius: '5px'
-                  }}
-                  onClick={() => this.componentClicked(renderProps)}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <h3
-                      style={{
-                        color: '#fff',
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      FACEBOOK LOGIN
-                    </h3>
-                  </div>
-                </div>
+                <button
+                  className={css.loginBtnFacebook}
+                  onClick={() => this.componentClicked(renderProps)}
+                >
+                  FACEBOOK LOGIN
+                </button>
               )}
             />
             <GoogleLogin
               clientId="712543376267-mi996e5cu5bkgn1vj9v19lmlm6fdifam.apps.googleusercontent.com"
               style={{}}
+              className={css.loginBtnGoogle}
               disabledStyle
               onSuccess={this.responseGoogle}
               onFailure={this.responseGoogle}>
-              <div
-                style={{
-                  background: '#28a7e9',
-                  padding: '20px',
-                  borderRadius: '5px',
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <h3
-                    style={{
-                      color: '#fff',
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    GOOGLE LOGIN
-                  </h3>
-                </div>
-              </div>
+                  GMAIL LOGIN
             </GoogleLogin>
           </div>
         </div>

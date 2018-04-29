@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import css from './styles/styles.scss';
+import year from '../../static/year.png';
+import name from '../../static/name.png';
+import phone from '../../static/phone.png';
+import email from '../../static/email.png';
 
 @connect(state => ({ clubs: state.clubs }))
 @graphql(gql`
@@ -59,20 +63,88 @@ class CoachesOne extends React.Component {
                     width="320"
                   />
                   <div className={css.card}>
-                    <div style={{ marginTop: '5px', marginBottom: '5px' }}>
-                      <h4 style={{ color: '#fff' }}>{`Ime i prezime: ${this.props.data.onePresonCl.firstName} ${this.props.data.onePresonCl.lastName}`}</h4>
+                    <div
+                      style={{
+                        marginTop: '5px',
+                        marginBottom: '5px',
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <img
+                        alt="name for couch"
+                        src={name}
+                        style={{
+                          width: '30px',
+                          height: '30px',
+                          marginRight: '10px',
+                        }}
+                      />
+                      <h4 style={{ color: '#fff' }}>{` ${this.props.data.onePresonCl.firstName} ${this.props.data.onePresonCl.lastName}`}</h4>
                     </div>
-                    <div style={{ marginTop: '5px', marginBottom: '5px' }}>
-                      <h4 style={{ color: '#fff' }}>{`Broj telefona: ${this.props.data.onePresonCl.cellPhone}`}</h4>
+                    <div
+                      style={{
+                        marginTop: '5px',
+                        marginBottom: '5px',
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <img
+                        alt="phone for couch"
+                        src={phone}
+                        style={{
+                          width: '30px',
+                          height: '30px',
+                          marginRight: '10px',
+                        }}
+                      />
+                      <h4 style={{ color: '#fff' }}>{` ${this.props.data.onePresonCl.cellPhone}`}</h4>
                     </div>
-                    <div style={{ marginTop: '5px', marginBottom: '5px' }}>
-                      <h4 style={{ color: '#fff' }}>{`Email: ${this.props.data.onePresonCl.email}`}</h4>
+                    <div
+                      style={{
+                        marginTop: '5px',
+                        marginBottom: '5px',
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <img
+                        alt="email for couch"
+                        src={email}
+                        style={{
+                          width: '35px',
+                          height: '25px',
+                          marginRight: '10px',
+                        }}
+                      />
+                      <h4 style={{ color: '#fff' }}>{` ${this.props.data.onePresonCl.email}`}</h4>
                     </div>
-                    <div style={{ marginTop: '5px', marginBottom: '5px' }}>
-                      <h4 style={{ color: '#fff' }}>{`Godiste: ${birthDay}`}</h4>
+                    <div
+                      style={{
+                        marginTop: '5px',
+                        marginBottom: '5px',
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <img
+                        alt="email for couch"
+                        src={year}
+                        style={{
+                          width: '30px',
+                          height: '30px',
+                          marginRight: '10px',
+                        }}
+                      />
+                      <h4 style={{ color: '#fff' }}>{` ${birthDay}`}</h4>
                     </div>
                     <div style={{ marginTop: '10px', marginBottom: '10px' }}>
-                      <h2 style={{ color: '#fff', fontWeight: 'bold' }}>Vestine</h2>
+                      <h2 style={{ color: '#fff', fontWeight: 'bold' }}>Veštine</h2>
                     </div>
                     <div style={{ marginBottom: 0 }}>
                       {
@@ -150,7 +222,7 @@ class CoachesOne extends React.Component {
                                 color: '#fff',
                               }}
                             >
-                              Opstina
+                              Opština
                             </th>
                             <th
                               style={{

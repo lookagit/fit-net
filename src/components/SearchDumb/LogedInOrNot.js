@@ -4,6 +4,7 @@ import css from '../styles/styles.scss';
 import ModalClass from './modalClass';
 import WelcomeMessage from './WelcomeMessage';
 
+
 @connect(state => ({ login: state.login }))
 class LogedInOrNot extends React.Component {
   render() {
@@ -21,7 +22,10 @@ class LogedInOrNot extends React.Component {
         >
           {
               typeof login.accessToken !== 'undefined' ?
-                <WelcomeMessage firstName={login.accessToken.firstName} /> :
+                <WelcomeMessage
+                  imageUrl={login.accessToken.imageUrl}
+                  firstName={login.accessToken.firstName}
+                /> :
                 <ModalClass name={this.props.name} />
           }
         </div>

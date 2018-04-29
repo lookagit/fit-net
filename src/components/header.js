@@ -5,6 +5,7 @@ import css from './styles/styles.scss';
 import Navigation from './navigation';
 import Login from './login';
 import LogedInOrNot from './SearchDumb/LogedInOrNot';
+import logoBright from '../../static/logoBright.png';
 
 @connect(state => ({ login: state.login }))
 class Header extends React.Component {
@@ -29,12 +30,24 @@ class Header extends React.Component {
   stopProp = e => {
     e.stopPropagation();
   }
+  logoutNow = () => {
+    window.localStorage.removeItem('fbToken');
+    this.props.dispatch({ type: 'FACEBOOK_LOGIN', accessToken: undefined });
+  }
   render() {
     return (
       <div className={css.header}>
         <div className={css.headerBox1}>
           <div className={css.logoBox}>
-            <h1>Fit Net</h1>
+            <img
+              alt="FIT NET"
+              src={logoBright}
+              width="150px"
+              height="75px"
+              style={{
+                borderRadius: '50%',
+              }}
+            />
           </div>
           <div className={css.loginBox}>
             {
@@ -42,7 +55,50 @@ class Header extends React.Component {
                 <div className={css.loginWrapper}>
                   <div>
                     <div className={css.loginLost}>
-                      <h3>{`${this.props.login.accessToken.firstName} ${this.props.login.accessToken.lastName}`}</h3>
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <img
+                          alt="FIT NET"
+                          src={`${this.props.login.accessToken.imageUrl}`}
+                          width="50px"
+                          height="50px"
+                          style={{
+                            borderRadius: '50%',
+                          }}
+                        />
+                        <div>
+                          <h3
+                            style={{
+                              marginLeft: '5px',
+                              color: '#fff',
+                            }}
+                          >
+                            {`${this.props.login.accessToken.firstName} ${this.props.login.accessToken.lastName}`}
+                          </h3>
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'flex-end',
+                              alignItems: 'flex-end'
+                            }}
+                            onClick={this.logoutNow}
+                          >
+                            <h4
+                              style={{
+                                color: '#0958ea',
+                                textAlign: 'center',
+                              }}
+                            >
+                              Izlogujte se
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div> :

@@ -64,6 +64,7 @@ import Proba from '../proba';
 import RegisterPerson from '../Forms/RegisterPerson';
 import UploadCertificates from '../Forms/UploadCertificates';
 import RegisterFisio from '../Forms/RegisterFisio';
+import Wrapper from './Wrapper';
 // Styles
 import css from '../styles/styles.scss';
 
@@ -82,29 +83,31 @@ function changeRoute() {
 
 export default () => (
   <div className={css.mainWrapper}>
-    <Helmet>
-      <title>ReactQL application</title>
-      <meta name="description" content="ReactQL starter kit app" />
-      {/* <base href="http://localhost:8081/" /> */}
-    </Helmet>
-    <Header />
-    {/* <GraphQLMessage /> */}
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="/page/coaches" component={Coaches} />
-      <Route path="/page/fizio" component={Fizio} />
-      <Route path="/page/clubs" component={Clubs} />
-      <Route path="/listofcoaches" component={FilteredCoaches} />
-      <Route path="/listOfClubs" component={FilteredClubs} />
-      <Route path="/listOfFizio" component={FilteredFizio} />
-      <Route path="/coaches-one/:id" component={CoachesOne} />
-      <Route path="/fisio-one/:id" component={FisioOne} />
-      <Route path="/proba" component={Proba} />
-      <Route path="/register" component={RegisterPerson} />
-      <Route path="/register-certificate/:userId" component={UploadCertificates} />
-      <Route path="/registerFisio" component={RegisterFisio} />
-      <Redirect from="/old/path" to="/new/path" />
-      <Route component={WhenNotFound} />
-    </Switch>
+    <Wrapper>
+      <Helmet>
+        <title>ReactQL application</title>
+        <meta name="description" content="ReactQL starter kit app" />
+        {/* <base href="http://localhost:8081/" /> */}
+      </Helmet>
+      <Header />
+      {/* <GraphQLMessage /> */}
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/page/coaches" component={Coaches} />
+        <Route path="/page/fizio" component={Fizio} />
+        <Route path="/page/clubs" component={Clubs} />
+        <Route path="/listofcoaches" component={FilteredCoaches} />
+        <Route path="/listOfClubs" component={FilteredClubs} />
+        <Route path="/listOfFizio" component={FilteredFizio} />
+        <Route path="/coaches-one/:id" component={CoachesOne} />
+        <Route path="/fisio-one/:id" component={FisioOne} />
+        <Route path="/proba" component={Proba} />
+        <Route path="/register" component={RegisterPerson} />
+        <Route path="/register-certificate/:userId" component={UploadCertificates} />
+        <Route path="/registerFisio" component={RegisterFisio} />
+        <Redirect from="/old/path" to="/new/path" />
+        <Route component={WhenNotFound} />
+      </Switch>
+    </Wrapper>
   </div>
 );

@@ -1,7 +1,21 @@
 import React from 'react';
+import logoBright from '../../../static/logoBright.png';
 
 const WelcomeMessage = props => (
-  <div>
+  <div
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
+    <img
+      alt="FIT-NET Logo"
+      src={logoBright}
+      width="185px"
+      height="90px"
+    />
     <h3
       style={{
         color: '#fff',
@@ -9,17 +23,17 @@ const WelcomeMessage = props => (
         textAlign: 'center',
       }}
     >
-      {`Dobrodosli ${props.firstName} zeli vam vas`}
+      {`Dobrodosli ${props.firstName}`}
     </h3>
-    <h3
+    <img
+      alt="Fit net user"
+      src={props.imageUrl}
+      width="150px"
+      height="150px"
       style={{
-        color: '#fff',
-        fontSize: '25px',
-        textAlign: 'center',
+        borderRadius: '50%',
       }}
-    >
-      FIT-NET
-    </h3>
+    />
   </div>
 );
 export default WelcomeMessage;

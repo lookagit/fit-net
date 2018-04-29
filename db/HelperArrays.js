@@ -326,6 +326,26 @@ export const CountyArr = [
     countyName: 'Čukarica',
     cityId: 1,
   },
+  {
+    countyName: 'Avijatičarsko naselje',
+    cityId: 2,
+  },
+  {
+    countyName: 'Adamovićevo naselje',
+    cityId: 2,
+  },
+  {
+    countyName: 'Adice',
+    cityId: 2,
+  },
+  {
+    countyName: 'Grbavica',
+    cityId: 2,
+  },
+  {
+    countyName: 'Liman',
+    cityId: 2,
+  },
 ];
 export const PersonCountyHelper = [
   {
