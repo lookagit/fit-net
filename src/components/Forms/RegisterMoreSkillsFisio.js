@@ -44,8 +44,8 @@ import DropdownSelectCounties from './DropdownSelectCounties';
 )
 @graphql(
   gql`
-  mutation createFisioCounty($price: Float, $saloonName: String, $address: String, $fisioClId: Int, $fisioCategoryId: Int, $countyId: Int) {
-    createFisioCounty(price: $price, saloonName: $saloonName, address: $address, fisioClId: $fisioClId, fisioCategoryId: $fisioCategoryId, countyId: $countyId) {
+  mutation createFisioCounty($price: Float, $saloonName: String, $address: String, $fisioClId: Int, $fisioCategoriesId: Int, $countyId: Int) {
+    createFisioCounty(price: $price, saloonName: $saloonName, address: $address, fisioClId: $fisioClId, fisioCategoriesId: $fisioCategoriesId, countyId: $countyId) {
       id
       fisioCategory {
         id
@@ -177,6 +177,7 @@ class RegisterMoreSkillsFisio extends React.Component {
 
   saveSkills = () => {
     const { id } = this.props.match.params;
+    console.log('evo ti ovaj items',this.state.items);
     this.state.items.map(async item => {
       const bla = await this.props.createMoreSkills({
         variables: {
@@ -184,8 +185,8 @@ class RegisterMoreSkillsFisio extends React.Component {
           saloonName: item.salonName,
           address: item.address,
           fisioClId: parseInt(id), //eslint-disable-line
-          fisioCategoryId: parseInt(item.skillId), //eslint-disable-line
-          countyId: parseInt(item.countiesId), //eslint-disable-line
+          fisioCategoriesId: parseInt(item.skillId.id), //eslint-disable-line
+          countyId: parseInt(item.counties.id), //eslint-disable-line
         },
       });
       console.log('evo ti ovaj mrtvi fisio', bla)

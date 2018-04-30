@@ -180,8 +180,8 @@ class RegisterMoreSkillsPerson extends React.Component {
           groupTraining: item.groupTraining,
           address: item.address,
           personClId: parseInt(id), //eslint-disable-line
-          countyId: parseInt(item.countiesId), //eslint-disable-line
-          skillId: parseInt(item.skillId), //eslint-disable-line
+          countyId: parseInt(item.counties.id), //eslint-disable-line
+          skillId: parseInt(item.skillId.id), //eslint-disable-line
         },
       });
     });
