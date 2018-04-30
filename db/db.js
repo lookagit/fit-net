@@ -180,6 +180,8 @@ const TrainingSkill = db.define('trainingSkill', {
   },
 });
 
+TrainingSkill.hasMany(PersonCounty);
+
 const PersonTrainingSkill = db.define('personTrainingSkill');
 
 TrainingSkill.hasMany(PersonTrainingSkill);
