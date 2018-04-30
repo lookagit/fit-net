@@ -282,6 +282,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
             outline: 'none',
             paddingLeft: 20,
           }}
+          disableClass
           value={valueAddress}
           updateFunc={e => {
             getValueFromAddress(e);
@@ -317,6 +318,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
             outline: 'none',
             paddingLeft: 20,
           }}
+          disableClass
           value={valuePrice}
           updateFunc={e => {
             if (validatePrice(e.target.value)) {
