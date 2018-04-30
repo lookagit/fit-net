@@ -841,7 +841,7 @@ const Mutation = new GraphQLObjectType({
                     countyId: {
                         type: GraphQLInt,
                     },
-                    skillId: {
+                    trainingSkillId: {
                       type: GraphQLInt,
                     },
                 },

@@ -204,16 +204,26 @@ export const PersonCounty = new GraphQLObjectType({
       county: {
         type: County,
         async resolve(personCounty) {
-          return await db.models.county.findOne({
+          return db.models.county.findOne({
             where: {
               id: personCounty.countyId,
             },
           });
         },
       },
-    }
-  }
-})
+      skills: {
+        type: TrainingSkill,
+        async resolve(personCounties) {
+          return db.models.trainingSkill.findOne({
+            where: {
+              id: personCounties.trainingSkillId,
+            },
+          });
+        },
+      },
+    };
+  },
+});
 
 export const Certification = new GraphQLObjectType({
   name: 'Certificates',

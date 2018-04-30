@@ -47,7 +47,7 @@ import DropdownSelectCounties from './DropdownSelectCounties';
   mutation createFisioCounty($price: Float, $saloonName: String, $address: String, $fisioClId: Int, $fisioCategoryId: Int, $countyId: Int) {
     createFisioCounty(price: $price, saloonName: $saloonName, address: $address, fisioClId: $fisioClId, fisioCategoryId: $fisioCategoryId, countyId: $countyId) {
       id
-      fisioCategories {
+      fisioCategory {
         id
       }
       fisioCounty{

@@ -45,8 +45,8 @@ import DropdownSelectCounties from './DropdownSelectCounties';
 )
 @graphql(
   gql`
-  mutation PersonCountyCreate($price: Int, $groupTraining: Boolean, $address: String, $personClId: Int, $countyId: Int, $skillId: Int) {
-    PersonCountyCreate(price: $price, groupTraining: $groupTraining, address: $address, personClId: $personClId, countyId: $countyId, skillId: $skillId) {
+  mutation PersonCountyCreate($price: Int, $groupTraining: Boolean, $address: String, $personClId: Int, $countyId: Int, $trainingSkillId: Int) {
+    PersonCountyCreate(price: $price, groupTraining: $groupTraining, address: $address, personClId: $personClId, countyId: $countyId, trainingSkillId: $trainingSkillId) {
       id
     }
   }`,
@@ -181,7 +181,7 @@ class RegisterMoreSkillsPerson extends React.Component {
           address: item.address,
           personClId: parseInt(id), //eslint-disable-line
           countyId: parseInt(item.counties.id), //eslint-disable-line
-          skillId: parseInt(item.skillId.id), //eslint-disable-line
+          trainingSkillId: parseInt(item.skillId.id), //eslint-disable-line
         },
       });
     });
