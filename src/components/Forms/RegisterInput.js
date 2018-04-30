@@ -2,9 +2,10 @@ import React from 'react';
 import { validateEmail } from './validationFuncs';
 import css from '../styles/styles.scss';
 
-const InputFine = ({placeHolder, type, updateFunc, setWarning, value}) => (
+const InputFine = ({ placeHolder, type, updateFunc, value, styles, disableClass }) => (
   <input
-    className={css.registerInput}
+    className={disableClass ? '' : css.registerInput}
+    style={styles}
     placeholder={placeHolder} 
     type={type ? type : 'text'}
     value={value}
