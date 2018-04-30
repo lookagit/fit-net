@@ -841,6 +841,9 @@ const Mutation = new GraphQLObjectType({
                     countyId: {
                         type: GraphQLInt,
                     },
+                    skillId: {
+                      type: GraphQLInt,
+                    },
                 },
                 async resolve(root, args) {
                     let createCounty = await db.models.personCounty.create({
