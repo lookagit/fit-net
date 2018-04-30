@@ -1104,7 +1104,7 @@ const Mutation = new GraphQLObjectType({
                     fisioClId: {
                         type: GraphQLInt,
                     },
-                    fisioCategoryId: {
+                    fisioCategoriesId: {
                         type: GraphQLInt,
                     },
                     countyId: {

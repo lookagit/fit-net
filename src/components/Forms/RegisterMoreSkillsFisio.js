@@ -1,11 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import RegisterInput from './RegisterInput';
 import css from '../styles/styles.scss';
-import SearchBox from '../searchBox';
 import { validatePrice } from './validationFuncs';
 import AddMore from '../../../static/add.png';
 import RecycleItem from '../../../static/remove.png';
@@ -46,9 +44,15 @@ import DropdownSelectCounties from './DropdownSelectCounties';
 )
 @graphql(
   gql`
-  mutation PersonCountyCreate($price: Int, $groupTraining: Boolean, $address: String, $personClId: Int, $countyId: Int) {
-    PersonCountyCreate(price: $price, groupTraining: $groupTraining, address: $address, personClId: $personClId, countyId: $countyId) {
+  mutation createFisioCounty($price: Float, $saloonName: String, $address: String, $fisioClId: Int, $fisioCategoryId: Int, $countyId: Int) {
+    createFisioCounty(price: $price, saloonName: $saloonName, address: $address, fisioClId: $fisioClId, fisioCategoryId: $fisioCategoryId, countyId: $countyId) {
       id
+      fisioCategory {
+        id
+      }
+      fisioCounty{
+        id
+      }
     }
   }`,
   {
@@ -63,7 +67,7 @@ class RegisterMoreSkillsFisio extends React.Component {
       cityId: 0,
       countiesId: '',
       address: '',
-      groupTraining: false,
+      salonName: '',
       price: '',
       arrayCategories: [],
       arrayCounties: [],
@@ -98,6 +102,11 @@ class RegisterMoreSkillsFisio extends React.Component {
     });
   }
 
+  setSalonName = e => {
+    this.setState({
+      salonName: e.target.value,
+    });
+  }
   selectCategory = e => {
     this.setState({
       skillId: e.target.value,
@@ -126,7 +135,7 @@ class RegisterMoreSkillsFisio extends React.Component {
   }
 
   moreItem = async () => {
-    const { price, skillId, countiesId, groupTraining, cityId, address } = this.state;
+    const { price, skillId, countiesId, salonName, cityId, address } = this.state;
     const obj = {};
     obj.price = price;
     const [filteredNameSkillId] = this.state.arrayCategories.filter(item => (
@@ -141,13 +150,13 @@ class RegisterMoreSkillsFisio extends React.Component {
     obj.skillId = { ...filteredNameSkillId };
     obj.cityId = { ...filteredNameCityId };
     obj.counties = { ...filteredNameCounties };
-    obj.groupTraining = groupTraining;
+    obj.salonName = salonName;
     obj.address = address;
     obj.id = this.state.itemId;
     this.setState({
       price: '',
       countiesId: '',
-      groupTraining: false,
+      salonName: '',
       cityId: '',
       skillId: '',
       address: '',
@@ -169,15 +178,17 @@ class RegisterMoreSkillsFisio extends React.Component {
   saveSkills = () => {
     const { id } = this.props.match.params;
     this.state.items.map(async item => {
-      await this.props.createMoreSkills({
+      const bla = await this.props.createMoreSkills({
         variables: {
           price: parseInt(item.price), //eslint-disable-line
-          groupTraining: item.groupTraining,
+          saloonName: item.salonName,
           address: item.address,
-          personClId: parseInt(id), //eslint-disable-line
+          fisioClId: parseInt(id), //eslint-disable-line
+          fisioCategoryId: parseInt(item.skillId), //eslint-disable-line
           countyId: parseInt(item.countiesId), //eslint-disable-line
         },
       });
+      console.log('evo ti ovaj mrtvi fisio', bla)
     });
   }
 
@@ -188,15 +199,15 @@ class RegisterMoreSkillsFisio extends React.Component {
           handleCategoryClick={this.selectCategory}
           handleCityClick={this.selectCity}
           handleCounties={this.selectCounties}
-          handleTraning={this.selectGroup}
           valueCategory={this.state.skillId}
           valueCity={this.state.cityId}
           valueCounties={this.state.countiesId}
           valuePrice={this.state.price}
           valueAddress={this.state.address}
-          groupTraining={this.state.groupTraining}
+          valueSalonName={this.state.salonName}
           getValueFromInput={this.setPrice}
           getValueFromAddress={this.setAddress}
+          getValueFromSalon={this.setSalonName}
           arrayForCategoryes={this.state.arrayCategories}
           arrayForCity={this.state.arrayCities}
           arrayForCounties={this.state.arrayCounties}
@@ -210,7 +221,7 @@ class RegisterMoreSkillsFisio extends React.Component {
                 key={k}
                 id={item.id}
                 removeMe={this.removeItem}
-                trening={item.groupTraining}
+                salonName={item.salonName}
                 counti={item.counties}
                 skill={item.skillId}
                 city={item.cityId}
@@ -254,7 +265,7 @@ class RegisterMoreSkillsFisio extends React.Component {
   }
 }
 
-const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAddress, handleCategoryClick, handleCityClick, handleCounties, handleTraning, groupTraining, getValueFromInput, getValueFromAddress, arrayForCategoryes, arrayForCity, arrayForCounties, visibleCounties }) => (
+const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAddress, valueSalonName, handleCategoryClick, handleCityClick, handleCounties, getValueFromInput, getValueFromAddress, getValueFromSalon, arrayForCategoryes, arrayForCity, arrayForCounties, visibleCounties }) => (
   <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 20 }}>
     <div className={css.registerFisio}>
       <div className={css.searchBoxWrapper}>
@@ -338,6 +349,37 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
         }}
       >
         <h3 style={{ color: 'white', padding: 5 }}>
+          Naziv salona
+        </h3>
+        <RegisterInput
+          placeHolder="Naziv salona"
+          type="text"
+          styles={{
+            border: 'none',
+            borderRadius: 5,
+            fontSize: 18,
+            height: 60,
+            outline: 'none',
+            paddingLeft: 20,
+          }}
+          disableClass
+          value={valueSalonName}
+          updateFunc={e => {
+            getValueFromSalon(e);
+          }}
+        />
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          padding: 20,
+          width: 700,
+          backgroundColor: 'rgba(61, 75, 105, .7)',
+          margin: '0 auto',
+        }}
+      >
+        <h3 style={{ color: 'white', padding: 5 }}>
           Cena
         </h3>
         <RegisterInput
@@ -366,7 +408,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
   </div>
 );
 
-const DisabledBox = ({ id, skill, trening, counti, prices, city, removeMe, address }) => (
+const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address, salonName }) => (
   <div className={css.searchBoxWrapper} style={{}}>
     <div style={{ marginTop: 20 }}>
       <div style={{ opacity: 0.7 }}>
@@ -421,46 +463,25 @@ const DisabledBox = ({ id, skill, trening, counti, prices, city, removeMe, addre
               value={address}
             />
           </div>
-          <div className={css.sertifikat}>
-            <div className={css.sertifikatBox1}>
-              <p>TRENINZI</p>
-            </div>
-            <div className={css.sertifikatBox2}>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <label
-                  className={css.labelStyle}
-                >
-                  GRUPNI
-                </label>
-                <div
-                  className={css.radio}
-                >
-                  <div className={`${!trening ? css.radioOn : css.radioOff}`}>
-                  </div>
-                </div>
-              </div>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-                <label className={css.labelStyle}>PERSONALNI</label>
-                <div
-                  className={css.radio}
-                >
-                  <div className={`${trening ? css.radioOn : css.radioOff}`}>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div style={{ paddingRight: 20 }}>
+            <h1
+              className={css.labelStyle}
+            >
+              NAZIV SALONA
+            </h1>
+            <br />
+            <input
+              style={{
+                border: 'none',
+                borderRadius: 5,
+                fontSize: 18,
+                height: 40,
+                outline: 'none',
+                paddingLeft: 20,
+                width: '100%',
+              }}
+              value={salonName}
+            />
           </div>
           <div style={{ paddingRight: 20 }}>
             <h1
