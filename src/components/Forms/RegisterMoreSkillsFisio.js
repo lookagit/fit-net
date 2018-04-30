@@ -30,9 +30,9 @@ import DropdownSelectCounties from './DropdownSelectCounties';
       id,
       cityName
     }
-    trainingCategories {
+    fisioCategories{
       id
-      trainSkillName
+      fisioSkillName
     }
   }
   `,
@@ -44,8 +44,18 @@ import DropdownSelectCounties from './DropdownSelectCounties';
     }),
   },
 )
-
-class RegisterMoreSkills extends React.Component {
+@graphql(
+  gql`
+  mutation PersonCountyCreate($price: Int, $groupTraining: Boolean, $address: String, $personClId: Int, $countyId: Int) {
+    PersonCountyCreate(price: $price, groupTraining: $groupTraining, address: $address, personClId: $personClId, countyId: $countyId) {
+      id
+    }
+  }`,
+  {
+    name: 'createMoreSkills',
+  },
+)
+class RegisterMoreSkillsFisio extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,8 +75,8 @@ class RegisterMoreSkills extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (typeof nextProps.data.trainingCategories !== 'undefined') {
-      this.setState({ arrayCategories: nextProps.data.trainingCategories });
+    if (typeof nextProps.data.fisioCategories !== 'undefined') {
+      this.setState({ arrayCategories: nextProps.data.fisioCategories });
     }
     if (typeof nextProps.data.getCities !== 'undefined') {
       this.setState({ arrayCities: nextProps.data.getCities });
@@ -85,12 +95,6 @@ class RegisterMoreSkills extends React.Component {
   setAddress = e => {
     this.setState({
       address: e.target.value,
-    });
-  }
-
-  selectGroup = isGroup => {
-    this.setState({
-      groupTraining: isGroup,
     });
   }
 
@@ -126,7 +130,7 @@ class RegisterMoreSkills extends React.Component {
     const obj = {};
     obj.price = price;
     const [filteredNameSkillId] = this.state.arrayCategories.filter(item => (
-      item.id === skillId
+      item.id == skillId
     ));
     const [filteredNameCityId] = this.state.arrayCities.filter(item => (
       item.id === cityId
@@ -161,6 +165,22 @@ class RegisterMoreSkills extends React.Component {
       items,
     });
   }
+
+  saveSkills = () => {
+    const { id } = this.props.match.params;
+    this.state.items.map(async item => {
+      await this.props.createMoreSkills({
+        variables: {
+          price: parseInt(item.price), //eslint-disable-line
+          groupTraining: item.groupTraining,
+          address: item.address,
+          personClId: parseInt(id), //eslint-disable-line
+          countyId: parseInt(item.countiesId), //eslint-disable-line
+        },
+      });
+    });
+  }
+
   render() {
     return (
       <div>
@@ -187,6 +207,7 @@ class RegisterMoreSkills extends React.Component {
           ?
             this.state.items.map((item, k) => (
               <DisabledBox
+                key={k}
                 id={item.id}
                 removeMe={this.removeItem}
                 trening={item.groupTraining}
@@ -212,6 +233,22 @@ class RegisterMoreSkills extends React.Component {
         >
           <img src={AddMore} width="50px" height="50px" alt="AddMore" />
         </div>
+        <div
+          onClick={() => this.saveSkills()}
+          onKeyDown={() => this.handleKeyPress()}
+          role="presentation"
+          style={{
+            position: 'fixed',
+            bottom: '30%',
+            right: '8%',
+            backgroundColor: '#0f5a8b',
+            width: 100,
+            height: 50,
+            textAlign: 'center',
+          }}
+        >
+          <p style={{ marginTop: 15 }}>Sacuvaj</p>
+        </div>
       </div>
     );
   }
@@ -229,6 +266,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
             label="Kategorije"
             styles={{ margin: '0 auto' }}
             handleClick={handleCategoryClick}
+            fisio
           />
         </div>
         <div className={css.searchBox}>
@@ -289,11 +327,6 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           }}
         />
       </div>
-      <SearchBox
-        group
-        groupTraining={groupTraining}
-        groupTrainingFunc={handleTraning}
-      />
       <div
         style={{
           display: 'flex',
@@ -333,7 +366,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
   </div>
 );
 
-const DisabledBox = ({ id, trening, skill, counti, prices, city, removeMe, address }) => (
+const DisabledBox = ({ id, skill, trening, counti, prices, city, removeMe, address }) => (
   <div className={css.searchBoxWrapper} style={{}}>
     <div style={{ marginTop: 20 }}>
       <div style={{ opacity: 0.7 }}>
@@ -347,7 +380,7 @@ const DisabledBox = ({ id, trening, skill, counti, prices, city, removeMe, addre
             </div>
             <div
               className={css.categorieButton}>
-              <h3 style={{ color: '#a9a9a9', fontWeight: 'bold' }}>{skill.trainSkillName}</h3> 
+              <h3 style={{ color: '#a9a9a9', fontWeight: 'bold' }}>{skill.fisioSkillName}</h3>
             </div>
           </div>
           <div className={css.categorie}>
@@ -455,4 +488,4 @@ const DisabledBox = ({ id, trening, skill, counti, prices, city, removeMe, addre
   </div>
 );
 
-export default RegisterMoreSkills;
+export default RegisterMoreSkillsFisio;
