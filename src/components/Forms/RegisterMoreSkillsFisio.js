@@ -44,10 +44,10 @@ import DropdownSelectCounties from './DropdownSelectCounties';
 )
 @graphql(
   gql`
-  mutation createFisioCounty($price: Float, $saloonName: String, $address: String, $fisioClId: Int, $fisioCategoriesId: Int, $countyId: Int) {
-    createFisioCounty(price: $price, saloonName: $saloonName, address: $address, fisioClId: $fisioClId, fisioCategoriesId: $fisioCategoriesId, countyId: $countyId) {
+  mutation createFisioCounty($price: Float, $saloonName: String, $address: String, $fisioClId: Int, $fisioCategoryId: Int, $countyId: Int) {
+    createFisioCounty(price: $price, saloonName: $saloonName, address: $address, fisioClId: $fisioClId, fisioCategoryId: $fisioCategoryId, countyId: $countyId) {
       id
-      fisioCategory {
+      fisioCategories {
         id
       }
       fisioCounty{
@@ -185,7 +185,7 @@ class RegisterMoreSkillsFisio extends React.Component {
           saloonName: item.salonName,
           address: item.address,
           fisioClId: parseInt(id), //eslint-disable-line
-          fisioCategoriesId: parseInt(item.skillId.id), //eslint-disable-line
+          fisioCategoryId: parseInt(item.skillId.id), //eslint-disable-line
           countyId: parseInt(item.counties.id), //eslint-disable-line
         },
       });
