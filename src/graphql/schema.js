@@ -759,6 +759,35 @@ const Mutation = new GraphQLObjectType({
     description: 'Mutation for fitnet.com',
     fields() {
         return {
+            setMoreSkills: {
+              type: PersonCounty,
+              args: {
+                userId: {
+                  type: GraphQLInt,
+                },
+                price: {
+                  type: GraphQLInt,
+                },
+                groupTraining: {
+                  type: GraphQLBoolean,
+                },
+                countyId: {
+                  type: GraphQLInt,
+                },
+                address: {
+                  type: GraphQLString,
+                },
+              },
+              async resolve(root, { ...args }) {
+                const createOne = await db.models.personCounty.create({
+                  ...args,
+                });
+                if (createOne) {
+                  return createOne;
+                }
+                return { error: 'Error on creating more skills for user' };
+              }
+            },
             updateOrCreateUser: {
                 type: PersonCl,
                 args: {
@@ -793,7 +822,7 @@ const Mutation = new GraphQLObjectType({
                         type: GraphQLBoolean,
                     },
                     about: {
-                        type: GraphQLString
+                        type: GraphQLString,
                     },
                     imageUrl: {
                         type: GraphQLString,
