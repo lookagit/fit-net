@@ -177,9 +177,8 @@ class RegisterMoreSkillsFisio extends React.Component {
 
   saveSkills = () => {
     const { id } = this.props.match.params;
-    console.log('evo ti ovaj items',this.state.items);
     this.state.items.map(async item => {
-      const bla = await this.props.createMoreSkills({
+      await this.props.createMoreSkills({
         variables: {
           price: parseInt(item.price), //eslint-disable-line
           saloonName: item.salonName,
@@ -189,7 +188,6 @@ class RegisterMoreSkillsFisio extends React.Component {
           countyId: parseInt(item.counties.id), //eslint-disable-line
         },
       });
-      console.log('evo ti ovaj mrtvi fisio', bla)
     });
   }
 
@@ -461,7 +459,7 @@ const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address, salon
                 paddingLeft: 20,
                 width: '100%',
               }}
-              value={address}
+              defaultValue={address}
             />
           </div>
           <div style={{ paddingRight: 20 }}>
@@ -481,7 +479,7 @@ const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address, salon
                 paddingLeft: 20,
                 width: '100%',
               }}
-              value={salonName}
+              defaultValue={salonName}
             />
           </div>
           <div style={{ paddingRight: 20 }}>
@@ -501,7 +499,7 @@ const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address, salon
                 paddingLeft: 20,
                 width: '100%',
               }}
-              value={`${prices + ' RSD'}`} //eslint-disable-line
+              defaultValue={`${prices + ' RSD'}`} //eslint-disable-line
             />
           </div>
         </div>

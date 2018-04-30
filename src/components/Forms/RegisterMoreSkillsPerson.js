@@ -428,7 +428,7 @@ const DisabledBox = ({ id, skill, trening, counti, prices, city, removeMe, addre
                 paddingLeft: 20,
                 width: '100%',
               }}
-              value={address}
+              defaultValue={address}
             />
           </div>
           <div className={css.sertifikat}>
@@ -489,7 +489,7 @@ const DisabledBox = ({ id, skill, trening, counti, prices, city, removeMe, addre
                 paddingLeft: 20,
                 width: '100%',
               }}
-              value={`${prices + ' RSD'}`} //eslint-disable-line
+              defaultValue={`${prices + ' RSD'}`} //eslint-disable-line
             />
           </div>
         </div>
