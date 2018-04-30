@@ -23,6 +23,27 @@ p {
   font-weight: 600;
 }
 
+// custom select css Start
+.customSelect {
+  position: relative;
+}
+.customSelect select {
+  background-color: #fff;
+  width: 100%;
+  height: 60px;
+  font-size: 1.14em;
+  color: rgb(169, 169, 169);
+  font-family: 'Comfortaa', cursive;
+  font-weight: bold;
+}
+//  custom select END
+// recycle Item 
+.recycleItem {
+  width: 100%;
+  height: 40px;
+  display: flex;
+}
+
 .loginBtnFacebook {
     box-sizing: border-box;
     position: relative;

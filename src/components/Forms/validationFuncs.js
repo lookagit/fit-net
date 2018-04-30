@@ -23,6 +23,11 @@ export function validateBirthPlace(value) {
   return regex.test(value);
 }
 
+export function validatePrice(value) {
+  const regex = /^([0-9]+)$/;
+  return regex.test(value);
+}
+
 export function validateUrl(value) {
   const regex = /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})$/
   return regex.test(value);
@@ -40,5 +45,6 @@ export default {
   validateBirthPlace,
   validateUrl,
   validateAbout,
+  validatePrice,
 };
 
