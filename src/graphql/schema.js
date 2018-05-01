@@ -756,11 +756,9 @@ const Query = new GraphQLObjectType({
               });
               return i;
             });
-            if (addCounterfindPersons.length > 1) {
-              return addCounterfindPersons.sort((ax, bx) => ax.counter - bx.counter)
-                .reverse();
-            }
-            return [];
+            return addCounterfindPersons.sort((ax, bx) => ax.counter - bx.counter)
+              .reverse();
+            
           }
           const findPerson = await db.models.personCl.findAll({
             where: {

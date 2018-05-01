@@ -21,19 +21,6 @@ class Coaches extends React.Component {
       countiesAlert: 'none',
     };
   }
-  sendToRedux = () => {
-    console.log(this.state);
-    this.props.dispatch({
-      type: "COACHES_FILTRATION",
-      skillArr: this.state.skillArr,
-      countyId: this.state.countiesId,
-      certified: this.state.certified,
-      groupTraining: this.state.groupTraining,
-      priceFrom: this.state.priceFrom,
-      priceTo: this.state.priceTo,
-    });
-    history.push('/listofcoaches');
-  }
   addToSkillArr = skillId => {
     const { skillArr } = this.state;
     if (skillArr.includes(skillId)) {
@@ -89,18 +76,22 @@ class Coaches extends React.Component {
         });
       }
     } else {
-      this.setState({
-        skillArr: [],
-        countiesId: null,
-        certified: false,
-        groupTraining: false,
-        priceFrom: 0,
-        priceTo: 0,
-        categoriesAlert: 'none',
-        countiesAlert: 'none',
-      });
       this.sendToRedux();
     }
+  }
+
+  sendToRedux = () => {
+    console.log(this.state);
+    this.props.dispatch({
+      type: "COACHES_FILTRATION",
+      skillArr: this.state.skillArr,
+      countyId: this.state.countiesId,
+      certified: this.state.certified,
+      groupTraining: this.state.groupTraining,
+      priceFrom: this.state.priceFrom,
+      priceTo: this.state.priceTo,
+    });
+    setTimeout(() => history.push('/listofcoaches'), 500);
   }
   render() {
     return (
