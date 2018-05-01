@@ -247,6 +247,7 @@ const router = (new KoaRouter())
       Key: ctx.params.id,
       Expires: 600,
       ContentType: ctx.params.indi + '/' + ctx.params.type,
+      ACL: 'public-read',
     };
     let asa = await s3.getSignedUrl('putObject', params);
     ctx.body = asa;

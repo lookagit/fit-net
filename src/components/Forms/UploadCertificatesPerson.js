@@ -56,10 +56,10 @@ class UploadCertificates extends React.Component {
               variables: {
                 name: 'nekoImeStaTiJaZnam',
                 certUrl: `https://s3.eu-central-1.amazonaws.com/zaluku/${uniqueNameForImg}`,
-                fisioClId: parseInt(this.props.match.params.userId),
+                personClId: parseInt(this.props.match.params.userId),
               },
             });
-            this.props.history.push(`/moreSkillsFisio/${parseInt(this.props.match.params.userId)}`);
+            this.props.history.push(`/moreSkills/${parseInt(this.props.match.params.userId)}`);
           } else {
             console.log('IZDUVASMO GA BATICE ', putOnServer);
           }

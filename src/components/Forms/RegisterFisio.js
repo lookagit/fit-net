@@ -1,7 +1,6 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { connect } from 'react-redux';
 import faker from 'faker';
 import { withRouter } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
@@ -16,17 +15,12 @@ import {
   validatePhone,
   validateBirthPlace,
   validateUrl,
-  validateAbout,
 } from './validationFuncs';
 import SearchBox from '../searchBox';
 
 const axios = require('axios');
 
 @withRouter
-@connect(state => ({
-  fizio: state.fizio,
-  coaches: state.coaches,
-}))
 @graphql(gql`
   mutation updateOrCreateFisio(
     $email: String,
@@ -71,6 +65,7 @@ class RegisterFisio extends React.Component {
       lastName: '',
       email: '',
       password: '',
+      passwordRepeat: null,
       birthPlace: '',
       dateSelected: Moment(),
       date: '',
@@ -86,55 +81,62 @@ class RegisterFisio extends React.Component {
     };
   }
   newFisio = async () => {
-    const { file } = this.state;
-    let uniqueNameForImg = '';
-    let fileOk = false;
-    if (this.state.file) {
-      let url;
-      const fakerUuid = faker.random.uuid();
-      const fileType = file.type.split('/').pop();
-      uniqueNameForImg = `${fakerUuid}.${fileType}`;
-      if (process.env.NODE_ENV === 'production') {
-        url = 'https://fit-net.herokuapp.com/ping/';
-      } else {
-        url = 'http://localhost:8081/ping/';
-      }
-      const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${file.type}`);
-      if (axiosStuff) {
-        const signedUrl = axiosStuff.data;
-        const options = {
-          'Content-Type': file.type,
-        };
-        const putOnServer = await axios.put(signedUrl, file, options);
-        if (putOnServer) {
-          fileOk = true;
+    const { password, passwordRepeat } = this.state;
+    if (password === passwordRepeat) {
+      const { file } = this.state;
+      let uniqueNameForImg = '';
+      let fileOk = false;
+      if (this.state.file) {
+        let url;
+        const fakerUuid = faker.random.uuid();
+        const fileType = file.type.split('/').pop();
+        uniqueNameForImg = `${fakerUuid}.${fileType}`;
+        if (process.env.NODE_ENV === 'production') {
+          url = 'https://honesty-app.herokuapp.com/ping/';
+        } else {
+          url = 'http://localhost:8081/ping/';
+        }
+        const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${file.type}`);
+        if (axiosStuff) {
+          const signedUrl = axiosStuff.data;
+          const options = {
+            'Content-Type': file.type,
+          };
+          const putOnServer = await axios.put(signedUrl, file, options);
+          if (putOnServer) {
+            fileOk = true;
+          }
         }
       }
-    }
-    const mutation = await this.props.registerNewFisio(
-      {
-        variables: {
-          email: this.state.email,
-          password: this.state.password,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          facebookLink: this.state.facebookLink,
-          instagramLink: this.state.instagramLink,
-          cellPhone: this.state.phone,
-          birthPlace: this.state.birthPlace,
-          birthDay: this.state.date,
-          hasCertificates: this.state.hasCerificates,
-          about: this.state.about,
-          imageUrl: fileOk ? `https://fitnetbucket.s3.eu-west-3.amazonaws.com/${uniqueNameForImg}` : 'https://placeholder.com',
-          fisioSkillsArr: this.state.skillArr,
+      const mutation = await this.props.registerNewFisio(
+        {
+          variables: {
+            email: this.state.email,
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            facebookLink: this.state.facebookLink,
+            instagramLink: this.state.instagramLink,
+            cellPhone: this.state.phone,
+            birthPlace: this.state.birthPlace,
+            birthDay: this.state.date,
+            hasCertificates: this.state.hasCerificates,
+            about: this.state.about,
+            imageUrl: fileOk ? `https://fitnetbucket.s3.eu-west-3.amazonaws.com/${uniqueNameForImg}` : 'https://placeholder.com',
+            fisioSkillsArr: this.state.skillArr,
+          },
         },
-      },
-    );
-    if (mutation) {
-      const { id } = mutation.data.updateOrCreateFisio;
-      this.props.history.push(`/register-certificate/${id}`);
+      );
+      if (mutation) {
+        const { id } = mutation.data.updateOrCreateFisio;
+        this.props.history.push(`/register-certificate/${id}`);
+      } else {
+        console.log('prsoo', mutation);
+      }
     } else {
-      console.log('prsoo', mutation);
+      this.setState({
+        warrnMess: 'Šifre se ne poklapaju. Molimo vas unesite šifre ponovo!' // eslint-disable-line
+      });
     }
   }
 
@@ -167,7 +169,11 @@ class RegisterFisio extends React.Component {
       <div className={css.registerFisioWrapper}>
         <div className={css.registerFisio}>
           <div className={css.registerFisioOne}>
-            {/* <h3>Fizio</h3> */}
+            {
+              this.state.warrnMess ?
+                <h3>{`Upozorenje: ${this.state.warrnMess}`}</h3>
+                : null
+            }
             <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>First name</label> */}
               <RegisterInput
@@ -303,7 +309,7 @@ class RegisterFisio extends React.Component {
                 type="password"
                 updateFunc={e => {
                   if (validatePassword(e.target.value)) {
-                     this.setState({ password: e.target.value });
+                     this.setState({ passwordRepeat: e.target.value });
                   } else {
                     console.warn('nije ok password!');
                   }
@@ -332,7 +338,7 @@ class RegisterFisio extends React.Component {
         </div>
         <div className={css.registerFisioOne}>
           <Uppy
-            setRegister={injectFile => this.setState({ file: injectFile })} 
+            setRegister={injectFile => this.setState({ file: injectFile })}
           />
         </div>
         <div>

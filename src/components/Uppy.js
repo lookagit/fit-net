@@ -28,14 +28,23 @@ export default class S3Uploader extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
         {
           this.state.prev ?
             <img
-              
+              style={{
+                paddingBottom: '20px',
+              }}
               alt="fit-net-placeholder"
-              width="130"
-              height="130"
+              width="160"
+              height="160"
               src={this.state.prev}
             />
             : null
