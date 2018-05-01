@@ -109,7 +109,7 @@ const PersonCl = db.define('personCl', {
     allowNull: false,
   },
   about: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   },
   birthPlace: {
     type: Sequelize.STRING,
@@ -186,7 +186,7 @@ const PersonTrainingSkill = db.define('personTrainingSkill');
 
 TrainingSkill.hasMany(PersonTrainingSkill);
 PersonCl.hasMany(PersonTrainingSkill);
-/**CLUBS TABLES */
+/** CLUBS TABLES */
 
 const ClubsCl = db.define('clubCl', {
   name: {
@@ -221,7 +221,7 @@ const ClubsCl = db.define('clubCl', {
     type: Sequelize.FLOAT,
   },
   about: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   },
   skillsArr: {
     type: Sequelize.ARRAY(Sequelize.INTEGER),
@@ -274,10 +274,10 @@ const WorkingTimeClub = db.define('workingTimeClub', {
 ClubsCl.hasMany(WorkingTimeClub);
 /** CLUBS TABLES */
 
-/**FISIO TABLES */
+/** FISIO TABLES */
 const FisioCl = db.define('fisioCl', {
   password: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
   email: {
     type: Sequelize.STRING,
@@ -319,7 +319,7 @@ const FisioCl = db.define('fisioCl', {
     allowNull: false,
   },
   about: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   },
   birthPlace: {
     type: Sequelize.STRING,
@@ -349,7 +349,7 @@ const FisioCl = db.define('fisioCl', {
   score: {
     type: Sequelize.FLOAT,
     defaultValue: 0,
-  }
+  },
 });
 
 const FisioCategories = db.define('fisioCategories', {

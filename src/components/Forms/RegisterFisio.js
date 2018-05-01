@@ -74,14 +74,15 @@ class RegisterFisio extends React.Component {
       birthPlace: '',
       dateSelected: Moment(),
       date: '',
-      about: '',
+      about: null,
       facebookLink: '',
       instagramLink: '',
       phone: '+381',
       hasCerificates: false,
       file: null,
       imgUrl: 'https://google.com',
-      skillArr: [],    
+      skillArr: [],
+      warrnMess: null,
     };
   }
   newFisio = async () => {
@@ -170,7 +171,7 @@ class RegisterFisio extends React.Component {
             <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>First name</label> */}
               <RegisterInput
-                placeHolder="First name"
+                placeHolder="Ime"
                 type="text"
                 updateFunc={e => {
                   if (validateStringNames(e.target.value)) {
@@ -184,7 +185,7 @@ class RegisterFisio extends React.Component {
             <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>Last name</label> */}
               <RegisterInput
-                placeHolder="Last name"
+                placeHolder="Prezime"
                 type="text"
                 updateFunc={e => {
                   if (validateStringNames(e.target.value)) {
@@ -201,28 +202,21 @@ class RegisterFisio extends React.Component {
               {/* <label className={css.labelsRegister}>Email</label> */}
               <RegisterInput
                 placeHolder="Email"
-                type="text"
+                type="email"
                 updateFunc={e => {
                   if (validateEmail(e.target.value)) {
                      this.setState({ email: e.target.value });
                   } else {
-                    console.warn('nije ok email!');
+                    this.setState({ warrnMess: 'Neispravan format email adrese' });
                   }
                 }}
               />
             </div>
             <div className={css.inputWrapperForm}>
-              {/* <label className={css.labelsRegister}>Password</label> */}
-              <RegisterInput
-                placeHolder="Password"
-                type="text"
-                updateFunc={e => {
-                  if (validatePassword(e.target.value)) {
-                     this.setState({ password: e.target.value });
-                  } else {
-                    console.warn('nije ok password!');
-                  }
-                }}
+              {/* <label className={css.labelsRegister}>Birtday Date</label> */}
+              <DatePicker
+                selected={this.state.dateSelected}
+                onChange={this.handleChange}
               />
             </div>
           </div>
@@ -230,7 +224,7 @@ class RegisterFisio extends React.Component {
             <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>Phone</label> */}
               <RegisterInput
-                placeHolder="Phone"
+                placeHolder="Broj telefona"
                 type="text"
                 value={this.state.phone}
                 updateFunc={e => {
@@ -245,7 +239,7 @@ class RegisterFisio extends React.Component {
             <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>Birtday Place</label> */}
               <RegisterInput
-                placeHolder="Birthday Place"
+                placeHolder="Mesto rodjenja"
                 type="text"
                 updateFunc={e => {
                   if (validateBirthPlace(e.target.value)) {
@@ -289,26 +283,51 @@ class RegisterFisio extends React.Component {
           </div>
           <div className={css.registerFisioOne}>
             <div className={css.inputWrapperForm}>
-              {/* <label className={css.labelsRegister}>About</label> */}
+              {/* <label className={css.labelsRegister}>Password</label> */}
               <RegisterInput
-                placeHolder="About"
-                type="text"
+                placeHolder="Šifra"
+                type="password"
                 updateFunc={e => {
-                  if (validateAbout(e.target.value)) {
-                     this.setState({ about: e.target.value });
+                  if (validatePassword(e.target.value)) {
+                    this.setState({ password: e.target.value });
                   } else {
-                    console.warn('nije ok about!');
+                    console.warn('nije ok password!');
                   }
                 }}
-                />
-            </div>
-            <div className={css.inputWrapperForm}>
-              {/* <label className={css.labelsRegister}>Birtday Date</label> */}
-              <DatePicker
-                selected={this.state.dateSelected}
-                onChange={this.handleChange}
               />
             </div>
+            <div className={css.inputWrapperForm}>
+              {/* <label className={css.labelsRegister}>Password</label> */}
+              <RegisterInput
+                placeHolder="Ponovite šifru"
+                type="password"
+                updateFunc={e => {
+                  if (validatePassword(e.target.value)) {
+                     this.setState({ password: e.target.value });
+                  } else {
+                    console.warn('nije ok password!');
+                  }
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        <div className={css.registerFisioOne}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+            }}
+          >
+            <textarea
+              rows="6"
+              cols="80"
+              placeholder="Napišite nešto o sebi. Gde ste radili, koliko se dugo bavite ovim poslom, najvece uspehe, itd..."
+              value={this.state.about}
+              onChange={e => this.setState({ about: e.target.value })}
+            />
           </div>
         </div>
         <div className={css.registerFisioOne}>

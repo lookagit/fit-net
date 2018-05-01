@@ -1,11 +1,9 @@
 import {
-    GraphQLObjectType,
-    GraphQLString,
-    GraphQLSchema,
-    GraphQLInt,
-    GraphQLList,
-    GraphQLNonNull,
-    GraphQLBoolean,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLList,
+  GraphQLBoolean,
 } from 'graphql';
 import db from '../../db/db';
 
@@ -48,7 +46,7 @@ export const PersonCl = new GraphQLObjectType({
         type: GraphQLString,
         resolve(personCl) {
           return personCl.birthDay;
-        }
+        },
       },
       instagramLink: {
         type: GraphQLString,
@@ -104,10 +102,20 @@ export const PersonCl = new GraphQLObjectType({
           return personCl.counter;
         },
       },
+      myCertificates: {
+        type: new GraphQLList(Certification),
+        async resolve(personCl) {
+          return db.models.certification.findAll({
+            where: {
+              personClId: personCl.id,
+            },
+          });
+        },
+      },
       trainingPersonSkills: {
         type: new GraphQLList(TrainingPersonSkill),
         async resolve(personCl) {
-          return await db.models.trainingSkill.findAll({
+          return db.models.trainingSkill.findAll({
             where: {
               id: {
                 [db.Op.or]: personCl.skillsArr,
@@ -119,7 +127,7 @@ export const PersonCl = new GraphQLObjectType({
       personCounties: {
         type: new GraphQLList(PersonCounty),
         async resolve(personCl) {
-          return await db.models.personCounty.findAll({
+          return db.models.personCounty.findAll({
             where: {
               personClId: personCl.id,
             },
@@ -131,25 +139,25 @@ export const PersonCl = new GraphQLObjectType({
 });
 
 export const TrainingSkill = new GraphQLObjectType({
-    name: 'TrainingSkill',
-    description: 'Training Skill List',
-    fields() {
-      return {
-        id: {
-          type: GraphQLString,
-          resolve(trainingSkill) {
-            return trainingSkill.id;
-          }
+  name: 'TrainingSkill',
+  description: 'Training Skill List',
+  fields() {
+    return {
+      id: {
+        type: GraphQLString,
+        resolve(trainingSkill) {
+          return trainingSkill.id;
         },
-        trainSkillName: {
-          type: GraphQLString,
-          resolve(trainingSkill) {
-            return trainingSkill.trainSkillName;
-          },
+      },
+      trainSkillName: {
+        type: GraphQLString,
+        resolve(trainingSkill) {
+          return trainingSkill.trainSkillName;
         },
-      };
-    },
-  })
+      },
+    };
+  },
+});
 
 export const County = new GraphQLObjectType({
   name: 'County',
@@ -168,9 +176,9 @@ export const County = new GraphQLObjectType({
           return county.countyName;
         },
       },
-    }
+    };
   },
-})
+});
 
 export const PersonCounty = new GraphQLObjectType({
   name: 'PersonCounty',
@@ -239,7 +247,7 @@ export const Certification = new GraphQLObjectType({
       name: {
         type: GraphQLString,
         resolve(cert) {
-          return cert.name
+          return cert.name;
         },
       },
       certUrl: {
@@ -252,6 +260,12 @@ export const Certification = new GraphQLObjectType({
         type: GraphQLInt,
         resolve(cert) {
           return cert.personClId;
+        },
+      },
+      fisioClId: {
+        type: GraphQLInt,
+        resolve(cert) {
+          return cert.fisioClId;
         },
       },
     };
@@ -267,8 +281,8 @@ export const TrainingPersonSkill = new GraphQLObjectType({
         type: GraphQLString,
         resolve(trainingPersonSkill) {
           return trainingPersonSkill.trainSkillName;
-        }
-      }
-    }
+        },
+      },
+    };
   },
-})
+});

@@ -4,6 +4,7 @@ import faker from 'faker';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import UppyCertificates from '../UppyCertificates';
+import css from '../styles/styles.scss';
 
 const axios = require('axios');
 
@@ -58,8 +59,9 @@ class UploadCertificates extends React.Component {
                 personClId: parseInt(this.props.match.params.userId),
               },
             });
+            this.props.history.push(`/moreSkillsFisio/${parseInt(this.props.match.params.userId)}`)
           } else {
-            console.log("IZDUVASMO GA BATICE ", putOnServer);
+            console.log('IZDUVASMO GA BATICE ', putOnServer);
           }
         }
       });
@@ -75,21 +77,49 @@ class UploadCertificates extends React.Component {
           alignItems: 'center',
           justifyContent: 'center',
           margin: '0 auto',
+          paddingTop: '30px',
         }}
       >
-        <h2
+        <div
           style={{
-            color: '#fff',
+            paddingBottom: '15px',
           }}
         >
-          Mozete ubaciti do 5 sertifikata
-        </h2>
+          <h2
+            style={{
+              color: '#fff',
+            }}
+          >
+            Mozete ubaciti do 10 sertifikata
+          </h2>
+        </div>
         <UppyCertificates setRegister={files => this.setState({ files })} />
-        <h3
+        <div
+          className={css.sendParams}
+          style={{
+            width: '190px',
+            marginTop: '25px',
+          }}
           onClick={() => this.certsUpload()}
         >
-          POSALJI
-        </h3>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <h3
+              style={{
+                color: '#fff',
+                fontWeight: 'bold',
+              }}
+            >
+              SNIMITE
+            </h3>
+          </div>
+        </div>
       </div>
     );
   }

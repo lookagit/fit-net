@@ -145,6 +145,16 @@ const FisioCl = new GraphQLObjectType({
       hasCerificates: {
         type: GraphQLBoolean,
       },
+      allCertificates: {
+        type: new GraphQLList(Certification),
+        resolve(fisioCl) {
+          return db.models.certification.findAll({
+            where: {
+              fisioClId: fisioCl.id,
+            },
+          });
+        },
+      },
       fisioSkillsArr: {
         type: new GraphQLList(GraphQLInt),
       },
@@ -661,170 +671,175 @@ const Query = new GraphQLObjectType({
             },
           });
           if (findFisio.length) {
-            let addCounterfindFisio = findFisio.map(i => {
-              i['counter'] = 0;
-              i.fisioSkillsArr.map(imp => {
+            const addCounterfindFisio = findFisio.map(i => {
+              i['counter'] = 0; // eslint-disable-line
+              i.fisioSkillsArr.map(imp => {  // eslint-disable-line
                 if (skillIds.includes(imp)) {
-                  i['counter'] += 1;
+                  i['counter'] += 1; // eslint-disable-line
                 }
               });
               return i;
             });
-            return addCounterfindFisio.sort((a,b) => a.counter - b.counter).reverse();
+            return addCounterfindFisio.sort((a, b) => a.counter - b.counter).reverse();
           }
-          return findFisio;           
+          return findFisio;
         },
       },
-         personCl: {
-             type: new GraphQLList(PersonCl),
-             args: {
-                 skillIds: {
-                     type: new GraphQLList(GraphQLInt),
-                 },
-                 priceFrom: {
-                     type: GraphQLInt,
-                 },
-                 priceTo: {
-                     type: GraphQLInt,
-                 },
-                 countyId: {
-                     type: GraphQLInt,
-                 },
-                 groupTraining: {
-                     type: GraphQLBoolean,
-                 },
-                 certified: {
-                     type: GraphQLBoolean,
-                 },
-                 page: {
-                     type: GraphQLInt,
-                 },
-                 id: {
-                     type: GraphQLInt,
-                 }
-             },
-             async resolve(root, {id, skillIds, priceFrom, priceTo, countyId, groupTraining, certified, page}) {
-                 if(typeof id == 'undefined') {
-                     const offset = 3;
-                     let pageLocal = page * offset;
-                     let b = await db.models.personCounty.findAll({
-                         where: {
-                             price: {
-                                 [db.Op.gte]: priceFrom,
-                                 [db.Op.lte]: priceTo,
-                             },
-                             countyId,
-                             groupTraining,
-                         }
-                     });
-                     let ids = b.map(item => item.personClId);
-                     let findPerson = await db.models.personCl.findAll({
-                         where: {
-                             id: {
-                                 [db.Op.or]: ids,
-                             },
-                             hasCerificates: certified,
-                             skillsArr: {
-                                 $overlap: skillIds
-                             }
-                         },
-                     });
-                     let addCounterfindPersons = findPerson.map(i => {
-                         i['counter'] = 0;
-                         i.skillsArr.map(imp => {
-                             if(skillIds.includes(imp)) {
-                                 i['counter'] += 1;
-                             }
-                         })
-                         return i
-                     })
-                     return addCounterfindPersons.sort((a,b) => a.counter - b.counter)
-                         .reverse();
-                 } else {
-                     let findPerson = await db.models.personCl.findAll({
-                         where: {
-                             id,
-                         },
-                     });
-                     return findPerson;
-                 }
-             }
-         }
-     };
-    },
+      personCl: {
+        type: new GraphQLList(PersonCl),
+        args: {
+          skillIds: {
+            type: new GraphQLList(GraphQLInt),
+          },
+          priceFrom: {
+            type: GraphQLInt,
+          },
+          priceTo: {
+            type: GraphQLInt,
+          },
+          countyId: {
+            type: GraphQLInt,
+          },
+          groupTraining: {
+            type: GraphQLBoolean,
+          },
+          certified: {
+            type: GraphQLBoolean,
+          },
+          page: {
+            type: GraphQLInt,
+          },
+          id: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, {
+          id,
+          skillIds,
+          priceFrom,
+          priceTo,
+          countyId,
+          groupTraining,
+          certified,
+        }) {
+          if (typeof id === 'undefined') {
+            // const offset = 3;
+            // const pageLocal = page * offset;
+            const b = await db.models.personCounty.findAll({
+              where: {
+                price: {
+                  [db.Op.gte]: priceFrom,
+                  [db.Op.lte]: priceTo,
+                },
+                countyId,
+                groupTraining,
+              },
+            });
+            const ids = b.map(item => item.personClId);
+            const findPerson = await db.models.personCl.findAll({
+              where: {
+                id: {
+                  [db.Op.or]: ids,
+                },
+                hasCerificates: certified,
+                skillsArr: {
+                  $overlap: skillIds,
+                },
+              },
+            });
+            const addCounterfindPersons = findPerson.map(i => {
+              i['counter'] = 0; // eslint-disable-line
+              i.skillsArr.map(imp => { // eslint-disable-line
+                if (skillIds.includes(imp)) {
+                  i['counter'] += 1; // eslint-disable-line
+                }
+              });
+              return i;
+            });
+            return addCounterfindPersons.sort((ax, bx) => ax.counter - bx.counter)
+              .reverse();
+          }
+          const findPerson = await db.models.personCl.findAll({
+            where: {
+              id,
+            },
+          });
+          return findPerson;
+        },
+      },
+    };
+  },
 });
 
 const Mutation = new GraphQLObjectType({
-    name: 'Mutation',
-    description: 'Mutation for fitnet.com',
-    fields() {
-        return {
-            updateOrCreateUser: {
-                type: PersonCl,
-                args: {
-                    email: {
-                        type: GraphQLString,
-                    },
-                    password: {
-                        type: GraphQLString,
-                    },
-                    firstName: {
-                        type: GraphQLString,
-                    },
-                    lastName: {
-                        type: GraphQLString,
-                    },
-                    facebookLink: {
-                        type: GraphQLString,
-                    },
-                    instagramLink: {
-                        type: GraphQLString,
-                    },
-                    cellPhone: {
-                        type: GraphQLString,
-                    },
-                    birthPlace: {
-                        type: GraphQLString,
-                    },
-                    birthDay: {
-                        type: GraphQLString,
-                    },
-                    hasCerificates: {
-                        type: GraphQLBoolean,
-                    },
-                    about: {
-                        type: GraphQLString,
-                    },
-                    imageUrl: {
-                        type: GraphQLString,
-                    },
-                    skillsArr: {
-                        type: new GraphQLList(GraphQLInt),
-                    },
-                },
-                async resolve(root, {email, ...args}){
-                    let findOrCreateUser = await db.models.personCl.findOne({
-                        where: {
-                            email,
-                        }
-                    });
-                    if(findOrCreateUser) {
-                        return {error: "We have user with that email"};
-                    } else {
-                        let createPersonCl = await db.models.personCl.create({
-                            email,
-                            ...args,
-                        });
-                        if(createPersonCl) {
-                            return createPersonCl;
-                        } else {
-                            return {error: "Database issue"};
-                        }
-                    }
-                },
+  name: 'Mutation',
+  description: 'Mutation for fitnet.com',
+  fields() {
+    return {
+      updateOrCreateUser: {
+        type: PersonCl,
+        args: {
+          email: {
+            type: GraphQLString,
+          },
+          password: {
+            type: GraphQLString,
+          },
+          firstName: {
+            type: GraphQLString,
+          },
+          lastName: {
+            type: GraphQLString,
+          },
+          facebookLink: {
+            type: GraphQLString,
+          },
+          instagramLink: {
+            type: GraphQLString,
+          },
+          cellPhone: {
+            type: GraphQLString,
+          },
+          birthPlace: {
+            type: GraphQLString,
+          },
+          birthDay: {
+            type: GraphQLString,
+          },
+          hasCerificates: {
+            type: GraphQLBoolean,
+          },
+          about: {
+            type: GraphQLString,
+          },
+          imageUrl: {
+            type: GraphQLString,
+          },
+          skillsArr: {
+            type: new GraphQLList(GraphQLInt),
+          },
+        },
+        async resolve(root, { email, ...args }) {
+          const findOrCreateUser = await db.models.personCl.findOne({
+            where: {
+              email,
             },
-            PersonCountyCreate: {
-                type: PersonCounty,
+          });
+          if (findOrCreateUser) {
+            return { error: 'We have user with that email' };
+          }
+          const createPersonCl = await db.models.personCl.create({
+            email,
+            ...args,
+          });
+          if (createPersonCl) {
+            return createPersonCl;
+          }
+          return { error: 'Database issue' };
+        },
+      },
+      PersonCountyCreate: {
+        type: PersonCounty,
                 args: {
                     price: {
                         type: GraphQLInt,
