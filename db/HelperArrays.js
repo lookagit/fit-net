@@ -19,132 +19,132 @@ import faker from 'faker';
 //     facebookLink: faker.internet.url(),
 //   }
 // })
-export const PersonArr = [
-  {
-    password: '2131SDA1', 
-    email: 'luka.simjanovic@gma.com',
-    firstName: 'Luki',
-    lastName: 'Muki',
-    birthPlace: 'Beograd',
-    birthDay: '1989-05-01 04:05:02',
-    cellPhone: '2133123',
-    imageUrl: 'https://s3.eu-west-3.amazonaws.com/fitnetbucket/srele.jpg',
-    skillsArr: [1,3,5],
-    countyArr: [2,3,5],
-    hasCerificates: true,
-    score: 5,
-    instagramLink: 'https://www.instagram.com/golazohub/',
-    facebookLink: 'https://www.facebook.com/jordanyeohfitness/',
-    about: 'JA sam trener vec dugi niz godina, bavim se fitnesom i ostalim stvarima. Vec dugo mrzim da ustajem rano tako da treninge drzim samo nocu. Razvio sam posao dobro jer ljudi ne vole da ustaju ujutru. pozdrav javite se',
-  },
-  {
-    password: '23!!!23',
-    email: 'simjanovic@gma.com',
-    firstName: 'Tuki',
-    lastName: 'Ruki',
-    birthPlace: 'Smederevo',
-    birthDay: '1987-09-01 04:05:02',
-    cellPhone: '122133123',
-    imageUrl: 'https://s3.eu-west-3.amazonaws.com/fitnetbucket/jocke.jpg',
-    skillsArr: [2,8,9],
-    countyArr: [1, 3],
-    hasCerificates: true,
-    score: 3,
-    instagramLink: 'https://www.instagram.com/heartrunnergirl/',
-    facebookLink: 'https://www.facebook.com/arnold/',
-    about: 'JA sam trener vec manji niz godina, ne bavim se fitnesom i ostalim stvarima, samo boks. Vec dugo volim  da ustajem rano tako da treninge drzim samo nocu. Razvio sam posao dobro jer ljudi ne vole da ustaju ujutru. pozdrav javite se meni',
-  },
-  {
-    password: '213#%^11',
-    firstName: 'Zuki',
-    lastName: 'Jang Kuki',
-    cellPhone: '23218123',
-    birthPlace: 'Beograd',
-    birthDay: '1995-08-09 04:05:02',
-    imageUrl: 'https://s3.eu-west-3.amazonaws.com/fitnetbucket/stefke.jpg',
-    email: 'luka.simjanovic@gmas.com',
-    countyArr: [3, 6],
-    skillsArr: [2, 3, 6],
-    hasCerificates: true,
-    score: 7,
-    instagramLink: 'https://www.instagram.com/scrfitness/',
-    facebookLink: 'https://www.facebook.com/djokovic.official/',
-    about: 'JA sam trener vec manji niz godina, ne bavim se fitnesom i ostalim stvarima, samo boks. Vec dugo volim  da ustajem rano tako da treninge drzim samo nocu. Razvio sam posao dobro jer ljudi ne vole da ustaju ujutru. pozdrav javite se meni',
-  },
-  {
-    password: 'a1213#%^11',
-    firstName: 'Lecuki',
-    lastName: 'Wiz Khaled',
-    cellPhone: '232100112',
-    birthPlace: 'Jagodina',
-    birthDay: '1999-08-09 04:05:02',
-    imageUrl: 'https://s3.eu-west-3.amazonaws.com/fitnetbucket/dragan.jpg',
-    email: 'wiz.khaledi@gmas.com',
-    countyArr: [3, 2],
-    skillsArr: [1, 6, 10],
-    hasCerificates: true,
-    score: 10,
-    instagramLink: 'https://www.instagram.com/fitnessew/',
-    facebookLink: 'https://www.facebook.com/kovic.official/',
-    about: 'JA sam trener vec manji niz godina, ne bavim se fitnesom i ostalim stvarima, samo boks. Vec dugo volim  da ustajem rano tako da treninge drzim samo nocu. Razvio sam posao dobro jer ljudi ne vole da ustaju ujutru. pozdrav javite se meni',
-  },
-  {
-    password: '90112231',
-    firstName: 'Lea kis',
-    lastName: 'Quavo',
-    cellPhone: '0632200112',
-    birthPlace: 'Krusedol',
-    birthDay: '1987-08-09 04:05:02',
-    imageUrl: 'https://s3.eu-west-3.amazonaws.com/fitnetbucket/micko.jpg',
-    email: 'mojkovax@gmas.com',
-    countyArr: [1, 4],
-    skillsArr: [2, 6, 9],
-    hasCerificates: false,
-    score: 2,
-    instagramLink: 'https://www.instagram.com/fitnesolie/',
-    facebookLink: 'https://www.facebook.com/officialee/',
-    about: 'JA sam trener vec manji niz godina, ne bavim se fitnesom i ostalim stvarima, samo boks. Vec dugo volim  da ustajem rano tako da treninge drzim samo nocu. Razvio sam posao dobro jer ljudi ne vole da ustaju ujutru. pozdrav javite se meni',
-  },
-]
-export const PersonTrainingSkillArr = [
-  {
-    trainingSkillId: 1,
-    personClId: 1,
-  },
-  {
-    trainingSkillId: 3,
-    personClId: 1,
-  },
-  {
-    trainingSkillId: 5,
-    personClId: 1,
-  },
-  {
-    trainingSkillId: 2,
-    personClId: 2,
-  },
-  {
-    trainingSkillId: 8,
-    personClId: 2,
-  },
-  {
-    trainingSkillId: 9,
-    personClId: 2,
-  },
-  {
-    trainingSkillId: 2,
-    personClId: 3,
-  },
-  {
-    trainingSkillId: 3,
-    personClId: 3,
-  },
-  {
-    trainingSkillId: 6,
-    personClId: 3,
-  },
+// export const PersonArr = [
+//   {
+//     password: '2131SDA1', 
+//     email: 'luka.simjanovic@gma.com',
+//     firstName: 'Luki',
+//     lastName: 'Muki',
+//     birthPlace: 'Beograd',
+//     birthDay: '1989-05-01 04:05:02',
+//     cellPhone: '2133123',
+//     imageUrl: 'https://s3.eu-west-3.amazonaws.com/fitnetbucket/srele.jpg',
+//     skillsArr: [1, 3, 5],
+//     countyArr: [2, 3, 5],
+//     hasCerificates: true,
+//     score: 5,
+//     instagramLink: 'https://www.instagram.com/golazohub/',
+//     facebookLink: 'https://www.facebook.com/jordanyeohfitness/',
+//     about: 'JA sam trener vec dugi niz godina, bavim se fitnesom i ostalim stvarima. Vec dugo mrzim da ustajem rano tako da treninge drzim samo nocu. Razvio sam posao dobro jer ljudi ne vole da ustaju ujutru. pozdrav javite se',
+//   },
+//   {
+//     password: '23!!!23',
+//     email: 'simjanovic@gma.com',
+//     firstName: 'Tuki',
+//     lastName: 'Ruki',
+//     birthPlace: 'Smederevo',
+//     birthDay: '1987-09-01 04:05:02',
+//     cellPhone: '122133123',
+//     imageUrl: 'https://s3.eu-west-3.amazonaws.com/fitnetbucket/jocke.jpg',
+//     skillsArr: [2, 8, 9],
+//     countyArr: [1, 3],
+//     hasCerificates: true,
+//     score: 3,
+//     instagramLink: 'https://www.instagram.com/heartrunnergirl/',
+//     facebookLink: 'https://www.facebook.com/arnold/',
+//     about: 'JA sam trener vec manji niz godina, ne bavim se fitnesom i ostalim stvarima, samo boks. Vec dugo volim  da ustajem rano tako da treninge drzim samo nocu. Razvio sam posao dobro jer ljudi ne vole da ustaju ujutru. pozdrav javite se meni',
+//   },
+//   {
+//     password: '213#%^11',
+//     firstName: 'Zuki',
+//     lastName: 'Jang Kuki',
+//     cellPhone: '23218123',
+//     birthPlace: 'Beograd',
+//     birthDay: '1995-08-09 04:05:02',
+//     imageUrl: 'https://s3.eu-west-3.amazonaws.com/fitnetbucket/stefke.jpg',
+//     email: 'luka.simjanovic@gmas.com',
+//     countyArr: [3, 6],
+//     skillsArr: [2, 3, 6],
+//     hasCerificates: true,
+//     score: 7,
+//     instagramLink: 'https://www.instagram.com/scrfitness/',
+//     facebookLink: 'https://www.facebook.com/djokovic.official/',
+//     about: 'JA sam trener vec manji niz godina, ne bavim se fitnesom i ostalim stvarima, samo boks. Vec dugo volim  da ustajem rano tako da treninge drzim samo nocu. Razvio sam posao dobro jer ljudi ne vole da ustaju ujutru. pozdrav javite se meni',
+//   },
+//   {
+//     password: 'a1213#%^11',
+//     firstName: 'Lecuki',
+//     lastName: 'Wiz Khaled',
+//     cellPhone: '232100112',
+//     birthPlace: 'Jagodina',
+//     birthDay: '1999-08-09 04:05:02',
+//     imageUrl: 'https://s3.eu-west-3.amazonaws.com/fitnetbucket/dragan.jpg',
+//     email: 'wiz.khaledi@gmas.com',
+//     countyArr: [3, 2],
+//     skillsArr: [1, 6, 10],
+//     hasCerificates: true,
+//     score: 10,
+//     instagramLink: 'https://www.instagram.com/fitnessew/',
+//     facebookLink: 'https://www.facebook.com/kovic.official/',
+//     about: 'JA sam trener vec manji niz godina, ne bavim se fitnesom i ostalim stvarima, samo boks. Vec dugo volim  da ustajem rano tako da treninge drzim samo nocu. Razvio sam posao dobro jer ljudi ne vole da ustaju ujutru. pozdrav javite se meni',
+//   },
+//   {
+//     password: '90112231',
+//     firstName: 'Lea kis',
+//     lastName: 'Quavo',
+//     cellPhone: '0632200112',
+//     birthPlace: 'Krusedol',
+//     birthDay: '1987-08-09 04:05:02',
+//     imageUrl: 'https://s3.eu-west-3.amazonaws.com/fitnetbucket/micko.jpg',
+//     email: 'mojkovax@gmas.com',
+//     countyArr: [1, 4],
+//     skillsArr: [2, 6, 9],
+//     hasCerificates: false,
+//     score: 2,
+//     instagramLink: 'https://www.instagram.com/fitnesolie/',
+//     facebookLink: 'https://www.facebook.com/officialee/',
+//     about: 'JA sam trener vec manji niz godina, ne bavim se fitnesom i ostalim stvarima, samo boks. Vec dugo volim  da ustajem rano tako da treninge drzim samo nocu. Razvio sam posao dobro jer ljudi ne vole da ustaju ujutru. pozdrav javite se meni',
+//   },
+// ]
+// export const PersonTrainingSkillArr = [
+//   {
+//     trainingSkillId: 1,
+//     personClId: 1,
+//   },
+//   {
+//     trainingSkillId: 3,
+//     personClId: 1,
+//   },
+//   {
+//     trainingSkillId: 5,
+//     personClId: 1,
+//   },
+//   {
+//     trainingSkillId: 2,
+//     personClId: 2,
+//   },
+//   {
+//     trainingSkillId: 8,
+//     personClId: 2,
+//   },
+//   {
+//     trainingSkillId: 9,
+//     personClId: 2,
+//   },
+//   {
+//     trainingSkillId: 2,
+//     personClId: 3,
+//   },
+//   {
+//     trainingSkillId: 3,
+//     personClId: 3,
+//   },
+//   {
+//     trainingSkillId: 6,
+//     personClId: 3,
+//   },
 
-]
+// ]
 
 export const TrainingSkillArr = [
   {
@@ -157,10 +157,10 @@ export const TrainingSkillArr = [
     trainSkillName: 'Cross Fit',
   },
   {
-    trainSkillName: 'Dizanje tegova'
+    trainSkillName: 'Dizanje tegova',
   },
   {
-    trainSkillName: 'Boks'
+    trainSkillName: 'Boks',
   },
   {
     trainSkillName: 'Kardio Boks',
@@ -175,10 +175,10 @@ export const TrainingSkillArr = [
     trainSkillName: 'Muay Thai',
   },
   {
-    trainSkillName: 'MMA'
+    trainSkillName: 'MMA',
   },
   {
-    trainSkillName: 'Brazilski Jiu Jitsu'
+    trainSkillName: 'Brazilski Jiu Jitsu',
   },
   {
     trainSkillName: 'Grapling',
@@ -193,10 +193,10 @@ export const TrainingSkillArr = [
     trainSkillName: 'Wing Chun',
   },
   {
-    trainSkillName: 'Krav Maga'
+    trainSkillName: 'Krav Maga',
   },
   {
-    trainSkillName: 'Karate'
+    trainSkillName: 'Karate',
   },
   {
     trainSkillName: 'Atletika',
@@ -211,16 +211,16 @@ export const TrainingSkillArr = [
     trainSkillName: 'Triaton',
   },
   {
-    trainSkillName: 'Biciklizam'
+    trainSkillName: 'Biciklizam',
   },
   {
-    trainSkillName: 'Tenis'
+    trainSkillName: 'Tenis',
   },
   {
     trainSkillName: 'Fudbal',
   },
   {
-    trainSkillName: 'Kosarka'
+    trainSkillName: 'Kosarka',
   },
   {
     trainSkillName: 'Ragbi',
@@ -235,10 +235,10 @@ export const TrainingSkillArr = [
     trainSkillName: 'Vaterpolo',
   },
   {
-    trainSkillName: 'Odbojka'
+    trainSkillName: 'Odbojka',
   },
   {
-    trainSkillName: 'Hokej'
+    trainSkillName: 'Hokej',
   },
   {
     trainSkillName: 'Klizanje',
@@ -253,10 +253,10 @@ export const TrainingSkillArr = [
     trainSkillName: 'Snowboarding',
   },
   {
-    trainSkillName: 'Alpinizam'
+    trainSkillName: 'Alpinizam',
   },
   {
-    trainSkillName: 'Sportsko penjanje'
+    trainSkillName: 'Sportsko penjanje',
   },
   {
     trainSkillName: 'Taekwondo',
@@ -264,7 +264,8 @@ export const TrainingSkillArr = [
   {
     trainSkillName: 'Sambo',
   },
-]
+];
+
 export const CityArr = [
   {
     cityName: 'Beograd',
@@ -272,7 +273,8 @@ export const CityArr = [
   {
     cityName: 'Novi Sad',
   },
-]
+];
+
 export const CountyArr = [
   {
     countyName: 'Zvezdara',
@@ -347,118 +349,118 @@ export const CountyArr = [
     cityId: 2,
   },
 ];
-export const PersonCountyHelper = [
-  {
-    personClId: 3,
-    countyId: 1,
-    price: 6200,
-    groupTraining: false,
-    address: 'Veljka Vlahovica 3a',
-  },
-  {
-    personClId: 3,
-    countyId: 1,
-    price: 3200,
-    groupTraining: true,
-    address: 'Veljka Vlahovic 3a',
+// export const PersonCountyHelper = [
+//   {
+//     personClId: 3,
+//     countyId: 1,
+//     price: 6200,
+//     groupTraining: false,
+//     address: 'Veljka Vlahovica 3a',
+//   },
+//   {
+//     personClId: 3,
+//     countyId: 1,
+//     price: 3200,
+//     groupTraining: true,
+//     address: 'Veljka Vlahovic 3a',
 
-  },
-  {
-    personClId: 1,
-    countyId: 1,
-    price: 2200,
-    groupTraining: false,
-    address: 'Veljka Vlahovica 3a',
-  },
-  {
-    personClId: 1,
-    countyId: 1,
-    price: 3200,
-    groupTraining: true,
-    address: 'Veljka Vlahovica 3a',
-  },
-  {
-    personClId: 3,
-    countyId: 5,
-    price: 3200,
-    groupTraining: false,
-    address: 'Palmira Toljatija 25',
-  },
-  {
-    personClId: 3,
-    countyId: 5,
-    price: 1200,
-    groupTraining: true,
-    address: 'Palmira Toljatija 25',
-  },
-  {
-    personClId: 1,
-    countyId: 2,
-    price: 3200,
-    groupTraining: false,
-    address: 'Teodora Mirijevskog 7v',
-  },
-  {
-    personClId: 1,
-    countyId: 2,
-    price: 2200,
-    groupTraining: true,
-    address: 'Teodora Mirijevskog 7v',
-  },
-  {
-    personClId: 3,
-    countyId: 2,
-    price: 1200,
-    groupTraining: false,
-    address: 'Teodora Mirijevskog 7v',
-  },
-  {
-    personClId: 3,
-    countyId: 5,
-    price: 4200,
-    groupTraining: true,
-    address: 'Jurija Gagarina 7v',
-  },
-  {
-    personClId: 3,
-    countyId: 5,
-    price: 3200,
-    groupTraining: false,
-    address: 'Jurija Gagarina 7b',
-  },
-  {
-    personClId: 4,
-    countyId: 1,
-    price: 3200,
-    groupTraining: true,
-    address: 'Brace Jerkovic 21',
-  },
-  {
-    personClId: 4,
-    countyId: 1,
-    price: 1800,
-    groupTraining: false,
-    address: 'Brace Jugovic 21',
-  },
-  {
-    personClId: 5,
-    countyId: 4,
-    price: 2400,
-    groupTraining: true,
-    address: 'Zmaja od Nocaja 2s',
-  },
-  {
-    personClId: 5,
-    countyId: 4,
-    price: 1200,
-    groupTraining: false,
-    address: 'Zmaja od Nocaja 2s',
-  },
-  {
-    personClId: 5,
-    countyId: 1,
-    price: 2200,
-    groupTraining: true,
-    address: 'Brace Jerkovic 22a',
-  },
-]
+//   },
+//   {
+//     personClId: 1,
+//     countyId: 1,
+//     price: 2200,
+//     groupTraining: false,
+//     address: 'Veljka Vlahovica 3a',
+//   },
+//   {
+//     personClId: 1,
+//     countyId: 1,
+//     price: 3200,
+//     groupTraining: true,
+//     address: 'Veljka Vlahovica 3a',
+//   },
+//   {
+//     personClId: 3,
+//     countyId: 5,
+//     price: 3200,
+//     groupTraining: false,
+//     address: 'Palmira Toljatija 25',
+//   },
+//   {
+//     personClId: 3,
+//     countyId: 5,
+//     price: 1200,
+//     groupTraining: true,
+//     address: 'Palmira Toljatija 25',
+//   },
+//   {
+//     personClId: 1,
+//     countyId: 2,
+//     price: 3200,
+//     groupTraining: false,
+//     address: 'Teodora Mirijevskog 7v',
+//   },
+//   {
+//     personClId: 1,
+//     countyId: 2,
+//     price: 2200,
+//     groupTraining: true,
+//     address: 'Teodora Mirijevskog 7v',
+//   },
+//   {
+//     personClId: 3,
+//     countyId: 2,
+//     price: 1200,
+//     groupTraining: false,
+//     address: 'Teodora Mirijevskog 7v',
+//   },
+//   {
+//     personClId: 3,
+//     countyId: 5,
+//     price: 4200,
+//     groupTraining: true,
+//     address: 'Jurija Gagarina 7v',
+//   },
+//   {
+//     personClId: 3,
+//     countyId: 5,
+//     price: 3200,
+//     groupTraining: false,
+//     address: 'Jurija Gagarina 7b',
+//   },
+//   {
+//     personClId: 4,
+//     countyId: 1,
+//     price: 3200,
+//     groupTraining: true,
+//     address: 'Brace Jerkovic 21',
+//   },
+//   {
+//     personClId: 4,
+//     countyId: 1,
+//     price: 1800,
+//     groupTraining: false,
+//     address: 'Brace Jugovic 21',
+//   },
+//   {
+//     personClId: 5,
+//     countyId: 4,
+//     price: 2400,
+//     groupTraining: true,
+//     address: 'Zmaja od Nocaja 2s',
+//   },
+//   {
+//     personClId: 5,
+//     countyId: 4,
+//     price: 1200,
+//     groupTraining: false,
+//     address: 'Zmaja od Nocaja 2s',
+//   },
+//   {
+//     personClId: 5,
+//     countyId: 1,
+//     price: 2200,
+//     groupTraining: true,
+//     address: 'Brace Jerkovic 22a',
+//   },
+// ]

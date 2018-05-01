@@ -10,8 +10,8 @@ const axios = require('axios');
 
 @graphql(
   gql`
-  mutation certificateCreate($name: String, $certUrl: String, $fisioClId: Int) {
-    certificateCreate(name: $name, certUrl: $certUrl, fisioClId: $fisioClId) {
+  mutation certificateCreate($name: String, $certUrl: String, $personClId: Int) {
+    certificateCreate(name: $name, certUrl: $certUrl, personClId: $personClId) {
       name
       certUrl
     }
