@@ -19,6 +19,7 @@ query onePresonCl($personClId: Int) {
       firstName
       about
       email
+      imageUrl
       instagramLink
       facebookLink
       cellPhone
@@ -26,6 +27,11 @@ query onePresonCl($personClId: Int) {
       birthPlace
       about
       hasCerificates
+      myCertificates {
+        certUrl
+        name
+        id
+      }
       trainingPersonSkills {
         trainSkillName
       }
@@ -35,6 +41,9 @@ query onePresonCl($personClId: Int) {
         price
         county {
           countyName
+        }
+        skills {
+          trainSkillName
         }
       }
     }
@@ -74,9 +83,9 @@ class CoachesOne extends React.Component {
               >
                 <div>
                   <img
-                    src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
-                    alt="Smiley face"
-                    height="350"
+                    src={this.props.data.onePresonCl.imageUrl}
+                    alt="Fit net user"
+                    height="320"
                     width="320"
                   />
                   <div className={css.card}>
@@ -218,13 +227,45 @@ class CoachesOne extends React.Component {
                   </div>
                   <div>
                     <div
-                      style={{ display: 'flex' }}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        borderRadius: '5px',
+                        padding: '10px',
+                      }}
                     >
                       <div
-                        style={{ margin: '0 auto', marginBottom: '25px' }}
+                        style={{ margin: '0 auto', marginBottom: '15px', display: 'flex', flexDirection: 'column', paddingLeft: '10px' }}
                       >
-
                         <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500' }}>{`${this.props.data.onePresonCl.about}`}</h3>
+                      </div>
+                      <div>
+                        <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500', paddingLeft: '10px' }}>{`Sertifikati:`}</h3>
+                        <div
+                          style={{
+                            display: 'flex',
+                            webkitFlexWrap: 'wrap',
+                            flexWrap: 'wrap',
+                          }}
+                        >
+                          {
+                            this.props.data.onePresonCl.myCertificates.length ?
+                              this.props.data.onePresonCl.myCertificates.map(certItem => (
+                                <div
+                                  style={{
+                                    padding: '10px',
+                                  }}
+                                >
+                                  <img
+                                    alt="Fit-net.rs certificate"
+                                    width="80"
+                                    height="80"
+                                    src={`${certItem.certUrl}`}
+                                  />
+                                </div>
+                              )) : <h3 style={{ color: '#fff' }}>Ovaj korisnik nema sertifikate.</h3>
+                        }
+                        </div>
                       </div>
                     </div>
                     <div>
@@ -271,6 +312,16 @@ class CoachesOne extends React.Component {
                             >
                               Tip
                             </th>
+                            <th
+                              style={{
+                                paddingTop: '25px',
+                                paddingBottom: '25px',
+                                fontSize: '22px',
+                                color: '#fff',
+                              }}
+                            >
+                              Kategorija
+                            </th>
                           </tr>
                         </thead>
                         <tbody className="table-hover">
@@ -281,6 +332,7 @@ class CoachesOne extends React.Component {
                                 <td>{`${item.address}`}</td>
                                 <td>{`${item.price}`}</td>
                                 <td>{item.groupTraining ? `Grupni Trening` : `Personalni trening`}</td>
+                                <td>{item.skills.trainSkillName}</td>
                               </tr>
                             ))
                           }

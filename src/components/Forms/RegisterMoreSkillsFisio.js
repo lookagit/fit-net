@@ -186,7 +186,7 @@ class RegisterMoreSkillsFisio extends React.Component {
 
   saveSkills = () => {
     const { id } = this.props.match.params;
-    this.state.items.map(async item => {
+    const mutationArray = this.state.items.map(async item => {
       await this.props.createMoreSkills({
         variables: {
           price: parseInt(item.price), //eslint-disable-line
@@ -198,6 +198,7 @@ class RegisterMoreSkillsFisio extends React.Component {
         },
       });
     });
+    Promise.all(mutationArray).then(() => this.props.history.push(`/fisio-one/${id}`));
   }
 
   render() {

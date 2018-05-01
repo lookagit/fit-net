@@ -22,10 +22,11 @@ class Coaches extends React.Component {
     };
   }
   sendToRedux = () => {
+    console.log(this.state);
     this.props.dispatch({
       type: "COACHES_FILTRATION",
       skillArr: this.state.skillArr,
-      countiesId: this.state.countiesId,
+      countyId: this.state.countiesId,
       certified: this.state.certified,
       groupTraining: this.state.groupTraining,
       priceFrom: this.state.priceFrom,

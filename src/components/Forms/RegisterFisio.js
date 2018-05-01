@@ -168,14 +168,20 @@ class RegisterFisio extends React.Component {
     return (
       <div className={css.registerFisioWrapper}>
         <div className={css.registerFisio}>
+          {
+            this.state.warrnMess ?
+              <h3
+                style={{
+                  textAlign: 'center',
+                  color: 'red',
+                }}
+              >
+                {`Upozorenje: ${this.state.warrnMess}`}
+              </h3> :
+              null
+          }
           <div className={css.registerFisioOne}>
-            {
-              this.state.warrnMess ?
-                <h3>{`Upozorenje: ${this.state.warrnMess}`}</h3>
-                : null
-            }
             <div className={css.inputWrapperForm}>
-              {/* <label className={css.labelsRegister}>First name</label> */}
               <RegisterInput
                 placeHolder="Ime"
                 type="text"
@@ -211,7 +217,10 @@ class RegisterFisio extends React.Component {
                 type="email"
                 updateFunc={e => {
                   if (validateEmail(e.target.value)) {
-                     this.setState({ email: e.target.value });
+                     this.setState({
+                       email: e.target.value,
+                       warrnMess: null,
+                      });
                   } else {
                     this.setState({ warrnMess: 'Neispravan format email adrese' });
                   }
@@ -265,9 +274,14 @@ class RegisterFisio extends React.Component {
                 type="text"
                 updateFunc={e => {
                   if (validateUrl(e.target.value)) {
-                     this.setState({ facebookLink: e.target.value });
+                    this.setState({
+                      facebookLink: e.target.value,
+                      warrnMess: null,
+                    });
                   } else {
-                    console.warn('nije ok link facebooka!');
+                    this.setState({
+                      warrnMess: 'Neispravan format linka',
+                    });
                   }
                 }}
               />
@@ -279,9 +293,14 @@ class RegisterFisio extends React.Component {
                 type="text"
                 updateFunc={e => {
                   if (validateUrl(e.target.value)) {
-                     this.setState({ instagramLink: e.target.value });
+                    this.setState({
+                      instagramLink: e.target.value,
+                      warrnMess: null,
+                    });
                   } else {
-                    console.warn('nije ok link instagram!');
+                    this.setState({
+                      warrnMess: 'Neispravan format linka',
+                    });
                   }
                 }}
               />
@@ -309,7 +328,17 @@ class RegisterFisio extends React.Component {
                 type="password"
                 updateFunc={e => {
                   if (validatePassword(e.target.value)) {
-                     this.setState({ passwordRepeat: e.target.value });
+                    if (this.state.password !== e.target.value) {
+                      this.setState({
+                        passwordRepeat: e.target.value,
+                        warrnMess: 'Šifre se ne poklapaju',
+                      });
+                    } else {
+                      this.setState({
+                        passwordRepeat: e.target.value,
+                        warrnMess: null,
+                      });
+                    }
                   } else {
                     console.warn('nije ok password!');
                   }
