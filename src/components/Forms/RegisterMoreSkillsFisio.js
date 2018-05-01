@@ -74,6 +74,7 @@ class RegisterMoreSkillsFisio extends React.Component {
       arrayCities: [],
       visibleCounties: false,
       itemId: 0,
+      moreItems: false,
       items: [],
     };
   }
@@ -160,6 +161,7 @@ class RegisterMoreSkillsFisio extends React.Component {
       cityId: '',
       skillId: '',
       address: '',
+      moreItems: true,
       visibleCounties: false,
       itemId: this.state.itemId + 1,
       items: [...this.state.items, obj],
@@ -170,9 +172,16 @@ class RegisterMoreSkillsFisio extends React.Component {
     const { items } = this.state;
     const indexFind = items.map(item => (item.id)).indexOf(id);
     items.splice(indexFind, 1);
-    this.setState({
-      items,
-    });
+    if (!items.length) {
+      this.setState({
+        items,
+        moreItems: false,
+      });
+    } else {
+      this.setState({
+        items,
+      });
+    }
   }
 
   saveSkills = () => {
@@ -237,11 +246,16 @@ class RegisterMoreSkillsFisio extends React.Component {
           role="presentation"
           style={{
             position: 'fixed',
+            cursor: 'pointer',
             bottom: '10%',
             right: '10%',
+            width: 100,
+            height: 50,
+            textAlign: 'center',
           }}
+          className={css.sendParams}
         >
-          <img src={AddMore} width="50px" height="50px" alt="AddMore" />
+          <h3 style={{ color: 'white', fontWeight: 'bold' }}>Dodaj</h3>
         </div>
         <div
           onClick={() => this.saveSkills()}
@@ -249,15 +263,17 @@ class RegisterMoreSkillsFisio extends React.Component {
           role="presentation"
           style={{
             position: 'fixed',
-            bottom: '30%',
-            right: '8%',
-            backgroundColor: '#0f5a8b',
+            cursor: !this.state.moreItems ? null : 'pointer',
+            bottom: '20%',
+            right: '10%',
+            opacity: !this.state.moreItems ? 0.65 : null,
             width: 100,
             height: 50,
             textAlign: 'center',
           }}
+          className={css.sendParams}
         >
-          <p style={{ marginTop: 15 }}>Sacuvaj</p>
+          <h3 style={{ color: 'white', fontWeight: 'bold' }}>Završi</h3>
         </div>
       </div>
     );
@@ -267,8 +283,8 @@ class RegisterMoreSkillsFisio extends React.Component {
 const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAddress, valueSalonName, handleCategoryClick, handleCityClick, handleCounties, getValueFromInput, getValueFromAddress, getValueFromSalon, arrayForCategoryes, arrayForCity, arrayForCounties, visibleCounties }) => (
   <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 20 }}>
     <div className={css.registerFisio}>
-      <div className={css.searchBoxWrapper}>
-        <div className={css.searchBox}>
+      <div className={css.searchBoxWrapper} style={{ paddingTop: 5 }}>
+        <div className={css.searchBox} style={{ paddingTop: 0, paddingBottom: 5 }}>
           <DropdownSelectCategory
             array={arrayForCategoryes}
             selected={valueCategory}
@@ -279,7 +295,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
             fisio
           />
         </div>
-        <div className={css.searchBox}>
+        <div className={css.searchBox} style={{ paddingTop: 0, paddingBottom: 5 }}>
           <DropdownSelectCity
             array={arrayForCity}
             selected={valueCity}
@@ -292,12 +308,12 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
         {
           visibleCounties
           ?
-            <div className={css.searchBox}>
+            <div className={css.searchBox} style={{ paddingTop: 0, paddingBottom: 5 }}>
               <DropdownSelectCounties
                 array={arrayForCounties}
                 selected={valueCounties}
-                firstOption="Izaberite opstinu"
-                label="Opstine"
+                firstOption="Izaberite opštinu"
+                label="Opštine"
                 styles={{ margin: '0 auto' }}
                 handleClick={handleCounties}
               />
@@ -311,6 +327,8 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           display: 'flex',
           flexDirection: 'column',
           padding: 20,
+          paddingTop: 0,
+          paddingBottom: 5,
           width: 700,
           backgroundColor: 'rgba(61, 75, 105, .7)',
           margin: '0 auto',
@@ -342,6 +360,8 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           display: 'flex',
           flexDirection: 'column',
           padding: 20,
+          paddingTop: 0,
+          paddingBottom: 5,
           width: 700,
           backgroundColor: 'rgba(61, 75, 105, .7)',
           margin: '0 auto',
@@ -373,6 +393,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           display: 'flex',
           flexDirection: 'column',
           padding: 20,
+          paddingTop: 0,
           width: 700,
           backgroundColor: 'rgba(61, 75, 105, .7)',
           margin: '0 auto',
@@ -413,7 +434,7 @@ const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address, salon
       <div style={{ opacity: 0.7 }}>
         <div className={css.searchBox}>
           <div className={css.recycleItem}>
-            <img alt="delete" src={RecycleItem} width="30" height="30" onClick={() => removeMe(id)} />
+            <img alt="delete" src={RecycleItem} width="30" height="30" onClick={() => removeMe(id)} style={{ cursor: 'pointer' }} />
           </div>
           <div className={css.categorie}>
             <div className={css.categorieTitle}>
@@ -438,17 +459,16 @@ const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address, salon
               <p style={{ marginTop: 0, color: '#fff', fontSize: '17px', fontWeight: 'bold' }}>OPŠTINA</p>
             </div>
             <div
-              className={css.categorieButton}>
+              className={css.categorieButton} style={{ marginBottom: 5 }}>
               <h3 style={{ color: '#a9a9a9', fontWeight: 'bold' }}>{counti.countyName}</h3>
             </div>
           </div>
-          <div style={{ paddingRight: 20 }}>
+          <div style={{ paddingRight: 20, paddingBottom: 5 }}>
             <h1
               className={css.labelStyle}
             >
               ADRESA
             </h1>
-            <br />
             <input
               style={{
                 border: 'none',
@@ -462,13 +482,12 @@ const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address, salon
               defaultValue={address}
             />
           </div>
-          <div style={{ paddingRight: 20 }}>
+          <div style={{ paddingRight: 20, paddingBottom: 5 }}>
             <h1
               className={css.labelStyle}
             >
               NAZIV SALONA
             </h1>
-            <br />
             <input
               style={{
                 border: 'none',
@@ -482,13 +501,12 @@ const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address, salon
               defaultValue={salonName}
             />
           </div>
-          <div style={{ paddingRight: 20 }}>
+          <div style={{ paddingRight: 20, paddingBottom: 5 }}>
             <h1
               className={css.labelStyle}
             >
               CENA
             </h1>
-            <br />
             <input
               style={{
                 border: 'none',

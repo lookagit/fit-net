@@ -214,7 +214,8 @@ class SearchBox extends React.Component {
             }
             {
               this.props.group ?
-                <GroupTrening 
+                <GroupTrening
+                  disableMarginOnSertificatesCss={this.props.disableMargin}
                   setTrening={this.props.groupTrainingFunc}
                   groupTraining={this.props.groupTraining}
                 />

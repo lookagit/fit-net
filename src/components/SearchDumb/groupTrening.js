@@ -8,7 +8,7 @@ class GroupTrening extends React.Component {
     }
     render() {
         return (
-            <div  className={css.sertifikat}>
+            <div  className={css.sertifikat} style={this.props.disableMarginOnSertificatesCss? { margin: 0 } : null}>
               <div className={css.sertifikatBox1}>
                 <p>TRENINZI</p>
               </div>
