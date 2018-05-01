@@ -895,6 +895,7 @@ const Mutation = new GraphQLObjectType({
                         fisioClId,
                     });
                     if(createCertificate) {
+                        console.log('JA SAM CERT CREATE ', personClId, fisioClId, certUrl, createCertificate);
                         return createCertificate;
                     } else {
                         return {error: "Database issue, check createCertificate"};
