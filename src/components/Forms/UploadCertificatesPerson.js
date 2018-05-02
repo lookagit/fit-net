@@ -43,10 +43,10 @@ class UploadCertificates extends React.Component {
     };
   }
   certsUpload = async () => {
-    this.setState({ loading: true });
     let url = '';
     const { files } = this.state;
     if (files.length) {
+      this.setState({ loading: true });
       await this.props.updateHasCertificates({
         variables: {
           userId: parseInt(this.props.match.params.userId),
@@ -91,12 +91,29 @@ class UploadCertificates extends React.Component {
       <div>
         {
           this.state.loading ?
-            <Loading
-              type="puff"
-              width={150}
-              height={150}
-              fill="#f44242"
-            /> : 
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Loading
+                type="puff"
+                width={150}
+                height={150}
+                fill="#f44242"
+              />
+              <h3
+                style={{
+                  color: '#fff',
+                }}
+              >
+                Molimo sačekajte. Hvala!
+              </h3>
+            </div>
+            :
             <div
               style={{
                 display: 'flex',

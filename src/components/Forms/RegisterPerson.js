@@ -27,6 +27,7 @@ const axios = require('axios');
     $password: String,
     $firstName: String,
     $lastName: String,
+    $personClub: String,
     $facebookLink: String,
     $instagramLink: String,
     $cellPhone: String,
@@ -42,6 +43,7 @@ const axios = require('axios');
       password: $password,
       firstName: $firstName,
       lastName: $lastName,
+      personClub: $personClub
       facebookLink: $facebookLink,
       instagramLink: $instagramLink,
       cellPhone: $cellPhone,
@@ -75,6 +77,7 @@ class RegisterPerson extends React.Component {
       instagramLink: '',
       phone: '+381',
       hasCerificates: false,
+      personClub: 'Nema',
       skillArr: [],
       imgUrl: 'https://s3.eu-central-1.amazonaws.com/zaluku/person-placeholder.jpg'
     };
@@ -122,6 +125,7 @@ class RegisterPerson extends React.Component {
             birthDay: this.state.date,
             hasCerificates: this.state.hasCerificates,
             about: this.state.about,
+            personClub: this.state.personClub,
             imageUrl: fileOk ? `https://s3.eu-central-1.amazonaws.com/zaluku/${uniqueNameForImg}` : 'https://s3.eu-central-1.amazonaws.com/zaluku/person-placeholder.jpg',
             skillsArr: this.state.skillArr,
           },
@@ -327,6 +331,15 @@ class RegisterPerson extends React.Component {
                     console.warn('nije ok password!');
                   }
                 }}
+              />
+            </div>
+          </div>
+          <div className={css.registerFisioOne}>
+            <div className={css.inputWrapperForm}>
+              <RegisterInput
+                placeHolder="Ime kluba"
+                type="password"
+                updateFunc={e => this.setState({ personClub: e.target.value })}
               />
             </div>
           </div>

@@ -91,7 +91,7 @@ class AfterSearchItemCouch extends React.Component {
             </h4>
             <DumbDate date={couchProp.birthDay} />
             <h4 className={css.coacheClub}>
-              {'Fitness klub Agoga'}
+              {`Salon: ${couchProp.saloonName}`}
             </h4>
             <h4 className={css.coacheTags}>
               {`Tagovi: ${joinedSkills}`}

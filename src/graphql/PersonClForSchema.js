@@ -90,6 +90,12 @@ export const PersonCl = new GraphQLObjectType({
           return personCl.imageUrl;
         },
       },
+      personClub: {
+        type: GraphQLString,
+        resolve(personCl) {
+          return personCl.personClub;
+        },
+      },
       skillsArr: {
         type: new GraphQLList(GraphQLInt),
         resolve(personCl) {

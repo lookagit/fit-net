@@ -20,6 +20,7 @@ query clubCl(
         phone,
         email,
         address,
+        personClub,
         facebookLink,
         instagramLink,
         profileImageUrl,

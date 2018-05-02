@@ -36,6 +36,7 @@ import FilteredDecisionFisio from './FilteredDecisionFisio';
       about
       birthPlace
       birthDay
+      saloonName
       fisioSkillsNames {
         fisioSkillName
       }

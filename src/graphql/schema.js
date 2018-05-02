@@ -145,6 +145,9 @@ const FisioCl = new GraphQLObjectType({
       hasCerificates: {
         type: GraphQLBoolean,
       },
+      saloonName: {
+        type: GraphQLString,
+      },
       allCertificates: {
         type: new GraphQLList(Certification),
         resolve(fisioCl) {
@@ -807,10 +810,10 @@ const Mutation = new GraphQLObjectType({
           },
         },
         async resolve(root, { hasCerificates, fisioId }) {
-          const findUser = await db.models.personCl.update({ hasCerificates },
+          const findUser = await db.models.fisioCl.update({ hasCerificates },
             {
               where: {
-                id: fisioId,
+                id: parseInt(fisioId),
               },
             });
           return findUser;
@@ -853,6 +856,9 @@ const Mutation = new GraphQLObjectType({
             type: GraphQLString,
           },
           imageUrl: {
+            type: GraphQLString,
+          },
+          personClub: {
             type: GraphQLString,
           },
           skillsArr: {
@@ -1118,6 +1124,9 @@ const Mutation = new GraphQLObjectType({
                     },
                     comesHome: {
                         type: GraphQLBoolean,
+                    },
+                    saloonName: {
+                      type: GraphQLString,
                     },
                     score: {
                         type: GraphQLFloat,

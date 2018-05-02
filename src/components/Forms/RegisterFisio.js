@@ -35,6 +35,8 @@ const axios = require('axios');
     $hasCerificates: Boolean,
     $about: String,
     $imageUrl: String,
+    $comesHome: Boolean,
+    $saloonName: String,
     $fisioSkillsArr: [Int]
   ) {
     updateOrCreateFisio(
@@ -50,6 +52,8 @@ const axios = require('axios');
       hasCerificates: $hasCerificates,
       about: $about,
       imageUrl: $imageUrl,
+      comesHome: $comesHome,
+      saloonName: $saloonName
       fisioSkillsArr: $fisioSkillsArr
     ) {
       id
@@ -67,14 +71,16 @@ class RegisterFisio extends React.Component {
       password: '',
       passwordRepeat: null,
       birthPlace: '',
-      dateSelected: Moment(),
+      dateSelected: null,
       date: '',
       about: null,
       facebookLink: '',
       instagramLink: '',
       phone: '+381',
       hasCerificates: false,
+      comesHome: false,
       file: null,
+      saloonName: 'Nema',
       imgUrl: 'https://s3.eu-central-1.amazonaws.com/zaluku/person-placeholder.jpg',
       skillArr: [],
       warrnMess: null,
@@ -123,6 +129,8 @@ class RegisterFisio extends React.Component {
             hasCertificates: this.state.hasCerificates,
             about: this.state.about,
             imageUrl: fileOk ? `https://s3.eu-central-1.amazonaws.com/zaluku/${uniqueNameForImg}` : 'https://s3.eu-central-1.amazonaws.com/zaluku/person-placeholder.jpg',
+            comesHome: this.state.comesHome,
+            saloonName: this.state.saloonName,
             fisioSkillsArr: this.state.skillArr,
           },
         },
@@ -162,7 +170,7 @@ class RegisterFisio extends React.Component {
       dateSelected: date,
     });
   }
-
+  comingHomeFunc = comesHome => this.setState({ comesHome })
   render() {
     return (
       <div className={css.registerFisioWrapper}>
@@ -231,6 +239,11 @@ class RegisterFisio extends React.Component {
               <DatePicker
                 selected={this.state.dateSelected}
                 onChange={this.handleChange}
+                showMonthDropdown
+                showYearDropdown
+                scrollableYearDropdown
+                placeholderText="Datum rodjenja"
+                yearDropdownItemNumber={35}
               />
             </div>
           </div>
@@ -345,6 +358,16 @@ class RegisterFisio extends React.Component {
               />
             </div>
           </div>
+          <div className={css.registerFisioOne}>
+            <div className={css.inputWrapperForm}>
+              {/* <label className={css.labelsRegister}>Email</label> */}
+              <RegisterInput
+                placeHolder="Ime salona"
+                type="text"
+                updateFunc={e => this.setState({ saloonName: e.target.value })}
+              />
+            </div>
+          </div>
         </div>
         <div className={css.registerFisioOne}>
           <div
@@ -373,6 +396,8 @@ class RegisterFisio extends React.Component {
           <SearchBox
             fizio
             categories
+            comingHomeFunc={this.comingHomeFunc}
+            comingHomeParams={this.state.comesHome}
             fizioCategories={this.fizioCategories}
           />
         </div>

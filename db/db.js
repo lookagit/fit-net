@@ -77,6 +77,11 @@ const PersonCl = db.define('personCl', {
     },
     unique: true,
   },
+  personClub: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: 'Nema',
+  },
   firstName: {
     type: Sequelize.STRING,
   },
@@ -292,6 +297,11 @@ const FisioCl = db.define('fisioCl', {
   },
   lastName: {
     type: Sequelize.STRING,
+  },
+  saloonName: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: 'Nema',
   },
   facebookLink: {
     type: Sequelize.STRING,

@@ -42,10 +42,10 @@ class UploadCertificates extends React.Component {
     };
   }
   certsUpload = async () => {
-    this.setState({ loading: true });
     let url = '';
     const { files } = this.state;
     if (files.length) {
+      this.setState({ loading: true });
       await this.props.updateHasCertificates({
         variables: {
           fisioId: parseInt(this.props.match.params.userId),
