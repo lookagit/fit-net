@@ -298,27 +298,9 @@ class CoachesOne extends React.Component {
                           marginTop: '5px',
                         }}
                       >
-                        {`Sertifikati: ${this.props.data.onePresonCl.hasCerificates ? 'Ima' : 'Nema'}` }
+                        {`Sertifikati: ${this.props.data.onePresonCl.hasCerificates ? 'Da' : 'Ne'}` }
                       </h4>
                     </div>
-                    <img
-                      src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
-                      alt="Smiley face"
-                      height="90"
-                      width="90"
-                    />
-                    <img
-                      src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
-                      alt="Smiley face"
-                      height="90"
-                      width="90"
-                    />
-                    <img
-                      src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
-                      alt="Smiley face"
-                      height="90"
-                      width="90"
-                    />
                   </div>
                   <div>
                     <div
