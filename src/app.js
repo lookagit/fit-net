@@ -143,73 +143,22 @@ if (SERVER) {
     ctx.body = `This route does not exist on the server - Redux dump: ${stateDump}`;
   });
 
-  /* CUSTOM ERROR HANDLER */
-
-  // By default, any exceptions thrown anywhere in the middleware chain
-  // (including inside the `createReactHandler` func) will propogate up the
-  // call stack to a default error handler that simply logs the message and
-  // informs the user that there's an error.  We can override that default
-  // behaviour with a func with a (e, ctx, next) -> {} signature, where `e` is
-  // the error thrown, `ctx` is the Koa context object, and `next()` should
-  // be called if you want to recover from the error and continue processing
-  // subsequent middleware.  Great for logging to third-party tools, tc.
   config.setErrorHandler((e, ctx /* `next` is unused in this example */) => {
-    // Mimic the default behaviour with an overriden message, so we know it's
-    // working
-    // eslint-disable-next-line no-console
-    console.log('Custom error: ', e.message);
     ctx.body = 'Some kind of error. Check your source code.';
   });
-
-  /* CUSTOM KOA APP INSTANTIATION */
-
-  // If you need to do something with `app` outside of middleware/routing,
-  // you can pass a func to `config.getKoaApp()` that will be fed the `app`
-  // instance directly.
   config.getKoaApp(app => {
-    // First, we'll add a new `engine` key to the app.context`
-    // prototype (that per-request `ctx` extends) that can be
-    // used in the middleware below, to set a `Powered-By` header.
     // eslint-disable-next-line no-param-reassign
     app.context.engine = 'ReactQL';
-
-    // We'll also add a generic error handler, that prints out to the console.
-    // Note: This is a 'lower-level' than `config.setErrorHandler()` because
-    // it's not middleware -- it's for errors that happen at the server level
     app.on('error', e => {
-      // This function should never show up, because `config.setErrorHandler()`
-      // is already catching errors -- but just an FYI for what you might do.
-      // eslint-disable-next-line no-console
       console.error('Server error:', e);
     });
   });
 
   /* CUSTOM MIDDLEWARE */
-
-  // We can set custom middleware to be processed on the server.  This gives us
-  // fine-grain control over headers, requests, responses etc, and even decide
-  // if we want to avoid the React handler until certain conditions
-
-  // There are two flavours of middleware -- `before` middleware, which
-  // executes in Koa before the per-request Apollo client / Redux store has
-  // been instantiated... and can be called with `confiig.addBeforeMiddleware`
-
-  // ... and 'after' middleware, which runs after per-request instantiation.
-  // Let's use the latter to add a custom header so we can see middleware in action
   config.addMiddleware(async (ctx, next) => {
     ctx.set('Powered-By', ctx.engine); // <-- `ctx.engine` from `config.getKoaApp()` above!
-
-    // For the fun of it, let's demonstrate that we can fire Redux actions
-    // and it'll manipulate the state on the server side!  View the SSR version
-    // to see that the counter is now 1 and has been passed down the wire
     ctx.store.dispatch({ type: 'INCREMENT_COUNTER' });
-
-    // Always return `next()`, otherwise the request won't 'pass' to the next
-    // middleware in the stack (likely, the React handler)
     return next();
   });
 }
-
-// In app.js, we need to export the root component we want to mount as the
-// starting point to our app.  We'll just export the `<Main>` component.
 export default Main;

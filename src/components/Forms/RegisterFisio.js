@@ -75,7 +75,7 @@ class RegisterFisio extends React.Component {
       phone: '+381',
       hasCerificates: false,
       file: null,
-      imgUrl: 'https://google.com',
+      imgUrl: 'https://s3.eu-central-1.amazonaws.com/zaluku/person-placeholder.jpg',
       skillArr: [],
       warrnMess: null,
     };
@@ -122,7 +122,7 @@ class RegisterFisio extends React.Component {
             birthDay: this.state.date,
             hasCertificates: this.state.hasCerificates,
             about: this.state.about,
-            imageUrl: fileOk ? `https://fitnetbucket.s3.eu-west-3.amazonaws.com/${uniqueNameForImg}` : 'https://placeholder.com',
+            imageUrl: fileOk ? `https://s3.eu-central-1.amazonaws.com/zaluku/${uniqueNameForImg}` : 'https://s3.eu-central-1.amazonaws.com/zaluku/person-placeholder.jpg',
             fisioSkillsArr: this.state.skillArr,
           },
         },
@@ -130,8 +130,6 @@ class RegisterFisio extends React.Component {
       if (mutation) {
         const { id } = mutation.data.updateOrCreateFisio;
         this.props.history.push(`/register-certificate/${id}`);
-      } else {
-        console.log('prsoo', mutation);
       }
     } else {
       this.setState({
@@ -157,9 +155,10 @@ class RegisterFisio extends React.Component {
   }
 
   handleChange = date => {
-    const d1 = Moment(date._d).format();
+    const d1 = Moment(date._d).format(); // eslint-disable-line
+    const dateformated = d1.slice(0, 10);
     this.setState({
-      date: d1,
+      date: dateformated,
       dateSelected: date,
     });
   }

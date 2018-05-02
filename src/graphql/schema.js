@@ -758,7 +758,6 @@ const Query = new GraphQLObjectType({
             });
             return addCounterfindPersons.sort((ax, bx) => ax.counter - bx.counter)
               .reverse();
-            
           }
           const findPerson = await db.models.personCl.findAll({
             where: {
@@ -777,6 +776,46 @@ const Mutation = new GraphQLObjectType({
   description: 'Mutation for fitnet.com',
   fields() {
     return {
+      updateUserCertificates: {
+        type: PersonCl,
+        args: {
+          userId: {
+            type: GraphQLInt,
+          },
+          hasCerificates: {
+            type: GraphQLBoolean,
+          },
+        },
+        async resolve(root, { hasCerificates, userId }) {
+          const findUser = await db.models.personCl.update({ hasCerificates },
+            {
+              where: {
+                id: userId,
+              },
+            });
+          return findUser;
+        },
+      },
+      updateFisioCertificates: {
+        type: FisioCl,
+        args: {
+          fisioId: {
+            type: GraphQLInt,
+          },
+          hasCerificates: {
+            type: GraphQLBoolean,
+          },
+        },
+        async resolve(root, { hasCerificates, fisioId }) {
+          const findUser = await db.models.personCl.update({ hasCerificates },
+            {
+              where: {
+                id: fisioId,
+              },
+            });
+          return findUser;
+        },
+      },
       updateOrCreateUser: {
         type: PersonCl,
         args: {
@@ -841,135 +880,130 @@ const Mutation = new GraphQLObjectType({
       },
       PersonCountyCreate: {
         type: PersonCounty,
-                args: {
-                    price: {
-                        type: GraphQLInt,
-                    },
-                    groupTraining: {
-                        type: GraphQLBoolean,
-                    },
-                    address: {
-                        type: GraphQLString,
-                    },
-                    personClId: {
-                        type: GraphQLInt,
-                    },
-                    countyId: {
-                        type: GraphQLInt,
-                    },
-                    trainingSkillId: {
-                      type: GraphQLInt,
-                    },
-                },
-                async resolve(root, args) {
-                    let createCounty = await db.models.personCounty.create({
-                        ...args,
-                    });
-                    if(createCounty) {
-                        return createCounty;
-                    } else {
-                        return { error: "Database issue, check createCounty" };
-                    }
-                },
+        args: {
+          price: {
+            type: GraphQLInt,
+          },
+          groupTraining: {
+            type: GraphQLBoolean,
+          },
+          address: {
+            type: GraphQLString,
+          },
+          personClId: {
+            type: GraphQLInt,
+          },
+          countyId: {
+            type: GraphQLInt,
+          },
+          trainingSkillId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, args) {
+          const createCounty = await db.models.personCounty.create({
+            ...args,
+          });
+          if (createCounty) {
+            return createCounty;
+          }
+          return { error: 'Database issue, check createCounty' };
+        },
+      },
+      certificateCreate: {
+        type: Certification,
+        args: {
+          name: {
+            type: GraphQLString,
+          },
+          certUrl: {
+            type: GraphQLString,
+          },
+          personClId: {
+            type: GraphQLInt,
+          },
+          fisioClId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, { name, certUrl, personClId, fisioClId }) {
+          const createCertificate = await db.models.certification.create({
+            name,
+            certUrl,
+            personClId,
+            fisioClId,
+          });
+          if (createCertificate) {
+            return createCertificate;
+          }
+          return { error: 'Database issue, check createCertificate' };
+        },
+      },
+      updateOrCreateClub: {
+        type: ClubCl,
+        args: {
+          name: {
+            type: GraphQLString,
+          },
+          password: {
+            type: GraphQLString,
+          },
+          address: {
+            type: GraphQLString,
+          },
+          email: {
+            type: GraphQLString,
+          },
+          phone: {
+            type: GraphQLString,
+          },
+          webAddress: {
+            type: GraphQLString,
+          },
+          facebookLink: {
+            type: GraphQLString,
+          },
+          instagramLink: {
+            type: GraphQLString,
+          },
+          profileImageUrl: {
+            type: GraphQLString,
+          },
+          score: {
+            type: GraphQLFloat,
+          },
+          about: {
+            type: GraphQLString,
+          },
+          skillsArr: {
+            type: new GraphQLList(GraphQLInt),
+          },
+          imgsArr: {
+            type: new GraphQLList(GraphQLInt),
+          },
+          countyId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, { email, ...args }) {
+          const findOrCreateClub = await db.models.clubCl.findOne({
+            where: {
+              email,
             },
-            certificateCreate: {
-                type: Certification,
-                args: {
-                    name: {
-                        type: GraphQLString,
-                    },
-                    certUrl: {
-                        type: GraphQLString,
-                    },
-                    personClId: {
-                        type: GraphQLInt,
-                    },
-                    fisioClId: {
-                        type: GraphQLInt,
-                    },
-                },
-                async resolve(root, {name, certUrl, personClId, fisioClId}) {
-                    let createCertificate = await db.models.certification.create({
-                        name,
-                        certUrl,
-                        personClId,
-                        fisioClId,
-                    });
-                    if(createCertificate) {
-                        console.log('JA SAM CERT CREATE ', personClId, fisioClId, certUrl, createCertificate);
-                        return createCertificate;
-                    } else {
-                        return {error: "Database issue, check createCertificate"};
-                    }
-                }
-            },
-            updateOrCreateClub: {
-                type: ClubCl,
-                args: {
-                    name: {
-                        type: GraphQLString
-                    },
-                    password: {
-                        type: GraphQLString,
-                    },
-                    address: {
-                        type: GraphQLString,
-                    },
-                    email: {
-                        type: GraphQLString,
-                    },
-                    phone: {
-                        type: GraphQLString,
-                    },
-                    webAddress: {
-                        type: GraphQLString,
-                    },
-                    facebookLink: {
-                        type: GraphQLString,
-                    },
-                    instagramLink: {
-                        type: GraphQLString,
-                    },
-                    profileImageUrl: {
-                        type: GraphQLString,
-                    },
-                    score: {
-                        type: GraphQLFloat,
-                    },
-                    about: {
-                        type: GraphQLString,
-                    },
-                    skillsArr: {
-                        type: new GraphQLList(GraphQLInt),
-                    },
-                    imgsArr: {
-                        type: new GraphQLList(GraphQLInt),
-                    },
-                    countyId: {
-                        type: GraphQLInt,
-                    },
-                },
-                async resolve(root, {email, ...args}) {
-                    let findOrCreateClub = await db.models.clubCl.findOne({
-                        where: {
-                            email,
-                        }
-                    });
-                    if(findOrCreateClub) {
-                        return {error: "We have club with that email"};
-                    } else {
-                        let createClubCl = await db.models.clubCl.create({
-                            email,
-                            ...args,
-                        });
-                        if(createClubCl) {
-                            return createClubCl;
-                        } else {
-                            return {error: "Database issue"};
-                        }
-                    }
-                },
-            },
+          });
+          if (findOrCreateClub) {
+            return { error: 'We have club with that email' };
+          }
+          const createClubCl = await db.models.clubCl.create({
+            email,
+            ...args,
+          });
+          if (createClubCl) {
+            return createClubCl;
+          }
+          return { error: 'Database issue' };
+        },
+      },
             createMembershipFees: {
                 type: MemberShip,
                 args: {

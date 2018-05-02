@@ -419,8 +419,6 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           updateFunc={e => {
             if (validatePrice(e.target.value)) {
               getValueFromInput(e);
-            } else {
-              console.log('unesite broj');
             }
           }}
         />

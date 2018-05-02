@@ -81,7 +81,6 @@ class Coaches extends React.Component {
   }
 
   sendToRedux = () => {
-    console.log(this.state);
     this.props.dispatch({
       type: "COACHES_FILTRATION",
       skillArr: this.state.skillArr,

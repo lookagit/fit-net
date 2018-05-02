@@ -182,6 +182,7 @@ class RegisterMoreSkillsPerson extends React.Component {
 
   saveSkills = () => {
     if (this.state.items.length) {
+      this.props.changeToLoad();
       const { id } = this.props.match.params;
       this.state.items.map(async item => {
         await this.props.createMoreSkills({
@@ -195,6 +196,7 @@ class RegisterMoreSkillsPerson extends React.Component {
           },
         });
       });
+      this.props.history.push(`/coaches-one/${id}`);
     }
   }
 
@@ -387,8 +389,6 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           updateFunc={e => {
             if (validatePrice(e.target.value)) {
               getValueFromInput(e);
-            } else {
-              console.log('unesite broj');
             }
           }}
         />

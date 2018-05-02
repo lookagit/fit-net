@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 @connect(state => ({ login: state.login }))
 class Wrapper extends React.Component {
   componentDidMount() {
-    console.log('PROOOPSS ', this.props);
     const myItem = window.localStorage.getItem('fbToken');
     if (myItem) {
       const user = JSON.parse(myItem);

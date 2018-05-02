@@ -34,11 +34,6 @@ class ModalClass extends React.Component {
       accessToken: null,
     };
   }
-
-  componentWillReceiveProps(nextProps) {
-    console.log('MI SMO NEXT ', nextProps);
-  }
-
   responseFacebook = async response => {
     if (response.accessToken) {
       const { accessToken } = response;

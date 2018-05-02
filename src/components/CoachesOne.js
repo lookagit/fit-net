@@ -79,9 +79,13 @@ class CoachesOne extends React.Component {
           <div>
             <div style={{ width: '100%', display: 'flex', paddingTop: '40px' }}>
               <div
-                style={{ maxWidth: '1330px', margin: '0 auto', display: 'flex', flexDirection: 'row', paddingRight: '5px', paddingLeft: '5px' }}
+                style={{ maxWidth: '1250px', margin: '0 auto', display: 'flex', flexDirection: 'row', paddingRight: '5px', paddingLeft: '5px' }}
               >
-                <div>
+                <div
+                  style={{
+                    width: '320px',
+                  }}
+                >
                   <img
                     src={this.props.data.onePresonCl.imageUrl}
                     alt="Fit net user"

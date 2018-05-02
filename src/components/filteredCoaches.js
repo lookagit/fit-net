@@ -54,7 +54,6 @@ import FilteredDecisionCoach from './FilteredDecisionCoach';
 
 class FilteredCoaches extends React.Component {
   render() {
-    console.log('PROPS ', this.props.data);
     return (
       <div className={css.coachesWrapper}>
         <div className={css.coachesHolder}>

@@ -32,10 +32,9 @@ import RegisterPerson from '../Forms/RegisterPerson';
 import UploadCertificates from '../Forms/UploadCertificates';
 import UploadCertificatesPerson from '../Forms/UploadCertificatesPerson';
 import RegisterFisio from '../Forms/RegisterFisio';
-import RegisterMoreSkillsPerson from '../Forms/RegisterMoreSkillsPerson';
 import RegisterMoreSkillsFisio from '../Forms/RegisterMoreSkillsFisio';
-// Styles
 import css from '../styles/styles.scss';
+import RegisterMoreSkillsContainer from '../Forms/RegisterMoreSkillsContainer';
 
 export default () => (
   <div className={css.mainWrapper}>
@@ -61,7 +60,7 @@ export default () => (
       <Route path="/register-certificate/:userId" component={UploadCertificates} />
       <Route path="/register-certificate-person/:userId" component={UploadCertificatesPerson} />
       <Route path="/registerFisio" component={RegisterFisio} />
-      <Route path="/moreSkills/:id" component={RegisterMoreSkillsPerson} />
+      <Route path="/moreSkills/:id" component={RegisterMoreSkillsContainer} />
       <Route path="/moreSkillsFisio/:id" component={RegisterMoreSkillsFisio} />
       <Redirect from="/old/path" to="/new/path" />
       <Route component={WhenNotFound} />

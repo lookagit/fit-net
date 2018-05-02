@@ -101,7 +101,6 @@ class SearchBox extends React.Component {
     if (this.props.clubs) {
       this.props.selectCounties(gotId);
     } else if (this.props.coaches) {
-      console.log('GOT IDS ', gotId)
       this.props.addToCountiesArr(gotId);
     } else if (this.props.fizio) {
       this.props.fizioCounties(gotId);

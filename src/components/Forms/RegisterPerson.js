@@ -76,6 +76,7 @@ class RegisterPerson extends React.Component {
       phone: '+381',
       hasCerificates: false,
       skillArr: [],
+      imgUrl: 'https://s3.eu-central-1.amazonaws.com/zaluku/person-placeholder.jpg'
     };
   }
 
@@ -102,7 +103,6 @@ class RegisterPerson extends React.Component {
             'Content-Type': file.type,
           };
           const putOnServer = await axios.put(signedUrl, file, options);
-          console.log('puton server ', putOnServer);
           if (putOnServer) {
             fileOk = true;
           }
@@ -122,7 +122,7 @@ class RegisterPerson extends React.Component {
             birthDay: this.state.date,
             hasCerificates: this.state.hasCerificates,
             about: this.state.about,
-            imageUrl: fileOk ? `https://s3.eu-central-1.amazonaws.com/zaluku/${uniqueNameForImg}` : 'https://placeholder.com',
+            imageUrl: fileOk ? `https://s3.eu-central-1.amazonaws.com/zaluku/${uniqueNameForImg}` : 'https://s3.eu-central-1.amazonaws.com/zaluku/person-placeholder.jpg',
             skillsArr: this.state.skillArr,
           },
         },

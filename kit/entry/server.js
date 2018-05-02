@@ -274,7 +274,6 @@ const app = new Koa()
       if (typeof config.errorHandler === 'function') {
         config.errorHandler(e, ctx, next);
       } else {
-        console.log('Error:', e.message);
         ctx.body = 'There was an error. Please try again later.';
       }
     }

@@ -16,8 +16,6 @@ export default class S3Uploader extends React.Component {
         prevArray: [...this.state.prevArray, ...files],
       });
       this.props.setRegister([...this.state.prevArray, ...files]);
-    } else {
-      console.log("JA SAM POPUNJEN MOLIMTE ISPRAZNI ");
     }
   }
   render() {
