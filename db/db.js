@@ -400,7 +400,7 @@ PersonCl.hasMany(Certification);
 FisioCl.hasMany(Certification);
 
 if (process.env.NODE_ENV === 'production') {
-  db.sync({ force: true }).then(() => {
+  db.sync().then(() => {
     // PersonArr.map(async item => {
     //   await PersonCl.create(item);
     // });

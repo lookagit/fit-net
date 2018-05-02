@@ -660,6 +660,7 @@ const Query = new GraphQLObjectType({
               countyId,
             },
           });
+          console.log('ja sam query ', fisioQuery);
           const findedIds = fisioQuery.map(item => item.fisioClId);
           const findFisio = await db.models.fisioCl.findAll({
             where: {
@@ -673,6 +674,7 @@ const Query = new GraphQLObjectType({
               },
             },
           });
+          console.log('KA SAM FIND FISIO ', findFisio);
           if (findFisio.length) {
             const addCounterfindFisio = findFisio.map(i => {
               i['counter'] = 0; // eslint-disable-line
