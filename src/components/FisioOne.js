@@ -249,7 +249,7 @@ class FisioOne extends React.Component {
                           marginTop: '5px',
                         }}
                       >
-                        {`Lokacija ${this.props.data.oneFisioCl.birthPlace}`}
+                        {`Lokacija: ${this.props.data.oneFisioCl.birthPlace}`}
                       </h4>
                     </div>
                     <div

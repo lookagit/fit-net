@@ -28,7 +28,7 @@ class Fizio extends React.Component {
       skillArr: this.state.skillArr,
       countiesId: this.state.countiesId,
       certified: this.state.certified,
-      comesHome: this.state.comesHome,
+      comesHome: this.state.comingHome,
       priceFrom: this.state.priceFrom,
       priceTo: this.state.priceTo,
     });
@@ -97,6 +97,7 @@ class Fizio extends React.Component {
   comingHomeFunc = comingHome => this.setState({ comingHome });
 
   render() {
+    console.log('THISA STATE ', this.state);
     return (
       <div className={css.coaches}>
         <SearchBox

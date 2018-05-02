@@ -26,6 +26,7 @@ query onePresonCl($personClId: Int) {
       birthDay
       birthPlace
       about
+      score
       hasCerificates
       myCertificates {
         certUrl
@@ -204,12 +205,102 @@ class CoachesOne extends React.Component {
                   <div
                     style={{ display: 'flex', flexDirection: 'row', width: '80%', justifyContent: 'space-between', alignItems: 'space-between', paddingBottom: '15px' }}
                   >
-                    <img
-                      src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
-                      alt="Smiley face"
-                      height="90"
-                      width="90"
-                    />
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <img
+                        src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
+                        alt="Smiley face"
+                        height="90"
+                        width="90"
+                      />
+                      <h4
+                        style={{
+                          color: '#fff',
+                          textAlign: 'center',
+                          marginTop: '5px',
+                        }}
+                      >
+                        {`Score: ${this.props.data.onePresonCl.score}`}
+                      </h4>
+                    </div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <img
+                        src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
+                        alt="Smiley face"
+                        height="90"
+                        width="90"
+                      />
+                      <h4
+                        style={{
+                          color: '#fff',
+                          textAlign: 'center',
+                          marginTop: '5px',
+                        }}
+                      >
+                        {`Lokacija: ${this.props.data.onePresonCl.birthPlace}`}
+                      </h4>
+                    </div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <img
+                        src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
+                        alt="Smiley face"
+                        height="90"
+                        width="90"
+                      />
+                      <h4
+                        style={{
+                          color: '#fff',
+                          textAlign: 'center',
+                          marginTop: '5px',
+                        }}
+                      >
+                        {`Veštine: ${this.props.data.onePresonCl.trainingPersonSkills.length}`}
+                      </h4>
+                    </div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <img
+                        src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
+                        alt="Smiley face"
+                        height="90"
+                        width="90"
+                      />
+                      <h4
+                        style={{
+                          color: '#fff',
+                          textAlign: 'center',
+                          marginTop: '5px',
+                        }}
+                      >
+                        {`Sertifikati: ${this.props.data.onePresonCl.hasCerificates ? 'Ima' : 'Nema'}` }
+                      </h4>
+                    </div>
                     <img
                       src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
                       alt="Smiley face"

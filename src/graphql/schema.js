@@ -685,6 +685,7 @@ const Query = new GraphQLObjectType({
               });
               return i;
             });
+            console.log('NEMA ME FIND FISIO', findFisio);
             return addCounterfindFisio.sort((a, b) => a.counter - b.counter).reverse();
           }
           return findFisio;

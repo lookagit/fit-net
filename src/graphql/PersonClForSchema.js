@@ -4,6 +4,7 @@ import {
   GraphQLInt,
   GraphQLList,
   GraphQLBoolean,
+  GraphQLFloat,
 } from 'graphql';
 import db from '../../db/db';
 
@@ -88,6 +89,12 @@ export const PersonCl = new GraphQLObjectType({
         type: GraphQLString,
         resolve(personCl) {
           return personCl.imageUrl;
+        },
+      },
+      score: {
+        type: GraphQLFloat,
+        resolve(personCl) {
+          return personCl.score;
         },
       },
       personClub: {

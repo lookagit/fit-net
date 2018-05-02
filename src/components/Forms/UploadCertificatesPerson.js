@@ -95,6 +95,7 @@ class UploadCertificates extends React.Component {
               style={{
                 width: '100%',
                 display: 'flex',
+                flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
               }}

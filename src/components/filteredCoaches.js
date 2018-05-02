@@ -30,7 +30,8 @@ import FilteredDecisionCoach from './FilteredDecisionCoach';
         imageUrl
         about
         birthPlace
-        birthDay 
+        birthDay
+        personClub
         trainingPersonSkills {
           trainSkillName
         }
