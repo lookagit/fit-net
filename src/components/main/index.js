@@ -35,35 +35,37 @@ import RegisterFisio from '../Forms/RegisterFisio';
 import RegisterMoreSkillsFisio from '../Forms/RegisterMoreSkillsFisio';
 import css from '../styles/styles.scss';
 import RegisterMoreSkillsContainer from '../Forms/RegisterMoreSkillsContainer';
-
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 export default () => (
   <div className={css.mainWrapper}>
-    <Helmet>
-      <title>Fit Net</title>
-      <meta name="description" content="ReactQL starter kit app" />
-      {/* <base href="http://localhost:8081/" /> */}
-    </Helmet>
-    <Header />
-    {/* <GraphQLMessage /> */}
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="/page/coaches" component={Coaches} />
-      <Route path="/page/fizio" component={Fizio} />
-      <Route path="/page/clubs" component={Clubs} />
-      <Route path="/listofcoaches" component={FilteredCoaches} />
-      <Route path="/listOfClubs" component={FilteredClubs} />
-      <Route path="/listOfFizio" component={FilteredFizio} />
-      <Route path="/coaches-one/:id" component={CoachesOne} />
-      <Route path="/fisio-one/:id" component={FisioOne} />
-      <Route path="/proba" component={Proba} />
-      <Route path="/register" component={RegisterPerson} />
-      <Route path="/register-certificate/:userId" component={UploadCertificates} />
-      <Route path="/register-certificate-person/:userId" component={UploadCertificatesPerson} />
-      <Route path="/registerFisio" component={RegisterFisio} />
-      <Route path="/moreSkills/:id" component={RegisterMoreSkillsContainer} />
-      <Route path="/moreSkillsFisio/:id" component={RegisterMoreSkillsFisio} />
-      <Redirect from="/old/path" to="/new/path" />
-      <Route component={WhenNotFound} />
-    </Switch>
+    <MuiThemeProvider>
+      <Helmet>
+        <title>Fit Net</title>
+        <meta name="description" content="ReactQL starter kit app" />
+        {/* <base href="http://localhost:8081/" /> */}
+      </Helmet>
+      <Header />
+      {/* <GraphQLMessage /> */}
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/page/coaches" component={Coaches} />
+        <Route path="/page/fizio" component={Fizio} />
+        <Route path="/page/clubs" component={Clubs} />
+        <Route path="/listofcoaches" component={FilteredCoaches} />
+        <Route path="/listOfClubs" component={FilteredClubs} />
+        <Route path="/listOfFizio" component={FilteredFizio} />
+        <Route path="/coaches-one/:id" component={CoachesOne} />
+        <Route path="/fisio-one/:id" component={FisioOne} />
+        <Route path="/proba" component={Proba} />
+        <Route path="/register" component={RegisterPerson} />
+        <Route path="/register-certificate/:userId" component={UploadCertificates} />
+        <Route path="/register-certificate-person/:userId" component={UploadCertificatesPerson} />
+        <Route path="/registerFisio" component={RegisterFisio} />
+        <Route path="/moreSkills/:id" component={RegisterMoreSkillsContainer} />
+        <Route path="/moreSkillsFisio/:id" component={RegisterMoreSkillsFisio} />
+        <Redirect from="/old/path" to="/new/path" />
+        <Route component={WhenNotFound} />
+      </Switch>
+    </MuiThemeProvider>
   </div>
 );

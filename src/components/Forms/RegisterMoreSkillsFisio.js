@@ -331,7 +331,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           paddingTop: 0,
           paddingBottom: 5,
           width: 700,
-          backgroundColor: 'rgba(61, 75, 105, .7)',
+          backgroundColor: 'rgba(61, 75, 105, .96)',
           margin: '0 auto',
         }}
       >
@@ -364,7 +364,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           paddingTop: 0,
           paddingBottom: 5,
           width: 700,
-          backgroundColor: 'rgba(61, 75, 105, .7)',
+          backgroundColor: 'rgba(61, 75, 105, .96)',
           margin: '0 auto',
         }}
       >
@@ -396,7 +396,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           padding: 20,
           paddingTop: 0,
           width: 700,
-          backgroundColor: 'rgba(61, 75, 105, .7)',
+          backgroundColor: 'rgba(61, 75, 105, .96)',
           margin: '0 auto',
         }}
       >
