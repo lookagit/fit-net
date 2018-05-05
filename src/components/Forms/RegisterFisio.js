@@ -170,7 +170,8 @@ class RegisterFisio extends React.Component {
       dateSelected: date,
     });
   }
-  comingHomeFunc = comesHome => this.setState({ comesHome })
+  comingHomeFunc = comesHome => this.setState({ comesHome });
+
   render() {
     return (
       <div className={css.registerFisioWrapper}>
@@ -236,14 +237,41 @@ class RegisterFisio extends React.Component {
             </div>
             <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>Birtday Date</label> */}
-              <DatePicker
-                selected={this.state.dateSelected}
-                onChange={this.handleChange}
-                showMonthDropdown
-                showYearDropdown
-                scrollableYearDropdown
-                placeholderText="Datum rodjenja"
-                yearDropdownItemNumber={35}
+              <RegisterInput
+                placeHolder="Broj telefona"
+                type="text"
+                value={this.state.phone}
+                updateFunc={e => {
+                  if (validatePhone(e.target.value)) {
+                     this.setState({ phone: e.target.value });
+                  } else {
+                    console.warn('nije ok phone!');
+                  }
+                }}
+              />
+              <RegisterInput
+                placeHolder="Broj telefona"
+                type="text"
+                value={this.state.phone}
+                updateFunc={e => {
+                  if (validatePhone(e.target.value)) {
+                     this.setState({ phone: e.target.value });
+                  } else {
+                    console.warn('nije ok phone!');
+                  }
+                }}
+              />
+              <RegisterInput
+                placeHolder="Broj telefona"
+                type="text"
+                value={this.state.phone}
+                updateFunc={e => {
+                  if (validatePhone(e.target.value)) {
+                     this.setState({ phone: e.target.value });
+                  } else {
+                    console.warn('nije ok phone!');
+                  }
+                }}
               />
             </div>
           </div>
