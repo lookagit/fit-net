@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,500,600,700,800&subset=latin-ext');
 $blue: #28a7e9;
 $blue-rgb: rgb(61, 75, 105);
-$blue-rgba: rgba(61, 75, 105, 0.7);
+$blue-rgba: rgba(61, 75, 105, 0.96);
 
 html, body{
   height: 100%;
@@ -696,7 +696,7 @@ button {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  background: rgba(61, 75, 105, .7);
+  background: rgba(61, 75, 105, .96);
   padding: 20px;
 }
 .inputWrapperForm {

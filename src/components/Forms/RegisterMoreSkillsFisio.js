@@ -10,6 +10,8 @@ import RecycleItem from '../../../static/remove.png';
 import DropdownSelectCategory from './DropdownSelectCategory';
 import DropdownSelectCity from './DropdownSelectCity';
 import DropdownSelectCounties from './DropdownSelectCounties';
+import TextField from 'material-ui/TextField';
+import { blue800, white } from 'material-ui/styles/colors';
 
 @withRouter
 
@@ -67,7 +69,6 @@ class RegisterMoreSkillsFisio extends React.Component {
       cityId: 0,
       countiesId: '',
       address: '',
-      salonName: '',
       price: '',
       arrayCategories: [],
       arrayCounties: [],
@@ -91,23 +92,18 @@ class RegisterMoreSkillsFisio extends React.Component {
     }
   }
 
-  setPrice = e => {
+  setPrice = price => {
     this.setState({
-      price: e.target.value,
+      price,
     });
   }
 
-  setAddress = e => {
+  setAddress = address => {
     this.setState({
-      address: e.target.value,
+      address,
     });
   }
 
-  setSalonName = e => {
-    this.setState({
-      salonName: e.target.value,
-    });
-  }
   selectCategory = e => {
     this.setState({
       skillId: e.target.value,
@@ -136,7 +132,7 @@ class RegisterMoreSkillsFisio extends React.Component {
   }
 
   moreItem = async () => {
-    const { price, skillId, countiesId, salonName, cityId, address } = this.state;
+    const { price, skillId, countiesId, cityId, address } = this.state;
     const obj = {};
     obj.price = price;
     const [filteredNameSkillId] = this.state.arrayCategories.filter(item => (
@@ -151,13 +147,11 @@ class RegisterMoreSkillsFisio extends React.Component {
     obj.skillId = { ...filteredNameSkillId };
     obj.cityId = { ...filteredNameCityId };
     obj.counties = { ...filteredNameCounties };
-    obj.salonName = salonName;
     obj.address = address;
     obj.id = this.state.itemId;
     this.setState({
       price: '',
       countiesId: '',
-      salonName: '',
       cityId: '',
       skillId: '',
       address: '',
@@ -185,12 +179,14 @@ class RegisterMoreSkillsFisio extends React.Component {
   }
 
   saveSkills = () => {
+    if (this.state.skillId !== '' && this.state.countiesId !== '' && this.state.price !== '' && this.state.cityId !== '' && this.state.address) {
+      this.moreItem();
+    }
     const { id } = this.props.match.params;
     const mutationArray = this.state.items.map(async item => {
       await this.props.createMoreSkills({
         variables: {
           price: parseInt(item.price), //eslint-disable-line
-          saloonName: item.salonName,
           address: item.address,
           fisioClId: parseInt(id), //eslint-disable-line
           fisioCategoryId: parseInt(item.skillId.id), //eslint-disable-line
@@ -213,10 +209,8 @@ class RegisterMoreSkillsFisio extends React.Component {
           valueCounties={this.state.countiesId}
           valuePrice={this.state.price}
           valueAddress={this.state.address}
-          valueSalonName={this.state.salonName}
           getValueFromInput={this.setPrice}
           getValueFromAddress={this.setAddress}
-          getValueFromSalon={this.setSalonName}
           arrayForCategoryes={this.state.arrayCategories}
           arrayForCity={this.state.arrayCities}
           arrayForCounties={this.state.arrayCounties}
@@ -281,7 +275,7 @@ class RegisterMoreSkillsFisio extends React.Component {
   }
 }
 
-const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAddress, valueSalonName, handleCategoryClick, handleCityClick, handleCounties, getValueFromInput, getValueFromAddress, getValueFromSalon, arrayForCategoryes, arrayForCity, arrayForCounties, visibleCounties }) => (
+const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAddress, handleCategoryClick, handleCityClick, handleCounties, getValueFromInput, getValueFromAddress, arrayForCategoryes, arrayForCity, arrayForCounties, visibleCounties }) => (
   <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 20 }}>
     <div className={css.registerFisio}>
       <div className={css.searchBoxWrapper} style={{ paddingTop: 5 }}>
@@ -331,61 +325,20 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           paddingTop: 0,
           paddingBottom: 5,
           width: 700,
-          backgroundColor: 'rgba(61, 75, 105, .7)',
+          backgroundColor: 'rgba(61, 75, 105, .96)',
           margin: '0 auto',
         }}
       >
-        <h3 style={{ color: 'white', padding: 5 }}>
-          Adresa
-        </h3>
-        <RegisterInput
-          placeHolder="Adresa"
-          type="text"
-          styles={{
-            border: 'none',
-            borderRadius: 5,
-            fontSize: 18,
-            height: 60,
-            outline: 'none',
-            paddingLeft: 20,
-          }}
-          disableClass
+        <TextField
+          hintText="Unesite adresu"
+          hintStyle={{ color: blue800 }}
+          floatingLabelText="Adresa"
+          floatingLabelStyle={{ color: white }}
           value={valueAddress}
-          updateFunc={e => {
-            getValueFromAddress(e);
-          }}
-        />
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          padding: 20,
-          paddingTop: 0,
-          paddingBottom: 5,
-          width: 700,
-          backgroundColor: 'rgba(61, 75, 105, .7)',
-          margin: '0 auto',
-        }}
-      >
-        <h3 style={{ color: 'white', padding: 5 }}>
-          Naziv salona
-        </h3>
-        <RegisterInput
-          placeHolder="Naziv salona"
-          type="text"
-          styles={{
-            border: 'none',
-            borderRadius: 5,
-            fontSize: 18,
-            height: 60,
-            outline: 'none',
-            paddingLeft: 20,
-          }}
-          disableClass
-          value={valueSalonName}
-          updateFunc={e => {
-            getValueFromSalon(e);
+          underlineFocusStyle={{ borderColor: blue800 }}
+          style={{ width: '100%' }}
+          onChange={(e, address) => {
+            getValueFromAddress(address);
           }}
         />
       </div>
@@ -396,29 +349,26 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           padding: 20,
           paddingTop: 0,
           width: 700,
-          backgroundColor: 'rgba(61, 75, 105, .7)',
+          backgroundColor: 'rgba(61, 75, 105, .96)',
           margin: '0 auto',
         }}
       >
-        <h3 style={{ color: 'white', padding: 5 }}>
-          Cena
-        </h3>
-        <RegisterInput
-          placeHolder="Cena"
-          type="text"
-          styles={{
-            border: 'none',
-            borderRadius: 5,
-            fontSize: 18,
-            height: 60,
-            outline: 'none',
-            paddingLeft: 20,
-          }}
-          disableClass
+        <TextField
+          hintText="Unesite cenu"
+          hintStyle={{ color: blue800 }}
+          floatingLabelText="Cena"
+          floatingLabelStyle={{ color: white }}
           value={valuePrice}
-          updateFunc={e => {
-            if (validatePrice(e.target.value)) {
-              getValueFromInput(e);
+          underlineFocusStyle={{ borderColor: blue800 }}
+          style={{ width: '100%' }}
+          onChange={(e, price) => {
+            if (validatePrice(price)) {
+              getValueFromInput(price);
+            } else {
+              this.setState({
+                warrningMessage: 'Neispravan format imena!',
+              });
+              this.showNotifications();
             }
           }}
         />
@@ -427,10 +377,10 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
   </div>
 );
 
-const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address, salonName }) => (
+const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address }) => (
   <div className={css.searchBoxWrapper} style={{}}>
     <div style={{ marginTop: 20 }}>
-      <div style={{ opacity: 0.7 }}>
+      <div style={{ opacity: 0.96 }}>
         <div className={css.searchBox}>
           <div className={css.recycleItem}>
             <img alt="delete" src={RecycleItem} width="30" height="30" onClick={() => removeMe(id)} style={{ cursor: 'pointer' }} />
@@ -463,60 +413,25 @@ const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address, salon
             </div>
           </div>
           <div style={{ paddingRight: 20, paddingBottom: 5 }}>
-            <h1
-              className={css.labelStyle}
-            >
-              ADRESA
-            </h1>
-            <input
-              style={{
-                border: 'none',
-                borderRadius: 5,
-                fontSize: 18,
-                height: 40,
-                outline: 'none',
-                paddingLeft: 20,
-                width: '100%',
-              }}
-              defaultValue={address}
+            <TextField
+              disabled
+              hintStyle={{ color: blue800 }}
+              floatingLabelText="Adresa"
+              floatingLabelStyle={{ color: white }}
+              value={address}
+              underlineFocusStyle={{ borderColor: blue800 }}
+              style={{ width: '100%' }}
             />
           </div>
           <div style={{ paddingRight: 20, paddingBottom: 5 }}>
-            <h1
-              className={css.labelStyle}
-            >
-              NAZIV SALONA
-            </h1>
-            <input
-              style={{
-                border: 'none',
-                borderRadius: 5,
-                fontSize: 18,
-                height: 40,
-                outline: 'none',
-                paddingLeft: 20,
-                width: '100%',
-              }}
-              defaultValue={salonName}
-            />
-          </div>
-          <div style={{ paddingRight: 20, paddingBottom: 5 }}>
-            <h1
-              className={css.labelStyle}
-            >
-              CENA
-            </h1>
-            <input
-              style={{
-                border: 'none',
-                borderRadius: 5,
-                fontSize: 18,
-                height: 40,
-                outline: 'none',
-                paddingLeft: 20,
-                width: '100%',
-              }}
-              defaultValue={`${prices + ' RSD'}`} //eslint-disable-line
+            <TextField
+              disabled
+              hintStyle={{ color: blue800 }}
+              floatingLabelText="Cena"
+              floatingLabelStyle={{ color: white }}
+              value={`${prices + ' RSD'}`} //eslint-disable-line
+              underlineFocusStyle={{ borderColor: blue800 }}
+              style={{ width: '100%' }}
             />
           </div>
         </div>

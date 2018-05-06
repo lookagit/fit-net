@@ -11,6 +11,8 @@ import RecycleItem from '../../../static/remove.png';
 import DropdownSelectCategory from './DropdownSelectCategory';
 import DropdownSelectCity from './DropdownSelectCity';
 import DropdownSelectCounties from './DropdownSelectCounties';
+import TextField from 'material-ui/TextField';
+import { blue800, white } from 'material-ui/styles/colors';
 
 @withRouter
 
@@ -86,15 +88,15 @@ class RegisterMoreSkillsPerson extends React.Component {
     }
   }
 
-  setPrice = e => {
+  setPrice = price => {
     this.setState({
-      price: e.target.value,
+      price,
     });
   }
 
-  setAddress = e => {
+  setAddress = address => {
     this.setState({
-      address: e.target.value,
+      address,
     });
   }
 
@@ -328,28 +330,20 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           padding: 20,
           paddingTop: 0,
           width: 700,
-          backgroundColor: 'rgba(61, 75, 105, .7)',
+          backgroundColor: 'rgba(61, 75, 105, .96)',
           margin: '0 auto',
         }}
       >
-        <h3 style={{ color: 'white', padding: 5 }}>
-          Adresa
-        </h3>
-        <RegisterInput
-          placeHolder="Adresa"
-          type="text"
-          styles={{
-            border: 'none',
-            borderRadius: 5,
-            fontSize: 18,
-            height: 60,
-            outline: 'none',
-            paddingLeft: 20,
-          }}
-          disableClass
+        <TextField
+          hintText="Unesite adresu"
+          hintStyle={{ color: blue800 }}
+          floatingLabelText="Adresa"
+          floatingLabelStyle={{ color: white }}
           value={valueAddress}
-          updateFunc={e => {
-            getValueFromAddress(e);
+          underlineFocusStyle={{ borderColor: blue800 }}
+          style={{ width: '100%' }}
+          onChange={(e, address) => {
+            getValueFromAddress(address);
           }}
         />
       </div>
@@ -366,29 +360,26 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           padding: 20,
           paddingTop: 0,
           width: 700,
-          backgroundColor: 'rgba(61, 75, 105, .7)',
+          backgroundColor: 'rgba(61, 75, 105, .96)',
           margin: '0 auto',
         }}
       >
-        <h3 style={{ color: 'white', padding: 5 }}>
-          Cena
-        </h3>
-        <RegisterInput
-          placeHolder="Cena"
-          type="text"
-          styles={{
-            border: 'none',
-            borderRadius: 5,
-            fontSize: 18,
-            height: 60,
-            outline: 'none',
-            paddingLeft: 20,
-          }}
-          disableClass
+        <TextField
+          hintText="Unesite cenu"
+          hintStyle={{ color: blue800 }}
+          floatingLabelText="Cena"
+          floatingLabelStyle={{ color: white }}
           value={valuePrice}
-          updateFunc={e => {
-            if (validatePrice(e.target.value)) {
-              getValueFromInput(e);
+          underlineFocusStyle={{ borderColor: blue800 }}
+          style={{ width: '100%' }}
+          onChange={(e, price) => {
+            if (validatePrice(price)) {
+              getValueFromInput(price);
+            } else {
+              this.setState({
+                warrningMessage: 'Neispravan format imena!',
+              });
+              this.showNotifications();
             }
           }}
         />
@@ -400,7 +391,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
 const DisabledBox = ({ id, skill, trening, counti, prices, city, removeMe, address }) => (
   <div className={css.searchBoxWrapper} style={{}}>
     <div style={{ marginTop: 20 }}>
-      <div style={{ opacity: 0.7 }}>
+      <div style={{ opacity: 0.96 }}>
         <div className={css.searchBox}>
           <div className={css.recycleItem}>
             <img alt="delete" src={RecycleItem} width="30" height="30" onClick={() => removeMe(id)} style={{ cursor: 'pointer' }} />
@@ -433,22 +424,14 @@ const DisabledBox = ({ id, skill, trening, counti, prices, city, removeMe, addre
             </div>
           </div>
           <div style={{ paddingRight: 20 }}>
-            <h3
-              className={css.labelStyle}
-            >
-              ADRESA
-            </h3>
-            <input
-              style={{
-                border: 'none',
-                borderRadius: 5,
-                fontSize: 18,
-                height: 40,
-                outline: 'none',
-                paddingLeft: 20,
-                width: '100%',
-              }}
-              defaultValue={address}
+            <TextField
+              disabled
+              hintStyle={{ color: blue800 }}
+              floatingLabelText="Adresa"
+              floatingLabelStyle={{ color: white }}
+              value={address}
+              underlineFocusStyle={{ borderColor: blue800 }}
+              style={{ width: '100%' }}
             />
           </div>
           <div className={css.sertifikat}>
@@ -493,22 +476,14 @@ const DisabledBox = ({ id, skill, trening, counti, prices, city, removeMe, addre
             </div>
           </div>
           <div style={{ paddingRight: 20 }}>
-            <h3
-              className={css.labelStyle}
-            >
-              CENA
-            </h3>
-            <input
-              style={{
-                border: 'none',
-                borderRadius: 5,
-                fontSize: 18,
-                height: 40,
-                outline: 'none',
-                paddingLeft: 20,
-                width: '100%',
-              }}
-              defaultValue={`${prices + ' RSD'}`} //eslint-disable-line
+            <TextField
+              disabled
+              hintStyle={{ color: blue800 }}
+              floatingLabelText="Cena"
+              floatingLabelStyle={{ color: white }}
+              value={`${prices + ' RSD'}`} //eslint-disable-line
+              underlineFocusStyle={{ borderColor: blue800 }}
+              style={{ width: '100%' }}
             />
           </div>
         </div>
