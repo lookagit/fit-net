@@ -134,7 +134,13 @@ class FisioOne extends React.Component {
                           marginRight: '10px',
                         }}
                       />
-                      <h4 style={{ color: '#fff' }}>{` ${cellPhone}`}</h4>
+                      <h4
+                        style={{ color: '#fff', cursor: this.props.login.accessToken === undefined? 'pointer': 'default' }} 
+                        onClick={() => {
+                          if (this.props.login.accessToken === undefined) {
+                            this.props.dispatch({ type: 'MODAL_VISIBLE', isVisible: true, modalClass: 'login' });
+                          }
+                        }}>{` ${cellPhone}`}</h4>
                     </div>
                     <div
                       style={{
@@ -154,7 +160,13 @@ class FisioOne extends React.Component {
                           marginRight: '10px',
                         }}
                       />
-                      <h4 style={{ color: '#fff' }}>{` ${emailConst}`}</h4>
+                      <h4
+                        style={{ color: '#fff', cursor: this.props.login.accessToken === undefined? 'pointer': 'default' }} 
+                        onClick={() => {
+                          if (this.props.login.accessToken === undefined) {
+                            this.props.dispatch({ type: 'MODAL_VISIBLE', isVisible: true, modalClass: 'login' });
+                          }
+                        }}>{` ${emailConst}`}</h4>
                     </div>
                     <div
                       style={{

@@ -7,6 +7,10 @@ import year from '../../static/year.png';
 import name from '../../static/name.png';
 import phone from '../../static/phone.png';
 import email from '../../static/email.png';
+import certificate from '../../static/cetificate.png';
+import locationImage from '../../static/location.png';
+import score from '../../static/score.png';
+import skill from '../../static/skill.png';
 
 @connect(state => ({
   clubs: state.clubs,
@@ -158,7 +162,13 @@ class CoachesOne extends React.Component {
                           marginRight: '10px',
                         }}
                       />
-                      <h4 style={{ color: '#fff' }}>{` ${emailConst}`}</h4>
+                      <h4
+                        style={{ color: '#fff', cursor: this.props.login.accessToken === undefined? 'pointer': 'default' }} 
+                        onClick={() => {
+                          if (this.props.login.accessToken === undefined) {
+                            this.props.dispatch({ type: 'MODAL_VISIBLE', isVisible: true, modalClass: 'login' });
+                          }
+                        }}>{` ${emailConst}`}</h4>
                     </div>
                     <div
                       style={{
@@ -220,7 +230,7 @@ class CoachesOne extends React.Component {
                       }}
                     >
                       <img
-                        src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
+                        src={score}
                         alt="Smiley face"
                         height="90"
                         width="90"
@@ -244,8 +254,8 @@ class CoachesOne extends React.Component {
                       }}
                     >
                       <img
-                        src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
-                        alt="Smiley face"
+                        alt="Fit net couch location"
+                        src={locationImage}
                         height="90"
                         width="90"
                       />
@@ -268,7 +278,7 @@ class CoachesOne extends React.Component {
                       }}
                     >
                       <img
-                        src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
+                        src={skill}
                         alt="Smiley face"
                         height="90"
                         width="90"
@@ -292,7 +302,7 @@ class CoachesOne extends React.Component {
                       }}
                     >
                       <img
-                        src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
+                        src={certificate}
                         alt="Smiley face"
                         height="90"
                         width="90"
