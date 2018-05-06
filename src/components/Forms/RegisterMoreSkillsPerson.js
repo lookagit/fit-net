@@ -134,36 +134,38 @@ class RegisterMoreSkillsPerson extends React.Component {
   }
 
   moreItem = async () => {
-    const { price, skillId, countiesId, groupTraining, cityId, address } = this.state;
-    const obj = {};
-    obj.price = price;
-    const [filteredNameSkillId] = this.state.arrayCategories.filter(item => (
-      item.id === skillId
-    ));
-    const [filteredNameCityId] = this.state.arrayCities.filter(item => (
-      item.id === cityId
-    ));
-    const [filteredNameCounties] = this.state.arrayCounties.filter(item => (
-      item.id == countiesId
-    ));
-    obj.skillId = { ...filteredNameSkillId };
-    obj.cityId = { ...filteredNameCityId };
-    obj.counties = { ...filteredNameCounties };
-    obj.groupTraining = groupTraining;
-    obj.address = address;
-    obj.id = this.state.itemId;
-    this.setState({
-      price: '',
-      countiesId: '',
-      groupTraining: false,
-      cityId: '',
-      skillId: '',
-      address: '',
-      moreItems: true,
-      visibleCounties: false,
-      itemId: this.state.itemId + 1,
-      items: [...this.state.items, obj],
-    });
+    if (this.state.skillId !== '' && this.state.countiesId !== '' && this.state.price !== '' && this.state.cityId !== '' && this.state.address) {
+      const { price, skillId, countiesId, groupTraining, cityId, address } = this.state;
+      const obj = {};
+      obj.price = price;
+      const [filteredNameSkillId] = this.state.arrayCategories.filter(item => (
+        item.id === skillId
+      ));
+      const [filteredNameCityId] = this.state.arrayCities.filter(item => (
+        item.id === cityId
+      ));
+      const [filteredNameCounties] = this.state.arrayCounties.filter(item => (
+        item.id == countiesId
+      ));
+      obj.skillId = { ...filteredNameSkillId };
+      obj.cityId = { ...filteredNameCityId };
+      obj.counties = { ...filteredNameCounties };
+      obj.groupTraining = groupTraining;
+      obj.address = address;
+      obj.id = this.state.itemId;
+      this.setState({
+        price: '',
+        countiesId: '',
+        groupTraining: false,
+        cityId: '',
+        skillId: '',
+        address: '',
+        moreItems: true,
+        visibleCounties: false,
+        itemId: this.state.itemId + 1,
+        items: [...this.state.items, obj],
+      });
+    }
   }
 
   removeItem = id => {
@@ -183,6 +185,9 @@ class RegisterMoreSkillsPerson extends React.Component {
   }
 
   saveSkills = () => {
+    if (this.state.skillId !== '' && this.state.countiesId !== '' && this.state.price !== '' && this.state.cityId !== '' && this.state.address) {
+      this.moreItem();
+    }
     if (this.state.items.length) {
       this.props.changeToLoad();
       const { id } = this.props.match.params;
@@ -205,77 +210,60 @@ class RegisterMoreSkillsPerson extends React.Component {
   render() {
     return (
       <div>
-        <OneItem
-          handleCategoryClick={this.selectCategory}
-          handleCityClick={this.selectCity}
-          handleCounties={this.selectCounties}
-          handleTraning={this.selectGroup}
-          valueCategory={this.state.skillId}
-          valueCity={this.state.cityId}
-          valueCounties={this.state.countiesId}
-          valuePrice={this.state.price}
-          valueAddress={this.state.address}
-          groupTraining={this.state.groupTraining}
-          getValueFromInput={this.setPrice}
-          getValueFromAddress={this.setAddress}
-          arrayForCategoryes={this.state.arrayCategories}
-          arrayForCity={this.state.arrayCities}
-          arrayForCounties={this.state.arrayCounties}
-          visibleCounties={this.state.visibleCounties}
-        />
-        {
-          this.state.items.length
-          ?
-            this.state.items.map((item, k) => (
-              <DisabledBox
-                key={k}
-                id={item.id}
-                removeMe={this.removeItem}
-                trening={item.groupTraining}
-                counti={item.counties}
-                skill={item.skillId}
-                city={item.cityId}
-                prices={item.price}
-                address={item.address}
-              />
-            ))
-          :
-          null
-        }
-        <div
-          onClick={() => this.moreItem()}
-          onKeyDown={() => this.handleKeyPress()}
-          role="presentation"
-          style={{
-            position: 'fixed',
-            cursor: 'pointer',
-            bottom: '10%',
-            right: '10%',
-            width: 100,
-            height: 50,
-            textAlign: 'center',
-          }}
-          className={css.sendParams}
-        >
-          <h3 style={{ color: 'white', fontWeight: 'bold' }}>Dodaj</h3>
-        </div>
-        <div
-          onClick={() => this.saveSkills()}
-          onKeyDown={() => this.handleKeyPress()}
-          role="presentation"
-          style={{
-            position: 'fixed',
-            cursor: !this.state.moreItems ? null : 'pointer',
-            bottom: '20%',
-            right: '10%',
-            opacity: !this.state.moreItems ? 0.65 : null,
-            width: 100,
-            height: 50,
-            textAlign: 'center',
-          }}
-          className={css.sendParams}
-        >
-          <h3 style={{ color: 'white', fontWeight: 'bold' }}>Završi</h3>
+        <div style={{ marginBottom: this.state.items.length ? 0 : 50 }}>
+          <OneItem
+            handleCategoryClick={this.selectCategory}
+            handleCityClick={this.selectCity}
+            handleCounties={this.selectCounties}
+            handleTraning={this.selectGroup}
+            valueCategory={this.state.skillId}
+            valueCity={this.state.cityId}
+            valueCounties={this.state.countiesId}
+            valuePrice={this.state.price}
+            valueAddress={this.state.address}
+            groupTraining={this.state.groupTraining}
+            getValueFromInput={this.setPrice}
+            getValueFromAddress={this.setAddress}
+            arrayForCategoryes={this.state.arrayCategories}
+            arrayForCity={this.state.arrayCities}
+            arrayForCounties={this.state.arrayCounties}
+            visibleCounties={this.state.visibleCounties}
+          />
+          {
+            this.state.items.length
+            ?
+              this.state.items.map((item, k) => (
+                <DisabledBox
+                  key={k}
+                  id={item.id}
+                  removeMe={this.removeItem}
+                  trening={item.groupTraining}
+                  counti={item.counties}
+                  skill={item.skillId}
+                  city={item.cityId}
+                  prices={item.price}
+                  address={item.address}
+                />
+              ))
+            :
+            null
+          }
+          <div
+            onClick={() => this.moreItem()}
+            onKeyDown={() => this.handleKeyPress()}
+            role="presentation"
+            className={css.setMoreSkillsButton}
+          >
+            <h3 style={{ color: 'white', fontWeight: 'bold' }}>Dodaj</h3>
+          </div>
+          <div
+            onClick={() => this.saveSkills()}
+            onKeyDown={() => this.handleKeyPress()}
+            role="presentation"
+            className={!this.state.moreItems ? css.endMoreSkillsButton : css.endMoreSkillsButtonPointer}
+          >
+            <h3 style={{ color: 'white', fontWeight: 'bold' }}>Završi</h3>
+          </div>
         </div>
       </div>
     );
@@ -324,15 +312,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
         }
       </div>
       <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          padding: 20,
-          paddingTop: 0,
-          width: 700,
-          backgroundColor: 'rgba(61, 75, 105, .96)',
-          margin: '0 auto',
-        }}
+        className={css.inputMoreSkills}
       >
         <TextField
           hintText="Unesite adresu"
@@ -354,15 +334,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
         groupTrainingFunc={handleTraning}
       />
       <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          padding: 20,
-          paddingTop: 0,
-          width: 700,
-          backgroundColor: 'rgba(61, 75, 105, .96)',
-          margin: '0 auto',
-        }}
+        className={css.inputMoreSkills}
       >
         <TextField
           hintText="Unesite cenu"
@@ -390,7 +362,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
 
 const DisabledBox = ({ id, skill, trening, counti, prices, city, removeMe, address }) => (
   <div className={css.searchBoxWrapper} style={{}}>
-    <div style={{ marginTop: 20 }}>
+    <div style={{ marginTop: 20, marginBottom: 45 }}>
       <div style={{ opacity: 0.96 }}>
         <div className={css.searchBox}>
           <div className={css.recycleItem}>

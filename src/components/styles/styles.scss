@@ -727,8 +727,61 @@ button {
 // REGISTER FISIO INPUT END
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+.inputMoreSkills {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  padding-top: 0px;
+  padding-bottom: 5px;
+  background-color: rgba(61, 75, 105, .96);
+  margin: 0 auto;
+  width: 700px;
+}
+.endMoreSkillsButtonPointer {
+  position: fixed;
+  bottom: 10%;
+  left: 5%;
+  width: 170px;
+  height: 60px;
+  text-align: center;
+  cursor: pointer;
+  background: $blue;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.endMoreSkillsButton {
+  position: fixed;
+  opacity: 0.65;
+  cursor: default;
+  bottom: 10%;
+  left: 5%;
+  width: 170px;
+  height: 60px;
+  text-align: center;
+  background: $blue;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.setMoreSkillsButton {
+  position: fixed;
+  bottom: 10%;
+  right: 5%;
+  width: 170px;
+  height: 60px;
+  text-align: center;
+  background: $blue;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @media screen and (max-width: 425px){
   .coaches{
     flex-direction: column;
@@ -745,7 +798,62 @@ button {
     height: 100%;
   }
   .searchBox {
-    padding: 10px 0;
+    padding: 10px;
+  }
+  .endMoreSkillsButtonPointer {
+    position: fixed;
+    bottom: 0%;
+    left: 5%;
+    width: 170px;
+    height: 45px;
+    text-align: center;
+    cursor: pointer;
+    background: $blue;
+    border-radius: 5px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .endMoreSkillsButton {
+    position: fixed;
+    opacity: 0.65;
+    cursor: default;
+    bottom: 0%;
+    left: 5%;
+    width: 170px;
+    height: 45px;
+    text-align: center;
+    background: $blue;
+    border-radius: 5px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .setMoreSkillsButton {
+    position: fixed;
+    bottom: 0%;
+    right: 5%;
+    width: 170px;
+    height: 45px;
+    text-align: center;
+    background: $blue;
+    border-radius: 5px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .inputMoreSkills {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    background-color: rgba(61, 75, 105, .96);
+    margin: 0 auto;
+    width: 360px;
   }
   .categorie {
     position: relative;

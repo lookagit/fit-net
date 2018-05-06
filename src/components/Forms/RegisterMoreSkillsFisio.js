@@ -137,34 +137,36 @@ class RegisterMoreSkillsFisio extends React.Component {
   }
 
   moreItem = async () => {
-    const { price, skillId, countiesId, cityId, address } = this.state;
-    const obj = {};
-    obj.price = price;
-    const [filteredNameSkillId] = this.state.arrayCategories.filter(item => (
-      item.id == skillId
-    ));
-    const [filteredNameCityId] = this.state.arrayCities.filter(item => (
-      item.id === cityId
-    ));
-    const [filteredNameCounties] = this.state.arrayCounties.filter(item => (
-      item.id == countiesId
-    ));
-    obj.skillId = { ...filteredNameSkillId };
-    obj.cityId = { ...filteredNameCityId };
-    obj.counties = { ...filteredNameCounties };
-    obj.address = address;
-    obj.id = this.state.itemId;
-    this.setState({
-      price: '',
-      countiesId: '',
-      cityId: '',
-      skillId: '',
-      address: '',
-      moreItems: true,
-      visibleCounties: false,
-      itemId: this.state.itemId + 1,
-      items: [...this.state.items, obj],
-    });
+    if (this.state.skillId !== '' && this.state.countiesId !== '' && this.state.price !== '' && this.state.cityId !== '' && this.state.address) {
+      const { price, skillId, countiesId, cityId, address } = this.state;
+      const obj = {};
+      obj.price = price;
+      const [filteredNameSkillId] = this.state.arrayCategories.filter(item => (
+        item.id == skillId
+      ));
+      const [filteredNameCityId] = this.state.arrayCities.filter(item => (
+        item.id === cityId
+      ));
+      const [filteredNameCounties] = this.state.arrayCounties.filter(item => (
+        item.id == countiesId
+      ));
+      obj.skillId = { ...filteredNameSkillId };
+      obj.cityId = { ...filteredNameCityId };
+      obj.counties = { ...filteredNameCounties };
+      obj.address = address;
+      obj.id = this.state.itemId;
+      this.setState({
+        price: '',
+        countiesId: '',
+        cityId: '',
+        skillId: '',
+        address: '',
+        moreItems: true,
+        visibleCounties: false,
+        itemId: this.state.itemId + 1,
+        items: [...this.state.items, obj],
+      });
+    }
   }
 
   removeItem = id => {
@@ -188,18 +190,20 @@ class RegisterMoreSkillsFisio extends React.Component {
       this.moreItem();
     }
     const { id } = this.props.match.params;
-    const mutationArray = this.state.items.map(async item => {
-      await this.props.createMoreSkills({
-        variables: {
-          price: parseInt(item.price), //eslint-disable-line
-          address: item.address,
-          fisioClId: parseInt(id), //eslint-disable-line
-          fisioCategoryId: parseInt(item.skillId.id), //eslint-disable-line
-          countyId: parseInt(item.counties.id), //eslint-disable-line
-        },
+    if (this.state.items.length) {
+      const mutationArray = this.state.items.map(async item => {
+        await this.props.createMoreSkills({
+          variables: {
+            price: parseInt(item.price), //eslint-disable-line
+            address: item.address,
+            fisioClId: parseInt(id), //eslint-disable-line
+            fisioCategoryId: parseInt(item.skillId.id), //eslint-disable-line
+            countyId: parseInt(item.counties.id), //eslint-disable-line
+          },
+        });
       });
-    });
-    Promise.all(mutationArray).then(() => this.props.history.push(`/fisio-one/${id}`));
+      Promise.all(mutationArray).then(() => this.props.history.push(`/fisio-one/${id}`));
+    }
   }
 
   render() {
@@ -244,16 +248,7 @@ class RegisterMoreSkillsFisio extends React.Component {
           onClick={() => this.moreItem()}
           onKeyDown={() => this.handleKeyPress()}
           role="presentation"
-          style={{
-            position: 'fixed',
-            cursor: 'pointer',
-            bottom: '10%',
-            right: '10%',
-            width: 100,
-            height: 50,
-            textAlign: 'center',
-          }}
-          className={css.sendParams}
+          className={css.setMoreSkillsButton}
         >
           <h3 style={{ color: 'white', fontWeight: 'bold' }}>Dodaj</h3>
         </div>
@@ -261,17 +256,7 @@ class RegisterMoreSkillsFisio extends React.Component {
           onClick={() => this.saveSkills()}
           onKeyDown={() => this.handleKeyPress()}
           role="presentation"
-          style={{
-            position: 'fixed',
-            cursor: !this.state.moreItems ? null : 'pointer',
-            bottom: '20%',
-            right: '10%',
-            opacity: !this.state.moreItems ? 0.65 : null,
-            width: 100,
-            height: 50,
-            textAlign: 'center',
-          }}
-          className={css.sendParams}
+          className={!this.state.moreItems ? css.endMoreSkillsButton : css.endMoreSkillsButtonPointer}
         >
           <h3 style={{ color: 'white', fontWeight: 'bold' }}>Završi</h3>
         </div>
@@ -323,16 +308,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
         }
       </div>
       <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          padding: 20,
-          paddingTop: 0,
-          paddingBottom: 5,
-          width: 700,
-          backgroundColor: 'rgba(61, 75, 105, .96)',
-          margin: '0 auto',
-        }}
+        className={css.inputMoreSkills}
       >
         <TextField
           hintText="Unesite adresu"
@@ -348,15 +324,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
         />
       </div>
       <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          padding: 20,
-          paddingTop: 0,
-          width: 700,
-          backgroundColor: 'rgba(61, 75, 105, .96)',
-          margin: '0 auto',
-        }}
+        className={css.inputMoreSkills}
       >
         <TextField
           hintText="Unesite cenu"
@@ -384,7 +352,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
 
 const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address }) => (
   <div className={css.searchBoxWrapper} style={{}}>
-    <div style={{ marginTop: 20 }}>
+    <div style={{ marginTop: 20, marginBottom: 45 }}>
       <div style={{ opacity: 0.96 }}>
         <div className={css.searchBox}>
           <div className={css.recycleItem}>
