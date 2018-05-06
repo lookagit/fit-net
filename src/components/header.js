@@ -7,7 +7,10 @@ import Login from './login';
 import LogedInOrNot from './SearchDumb/LogedInOrNot';
 import logoBright from '../../static/logoBright.png';
 
-@connect(state => ({ login: state.login }))
+@connect(state => ({
+  login: state.login,
+  modal: state.modal,
+}))
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -17,15 +20,10 @@ class Header extends React.Component {
     };
   }
   modalOn = e => {
-    this.setState({
-      modal: true,
-      modalClass: e,
-    });
+    this.props.dispatch({ type: 'MODAL_VISIBLE', isVisible: true, modalClass: e });
   }
   modalOff = () => {
-    this.setState({
-      modal: false,
-    });
+    this.props.dispatch({ type: 'MODAL_VISIBLE', isVisible: false, modalClass: '' });
   }
   stopProp = e => {
     e.stopPropagation();
@@ -111,12 +109,12 @@ class Header extends React.Component {
         </div>
         <div
           onClick={() => this.modalOff()}
-          style={{display:`${this.state.modal ? 'block' : 'none'}`}}
+          style={{display:`${this.props.modal.isVisible ? 'block' : 'none'}`}}
           className={css.loginModalWrapper}>
           <div 
             onClick={(e) => this.stopProp(e)}
             className={css.loginModalHolder}>
-              <LogedInOrNot name={this.state.modalClass}/>
+              <LogedInOrNot />
           </div>
         </div>
       </div>

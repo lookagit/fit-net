@@ -69,7 +69,6 @@ class RegisterMoreSkillsFisio extends React.Component {
       cityId: 0,
       countiesId: '',
       address: '',
-      salonName: '',
       price: '',
       arrayCategories: [],
       arrayCounties: [],
@@ -105,11 +104,6 @@ class RegisterMoreSkillsFisio extends React.Component {
     });
   }
 
-  setSalonName = salonName => {
-    this.setState({
-      salonName,
-    });
-  }
   selectCategory = e => {
     this.setState({
       skillId: e.target.value,
@@ -138,7 +132,7 @@ class RegisterMoreSkillsFisio extends React.Component {
   }
 
   moreItem = async () => {
-    const { price, skillId, countiesId, salonName, cityId, address } = this.state;
+    const { price, skillId, countiesId, cityId, address } = this.state;
     const obj = {};
     obj.price = price;
     const [filteredNameSkillId] = this.state.arrayCategories.filter(item => (
@@ -153,13 +147,11 @@ class RegisterMoreSkillsFisio extends React.Component {
     obj.skillId = { ...filteredNameSkillId };
     obj.cityId = { ...filteredNameCityId };
     obj.counties = { ...filteredNameCounties };
-    obj.salonName = salonName;
     obj.address = address;
     obj.id = this.state.itemId;
     this.setState({
       price: '',
       countiesId: '',
-      salonName: '',
       cityId: '',
       skillId: '',
       address: '',
@@ -187,12 +179,14 @@ class RegisterMoreSkillsFisio extends React.Component {
   }
 
   saveSkills = () => {
+    if (this.state.skillId !== '' && this.state.countiesId !== '' && this.state.price !== '' && this.state.cityId !== '' && this.state.address) {
+      this.moreItem();
+    }
     const { id } = this.props.match.params;
     const mutationArray = this.state.items.map(async item => {
       await this.props.createMoreSkills({
         variables: {
           price: parseInt(item.price), //eslint-disable-line
-          saloonName: item.salonName,
           address: item.address,
           fisioClId: parseInt(id), //eslint-disable-line
           fisioCategoryId: parseInt(item.skillId.id), //eslint-disable-line
@@ -215,10 +209,8 @@ class RegisterMoreSkillsFisio extends React.Component {
           valueCounties={this.state.countiesId}
           valuePrice={this.state.price}
           valueAddress={this.state.address}
-          valueSalonName={this.state.salonName}
           getValueFromInput={this.setPrice}
           getValueFromAddress={this.setAddress}
-          getValueFromSalon={this.setSalonName}
           arrayForCategoryes={this.state.arrayCategories}
           arrayForCity={this.state.arrayCities}
           arrayForCounties={this.state.arrayCounties}
@@ -283,7 +275,7 @@ class RegisterMoreSkillsFisio extends React.Component {
   }
 }
 
-const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAddress, valueSalonName, handleCategoryClick, handleCityClick, handleCounties, getValueFromInput, getValueFromAddress, getValueFromSalon, arrayForCategoryes, arrayForCity, arrayForCounties, visibleCounties }) => (
+const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAddress, handleCategoryClick, handleCityClick, handleCounties, getValueFromInput, getValueFromAddress, arrayForCategoryes, arrayForCity, arrayForCounties, visibleCounties }) => (
   <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 20 }}>
     <div className={css.registerFisio}>
       <div className={css.searchBoxWrapper} style={{ paddingTop: 5 }}>
@@ -356,31 +348,6 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           flexDirection: 'column',
           padding: 20,
           paddingTop: 0,
-          paddingBottom: 5,
-          width: 700,
-          backgroundColor: 'rgba(61, 75, 105, .96)',
-          margin: '0 auto',
-        }}
-      >
-        <TextField
-          hintText="Unesite naziv salona"
-          hintStyle={{ color: blue800 }}
-          floatingLabelText="Naziv salona"
-          floatingLabelStyle={{ color: white }}
-          value={valueSalonName}
-          underlineFocusStyle={{ borderColor: blue800 }}
-          style={{ width: '100%' }}
-          onChange={(e, salon) => {
-            getValueFromSalon(salon);
-          }}
-        />
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          padding: 20,
-          paddingTop: 0,
           width: 700,
           backgroundColor: 'rgba(61, 75, 105, .96)',
           margin: '0 auto',
@@ -410,7 +377,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
   </div>
 );
 
-const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address, salonName }) => (
+const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address }) => (
   <div className={css.searchBoxWrapper} style={{}}>
     <div style={{ marginTop: 20 }}>
       <div style={{ opacity: 0.96 }}>
@@ -452,17 +419,6 @@ const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address, salon
               floatingLabelText="Adresa"
               floatingLabelStyle={{ color: white }}
               value={address}
-              underlineFocusStyle={{ borderColor: blue800 }}
-              style={{ width: '100%' }}
-            />
-          </div>
-          <div style={{ paddingRight: 20, paddingBottom: 5 }}>
-            <TextField
-              disabled
-              hintStyle={{ color: blue800 }}
-              floatingLabelText="Naziv salona"
-              floatingLabelStyle={{ color: white }}
-              value={salonName}
               underlineFocusStyle={{ borderColor: blue800 }}
               style={{ width: '100%' }}
             />

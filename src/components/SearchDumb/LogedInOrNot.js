@@ -5,7 +5,10 @@ import ModalClass from './modalClass';
 import WelcomeMessage from './WelcomeMessage';
 
 
-@connect(state => ({ login: state.login }))
+@connect(state => ({
+  login: state.login,
+  modal: state.modal,
+}))
 class LogedInOrNot extends React.Component {
   render() {
     const { login } = this.props;
@@ -26,7 +29,7 @@ class LogedInOrNot extends React.Component {
                   imageUrl={login.accessToken.imageUrl}
                   firstName={login.accessToken.firstName}
                 /> :
-                <ModalClass name={this.props.name} />
+                <ModalClass name={this.props.modal.modalClass} />
           }
         </div>
       </div>
