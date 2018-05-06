@@ -7,6 +7,10 @@ import year from '../../static/year.png';
 import name from '../../static/name.png';
 import phone from '../../static/phone.png';
 import email from '../../static/email.png';
+import certificate from '../../static/cetificate.png';
+import location from '../../static/location.png';
+import score from '../../static/score.png';
+import skill from '../../static/skill.png';
 
 @connect(state => ({
   clubs: state.clubs,
@@ -212,7 +216,7 @@ class FisioOne extends React.Component {
                       }}
                     >
                       <img
-                        src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
+                        src={score}
                         alt="Smiley face"
                         height="90"
                         width="90"
@@ -236,7 +240,7 @@ class FisioOne extends React.Component {
                       }}
                     >
                       <img
-                        src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
+                        src={location} 
                         alt="Smiley face"
                         height="90"
                         width="90"
@@ -260,8 +264,8 @@ class FisioOne extends React.Component {
                       }}
                     >
                       <img
-                        src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
-                        alt="Smiley face"
+                        src={skill}
+                        alt="Skill for fisio Fit-Net"
                         height="90"
                         width="90"
                       />
@@ -284,8 +288,8 @@ class FisioOne extends React.Component {
                       }}
                     >
                       <img
-                        src="https://scontent.fbeg2-1.fna.fbcdn.net/v/t1.0-9/14718614_10153836994745689_8529919099735870266_n.jpg?_nc_cat=0&oh=8faa75a7e99a56567b8ab9d40b00bfb6&oe=5B6C3464" 
-                        alt="Smiley face"
+                        src={score}
+                        alt="Score for fisio Fit-Net"
                         height="90"
                         width="90"
                       />
