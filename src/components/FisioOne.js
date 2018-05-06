@@ -11,6 +11,7 @@ import certificate from '../../static/cetificate.png';
 import locationImage from '../../static/location.png';
 import score from '../../static/score.png';
 import skill from '../../static/skill.png';
+import DumbDate from './DumbDate/DumbDateComponent';
 
 @connect(state => ({
   clubs: state.clubs,
@@ -79,17 +80,17 @@ class FisioOne extends React.Component {
           <div>
             <div style={{ width: '100%', display: 'flex', paddingTop: '40px' }}>
               <div
-                style={{ maxWidth: '1250px', margin: '0 auto', display: 'flex', flexDirection: 'row', paddingRight: '5px', paddingLeft: '5px' }}
+                style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'row', paddingRight: '5px', paddingLeft: '5px' }}
               >
                 <div
                   style={{
-                    width: '320px',
+                    width: '300px',
                   }}
                 >
                   <div
                     style={{
-                      width: '320px',
-                      height: '320px',
+                      width: '300px',
+                      height: '300px',
                       backgroundImage: `url(${this.props.data.oneFisioCl.imageUrl})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
@@ -186,7 +187,10 @@ class FisioOne extends React.Component {
                           marginRight: '10px',
                         }}
                       />
-                      <h4 style={{ color: '#fff' }}>{` ${birthDay}`}</h4>
+                      <DumbDate
+                        isDate
+                        date={this.props.data.oneFisioCl.birthDay}
+                      />
                     </div>
                     <div style={{ marginTop: '10px', marginBottom: '10px' }}>
                       <h2 style={{ color: '#fff', fontWeight: 'bold' }}>Vrste masaža</h2>
@@ -214,109 +218,126 @@ class FisioOne extends React.Component {
                   </div>
                 </div>
                 <div
-                  style={{ marginLeft: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center' }}
+                  style={{ marginLeft: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '760px' }}
                 >
                   <div
-                    style={{ display: 'flex', flexDirection: 'row', width: '80%', justifyContent: 'space-between', alignItems: 'space-between', paddingBottom: '15px' }}
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: 'rgba(41, 53, 81, 0.6)',
+                      borderRadius: '5px',
+                      paddingTop: '10px',
+                    }}
                   >
                     <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
+                      style={{ display: 'flex', flexDirection: 'row', width: '90%', justifyContent: 'space-between', alignItems: 'space-between', paddingBottom: '15px' }}
                     >
-                      <img
-                        src={score}
-                        alt="Smiley face"
-                        height="90"
-                        width="90"
-                      />
-                      <h4
+                      <div
                         style={{
-                          color: '#fff',
-                          textAlign: 'center',
-                          marginTop: '5px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center',
                         }}
                       >
-                        {`Score: ${this.props.data.oneFisioCl.score}`}
-                      </h4>
-                    </div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <img
-                        src={locationImage}
-                        alt="Smiley face"
-                        height="90"
-                        width="90"
-                      />
-                      <h4
+                        <img
+                          src={score}
+                          alt="Smiley face"
+                          height="90"
+                          width="90"
+                        />
+                        <h4
+                          style={{
+                            color: '#fff',
+                            textAlign: 'center',
+                            marginTop: '5px',
+                          }}
+                        >
+                          {`Score: ${this.props.data.oneFisioCl.score}`}
+                        </h4>
+                      </div>
+                      <div
                         style={{
-                          color: '#fff',
-                          textAlign: 'center',
-                          marginTop: '5px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center',
                         }}
                       >
-                        {`Lokacija: ${this.props.data.oneFisioCl.birthPlace}`}
-                      </h4>
-                    </div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <img
-                        src={skill}
-                        alt="Skill for fisio Fit-Net"
-                        height="90"
-                        width="90"
-                      />
-                      <h4
+                        <img
+                          src={locationImage}
+                          alt="Smiley face"
+                          height="90"
+                          width="90"
+                        />
+                        <h4
+                          style={{
+                            color: '#fff',
+                            textAlign: 'center',
+                            marginTop: '5px',
+                          }}
+                        >
+                          {`Lokacija: ${this.props.data.oneFisioCl.birthPlace}`}
+                        </h4>
+                      </div>
+                      <div
                         style={{
-                          color: '#fff',
-                          textAlign: 'center',
-                          marginTop: '5px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center',
                         }}
                       >
-                        {`Veštine: ${this.props.data.oneFisioCl.fisioSkillsArr.length}`}
-                      </h4>
-                    </div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <img
-                        src={certificate}
-                        alt="Score for fisio Fit-Net"
-                        height="90"
-                        width="90"
-                      />
-                      <h4
+                        <img
+                          src={skill}
+                          alt="Skill for fisio Fit-Net"
+                          height="90"
+                          width="90"
+                        />
+                        <h4
+                          style={{
+                            color: '#fff',
+                            textAlign: 'center',
+                            marginTop: '5px',
+                          }}
+                        >
+                          {`Veštine: ${this.props.data.oneFisioCl.fisioSkillsArr.length}`}
+                        </h4>
+                      </div>
+                      <div
                         style={{
-                          color: '#fff',
-                          textAlign: 'center',
-                          marginTop: '5px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center',
                         }}
                       >
-                        {`Na kućnu adresu: ${this.props.data.oneFisioCl.comesHome ? `DA`: `Ne`}`}
-                      </h4>
+                        <img
+                          src={certificate}
+                          alt="Score for fisio Fit-Net"
+                          height="90"
+                          width="90"
+                        />
+                        <h4
+                          style={{
+                            color: '#fff',
+                            textAlign: 'center',
+                            marginTop: '5px',
+                          }}
+                        >
+                          {`Na kućnu adresu: ${this.props.data.oneFisioCl.comesHome ? `DA`: `Ne`}`}
+                        </h4>
+                      </div>
                     </div>
                   </div>
-                  <div>
+                  <div
+                    style={{
+                     width: '100%',
+                    }}
+                  >
                     <div
                       style={{
                         display: 'flex',
@@ -326,12 +347,12 @@ class FisioOne extends React.Component {
                       }}
                     >
                       <div
-                        style={{ margin: '0 auto', marginBottom: '15px', display: 'flex', flexDirection: 'column', paddingLeft: '10px' }}
+                        style={{ marginBottom: '15px', display: 'flex', flexDirection: 'column' }}
                       >
-                        <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500' }}>{`${this.props.data.oneFisioCl.about}`}</h3>
+                        <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500' }}>{`Opis: ${this.props.data.oneFisioCl.about}`}</h3>
                       </div>
                       <div>
-                        <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500', paddingLeft: '10px' }}>{`Sertifikati:`}</h3>
+                        <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500'}}>{`Sertifikati:`}</h3>
                         <div
                           style={{
                             display: 'flex',

@@ -11,6 +11,7 @@ import certificate from '../../static/cetificate.png';
 import locationImage from '../../static/location.png';
 import score from '../../static/score.png';
 import skill from '../../static/skill.png';
+import DumbDate from './DumbDate/DumbDateComponent';
 
 @connect(state => ({
   clubs: state.clubs,
@@ -84,18 +85,21 @@ class CoachesOne extends React.Component {
           <div>
             <div style={{ width: '100%', display: 'flex', paddingTop: '40px' }}>
               <div
-                style={{ maxWidth: '1250px', margin: '0 auto', display: 'flex', flexDirection: 'row', paddingRight: '5px', paddingLeft: '5px' }}
+                style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'row', paddingRight: '5px', paddingLeft: '5px' }}
               >
                 <div
                   style={{
-                    width: '320px',
+                    width: '300px',
                   }}
                 >
-                  <img
-                    src={this.props.data.onePresonCl.imageUrl}
-                    alt="Fit net user"
-                    height="320"
-                    width="320"
+                  <div
+                    style={{
+                      width: '300px',
+                      height: '300px',
+                      backgroundImage: `url(${this.props.data.onePresonCl.imageUrl})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
                   />
                   <div className={css.card}>
                     <div
@@ -188,7 +192,10 @@ class CoachesOne extends React.Component {
                           marginRight: '10px',
                         }}
                       />
-                      <h4 style={{ color: '#fff' }}>{` ${birthDay}`}</h4>
+                      <DumbDate
+                        isDate
+                        date={this.props.data.onePresonCl.birthDay}
+                      />
                     </div>
                     <div style={{ marginTop: '10px', marginBottom: '10px' }}>
                       <h2 style={{ color: '#fff', fontWeight: 'bold' }}>Veštine</h2>
@@ -216,106 +223,119 @@ class CoachesOne extends React.Component {
                   </div>
                 </div>
                 <div
-                  style={{ marginLeft: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center' }}
+                  style={{ marginLeft: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '760px' }}
                 >
                   <div
-                    style={{ display: 'flex', flexDirection: 'row', width: '80%', justifyContent: 'space-between', alignItems: 'space-between', paddingBottom: '15px' }}
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: 'rgba(41, 53, 81, 0.6)',
+                      borderRadius: '5px',
+                      paddingTop: '10px',
+                    }}
                   >
                     <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
+                      style={{ display: 'flex', flexDirection: 'row', width: '90%', justifyContent: 'space-between', alignItems: 'space-between', paddingBottom: '15px' }}
                     >
-                      <img
-                        src={score}
-                        alt="Smiley face"
-                        height="90"
-                        width="90"
-                      />
-                      <h4
+                      <div
                         style={{
-                          color: '#fff',
-                          textAlign: 'center',
-                          marginTop: '5px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center',
                         }}
                       >
-                        {`Score: ${this.props.data.onePresonCl.score}`}
-                      </h4>
-                    </div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <img
-                        alt="Fit net couch location"
-                        src={locationImage}
-                        height="90"
-                        width="90"
-                      />
-                      <h4
+                        <img
+                          src={score}
+                          alt="Smiley face"
+                          height="90"
+                          width="90"
+                        />
+                        <h4
+                          style={{
+                            color: '#fff',
+                            textAlign: 'center',
+                            marginTop: '5px',
+                          }}
+                        >
+                          {`Score: ${this.props.data.onePresonCl.score}`}
+                        </h4>
+                      </div>
+                      <div
                         style={{
-                          color: '#fff',
-                          textAlign: 'center',
-                          marginTop: '5px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center',
                         }}
                       >
-                        {`Lokacija: ${this.props.data.onePresonCl.birthPlace}`}
-                      </h4>
-                    </div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <img
-                        src={skill}
-                        alt="Smiley face"
-                        height="90"
-                        width="90"
-                      />
-                      <h4
+                        <img
+                          alt="Fit net couch location"
+                          src={locationImage}
+                          height="90"
+                          width="90"
+                        />
+                        <h4
+                          style={{
+                            color: '#fff',
+                            textAlign: 'center',
+                            marginTop: '5px',
+                          }}
+                        >
+                          {`Lokacija: ${this.props.data.onePresonCl.birthPlace}`}
+                        </h4>
+                      </div>
+                      <div
                         style={{
-                          color: '#fff',
-                          textAlign: 'center',
-                          marginTop: '5px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center',
                         }}
                       >
-                        {`Veštine: ${this.props.data.onePresonCl.trainingPersonSkills.length}`}
-                      </h4>
-                    </div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <img
-                        src={certificate}
-                        alt="Smiley face"
-                        height="90"
-                        width="90"
-                      />
-                      <h4
+                        <img
+                          src={skill}
+                          alt="Smiley face"
+                          height="90"
+                          width="90"
+                        />
+                        <h4
+                          style={{
+                            color: '#fff',
+                            textAlign: 'center',
+                            marginTop: '5px',
+                          }}
+                        >
+                          {`Veštine: ${this.props.data.onePresonCl.trainingPersonSkills.length}`}
+                        </h4>
+                      </div>
+                      <div
                         style={{
-                          color: '#fff',
-                          textAlign: 'center',
-                          marginTop: '5px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center',
                         }}
                       >
-                        {`Sertifikati: ${this.props.data.onePresonCl.hasCerificates ? 'Da' : 'Ne'}` }
-                      </h4>
+                        <img
+                          src={certificate}
+                          alt="Smiley face"
+                          height="90"
+                          width="90"
+                        />
+                        <h4
+                          style={{
+                            color: '#fff',
+                            textAlign: 'center',
+                            marginTop: '5px',
+                          }}
+                        >
+                          {`Sertifikati: ${this.props.data.onePresonCl.hasCerificates ? 'Da' : 'Ne'}` }
+                        </h4>
+                      </div>
                     </div>
                   </div>
                   <div>
@@ -328,12 +348,12 @@ class CoachesOne extends React.Component {
                       }}
                     >
                       <div
-                        style={{ margin: '0 auto', marginBottom: '15px', display: 'flex', flexDirection: 'column', paddingLeft: '10px' }}
+                        style={{ margin: '0 auto', marginBottom: '15px', display: 'flex', flexDirection: 'column' }}
                       >
-                        <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500' }}>{`${this.props.data.onePresonCl.about}`}</h3>
+                        <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500' }}>{`Opis: ${this.props.data.onePresonCl.about}`}</h3>
                       </div>
                       <div>
-                        <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500', paddingLeft: '10px' }}>{`Sertifikati:`}</h3>
+                        <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500' }}>{`Sertifikati:`}</h3>
                         <div
                           style={{
                             display: 'flex',

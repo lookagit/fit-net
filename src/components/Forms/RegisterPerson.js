@@ -3,15 +3,16 @@ import { graphql } from 'react-apollo';
 import { withRouter } from 'react-router-dom';
 import gql from 'graphql-tag';
 import Moment from 'moment-timezone';
-import ReactNotifications from 'react-browser-notifications';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import { blue800, white } from 'material-ui/styles/colors';
+import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
+import Snackbar from 'material-ui/Snackbar';
 import faker from 'faker';
-import Logo from '../../../static/logo2.png';
+import logoBright from '../../../static/logoBright.png';
 import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
-import RegisterInput from './RegisterInput';
 import SearchBox from '../searchBox';
 import {
   validateStringNames,
@@ -85,10 +86,77 @@ class RegisterPerson extends React.Component {
       skillArr: [],
       imgUrl: 'https://s3.eu-central-1.amazonaws.com/zaluku/person-placeholder.jpg',
       warrningMessage: '',
+      snackOpen: false,
+      snackMessage: 'Greska!!',
+      openDialog: false,
     };
   }
+  handleOpen = () => {
+    this.setState({ openDialog: true });
+  };
 
+  handleClose = () => {
+    this.setState({ openDialog: false });
+  };
   newUser = async () => {
+    if (this.state.firstName === '' || !validateStringNames(this.state.firstName)) {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Ime ne sme biti prazno i mora imati više od 2 karaktera',
+      });
+      return;
+    }
+    if (this.state.lastName === '' || !validateStringNames(this.state.lastName)) {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Prezime ne sme biti prazno i mora imati više od 2 karaktera',
+      });
+      return;
+    }
+    if (!validateEmail(this.state.email)) {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Email format nije u redu',
+      });
+      return;
+    }
+    if (!validatePhone(this.state.phone) || this.state.phone === '+381') {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Broj telefona nije u redu!',
+      });
+      return;
+    }
+    if (this.state.date === '') {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Molimo popunite datum rodjenja. Hvala!',
+      });
+      return;
+    }
+    if (!this.state.facebookLink.startsWith('https://facebook.com')) {
+      this.setState({
+        openDialog: true,
+        facebookLink: 'https://facebook.com',
+        socialMessage: 'Facebook link nije u redu. Predlažemo da odete na svoj Facebook profil i kopirate link iz address bar-a. Hvala!'
+      });
+      return;
+    }
+    if (!this.state.instagramLink.startsWith('https://instagram.com')) {
+      this.setState({
+        openDialog: true,
+        instagramLink: 'https://instagram.com',
+        socialMessage: 'Instagram link nije u redu. Predlažemo da odete na svoj Instagram profil i kopirate link iz address bar-a. Hvala!'
+      });
+      return;
+    }
+    if (this.state.skillArr.length < 1) {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Morate izabrati barem jednu veštinu koju trenirate!',
+      });
+      return;
+    }
     const { password, passwordRepeat } = this.state;
     if (password === passwordRepeat) {
       const { file } = this.state;
@@ -165,47 +233,57 @@ class RegisterPerson extends React.Component {
     });
   }
 
-  showNotifications = () => {
-    // If the Notifications API is supported by the browser
-    // then show the notification
-    if (this.n.supported()) this.n.show();
-  }
-
-  handleClick = event => {
-    // Do something here such as
-    // console.log("Notification Clicked") OR
-    // window.focus() OR
-    // window.open("http://www.google.com")
-
-    // Lastly, Close the notification
-    this.n.close(event.target.tag);
-  }
-
   render() {
+    const actions = [
+      <RaisedButton
+        label="Ok"
+        labelColor="#fff"
+        labelStyle={{ fontWeight: '700' }}
+        backgroundColor="#1da9ec"
+        onClick={this.handleClose}
+      />,
+    ];
     return (
       <div className={css.registerFisioWrapper}>
-        <ReactNotifications
-          onRef={ref => (this.n = ref)} // Required
-          title="Greška!" // Required
-          body={this.state.warrningMessage}
-          icon={Logo}
-          tag="abcdef"
-          timeout="2000"
-          onClick={event => this.handleClick(event)}
+        <Snackbar
+          open={this.state.snackOpen}
+          message={this.state.snackMessage}
+          autoHideDuration={4000}
+          bodyStyle={{ backgroundColor: '#E91E63' }}
+          onRequestClose={this.handleRequestClose}
         />
+        <Dialog
+          title={(
+            <img
+              alt="FIT NET"
+              src={logoBright}
+              width="150px"
+              height="75px"
+              style={{
+                borderRadius: '50%',
+              }}
+            />
+          )}
+          paperProps={{
+            zDepth: 3,
+            style: {
+              backgroundColor: '#15233c',
+            },
+          }}
+          actions={actions}
+          modal={false}
+          open={this.state.openDialog}
+          onRequestClose={this.handleClose}
+        >
+          <h4
+            style={{
+              color: '#fff',
+            }}
+          >
+            {this.state.socialMessage}
+          </h4>
+        </Dialog>
         <div className={css.registerFisio}>
-          {
-            this.state.warrnMess ?
-              <h3
-                style={{
-                  textAlign: 'center',
-                  color: 'red',
-                }}
-              >
-                {`Upozorenje: ${this.state.warrnMess}`}
-              </h3> :
-              null
-          }
           <div className={css.registerFisioOne}>
             <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>First name</label> */}
@@ -215,17 +293,21 @@ class RegisterPerson extends React.Component {
                 floatingLabelText="Ime"
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
-                style={{ width: '100%' }}
+                style={{ width: '100%', textTransform: 'capitalize' }}
+                className={css.biggerFont}
+                errorText={this.state.nameErr ? 'Ime mora imati više od 2 karakera i ne sme sadržati brojeve!' : null}
                 onChange={(e, firstName) => {
                   if (validateStringNames(firstName)) {
                     this.setState({
+                      snackOpen: false,
+                      nameErr: false,
                       firstName,
                     });
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan format imena!',
+                      snackOpen: false,
+                      nameErr: true,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -237,17 +319,21 @@ class RegisterPerson extends React.Component {
                 floatingLabelText="Prezime"
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
-                style={{ width: '100%' }}
+                className={css.biggerFont}
+                style={{ width: '100%', textTransform: 'capitalize' }}
+                errorText={this.state.lastNameErr ? 'Ime mora imati više od 2 karakera i ne sme sadržati brojeve!' : null}
                 onChange={(e, lastName) => {
                   if (validateStringNames(lastName)) {
                     this.setState({
+                      snackOpen: false,
                       lastName,
+                      lastNameErr: null,
                     });
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan format prezimena!',
+                      snackOpen: false,
+                      lastNameErr: true,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -261,17 +347,21 @@ class RegisterPerson extends React.Component {
                 floatingLabelText="Email"
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
+                className={css.brightFont}
                 style={{ width: '100%' }}
+                errorText={this.state.emailErr ? 'Molimo unesite ispravan format email-a' : null}
                 onChange={(e, email) => {
                   if (validateEmail(email)) {
                     this.setState({
+                      emailErr: false,
                       email,
+                      snackOpen: false,
                     });
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan format email adrese!',
+                      emailErr: true,
+                      snackOpen: false,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -281,6 +371,7 @@ class RegisterPerson extends React.Component {
                 floatingLabelText="Datum rodjenja"
                 hintText="Open to Year"
                 openToYearSelection
+                className={css.brightFont}
                 floatingLabelStyle={{ color: white }}
                 textFieldStyle={{ width: '100%' }}
                 onChange={this.handleChange} />
@@ -295,17 +386,22 @@ class RegisterPerson extends React.Component {
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
+                type="email"
+                className={css.brightFont}
+                errorText={this.state.phoneErr ? 'Molimo unesite ispravan broj telefona (npr. +381691112233)' : null}
                 value={this.state.phone}
                 onChange={(e, phone) => {
                   if (validatePhone(phone)) {
                     this.setState({
+                      snackOpen: false,
+                      phoneErr: false,
                       phone,
                     });
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan broj telefona!',
+                      snackOpen: false,
+                      phoneErr: true,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -318,16 +414,20 @@ class RegisterPerson extends React.Component {
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
+                className={css.biggerFont}
+                errorText={this.state.birthErr ? 'Molimo unesti ispravno mesto rodjenja (npr. Beograd, Zrenjanin, Budva...)' : null}
                 onChange={(e, birthPlace) => {
                   if (validateBirthPlace(birthPlace)) {
                     this.setState({
                       birthPlace,
+                      snackOpen: false,
+                      birthErr: false,
                     });
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan format mesta rodjenja!',
+                      snackOpen: false,
+                      birthErr: true,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -342,16 +442,20 @@ class RegisterPerson extends React.Component {
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
+                className={css.brightFont}
+                errorText={this.state.fbErr ? 'Format linka neispravan' : null}
                 onChange={(e, facebookLink) => {
                   if (validateUrl(facebookLink)) {
                     this.setState({
                       facebookLink,
+                      fbErr: false,
+                      snackOpen: false,
                     });
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan format facebook profila!',
+                      fbErr: true,
+                      snackOpen: false,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -365,16 +469,20 @@ class RegisterPerson extends React.Component {
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
+                className={css.brightFont}
+                errorText={this.state.instaErr ? 'Format linka neispravan' : null}
                 onChange={(e, instagramLink) => {
                   if (validateUrl(instagramLink)) {
                     this.setState({
                       instagramLink,
+                      instaErr: false,
+                      snackOpen: false,
                     });
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan format instagram profila!',
+                      instaErr: true,
+                      snackOpen: false,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -390,16 +498,17 @@ class RegisterPerson extends React.Component {
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
                 type="password"
+                className={css.brightFont}
                 onChange={(e, password) => {
                   if (validatePassword(password)) {
                     this.setState({
                       password,
+                      snackOpen: false,
                     });
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan format šifre!',
+                      snackOpen: false,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -413,24 +522,28 @@ class RegisterPerson extends React.Component {
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
                 type="password"
+                className={css.brightFont}
+                errorText={this.state.passErr ? 'Šifre se ne poklapaju!' : null}
                 onChange={(e, passwordRepeat) => {
                   if (validatePassword(passwordRepeat)) {
                     if (this.state.password !== passwordRepeat) {
                       this.setState({
                         passwordRepeat,
-                        warrningMessage: 'Šifre se ne poklapaju',
+                        passErr: true,
+                        snackOpen: false,
                       });
                     } else {
                       this.setState({
                         passwordRepeat: e.target.value,
-                        warrningMessage: null,
+                        snackOpen: false,
+                        passErr: false,
                       });
                     }
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan format šifre',
+                      snackOpen: false,
+                      passErr: true,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -454,6 +567,7 @@ class RegisterPerson extends React.Component {
               floatingLabelStyle={{ color: white }}
               underlineFocusStyle={{ borderColor: blue800 }}
               rows={3}
+              className={css.brightFont}
               style={{ width: '100%' }}
               onChange={(e, about) => {
                 this.setState({
@@ -476,30 +590,15 @@ class RegisterPerson extends React.Component {
           />
         </div>
         <div className={css.registerFisioOne} style={{ justifyContent: 'center' }}>
-          <div  //eslint-disable-line
+          <RaisedButton
+            label="Registrujte se"
+            fullWidth
+            labelColor="#fff"
+            labelStyle={{ fontWeight: '700' }}
+            backgroundColor="#1da9ec"
             onClick={() => {
               this.newUser();
-            }}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: '35%',
-              height: '50px',
-              borderRadius: '10px',
-              backgroundColor: '#28a7e9',
-            }}
-          >
-            <h3
-              style={{
-                color: '#fff',
-                fontWeight: 'bold',
-             }}
-            >
-              REGISTRUJTE SE
-            </h3>
-          </div>
+            }} />
         </div>
       </div>
     );

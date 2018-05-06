@@ -330,10 +330,10 @@ class RegisterFisio extends React.Component {
                 hintText="Unesite prezime"
                 hintStyle={{ color: blue800 }}
                 floatingLabelText="Prezime"
-                className={css.biggerFont}
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
-                style={{ width: '100%' }}
+                className={css.biggerFont}
+                style={{ width: '100%', textTransform: 'capitalize' }}
                 errorText={this.state.lastNameErr ? 'Ime mora imati više od 2 karakera i ne sme sadržati brojeve!' : null}
                 onChange={(e, lastName) => {
                   if (validateStringNames(lastName)) {
@@ -433,11 +433,11 @@ class RegisterFisio extends React.Component {
               <TextField
                 hintText="Unesite mesto rodjenja"
                 hintStyle={{ color: blue800 }}
-                className={css.biggerFont}
                 floatingLabelText="Mesto rodjenja"
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
+                className={css.biggerFont}
                 errorText={this.state.birthErr ? 'Molimo unesti ispravno mesto rodjenja (npr. Beograd, Zrenjanin, Budva...)' : null}
                 onChange={(e, birthPlace) => {
                   if (validateBirthPlace(birthPlace)) {
@@ -599,11 +599,11 @@ class RegisterFisio extends React.Component {
               hintText="Napišite nešto o sebi. Gde ste radili, koliko se dugo bavite ovim poslom, najvece uspehe, itd..."
               floatingLabelText="O sebi"
               multiLine
-              className={css.brightFont}
               hintStyle={{ color: blue800 }}
               floatingLabelStyle={{ color: white }}
               underlineFocusStyle={{ borderColor: blue800 }}
               rows={3}
+              className={css.brightFont}
               style={{ width: '100%' }}
               onChange={(e, about) => {
                 this.setState({
