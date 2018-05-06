@@ -221,7 +221,8 @@ class RegisterPerson extends React.Component {
       });
     } else {
       this.setState({
-        skillArr: [...skillArr, parseInt(skillId)]  //eslint-disable-line
+        skillArr: [...skillArr, parseInt(skillId)],  //eslint-disable-line
+        snackOpen: false,
       });
     }
   }
@@ -230,6 +231,7 @@ class RegisterPerson extends React.Component {
     const dateformated = d1.slice(0, 10);
     this.setState({
       date: dateformated,
+      snackOpen: false,
     });
   }
 
