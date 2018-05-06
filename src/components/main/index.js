@@ -41,7 +41,7 @@ export default () => (
     <MuiThemeProvider>
       <Helmet>
         <title>Fit Net</title>
-        <meta name="description" content="ReactQL starter kit app" />
+        <meta name="description" content="Fit-Net Sport kakav zaista jeste!" />
         {/* <base href="http://localhost:8081/" /> */}
       </Helmet>
       <Header />
