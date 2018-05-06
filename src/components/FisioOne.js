@@ -36,7 +36,6 @@ import email from '../../static/email.png';
         id
         price
         address
-        saloonName
         fisioCounty {
           id
           countyName
@@ -386,16 +385,6 @@ class FisioOne extends React.Component {
                                 color: '#fff',
                               }}
                             >
-                              Ime salona
-                            </th>
-                            <th
-                              style={{
-                                paddingTop: '25px',
-                                paddingBottom: '25px',
-                                fontSize: '22px',
-                                color: '#fff',
-                              }}
-                            >
                               Vrsta masaže
                             </th>
                           </tr>
@@ -407,7 +396,6 @@ class FisioOne extends React.Component {
                                 <td>{`${item.fisioCounty.countyName}`}</td>
                                 <td>{`${item.address}`}</td>
                                 <td>{`${item.price}`}</td>
-                                <td>{item.saloonName}</td>
                                 <td>{item.fisioCategory.fisioSkillName}</td>
                               </tr>
                             ))

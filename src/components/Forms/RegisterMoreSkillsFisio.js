@@ -46,8 +46,8 @@ import { blue800, white } from 'material-ui/styles/colors';
 )
 @graphql(
   gql`
-  mutation createFisioCounty($price: Float, $saloonName: String, $address: String, $fisioClId: Int, $fisioCategoryId: Int, $countyId: Int) {
-    createFisioCounty(price: $price, saloonName: $saloonName, address: $address, fisioClId: $fisioClId, fisioCategoryId: $fisioCategoryId, countyId: $countyId) {
+  mutation createFisioCounty($price: Float, $address: String, $fisioClId: Int, $fisioCategoryId: Int, $countyId: Int) {
+    createFisioCounty(price: $price, address: $address, fisioClId: $fisioClId, fisioCategoryId: $fisioCategoryId, countyId: $countyId) {
       id
       fisioCategory {
         id
@@ -104,6 +104,11 @@ class RegisterMoreSkillsFisio extends React.Component {
     });
   }
 
+  setSalonName = salonName => {
+    this.setState({
+      salonName,
+    });
+  }
   selectCategory = e => {
     this.setState({
       skillId: e.target.value,

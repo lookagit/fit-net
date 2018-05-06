@@ -74,9 +74,6 @@ const FisioCounty = new GraphQLObjectType({
       address: {
         type: GraphQLString,
       },
-      saloonName: {
-        type: GraphQLString,
-      },
       fisioCategory: {
         type: FisioCategories,
         async resolve(fisioCounty) {
@@ -144,9 +141,6 @@ const FisioCl = new GraphQLObjectType({
       },
       hasCerificates: {
         type: GraphQLBoolean,
-      },
-      saloonName: {
-        type: GraphQLString,
       },
       allCertificates: {
         type: new GraphQLList(Certification),
@@ -1128,9 +1122,6 @@ const Mutation = new GraphQLObjectType({
                     comesHome: {
                         type: GraphQLBoolean,
                     },
-                    saloonName: {
-                      type: GraphQLString,
-                    },
                     score: {
                         type: GraphQLFloat,
                     },
@@ -1159,9 +1150,6 @@ const Mutation = new GraphQLObjectType({
                         type: GraphQLFloat,
                     },
                     address: {
-                        type: GraphQLString,
-                    },
-                    saloonName: {
                         type: GraphQLString,
                     },
                     fisioClId: {

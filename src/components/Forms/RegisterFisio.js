@@ -4,14 +4,16 @@ import gql from 'graphql-tag';
 import faker from 'faker';
 import { withRouter } from 'react-router-dom';
 import Moment from 'moment-timezone';
-import ReactNotifications from 'react-browser-notifications';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
+import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
 import { blue800, white } from 'material-ui/styles/colors';
+import Snackbar from 'material-ui/Snackbar';
 import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
-import RegisterInput from './RegisterInput';
-import Logo from '../../../static/logo2.png';
+import logoBright from '../../../static/logoBright.png';
+
 import {
   validateStringNames,
   validateEmail,
@@ -40,7 +42,6 @@ const axios = require('axios');
     $about: String,
     $imageUrl: String,
     $comesHome: Boolean,
-    $saloonName: String,
     $fisioSkillsArr: [Int]
   ) {
     updateOrCreateFisio(
@@ -57,7 +58,6 @@ const axios = require('axios');
       about: $about,
       imageUrl: $imageUrl,
       comesHome: $comesHome,
-      saloonName: $saloonName
       fisioSkillsArr: $fisioSkillsArr
     ) {
       id
@@ -75,7 +75,6 @@ class RegisterFisio extends React.Component {
       password: '',
       passwordRepeat: null,
       birthPlace: '',
-      dateSelected: null,
       date: '',
       about: null,
       facebookLink: '',
@@ -84,15 +83,81 @@ class RegisterFisio extends React.Component {
       hasCerificates: false,
       comesHome: false,
       file: null,
-      saloonName: 'Nema',
-      imgUrl: 'https://s3.eu-central-1.amazonaws.com/zaluku/person-placeholder.jpg',
       skillArr: [],
-      warrnMess: null,
-      warrningMessage: '',
+      snackOpen: false,
+      snackMessage: 'Greska!!',
+      openDialog: false,
     };
   }
+
+  handleOpen = () => {
+    this.setState({ openDialog: true });
+  };
+
+  handleClose = () => {
+    this.setState({ openDialog: false });
+  };
+
   newFisio = async () => {
     const { password, passwordRepeat } = this.state;
+    if (this.state.firstName === '' || !validateStringNames(this.state.firstName)) {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Ime ne sme biti prazno i mora imati više od 2 karaktera',
+      });
+      return;
+    }
+    if (this.state.lastName === '' || !validateStringNames(this.state.lastName)) {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Prezime ne sme biti prazno i mora imati više od 2 karaktera',
+      });
+      return;
+    }
+    if (!validateEmail(this.state.email)) {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Email format nije u redu',
+      });
+      return;
+    }
+    if (!validatePhone(this.state.phone) || this.state.phone === '+381') {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Broj telefona nije u redu!',
+      });
+      return;
+    }
+    if (this.state.date === '') {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Molimo popunite datum rodjenja. Hvala!',
+      });
+      return;
+    }
+    if (!this.state.facebookLink.startsWith('https://facebook.com')) {
+      this.setState({
+        openDialog: true,
+        facebookLink: 'https://facebook.com',
+        socialMessage: 'Facebook link nije u redu. Predlažemo da odete na svoj Facebook profil i kopirate link iz address bar-a. Hvala!'
+      });
+      return;
+    }
+    if (!this.state.instagramLink.startsWith('https://instagram.com')) {
+      this.setState({
+        openDialog: true,
+        instagramLink: 'https://instagram.com',
+        socialMessage: 'Instagram link nije u redu. Predlažemo da odete na svoj Instagram profil i kopirate link iz address bar-a. Hvala!'
+      });
+      return;
+    }
+    if (this.state.skillArr.length < 1) {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Morate izabrati barem jednu veštinu koju trenirate!',
+      });
+      return;
+    }
     if (password === passwordRepeat) {
       const { file } = this.state;
       let uniqueNameForImg = '';
@@ -135,13 +200,13 @@ class RegisterFisio extends React.Component {
             about: this.state.about,
             imageUrl: fileOk ? `https://s3.eu-central-1.amazonaws.com/zaluku/${uniqueNameForImg}` : 'https://s3.eu-central-1.amazonaws.com/zaluku/person-placeholder.jpg',
             comesHome: this.state.comesHome,
-            saloonName: this.state.saloonName,
             fisioSkillsArr: this.state.skillArr,
           },
         },
       );
       if (mutation) {
         const { id } = mutation.data.updateOrCreateFisio;
+        console.log('mutation ', mutation);
         this.props.history.push(`/register-certificate/${id}`);
       }
     } else {
@@ -163,6 +228,7 @@ class RegisterFisio extends React.Component {
     } else {
       this.setState({
         skillArr: [...skillArr, parseInt(skillId)],
+        snackOpen: false,
       });
     }
   }
@@ -172,51 +238,63 @@ class RegisterFisio extends React.Component {
     const dateformated = d1.slice(0, 10);
     this.setState({
       date: dateformated,
+      snackOpen: false,
     });
   }
 
-  comingHomeFunc = comesHome => this.setState({ comesHome })
-  
-  showNotifications = () => {
-    // If the Notifications API is supported by the browser
-    // then show the notification
-    if (this.n.supported()) this.n.show();
-  }
+  comingHomeFunc = comesHome => this.setState({ comesHome });
 
-  handleClick = event => {
-    // Do something here such as
-    // console.log("Notification Clicked") OR
-    // window.focus() OR
-    // window.open("http://www.google.com")
-
-    // Lastly, Close the notification
-    this.n.close(event.target.tag);
-  }
   render() {
+    const actions = [
+      <RaisedButton
+        label="Ok"
+        labelColor="#fff"
+        labelStyle={{ fontWeight: '700' }}
+        backgroundColor="#1da9ec"
+        onClick={this.handleClose}
+      />,
+    ];
     return (
       <div className={css.registerFisioWrapper}>
-        <ReactNotifications
-          onRef={ref => (this.n = ref)} // Required
-          title="Greška!" // Required
-          body={this.state.warrningMessage}
-          icon={Logo}
-          tag="abcdef"
-          timeout="2000"
-          onClick={event => this.handleClick(event)}
+        <Snackbar
+          open={this.state.snackOpen}
+          message={this.state.snackMessage}
+          autoHideDuration={4000}
+          bodyStyle={{ backgroundColor: '#E91E63' }}
+          onRequestClose={this.handleRequestClose}
         />
+        <Dialog
+          title={(
+            <img
+              alt="FIT NET"
+              src={logoBright}
+              width="150px"
+              height="75px"
+              style={{
+                borderRadius: '50%',
+              }}
+            />
+          )}
+          paperProps={{
+            zDepth: 3,
+            style: {
+              backgroundColor: '#15233c',
+            },
+          }}
+          actions={actions}
+          modal={false}
+          open={this.state.openDialog}
+          onRequestClose={this.handleClose}
+        >
+          <h4
+            style={{
+              color: '#fff',
+            }}
+          >
+            {this.state.socialMessage}
+          </h4>
+        </Dialog>
         <div className={css.registerFisio}>
-          {
-            this.state.warrnMess ?
-              <h3
-                style={{
-                  textAlign: 'center',
-                  color: 'red',
-                }}
-              >
-                {`Upozorenje: ${this.state.warrnMess}`}
-              </h3> :
-              null
-          }
           <div className={css.registerFisioOne}>
             <div className={css.inputWrapperForm}>
               <TextField
@@ -225,17 +303,23 @@ class RegisterFisio extends React.Component {
                 floatingLabelText="Ime"
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
-                style={{ width: '100%' }}
+                style={{ width: '100%', textTransform: 'capitalize' }}
+                className={css.biggerFont}
+                errorText={this.state.nameErr ? 'Ime mora imati više od 2 karakera i ne sme sadržati brojeve!' : null}
                 onChange={(e, firstName) => {
                   if (validateStringNames(firstName)) {
                     this.setState({
+                      warrningMessage: null,
+                      snackOpen: false,
+                      nameErr: false,
                       firstName,
                     });
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan format imena!',
+                      snackOpen: false,
+                      nameErr: true,
+                      warrningMessage: 'Ime mora imati više od 2 karakera i ne sme sadržati brojeve!',
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -246,19 +330,25 @@ class RegisterFisio extends React.Component {
                 hintText="Unesite prezime"
                 hintStyle={{ color: blue800 }}
                 floatingLabelText="Prezime"
+                className={css.biggerFont}
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
+                errorText={this.state.lastNameErr ? 'Ime mora imati više od 2 karakera i ne sme sadržati brojeve!' : null}
                 onChange={(e, lastName) => {
                   if (validateStringNames(lastName)) {
                     this.setState({
+                      snackOpen: false,
+                      warrningMessage: null,
                       lastName,
+                      lastNameErr: null,
                     });
                   } else {
                     this.setState({
+                      snackOpen: false,
                       warrningMessage: 'Neispravan format prezimena!',
+                      lastNameErr: true,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -274,16 +364,22 @@ class RegisterFisio extends React.Component {
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
+                className={css.brightFont}
+                errorText={this.state.emailErr ? 'Molimo unesite ispravan format email-a' : null}
                 onChange={(e, email) => {
                   if (validateEmail(email)) {
                     this.setState({
+                      warrningMessage: null,
+                      emailErr: false,
                       email,
+                      snackOpen: false,
                     });
                   } else {
                     this.setState({
+                      emailErr: true,
                       warrningMessage: 'Neispravan format email adrese!',
+                      snackOpen: false,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -294,6 +390,7 @@ class RegisterFisio extends React.Component {
                 floatingLabelText="Datum rodjenja"
                 hintText="Open to Year"
                 openToYearSelection
+                className={css.brightFont}
                 floatingLabelStyle={{ color: white }}
                 textFieldStyle={{ width: '100%' }}
                 onChange={this.handleChange} />
@@ -309,17 +406,24 @@ class RegisterFisio extends React.Component {
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
+                type="email"
+                className={css.brightFont}
+                errorText={this.state.phoneErr ? 'Molimo unesite ispravan broj telefona (npr. +381691112233)' : null}
                 value={this.state.phone}
                 onChange={(e, phone) => {
                   if (validatePhone(phone)) {
                     this.setState({
+                      snackOpen: false,
+                      warrningMessage: null,
+                      phoneErr: false,
                       phone,
                     });
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan broj telefona!',
+                      snackOpen: false,
+                      warrningMessage: true,
+                      phoneErr: true,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -329,20 +433,26 @@ class RegisterFisio extends React.Component {
               <TextField
                 hintText="Unesite mesto rodjenja"
                 hintStyle={{ color: blue800 }}
+                className={css.biggerFont}
                 floatingLabelText="Mesto rodjenja"
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
+                errorText={this.state.birthErr ? 'Molimo unesti ispravno mesto rodjenja (npr. Beograd, Zrenjanin, Budva...)' : null}
                 onChange={(e, birthPlace) => {
                   if (validateBirthPlace(birthPlace)) {
                     this.setState({
                       birthPlace,
+                      snackOpen: false,
+                      birthErr: false,
+                      warrningMessage: false,
                     });
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan format mesta rodjenja!',
+                      snackOpen: false,
+                      warrningMessage: true,
+                      birthErr: true
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -358,16 +468,22 @@ class RegisterFisio extends React.Component {
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
+                className={css.brightFont}
+                errorText={this.state.fbErr ? 'Format linka neispravan' : null}
                 onChange={(e, facebookLink) => {
                   if (validateUrl(facebookLink)) {
                     this.setState({
                       facebookLink,
+                      fbErr: false,
+                      warrningMessage: null,
+                      snackOpen: false,
                     });
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan format facebook profila!',
+                      warrningMessage: true,
+                      fbErr: true,
+                      snackOpen: false,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -381,16 +497,22 @@ class RegisterFisio extends React.Component {
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
+                className={css.brightFont}
+                errorText={this.state.instaErr ? 'Format linka neispravan' : null}
                 onChange={(e, instagramLink) => {
                   if (validateUrl(instagramLink)) {
                     this.setState({
                       instagramLink,
+                      instaErr: false,
+                      warrningMessage: false,
+                      snackOpen: false,
                     });
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan format instagram profila!',
+                      warrningMessage: true,
+                      instaErr: true,
+                      snackOpen: false,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -407,16 +529,18 @@ class RegisterFisio extends React.Component {
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
                 type="password"
+                className={css.brightFont}
                 onChange={(e, password) => {
                   if (validatePassword(password)) {
                     this.setState({
                       password,
+                      snackOpen: false,
                     });
                   } else {
                     this.setState({
+                      snackOpen: false,
                       warrningMessage: 'Neispravan format šifre!',
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -431,24 +555,31 @@ class RegisterFisio extends React.Component {
                 underlineFocusStyle={{ borderColor: blue800 }}
                 style={{ width: '100%' }}
                 type="password"
+                className={css.brightFont}
+                errorText={this.state.passErr ? 'Šifre se ne poklapaju!' : null}
                 onChange={(e, passwordRepeat) => {
                   if (validatePassword(passwordRepeat)) {
                     if (this.state.password !== passwordRepeat) {
                       this.setState({
                         passwordRepeat,
+                        passErr: true,
+                        snackOpen: false,
                         warrningMessage: 'Šifre se ne poklapaju',
                       });
                     } else {
                       this.setState({
                         passwordRepeat: e.target.value,
                         warrningMessage: null,
+                        snackOpen: false,
+                        passErr: false,
                       });
                     }
                   } else {
                     this.setState({
                       warrningMessage: 'Neispravan format šifre',
+                      snackOpen: false,
+                      passErr: true,
                     });
-                    this.showNotifications();
                   }
                 }}
               />
@@ -468,6 +599,7 @@ class RegisterFisio extends React.Component {
               hintText="Napišite nešto o sebi. Gde ste radili, koliko se dugo bavite ovim poslom, najvece uspehe, itd..."
               floatingLabelText="O sebi"
               multiLine
+              className={css.brightFont}
               hintStyle={{ color: blue800 }}
               floatingLabelStyle={{ color: white }}
               underlineFocusStyle={{ borderColor: blue800 }}
@@ -496,33 +628,18 @@ class RegisterFisio extends React.Component {
           />
         </div>
         <div className={css.registerFisioOne} style={{ justifyContent: 'center' }}>
-          <div
+          <RaisedButton
+            label="Registrujte se"
+            fullWidth
+            labelColor="#fff"
+            labelStyle={{ fontWeight: '700' }}
+            backgroundColor="#1da9ec"
             onClick={() => {
               this.newFisio();
-            }}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: '35%',
-              height: '50px',
-              borderRadius: '10px',
-              backgroundColor: '#28a7e9'
-            }}
-          >
-            <h3
-              style={{
-                color: '#fff',
-                fontWeight: 'bold',
-             }}
-            >
-              REGISTRUJTE SE
-            </h3>
-          </div>
+            }} />
         </div>
       </div>
     );
   }
 }
-export default RegisterFisio
+export default RegisterFisio;

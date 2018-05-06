@@ -298,11 +298,6 @@ const FisioCl = db.define('fisioCl', {
   lastName: {
     type: Sequelize.STRING,
   },
-  saloonName: {
-    type: Sequelize.STRING,
-    allowNull: true,
-    defaultValue: 'Nema',
-  },
   facebookLink: {
     type: Sequelize.STRING,
     allowNull: true,
@@ -374,10 +369,6 @@ const FisioCounty = db.define('fisioCounty', {
     allowNull: false,
   },
   address: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  saloonName: {
     type: Sequelize.STRING,
     allowNull: false,
   },
