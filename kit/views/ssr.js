@@ -15,7 +15,7 @@ const Html = ({ helmet, scripts, window, css, children }) => (
       {helmet.title.toComponent()}
       <meta charSet="utf-8" />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="http://fit-net.rs" />
+      <meta property="og:url" content="https://honesty-app.herokuapp.com/" />
       <meta property="og:title" content="Sport kakav zaista jeste!" />
       <meta property="og:image" content="https://s3.eu-central-1.amazonaws.com/zaluku/fit-net-logo.jpg" />
       <meta
