@@ -8,7 +8,7 @@ import name from '../../static/name.png';
 import phone from '../../static/phone.png';
 import email from '../../static/email.png';
 import certificate from '../../static/cetificate.png';
-import location from '../../static/location.png';
+import locationImage from '../../static/location.png';
 import score from '../../static/score.png';
 import skill from '../../static/skill.png';
 
@@ -240,7 +240,7 @@ class FisioOne extends React.Component {
                       }}
                     >
                       <img
-                        src={location} 
+                        src={locationImage}
                         alt="Smiley face"
                         height="90"
                         width="90"
@@ -288,7 +288,7 @@ class FisioOne extends React.Component {
                       }}
                     >
                       <img
-                        src={score}
+                        src={certificate}
                         alt="Score for fisio Fit-Net"
                         height="90"
                         width="90"
