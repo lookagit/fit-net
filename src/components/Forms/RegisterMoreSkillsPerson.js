@@ -344,16 +344,8 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           value={valuePrice}
           underlineFocusStyle={{ borderColor: blue800 }}
           style={{ width: '100%' }}
-          onChange={(e, price) => {
-            if (validatePrice(price)) {
-              getValueFromInput(price);
-            } else {
-              this.setState({
-                warrningMessage: 'Neispravan format imena!',
-              });
-              this.showNotifications();
-            }
-          }}
+          type="number"
+          onChange={(e, price) => getValueFromInput(price)}
         />
       </div>
     </div>

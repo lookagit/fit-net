@@ -188,7 +188,7 @@ class UploadCertificates extends React.Component {
                       marginTop: '25px',
                       cursor: 'pointer',
                     }}
-                    onClick={() => this.props.history.push(`/moreSkills/${this.props.match.params.id}`)}
+                    onClick={() => this.props.history.push(`/moreSkills/${this.props.match.params.userId}`)}
                   >
                     <div
                       style={{
