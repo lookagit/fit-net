@@ -58,7 +58,7 @@ async function userLogin(args) {
     const gId = await socialApi.checkSocialToken('google', args.gToken);
     if (gId.success) {
       const gInfo = await socialApi.googleGetInfo(args.gToken);
-      const user = await db.models.person.findOne({ where: { email: gInfo.email } })
+      const user = await db.models.userCl.findOne({ where: { email: gInfo.email } })
       if (user) {
         const payload = {
           id: user.id,

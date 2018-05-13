@@ -9,21 +9,20 @@ import logoBright from '../../../static/logoBright.png';
 
 @connect(state => ({ login: state.login }))
 @graphql(gql`
-  query userLogin($fbToken: String) 
+  query userLogin($gToken: String) 
   {
-    userLogin(fbToken: $fbToken) { 
+    userLogin(gToken: $gToken) { 
       id,
       lastName,
       firstName,
       email,
       imageUrl,
-      token,
     }
   }`,
 {
   options: props => ({
     variables: {
-      fbToken: props.login.accessToken,
+      gToken: props.login.accessToken,
     },
   }),
 })
@@ -50,7 +49,20 @@ class ModalClass extends React.Component {
 
   componentClicked = renderProps => console.log('click', renderProps.onClick());
 
-  responseGoogle = response => console.log(response);
+  responseGoogle = async response => {
+    if (response.profileObj) {
+      const { accessToken } = response;
+      const getUser = await this.props.data.refetch({
+        gToken: accessToken,
+      });
+      const id = null;
+      console.log('GET USER ', getUser);
+      if (id) {
+        this.props.dispatch({ type: 'FACEBOOK_LOGIN', accessToken: { ...getUser.data.userLogin } });
+        window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...getUser.data.userLogin } }));
+      }
+    }
+  };
 
   render() {
     return (
