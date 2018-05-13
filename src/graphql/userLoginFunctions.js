@@ -56,8 +56,10 @@ async function userLogin(args) {
     }
   } else if (args.gToken) {
     const gId = await socialApi.checkSocialToken('google', args.gToken);
+    console.log('JKA SAM G ID ', gId);
     if (gId.success) {
       const gInfo = await socialApi.googleGetInfo(args.gToken);
+      console.log('JA SAM GINFO ', gInfo);
       const user = await db.models.userCl.findOne({ where: { email: gInfo.email } });
       if (user) {
         const payload = {
