@@ -9,21 +9,23 @@ const Login = props => (
         display: 'flex',
         flexDirection: 'row',
       }}
-    >
-      <Link
-        to={`/profile-choose`}
-        className={css.login}
-        style={{
-          marginTop: '5px',
-          marginRight: '10px',
-        }}
-      >
-        <p
-          style={{ color: '#28a7e9' }}
+    > 
+        <Link
+          
+          to={`/profile-choose`}
+          className={css.login}
+          style={{
+            marginTop: '5px',
+            marginRight: '10px',
+          }}
+          id={css.dissapearForPros}
         >
-          Napravite profesionalni profil
-        </p>
-      </Link>
+          <p
+            style={{ color: '#00c0ff' }}
+          >
+            Napravite profesionalni profil
+          </p>
+        </Link>
       <div
         style={{
           marginTop: '5px',

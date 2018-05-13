@@ -38,8 +38,7 @@ class GoogleLoginContainer extends React.Component {
       const getUser = await this.props.data.refetch({
         gToken: accessToken,
       });
-      const id = null;
-      console.log('GOOG ', getUser.data);
+      const { id } = getUser.data.userLogin;
       if (id) {
         this.props.dispatch({ type: 'FACEBOOK_LOGIN', accessToken: { ...getUser.data.userLogin } });
         window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...getUser.data.userLogin } }));

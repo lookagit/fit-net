@@ -811,6 +811,9 @@ button {
   align-items: center;
 }
 @media screen and (max-width: 425px){
+  #dissapearForPros {
+    display: none;
+  }
   .socialContainerButton {
     text-align: center;
     margin: 0 auto;
@@ -1016,6 +1019,9 @@ button {
   }
 }
 @media screen and (min-width: 426px) and (max-width: 768px){
+  #dissapearForPros {
+    display: none;
+  }
   .socialContainerButton {
     text-align: center;
     margin: 0 auto;
@@ -1046,6 +1052,9 @@ button {
   }
 }
 @media screen and (min-width: 769px) and (max-width: 1024px){
+  #dissapearForPros {
+    display: none;
+  }
   .socialContainerButton {
     text-align: center;
     margin: 0 auto;
