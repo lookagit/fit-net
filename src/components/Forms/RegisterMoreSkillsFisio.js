@@ -303,6 +303,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           value={valueAddress}
           underlineFocusStyle={{ borderColor: blue800 }}
           style={{ width: '100%' }}
+          className={css.brightFont}
           onChange={(e, address) => {
             getValueFromAddress(address);
           }}
@@ -312,7 +313,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
         className={css.inputMoreSkills}
       >
         <TextField
-          hintText="Unesite cenu"
+          hintText="Unesite cenu u dinarima(RSD)"
           hintStyle={{ color: blue800 }}
           floatingLabelText="Cena"
           floatingLabelStyle={{ color: white }}
@@ -320,6 +321,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           underlineFocusStyle={{ borderColor: blue800 }}
           style={{ width: '100%' }}
           type="number"
+          className={css.brightFont}
           onChange={(e, price) => getValueFromInput(price)}
         />
       </div>
@@ -360,6 +362,7 @@ const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address }) => 
               floatingLabelText="Adresa"
               floatingLabelStyle={{ color: white }}
               value={address}
+              className={css.brightFont}
               underlineFocusStyle={{ borderColor: blue800 }}
               style={{ width: '100%' }}
             />
@@ -370,6 +373,7 @@ const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address }) => 
               hintStyle={{ color: blue800 }}
               floatingLabelText="Cena"
               floatingLabelStyle={{ color: white }}
+              className={css.brightFont}
               value={`${prices + ' RSD'}`} //eslint-disable-line
               underlineFocusStyle={{ borderColor: blue800 }}
               style={{ width: '100%' }}

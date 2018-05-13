@@ -307,6 +307,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           hintText="Unesite adresu"
           hintStyle={{ color: blue800 }}
           floatingLabelText="Adresa"
+          className={css.brightFont}
           floatingLabelStyle={{ color: white }}
           value={valueAddress}
           underlineFocusStyle={{ borderColor: blue800 }}
@@ -326,9 +327,10 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
         className={css.inputMoreSkills}
       >
         <TextField
-          hintText="Unesite cenu"
+          hintText="Unesite cenu u dinarima(RSD)"
           hintStyle={{ color: blue800 }}
           floatingLabelText="Cena"
+          className={css.brightFont}
           floatingLabelStyle={{ color: white }}
           value={valuePrice}
           underlineFocusStyle={{ borderColor: blue800 }}
@@ -374,6 +376,7 @@ const DisabledBox = ({ id, skill, trening, counti, prices, city, removeMe, addre
               floatingLabelText="Adresa"
               floatingLabelStyle={{ color: white }}
               value={address}
+              className={css.brightFont}
               underlineFocusStyle={{ borderColor: blue800 }}
               style={{ width: '100%' }}
             />
@@ -424,6 +427,7 @@ const DisabledBox = ({ id, skill, trening, counti, prices, city, removeMe, addre
               disabled
               hintStyle={{ color: blue800 }}
               floatingLabelText="Cena"
+              className={css.brightFont}
               floatingLabelStyle={{ color: white }}
               value={`${prices + ' RSD'}`} //eslint-disable-line
               underlineFocusStyle={{ borderColor: blue800 }}

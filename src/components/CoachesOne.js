@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Lightbox } from 'react-modal-image';
+import ToolTip from 'react-portal-tooltip';
 import css from './styles/styles.scss';
 import year from '../../static/year.png';
 import name from '../../static/name.png';
@@ -66,14 +67,24 @@ class CoachesOne extends React.Component {
       user: null,
       selectedImageForModal: '',
       modalImageVisible: false,
+      isTooltipActive: true,
     };
   }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ isTooltipActive: false }), 1700);
+  }
+  showTooltip = () => this.setState({ isTooltipActive: true });
+
+  hideTooltip = () => this.setState({ isTooltipActive: false });
+
   selecetThisForModal = selectedImageForModal => {
     this.setState({
       selectedImageForModal,
       modalImageVisible: true,
     });
   }
+
   render() {
     const [birthDay] = !this.props.data.loading ? this.props.data.onePresonCl.birthDay.split('-') : '';
     const cellPhone = !this.props.data.loading ? 
@@ -188,12 +199,25 @@ class CoachesOne extends React.Component {
                         }}
                       />
                       <h4
-                        style={{ color: '#fff', cursor: this.props.login.accessToken === undefined? 'pointer': 'default' }} 
+                        id="coachEmail"
+                        style={{ color: '#fff', cursor: this.props.login.accessToken === undefined? 'pointer': 'default' }}
+                        onMouseEnter={() => this.showTooltip()} 
+                        onMouseLeave={() => this.hideTooltip()}
                         onClick={() => {
                           if (this.props.login.accessToken === undefined) {
                             this.props.dispatch({ type: 'MODAL_VISIBLE', isVisible: true, modalClass: 'login' });
                           }
                         }}>{` ${emailConst}`}</h4>
+                      <ToolTip active={this.state.isTooltipActive} position="bottom" arrow="center" parent="#coachEmail">
+                        <div style={{ maxWidth: '200px', backgroundColor: 'rgba(61,75,105,.7)' }}>
+                          <p
+                            style={{
+                              textAlign: 'center',
+                              color: '#fff',
+                            }}
+                          >Kliknite ovde kako biste se ulogovali i videli kontakt informacije</p>
+                        </div>
+                      </ToolTip>
                     </div>
                     <div
                       style={{

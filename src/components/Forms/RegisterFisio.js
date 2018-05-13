@@ -256,7 +256,6 @@ class RegisterFisio extends React.Component {
   comingHomeFunc = comesHome => this.setState({ comesHome });
 
   render() {
-    console.log('JA STATE ', this.state);
     const actions = [
       <RaisedButton
         label="Ok"

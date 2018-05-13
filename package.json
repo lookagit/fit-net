@@ -101,6 +101,7 @@
     "react-hot-loader": "^4.0.0-beta.18",
     "react-loading-components": "^1.1.12",
     "react-modal-image": "^2.1.4",
+    "react-portal-tooltip": "1",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
