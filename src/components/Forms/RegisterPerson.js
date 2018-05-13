@@ -7,6 +7,7 @@ import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import { blue800, white } from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
+import Loading from 'react-loading-components';
 import Dialog from 'material-ui/Dialog';
 import Snackbar from 'material-ui/Snackbar';
 import faker from 'faker';
@@ -89,6 +90,7 @@ class RegisterPerson extends React.Component {
       snackOpen: false,
       snackMessage: 'Greska!!',
       openDialog: false,
+      loading: false,
     };
   }
   handleOpen = () => {
@@ -165,6 +167,9 @@ class RegisterPerson extends React.Component {
     }
     const { password, passwordRepeat } = this.state;
     if (password === passwordRepeat) {
+      this.setState({
+        loading: true,
+      });
       const { file } = this.state;
       let uniqueNameForImg = '';
       let fileOk = false;
@@ -251,6 +256,33 @@ class RegisterPerson extends React.Component {
         onClick={this.handleClose}
       />,
     ];
+    if (this.state.loading) {
+      return (
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Loading
+            type="puff"
+            width={150}
+            height={150}
+            fill="#f44242"
+          />
+          <h3
+            style={{
+              color: '#fff',
+            }}
+          >
+            Molimo sačekajte. Hvala!
+          </h3>
+        </div>
+      );
+    }
     return (
       <div className={css.registerFisioWrapper}>
         <Snackbar
