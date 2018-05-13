@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import { Lightbox } from 'react-modal-image';
 import css from './styles/styles.scss';
 import year from '../../static/year.png';
 import name from '../../static/name.png';
@@ -59,6 +60,20 @@ import DumbDate from './DumbDate/DumbDateComponent';
   }),
 })
 class FisioOne extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalImageVisible: false,
+      selectedImageForModal: '',
+    }
+  }
+  selecetThisForModal = selectedImageForModal => {
+    this.setState({
+      selectedImageForModal,
+      modalImageVisible: true,
+    });
+  }
+
   render() {
     const [birthDay] = !this.props.data.loading ? this.props.data.oneFisioCl.birthDay.split('-') : '';
     const cellPhone = !this.props.data.loading ? 
@@ -71,6 +86,21 @@ class FisioOne extends React.Component {
       "xxx" + this.props.data.oneFisioCl.email.slice(3, this.props.data.oneFisioCl.email.length - 3) + 'xxx' : '';
     return (
       <div>
+        {
+          this.state.modalImageVisible
+          ?
+            <Lightbox
+              medium={this.state.selectedImageForModal}
+              alt="Fit-net.rs certificate"
+              onClose={() => {
+                this.setState({
+                  modalImageVisible: false,
+                });
+              }
+              }
+            />
+          : null
+        }
         {
           this.props.data.loading ? <h3>LOADING</h3> :
           <div>
@@ -362,6 +392,9 @@ class FisioOne extends React.Component {
                                 <div
                                   style={{
                                     padding: '10px',
+                                  }}
+                                  onClick={() => {
+                                    this.selecetThisForModal(certItem.certUrl);
                                   }}
                                 >
                                   <img

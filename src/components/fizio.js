@@ -1,4 +1,6 @@
 import React from 'react';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import css from './styles/styles.scss';
 import SearchBox from './searchBox';
 import CoachesImg from './coachesImg';
@@ -6,6 +8,32 @@ import { connect } from 'react-redux';
 import { history } from 'kit/lib/routing';
 
 @connect(state => ({ clubs: state.clubs }))
+
+@graphql(
+  gql`
+  query getCounties(
+    $cityId: Int
+  ) {
+    getCounties(
+      cityId: $cityId,
+    ) {
+      id
+      countyName
+    }
+    getCities{
+      id,
+      cityName
+    }
+  }
+  `,
+  {
+    options: props => ({
+      variables: {
+        cityId: 1,
+      },
+    }),
+  },
+)
 
 class Fizio extends React.Component {
   constructor(props) {
@@ -19,9 +47,22 @@ class Fizio extends React.Component {
       comesHome: false,
       priceFrom: 0,
       priceTo: 0,
+      arrayCities: [],
+      arrayCounties: [],
+      visibleCounties: false,
+      cityId: 1,
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (typeof nextProps.data.getCities !== 'undefined') {
+      this.setState({ arrayCities: nextProps.data.getCities });
+    }
+    if (typeof nextProps.data.getCounties !== 'undefined') {
+      this.setState({ arrayCounties: nextProps.data.getCounties });
+    }
+  }
+  
   sendToRedux = () => {
     this.props.dispatch({
       type: "FIZIO_FILTRATION",
@@ -94,6 +135,21 @@ class Fizio extends React.Component {
     });
   }
 
+  selectCity = async e => {
+    let id = parseInt(e.target.value); //eslint-disable-line
+    await this.props.data.refetch({ cityId: id });
+    this.setState({
+      visibleCounties: true,
+      cityId: id,
+    });
+  }
+
+  selectCounties = e => {
+    this.setState({
+      countiesId: e.target.value,
+    });
+  }
+
   comingHomeFunc = comingHome => this.setState({ comingHome });
 
   render() {
@@ -119,6 +175,13 @@ class Fizio extends React.Component {
           comingHomeParams={this.state.comingHome}
           certifiedField={this.state.certified}
           certifiedFunc={this.certifiedFunc}
+          arrayForCity={this.state.arrayCities} //list of city for select city in searchBox
+          arrayForCounties={this.state.arrayCounties} //list of counties refetched when select city
+          handleCityClick={this.selectCity} //func for select cityId
+          handleCounties={this.selectCounties} //func for select couniesId
+          valueCity={this.state.cityId} //value for selected city
+          valueCounties={this.state.countiesId} //value for selected counties
+          visibleCounties={this.state.visibleCounties} //value for visible counties dropdown
         />
         <CoachesImg />
       </div>
