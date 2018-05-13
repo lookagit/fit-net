@@ -26,6 +26,7 @@ import FilteredCoaches from '../filteredCoaches';
 import FilteredClubs from '../filteredClubs';
 import FilteredFizio from '../filteredFizio';
 import CoachesOne from '../CoachesOne';
+import ChooseProfileMake from '../ChooseProfileMake';
 import FisioOne from '../FisioOne';
 import Proba from '../proba';
 import RegisterPerson from '../Forms/RegisterPerson';
@@ -63,6 +64,7 @@ export default () => (
         <Route path="/registerFisio" component={RegisterFisio} />
         <Route path="/moreSkills/:id" component={RegisterMoreSkillsContainer} />
         <Route path="/moreSkillsFisio/:id" component={RegisterMoreSkillsFisio} />
+        <Route path="/profile-choose" component={ChooseProfileMake} />
         <Redirect from="/old/path" to="/new/path" />
         <Route component={WhenNotFound} />
       </Switch>

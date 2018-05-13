@@ -82,15 +82,7 @@ class ModalClass extends React.Component {
             </h3>
           </div>
           <div
-            style={{
-              textAlign: 'center',
-              margin: '0 auto',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: '35%',
-              height: '40px',
-            }}
+            className={css.socialContainerButton}
           >
             <FacebookLogin
               appId="1900315403334325"
