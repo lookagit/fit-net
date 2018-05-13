@@ -58,7 +58,7 @@ async function userLogin(args) {
     const gId = await socialApi.checkSocialToken('google', args.gToken);
     if (gId.success) {
       const gInfo = await socialApi.googleGetInfo(args.gToken);
-      const user = await db.models.userCl.findOne({ where: { email: gInfo.email } })
+      const user = await db.models.userCl.findOne({ where: { email: gInfo.email } });
       if (user) {
         const payload = {
           id: user.id,
@@ -69,7 +69,7 @@ async function userLogin(args) {
         user.token = token;
         return user;
       }
-      const personProfile = await db.models.userProfile.create({ profileImageUrl: gInfo.picture })
+      const personProfile = await db.models.userCl.create({ profileImageUrl: gInfo.picture });
       if (personProfile) {
         const payload = {
           id: personProfile.id,
