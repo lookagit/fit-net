@@ -45,10 +45,6 @@ import DumbDate from './DumbDate/DumbDateComponent';
           id
           countyName
         }
-        fisioCategory {
-          id
-          fisioSkillName
-        }
       }
       fisioSkillsNames {
         id
@@ -414,16 +410,6 @@ class FisioOne extends React.Component {
                             >
                               Cena
                             </th>
-                            <th
-                              style={{
-                                paddingTop: '25px',
-                                paddingBottom: '25px',
-                                fontSize: '22px',
-                                color: '#fff',
-                              }}
-                            >
-                              Vrsta masaže
-                            </th>
                           </tr>
                         </thead>
                         <tbody className="table-hover">
@@ -433,7 +419,6 @@ class FisioOne extends React.Component {
                                 <td>{`${item.fisioCounty.countyName}`}</td>
                                 <td>{`${item.address}`}</td>
                                 <td>{`${item.price}`}</td>
-                                <td>{item.fisioCategory.fisioSkillName}</td>
                               </tr>
                             ))
                           }

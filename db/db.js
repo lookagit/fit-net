@@ -185,7 +185,6 @@ const TrainingSkill = db.define('trainingSkill', {
   },
 });
 
-TrainingSkill.hasMany(PersonCounty);
 
 const PersonTrainingSkill = db.define('personTrainingSkill');
 
@@ -375,7 +374,6 @@ const FisioCounty = db.define('fisioCounty', {
 });
 
 FisioCl.hasMany(FisioCounty);
-FisioCategories.hasMany(FisioCounty);
 County.hasMany(FisioCounty);
 
 const Certification = db.define('certification', {

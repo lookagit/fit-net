@@ -232,16 +232,6 @@ export const PersonCounty = new GraphQLObjectType({
           });
         },
       },
-      skills: {
-        type: TrainingSkill,
-        async resolve(personCounties) {
-          return db.models.trainingSkill.findOne({
-            where: {
-              id: personCounties.trainingSkillId,
-            },
-          });
-        },
-      },
     };
   },
 });

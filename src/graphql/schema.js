@@ -74,16 +74,6 @@ const FisioCounty = new GraphQLObjectType({
       address: {
         type: GraphQLString,
       },
-      fisioCategory: {
-        type: FisioCategories,
-        async resolve(fisioCounty) {
-          return db.models.fisioCategories.findOne({
-            where: {
-              id: fisioCounty.fisioCategoryId,
-            },
-          });
-        },
-      },
       fisioCounty: {
         type: County,
         async resolve(fisioCounty) {
@@ -654,7 +644,6 @@ const Query = new GraphQLObjectType({
               countyId,
             },
           });
-          console.log('ja sam query ', fisioQuery);
           const findedIds = fisioQuery.map(item => item.fisioClId);
           const findFisio = await db.models.fisioCl.findAll({
             where: {
@@ -668,7 +657,6 @@ const Query = new GraphQLObjectType({
               },
             },
           });
-          console.log('KA SAM FIND FISIO ', findFisio);
           if (findFisio.length) {
             const addCounterfindFisio = findFisio.map(i => {
               i['counter'] = 0; // eslint-disable-line
@@ -679,7 +667,6 @@ const Query = new GraphQLObjectType({
               });
               return i;
             });
-            console.log('NEMA ME FIND FISIO', findFisio);
             return addCounterfindFisio.sort((a, b) => a.counter - b.counter).reverse();
           }
           return findFisio;
@@ -897,9 +884,6 @@ const Mutation = new GraphQLObjectType({
             type: GraphQLInt,
           },
           countyId: {
-            type: GraphQLInt,
-          },
-          trainingSkillId: {
             type: GraphQLInt,
           },
         },
@@ -1153,9 +1137,6 @@ const Mutation = new GraphQLObjectType({
                         type: GraphQLString,
                     },
                     fisioClId: {
-                        type: GraphQLInt,
-                    },
-                    fisioCategoryId: { 
                         type: GraphQLInt,
                     },
                     countyId: {

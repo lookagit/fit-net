@@ -88,9 +88,6 @@ class AfterSearchItemCouch extends React.Component {
             <h4 className={css.coacheBday}>
               {`${couchProp.birthDay}`}
             </h4>
-            <h4 className={css.coacheClub}>
-              {`Klub: ${couchProp.personClub}`}
-            </h4>
             <h4 className={css.coacheTags}>
               {`Tagovi: ${joinedSkills}`}
             </h4>

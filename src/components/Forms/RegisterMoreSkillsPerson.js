@@ -47,8 +47,8 @@ import { blue800, white } from 'material-ui/styles/colors';
 )
 @graphql(
   gql`
-  mutation PersonCountyCreate($price: Int, $groupTraining: Boolean, $address: String, $personClId: Int, $countyId: Int, $trainingSkillId: Int) {
-    PersonCountyCreate(price: $price, groupTraining: $groupTraining, address: $address, personClId: $personClId, countyId: $countyId, trainingSkillId: $trainingSkillId) {
+  mutation PersonCountyCreate($price: Int, $groupTraining: Boolean, $address: String, $personClId: Int, $countyId: Int) {
+    PersonCountyCreate(price: $price, groupTraining: $groupTraining, address: $address, personClId: $personClId, countyId: $countyId) {
       id
     }
   }`,
@@ -199,7 +199,6 @@ class RegisterMoreSkillsPerson extends React.Component {
             address: item.address,
             personClId: parseInt(id), //eslint-disable-line
             countyId: parseInt(item.counties.id), //eslint-disable-line
-            trainingSkillId: parseInt(item.skillId.id), //eslint-disable-line
           },
         });
       });
@@ -274,16 +273,6 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
   <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 20 }}>
     <div className={css.registerFisio}>
       <div className={css.searchBoxWrapper}>
-        <div className={css.searchBox} style={{ paddingTop: 5, paddingBottom: 5 }}>
-          <DropdownSelectCategory
-            array={arrayForCategoryes}
-            selected={valueCategory}
-            firstOption="Izaberite kategoriju"
-            label="Kategorije"
-            styles={{ margin: '0 auto' }}
-            handleClick={handleCategoryClick}
-          />
-        </div>
         <div className={css.searchBox} style={{ paddingTop: 0, paddingBottom: 5 }}>
           <DropdownSelectCity
             array={arrayForCity}
@@ -359,15 +348,6 @@ const DisabledBox = ({ id, skill, trening, counti, prices, city, removeMe, addre
         <div className={css.searchBox}>
           <div className={css.recycleItem}>
             <img alt="delete" src={RecycleItem} width="30" height="30" onClick={() => removeMe(id)} style={{ cursor: 'pointer' }} />
-          </div>
-          <div className={css.categorie}>
-            <div className={css.categorieTitle}>
-              <p style={{ marginTop: 0, color: '#fff', fontSize: '18px', fontWeight: 'bold' }}>KATEGORIJA</p>
-            </div>
-            <div
-              className={css.categorieButton}>
-              <h3 style={{ color: '#a9a9a9', fontWeight: 'bold' }}>{skill.trainSkillName}</h3> 
-            </div>
           </div>
           <div className={css.categorie}>
             <div className={css.categorieTitle}>

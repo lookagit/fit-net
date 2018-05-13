@@ -46,8 +46,8 @@ import { blue800, white } from 'material-ui/styles/colors';
 )
 @graphql(
   gql`
-  mutation createFisioCounty($price: Float, $address: String, $fisioClId: Int, $fisioCategoryId: Int, $countyId: Int) {
-    createFisioCounty(price: $price, address: $address, fisioClId: $fisioClId, fisioCategoryId: $fisioCategoryId, countyId: $countyId) {
+  mutation createFisioCounty($price: Float, $address: String, $fisioClId: Int,$countyId: Int) {
+    createFisioCounty(price: $price, address: $address, fisioClId: $fisioClId, countyId: $countyId) {
       id
       fisioCategory {
         id
@@ -197,7 +197,6 @@ class RegisterMoreSkillsFisio extends React.Component {
             price: parseInt(item.price), //eslint-disable-line
             address: item.address,
             fisioClId: parseInt(id), //eslint-disable-line
-            fisioCategoryId: parseInt(item.skillId.id), //eslint-disable-line
             countyId: parseInt(item.counties.id), //eslint-disable-line
           },
         });
@@ -270,17 +269,6 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
     <div className={css.registerFisio}>
       <div className={css.searchBoxWrapper} style={{ paddingTop: 5 }}>
         <div className={css.searchBox} style={{ paddingTop: 0, paddingBottom: 5 }}>
-          <DropdownSelectCategory
-            array={arrayForCategoryes}
-            selected={valueCategory}
-            firstOption="Izaberite kategoriju"
-            label="Kategorije"
-            styles={{ margin: '0 auto' }}
-            handleClick={handleCategoryClick}
-            fisio
-          />
-        </div>
-        <div className={css.searchBox} style={{ paddingTop: 0, paddingBottom: 5 }}>
           <DropdownSelectCity
             array={arrayForCity}
             selected={valueCity}
@@ -334,16 +322,8 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           value={valuePrice}
           underlineFocusStyle={{ borderColor: blue800 }}
           style={{ width: '100%' }}
-          onChange={(e, price) => {
-            if (validatePrice(price)) {
-              getValueFromInput(price);
-            } else {
-              this.setState({
-                warrningMessage: 'Neispravan format imena!',
-              });
-              this.showNotifications();
-            }
-          }}
+          type="number"
+          onChange={(e, price) => getValueFromInput(price)}
         />
       </div>
     </div>
@@ -357,15 +337,6 @@ const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address }) => 
         <div className={css.searchBox}>
           <div className={css.recycleItem}>
             <img alt="delete" src={RecycleItem} width="30" height="30" onClick={() => removeMe(id)} style={{ cursor: 'pointer' }} />
-          </div>
-          <div className={css.categorie}>
-            <div className={css.categorieTitle}>
-              <p style={{ marginTop: 0, color: '#fff', fontSize: '17px', fontWeight: 'bold' }}>KATEGORIJA</p>
-            </div>
-            <div
-              className={css.categorieButton}>
-              <h3 style={{ color: '#a9a9a9', fontWeight: 'bold' }}>{skill.fisioSkillName}</h3>
-            </div>
           </div>
           <div className={css.categorie}>
             <div className={css.categorieTitle}>

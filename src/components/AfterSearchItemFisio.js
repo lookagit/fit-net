@@ -25,7 +25,6 @@ class AfterSearchItemCouch extends React.Component {
   render() {
     const { couchProp } = this.props;
     const { fisioSkillsNames } = couchProp;
-    console.dir(fisioSkillsNames);
     const letsSplice = [...fisioSkillsNames].splice(0, 3);
     const giveMeSkills = letsSplice.map(item => item.fisioSkillName);
     const joinedSkills = giveMeSkills.join(', ');

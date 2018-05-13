@@ -48,9 +48,6 @@ query onePresonCl($personClId: Int) {
         county {
           countyName
         }
-        skills {
-          trainSkillName
-        }
       }
     }
   }`,
@@ -445,7 +442,6 @@ class CoachesOne extends React.Component {
                                 <td>{`${item.address}`}</td>
                                 <td>{`${item.price}`}</td>
                                 <td>{item.groupTraining ? `Grupni Trening` : `Personalni trening`}</td>
-                                <td>{item.skills.trainSkillName}</td>
                               </tr>
                             ))
                           }
