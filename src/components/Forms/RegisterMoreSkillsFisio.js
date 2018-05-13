@@ -134,7 +134,7 @@ class RegisterMoreSkillsFisio extends React.Component {
   }
 
   moreItem = async () => {
-    if (this.state.skillId !== '' && this.state.countiesId !== '' && this.state.price !== '' && this.state.cityId !== '' && this.state.address) {
+    if (this.state.countiesId !== '' && this.state.price !== '' && this.state.cityId !== '' && this.state.address) {
       const { price, skillId, countiesId, cityId, address } = this.state;
       const obj = {};
       obj.price = price;
@@ -183,7 +183,7 @@ class RegisterMoreSkillsFisio extends React.Component {
   }
 
   saveSkills = () => {
-    if (this.state.skillId !== '' && this.state.countiesId !== '' && this.state.price !== '' && this.state.cityId !== '' && this.state.address) {
+    if (this.state.countiesId !== '' && this.state.price !== '' && this.state.cityId !== '' && this.state.address) {
       this.moreItem();
     }
     const { id } = this.props.match.params;

@@ -41,6 +41,10 @@ import DropdownSelectCounties from './Forms/DropdownSelectCounties';
       id
       countyName
     }
+    counties {
+      id
+      countyName
+    }
     getCities{
       id,
       cityName
@@ -247,7 +251,7 @@ class SearchBox extends React.Component {
             : null
             }
             {
-              this.props.counties && this.props.visibleCounties
+              this.props.visibleCounties
               ?
                 <div>
                   <div style={{ paddingTop: 0, paddingBottom: 5 }}>
@@ -272,6 +276,8 @@ class SearchBox extends React.Component {
                   </div>
                 </div>
               :
+                this.props.counties
+                ?
                 <div style={{ paddingTop: 0, paddingBottom: 5 }}>
                   <DropdownSelectCity
                     array={this.props.arrayForCity}
@@ -282,6 +288,8 @@ class SearchBox extends React.Component {
                     handleClick={this.props.handleCityClick}
                   />
                 </div>
+                :
+                  null
             }
             {
               this.props.group ?
