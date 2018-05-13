@@ -1,11 +1,12 @@
 import React from 'react';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { GoogleLogin } from 'react-google-login';
 import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import css from '../styles/styles.scss';
 import logoBright from '../../../static/logoBright.png';
+import FacebookLoginContainer from './FacebookLoginContainer';
+import GoogleLoginContainer from './GoogleLoginContainer';
 
 @connect(state => ({ login: state.login }))
 @graphql(gql`
@@ -96,29 +97,8 @@ class ModalClass extends React.Component {
           <div
             className={css.socialContainerButton}
           >
-            <FacebookLogin
-              appId="1900315403334325"
-              className={css.sendParams}
-              fields="name,email,picture"
-              callback={this.responseFacebook}
-              render={renderProps => (
-                <button
-                  className={css.loginBtnFacebook}
-                  onClick={() => this.componentClicked(renderProps)}
-                >
-                  FACEBOOK LOGIN
-                </button>
-              )}
-            />
-            <GoogleLogin
-              clientId="712543376267-mi996e5cu5bkgn1vj9v19lmlm6fdifam.apps.googleusercontent.com"
-              style={{}}
-              className={css.loginBtnGoogle}
-              disabledStyle
-              onSuccess={this.responseGoogle}
-              onFailure={this.responseGoogle}>
-                  GMAIL LOGIN
-            </GoogleLogin>
+            <FacebookLoginContainer />
+            <GoogleLoginContainer />
           </div>
         </div>
       </div>

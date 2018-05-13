@@ -64,15 +64,17 @@ async function userLogin(args) {
       if (user) {
         const payload = {
           id: user.id,
-          name: user.firstName,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
+          imageUrl: user.picture,
         };
         const token = jwt.sign(payload, 'nasasifra');
         user.token = token;
         return user;
       }
       const personProfile = await db.models.userCl.create({
-        profileImageUrl: gInfo.picture,
+        imageUrl: gInfo.picture,
         email: gInfo.email,
         lastName: gInfo.lastName,
         firstName: gInfo.firstName,
@@ -80,7 +82,9 @@ async function userLogin(args) {
       if (personProfile) {
         const payload = {
           id: personProfile.id,
-          name: personProfile.firstName,
+          firstName: personProfile.firstName,
+          lastName: personProfile.lastName,
+          imageUrl: personProfile.imageUrl,
           email: personProfile.email,
         };
         const token = jwt.sign(payload, 'nasasifra');
