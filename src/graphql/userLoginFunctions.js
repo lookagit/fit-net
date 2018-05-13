@@ -71,7 +71,12 @@ async function userLogin(args) {
         user.token = token;
         return user;
       }
-      const personProfile = await db.models.userCl.create({ profileImageUrl: gInfo.picture });
+      const personProfile = await db.models.userCl.create({
+        profileImageUrl: gInfo.picture,
+        email: gInfo.email,
+        lastName: gInfo.lastName,
+        firstName: gInfo.firstName,
+      });
       if (personProfile) {
         const payload = {
           id: personProfile.id,
