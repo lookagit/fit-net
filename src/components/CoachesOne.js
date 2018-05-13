@@ -223,7 +223,7 @@ class CoachesOne extends React.Component {
                   </div>
                 </div>
                 <div
-                  style={{ marginLeft: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '760px' }}
+                  style={{ marginLeft: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', width: '760px' }}
                 >
                   <div
                     style={{
@@ -348,7 +348,7 @@ class CoachesOne extends React.Component {
                       }}
                     >
                       <div
-                        style={{ margin: '0 auto', marginBottom: '15px', display: 'flex', flexDirection: 'column' }}
+                        style={{display: 'flex', flexDirection: 'column' }}
                       >
                         <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500' }}>{`Opis: ${this.props.data.onePresonCl.about}`}</h3>
                       </div>

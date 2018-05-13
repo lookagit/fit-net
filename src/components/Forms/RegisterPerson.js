@@ -134,15 +134,15 @@ class RegisterPerson extends React.Component {
       });
       return;
     }
-    if (!this.state.facebookLink.startsWith('https://facebook.com')) {
+    if (!/^(https?:\/\/)?((w{3}\.)?)facebook.com\/.*/i.test(this.state.facebookLink)) {
       this.setState({
         openDialog: true,
         facebookLink: 'https://facebook.com',
-        socialMessage: 'Facebook link nije u redu. Predlažemo da odete na svoj Facebook profil i kopirate link iz address bar-a. Hvala!'
+        socialMessage: 'Facebook link nije u redu. Predlažemo da odete na svoj Facebook profil i kopirate link iz address bar-a. Ukoliko nemate facebook profil ostavite ovo polje prazno. Hvala!'
       });
       return;
     }
-    if (!this.state.instagramLink.startsWith('https://instagram.com')) {
+    if (!/^(https?:\/\/)?((w{3}\.)?)instagram.com\/.*/i.test(this.state.instagramLink)) {
       this.setState({
         openDialog: true,
         instagramLink: 'https://instagram.com',
@@ -156,6 +156,12 @@ class RegisterPerson extends React.Component {
         snackMessage: 'Morate izabrati barem jednu veštinu koju trenirate!',
       });
       return;
+    }
+    if (this.state.password.length <= 5) {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Šifra mora imati više od 5 karaktera!',
+      });
     }
     const { password, passwordRepeat } = this.state;
     if (password === passwordRepeat) {

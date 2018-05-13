@@ -135,18 +135,18 @@ class RegisterFisio extends React.Component {
       });
       return;
     }
-    if (!this.state.facebookLink.startsWith('https://facebook.com')) {
+    if (!/^(https?:\/\/)?((w{3}\.)?)facebook.com\/.*/i.test(this.state.facebookLink)) {
       this.setState({
         openDialog: true,
-        facebookLink: 'https://facebook.com',
-        socialMessage: 'Facebook link nije u redu. Predlažemo da odete na svoj Facebook profil i kopirate link iz address bar-a. Hvala!'
+        facebookLink: 'https://facebook.com/',
+        socialMessage: 'Facebook link nije u redu. Predlažemo da odete na svoj Facebook profil i kopirate link iz address bar-a. Ukoliko nemate facebook profil ostavite ovo polje prazno. Hvala!'
       });
       return;
     }
-    if (!this.state.instagramLink.startsWith('https://instagram.com')) {
+    if (!/^(https?:\/\/)?((w{3}\.)?)instagram.com\/.*/i.test(this.state.instagramLink)) {
       this.setState({
         openDialog: true,
-        instagramLink: 'https://instagram.com',
+        instagramLink: 'https://instagram.com/',
         socialMessage: 'Instagram link nije u redu. Predlažemo da odete na svoj Instagram profil i kopirate link iz address bar-a. Hvala!'
       });
       return;
@@ -157,6 +157,12 @@ class RegisterFisio extends React.Component {
         snackMessage: 'Morate izabrati barem jednu veštinu koju trenirate!',
       });
       return;
+    }
+    if (this.state.password.length <= 5) {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Šifra mora imati više od 5 karaktera!',
+      });
     }
     if (password === passwordRepeat) {
       const { file } = this.state;
@@ -245,6 +251,7 @@ class RegisterFisio extends React.Component {
   comingHomeFunc = comesHome => this.setState({ comesHome });
 
   render() {
+    console.log('JA STATE ', this.state);
     const actions = [
       <RaisedButton
         label="Ok"
