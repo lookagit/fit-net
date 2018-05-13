@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import { Lightbox } from 'react-modal-image';
 import css from './styles/styles.scss';
 import year from '../../static/year.png';
 import name from '../../static/name.png';
@@ -63,7 +64,15 @@ class CoachesOne extends React.Component {
     super(props);
     this.state = {
       user: null,
+      selectedImageForModal: '',
+      modalImageVisible: false,
     };
+  }
+  selecetThisForModal = selectedImageForModal => {
+    this.setState({
+      selectedImageForModal,
+      modalImageVisible: true,
+    });
   }
   render() {
     const [birthDay] = !this.props.data.loading ? this.props.data.onePresonCl.birthDay.split('-') : '';
@@ -77,6 +86,21 @@ class CoachesOne extends React.Component {
       "xxx" + this.props.data.onePresonCl.email.slice(3, this.props.data.onePresonCl.email.length - 3) + 'xxx' : '';
     return (
       <div>
+        {
+          this.state.modalImageVisible
+          ?
+            <Lightbox
+              medium={this.state.selectedImageForModal}
+              alt="Fit-net.rs certificate"
+              onClose={() => {
+                this.setState({
+                  modalImageVisible: false,
+                });
+              }
+              }
+            />
+          : null
+        }
         {
           this.props.data.loading ? <h3>LOADING</h3> :
           <div>
@@ -364,6 +388,9 @@ class CoachesOne extends React.Component {
                                 <div
                                   style={{
                                     padding: '10px',
+                                  }}
+                                  onClick={() => {
+                                    this.selecetThisForModal(certItem.certUrl);
                                   }}
                                 >
                                   <img

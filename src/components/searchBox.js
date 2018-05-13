@@ -11,23 +11,58 @@ import GroupTrening from './SearchDumb/groupTrening';
 import Prices from './SearchDumb/prices';
 import SearchClubs from './SearchDumb/searchClubs';
 import ComingHome from './SearchDumb/comingHome';
+import DropdownSelectCity from './Forms/DropdownSelectCity';
+import DropdownSelectCounties from './Forms/DropdownSelectCounties';
+// @graphql(gql`
+// {
+//   trainingCategories {
+//     id
+//     trainSkillName
+//   }
+//   counties {
+//     id
+//     countyName
+//   }
+//   fisioCategories{
+//     id
+//     fisioSkillName
+//   }
+// }
+// `)
 
-@graphql(gql`
-{
-  trainingCategories {
-    id
-    trainSkillName
+@graphql(
+  gql`
+  query getCounties(
+    $cityId: Int
+  ) {
+    getCounties(
+      cityId: $cityId,
+    ) {
+      id
+      countyName
+    }
+    getCities{
+      id,
+      cityName
+    }
+    fisioCategories{
+      id
+      fisioSkillName
+    }
+    trainingCategories {
+      id
+      trainSkillName
+    }
   }
-  counties {
-    id
-    countyName
-  }
-  fisioCategories{
-    id
-    fisioSkillName
-  }
-}
-`)
+  `,
+  {
+    options: props => ({
+      variables: {
+        cityId: 1,
+      },
+    }),
+  },
+)
 
 class SearchBox extends React.Component {
   constructor(props) {
@@ -43,6 +78,7 @@ class SearchBox extends React.Component {
       nameInCounties: [],
       clickCount: 0,
       clickCountie: 0,
+      arrayCities: [],
     };
   }
 
@@ -56,7 +92,14 @@ class SearchBox extends React.Component {
     if (typeof nextProps.data.fisioCategories !== 'undefined') {
       this.setState({ arrayFizio: nextProps.data.fisioCategories });
     }
+    if (typeof nextProps.data.getCities !== 'undefined') {
+      this.setState({ arrayCities: nextProps.data.getCities });
+    }
+    if (typeof nextProps.data.getCounties !== 'undefined') {
+      this.setState({ arrayCounties: nextProps.data.getCounties });
+    }
   }
+
 
   handleSkillArr = (gotSkill, gotName) => {
     const { nameInCategorie } = this.state;
@@ -204,13 +247,41 @@ class SearchBox extends React.Component {
             : null
             }
             {
-              this.props.counties ?
-                <Countie
-                  openModal={this.openModalCounties}
-                  countiesAlert={this.props.countiesAlert}
-                  nameInCounties={this.state.nameInCounties} 
-                />
-              : null
+              this.props.counties && this.props.visibleCounties
+              ?
+                <div>
+                  <div style={{ paddingTop: 0, paddingBottom: 5 }}>
+                    <DropdownSelectCity
+                      array={this.props.arrayForCity}
+                      selected={this.props.valueCity}
+                      firstOption="Izaberite grad"
+                      label="Grad"
+                      styles={{ margin: '0 auto' }}
+                      handleClick={this.props.handleCityClick}
+                    />
+                  </div>
+                  <div style={{ paddingTop: 0, paddingBottom: 5 }}>
+                    <DropdownSelectCounties
+                      array={this.props.arrayForCounties}
+                      selected={this.props.valueCounties}
+                      firstOption="Izaberite opštinu"
+                      label="Opštine"
+                      styles={{ margin: '0 auto' }}
+                      handleClick={this.props.handleCounties}
+                    />
+                  </div>
+                </div>
+              :
+                <div style={{ paddingTop: 0, paddingBottom: 5 }}>
+                  <DropdownSelectCity
+                    array={this.props.arrayForCity}
+                    selected={this.props.valueCity}
+                    firstOption="Izaberite grad"
+                    label="Grad"
+                    styles={{ margin: '0 auto' }}
+                    handleClick={this.props.handleCityClick}
+                  />
+                </div>
             }
             {
               this.props.group ?

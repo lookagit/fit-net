@@ -1,11 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import css from './styles/styles.scss';
 import SearchBox from './searchBox';
 import CoachesImg from './coachesImg';
 import { history } from 'kit/lib/routing';
 
 @connect(state => ({ coaches: state.coaches }))
+
+@graphql(
+  gql`
+  query getCounties(
+    $cityId: Int
+  ) {
+    getCounties(
+      cityId: $cityId,
+    ) {
+      id
+      countyName
+    }
+    getCities{
+      id,
+      cityName
+    }
+  }
+  `,
+  {
+    options: props => ({
+      variables: {
+        cityId: 1,
+      },
+    }),
+  },
+)
 
 class Coaches extends React.Component {
   constructor(props) {
@@ -19,8 +47,22 @@ class Coaches extends React.Component {
       priceTo: 0,
       categoriesAlert: 'none',
       countiesAlert: 'none',
+      arrayCities: [],
+      arrayCounties: [],
+      visibleCounties: false,
+      cityId: 1,
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (typeof nextProps.data.getCities !== 'undefined') {
+      this.setState({ arrayCities: nextProps.data.getCities });
+    }
+    if (typeof nextProps.data.getCounties !== 'undefined') {
+      this.setState({ arrayCounties: nextProps.data.getCounties });
+    }
+  }
+
   addToSkillArr = skillId => {
     const { skillArr } = this.state;
     if (skillArr.includes(skillId)) {
@@ -92,6 +134,22 @@ class Coaches extends React.Component {
     });
     setTimeout(() => history.push('/listofcoaches'), 500);
   }
+
+  selectCity = async e => {
+    let id = parseInt(e.target.value); //eslint-disable-line
+    await this.props.data.refetch({ cityId: id });
+    this.setState({
+      visibleCounties: true,
+      cityId: id,
+    });
+  }
+
+  selectCounties = e => {
+    this.setState({
+      countiesId: e.target.value,
+    });
+  }
+
   render() {
     return (
       <div className={css.coaches}>
@@ -114,7 +172,15 @@ class Coaches extends React.Component {
           getPriceFrom={this.state.priceFrom}
           priceToFunc={this.priceToFunc}
           getPriceTo={this.state.priceTo}
-          getParams={this.getParams} />
+          getParams={this.getParams}
+          arrayForCity={this.state.arrayCities} //list of city for select city in searchBox
+          arrayForCounties={this.state.arrayCounties} //list of counties refetched when select city
+          handleCityClick={this.selectCity} //func for select cityId
+          handleCounties={this.selectCounties} //func for select couniesId
+          valueCity={this.state.cityId} //value for selected city
+          valueCounties={this.state.countiesId} //value for selected counties
+          visibleCounties={this.state.visibleCounties} //value for visible counties dropdown
+        />
         <CoachesImg />
       </div>
     );
