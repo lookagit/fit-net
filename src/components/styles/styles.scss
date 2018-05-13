@@ -513,7 +513,7 @@ a{
 }
 .coacheName{
   font-size: 40px;
-  color: #2a87e9;
+  color: $blue;
   font-weight: 700;
 }
 .coacheBirthPlace{
@@ -637,7 +637,7 @@ button {
 }
 .coacheName{
   font-size: 40px;
-  color: #2a87e9;
+  color: $blue;
   font-weight: 700;
 }
 .coacheBirthPlace{
@@ -789,6 +789,9 @@ button {
   align-items: center;
 }
 @media screen and (max-width: 425px){
+  .coachesHolder {
+    padding-top: 20px;
+  }
   .coaches{
     flex-direction: column;
     height: 100%;
@@ -940,9 +943,14 @@ button {
     }
   }
   .filteredCoaches{
-    background: rgba(0, 63, 121, 0.28);
+    background: rgba(61,75,105,.76);
     border-radius: 7px;
     flex-direction: column;
+    margin: 0;
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
   }
   .filteredCoachesImgWrapper{
     margin-bottom: 10px;
@@ -950,6 +958,12 @@ button {
   .infoProfileWrapper{
     margin-bottom: 10px;
     padding: 0;
+  }
+  .profileAboutHolder {
+    padding: 0 10px;
+  }
+  .coacheName {
+    color: $blue;
   }
   .infoProfileHolder{
     padding: 0;
@@ -978,6 +992,7 @@ button {
   .filteredCoaches{
     flex-direction: column;
     align-items: center;
+    background: rgba(61,75,105,.76);
   }
   .filteredCoachesImgWrapper{
     margin-bottom: 10px;
@@ -999,6 +1014,7 @@ button {
     height: 100%;
   }
   .filteredCoaches{
+    background: rgba(61,75,105,.76);
     flex-direction: column;
     align-items: center;
   }
@@ -1016,6 +1032,7 @@ button {
 
 @media screen and (max-width: 1440px){
   .filteredCoaches{
+    background: rgba(61,75,105,.76);
     margin-bottom: 50px;
   }
   .filteredCoachesImgWrapper{

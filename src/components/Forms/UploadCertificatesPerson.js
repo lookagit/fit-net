@@ -4,7 +4,7 @@ import Loading from 'react-loading-components';
 import faker from 'faker';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import UppyCertificates from '../UppyCertificates';
 import css from '../styles/styles.scss';
@@ -45,6 +45,7 @@ class UploadCertificates extends React.Component {
       uploadedArr: [],
       loading: false,
       openDialog: false,
+      socialMessage: '',
     };
   }
   handleOpen = () => {
@@ -105,18 +106,19 @@ class UploadCertificates extends React.Component {
   }
   render() {
     const actions = [
-      <RaisedButton
+      <FlatButton
         label="Nazad"
         labelColor="#fff"
-        labelStyle={{ fontWeight: '700' }}
-        backgroundColor="#1da9ec"
+        labelStyle={{ fontWeight: '700', color: '#fff' }}
+        style={{ color: '#fff' }}
+        keyboardFocused
         onClick={this.handleClose}
       />,
-      <RaisedButton
+      <FlatButton
         label="Dalje"
         labelColor="#fff"
-        labelStyle={{ fontWeight: '700' }}
-        backgroundColor="#1da9ec"
+        labelStyle={{ fontWeight: '700', color: '#fff' }}
+        style={{ color: '#fff' }}
         onClick={() => this.props.history.push(`/moreSkills/${parseInt(this.props.match.params.userId)}`)}
       />,
     ];
@@ -257,7 +259,7 @@ class UploadCertificates extends React.Component {
                       } else {
                         this.setState({
                           openDialog: true,
-                          socialMessage: 'Niste uploadovali nijedan sertifikat. Ukoliko zelite da se vasi sertifikati prikazu potencijalnim klijentima kliknite Nazad i uploadujte sertifikate, ukoliko nemate sertifikate kliknite Dalje',
+                          socialMessage: 'Niste uploadovali nijedan sertifikat. Ukoliko želite da se vaši sertifikati prikažu potencijalnim klijentima kliknite Nazad i uploadujte sertifikate, ukoliko nemate sertifikate kliknite Dalje. Hvala!',
                         })
                       }
                     }}

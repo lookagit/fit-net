@@ -4,8 +4,11 @@ import Loading from 'react-loading-components';
 import faker from 'faker';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 import UppyCertificates from '../UppyCertificates';
 import css from '../styles/styles.scss';
+import logoBright from '../../../static/logoBright.png';
 
 const axios = require('axios');
 @withRouter
@@ -39,6 +42,8 @@ class UploadCertificates extends React.Component {
       files: [],
       uploadedArr: [],
       loading: false,
+      openDialog: false,
+      socialMessage: '',
     };
   }
   certsUpload = async () => {
@@ -83,11 +88,64 @@ class UploadCertificates extends React.Component {
           }
         }
       });
+    } else {
+      this.setState({
+        openDialog: true,
+        socialMessage: 'Niste uploadovali nijedan sertifikat. Ukoliko želite da se vaši sertifikati prikažu potencijalnim klijentima kliknite Nazad i uploadujte sertifikate, ukoliko nemate sertifikate kliknite Dalje. Hvala!',
+      });
     }
   }
   render() {
+    const actions = [
+      <FlatButton
+        label="Nazad"
+        labelColor="#fff"
+        labelStyle={{ fontWeight: '700', color: '#fff' }}
+        style={{ color: '#fff' }}
+        keyboardFocused={true}
+        onClick={this.handleClose}
+      />,
+      <FlatButton
+        label="Dalje"
+        labelColor="#fff"
+        labelStyle={{ fontWeight: '700', color: '#fff' }}
+        style={{ color: '#fff' }}
+        onClick={() => this.props.history.push(`/moreSkills/${parseInt(this.props.match.params.userId)}`)}
+      />,
+    ];
     return (
       <div>
+        <Dialog
+          title={(
+            <img
+              alt="FIT NET"
+              src={logoBright}
+              width="150px"
+              height="75px"
+              style={{
+                borderRadius: '50%',
+              }}
+            />
+          )}
+          paperProps={{
+            zDepth: 3,
+            style: {
+              backgroundColor: '#15233c',
+            },
+          }}
+          actions={actions}
+          modal={false}
+          open={this.state.openDialog}
+          onRequestClose={this.handleClose}
+        >
+          <h4
+            style={{
+              color: '#fff',
+            }}
+          >
+            {this.state.socialMessage}
+          </h4>
+        </Dialog>
         {
           this.state.loading ?
             <div
@@ -189,7 +247,16 @@ class UploadCertificates extends React.Component {
                       marginTop: '25px',
                       cursor: 'pointer',
                     }}
-                    onClick={() => this.props.history.push(`/moreSkillsFisio/${this.props.match.params.userId}`)}
+                    onClick={() => {
+                      if (this.state.files.length) {
+                        this.certsUpload();
+                      } else {
+                        this.setState({
+                          openDialog: true,
+                          socialMessage: 'Niste uploadovali nijedan sertifikat. Ukoliko zelite da se vasi sertifikati prikazu potencijalnim klijentima kliknite Nazad i uploadujte sertifikate, ukoliko nemate sertifikate kliknite Dalje',
+                        })
+                      }
+                    }}
                   >
                     <div
                       style={{
