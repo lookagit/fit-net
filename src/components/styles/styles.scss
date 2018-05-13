@@ -212,10 +212,12 @@ a{
 .loginBox{
   flex: 1;
   display: flex;
+  min-width: 150px;
 }
 .loginWrapper{
   margin: auto 50px auto auto;
   display: flex;
+  min-width: 150px;
 }
 .loginWrapper>div{
   display: flex;
@@ -253,6 +255,10 @@ a{
 }
 .navigationItem p{
   font-size: 24px;
+}
+.uploadButtonsContainer {
+  display: flex;
+  margin: 0 auto;
 }
 // END HEADER
 // COACHES
@@ -786,6 +792,12 @@ button {
   .coaches{
     flex-direction: column;
     height: 100%;
+  }
+  .uploadButtonsContainer {
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    justify-content: center;
   }
   .priceContainer {
     width: 95%;

@@ -76,7 +76,7 @@ class RegisterPerson extends React.Component {
       passwordRepeat: null,
       birthPlace: '',
       dateSelected: Moment(),
-      date: '',
+      date: 'Nema',
       about: '',
       facebookLink: '',
       instagramLink: '',
@@ -137,16 +137,16 @@ class RegisterPerson extends React.Component {
     if (!/^(https?:\/\/)?((w{3}\.)?)facebook.com\/.*/i.test(this.state.facebookLink)) {
       this.setState({
         openDialog: true,
-        facebookLink: 'https://facebook.com',
-        socialMessage: 'Facebook link nije u redu. Predlažemo da odete na svoj Facebook profil i kopirate link iz address bar-a. Ukoliko nemate facebook profil ostavite ovo polje prazno. Hvala!'
+        facebookLink: 'https://facebook.com/',
+        socialMessage: 'Facebook link nije u redu. Predlažemo da odete na svoj Facebook profil i kopirate link iz address bar-a. Ukoliko nemate Facebook profil ostavite ovo polje prazno. Hvala!'
       });
       return;
     }
     if (!/^(https?:\/\/)?((w{3}\.)?)instagram.com\/.*/i.test(this.state.instagramLink)) {
       this.setState({
         openDialog: true,
-        instagramLink: 'https://instagram.com',
-        socialMessage: 'Instagram link nije u redu. Predlažemo da odete na svoj Instagram profil i kopirate link iz address bar-a. Hvala!'
+        instagramLink: 'https://instagram.com/',
+        socialMessage: 'Instagram link nije u redu. Predlažemo da odete na svoj Instagram profil i kopirate link iz address bar-a. Ukoliko nemate profil na Instagramu ostavite ovo polje prazno. Hvala!'
       });
       return;
     }

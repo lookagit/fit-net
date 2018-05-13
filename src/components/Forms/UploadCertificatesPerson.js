@@ -4,8 +4,12 @@ import Loading from 'react-loading-components';
 import faker from 'faker';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
 import UppyCertificates from '../UppyCertificates';
 import css from '../styles/styles.scss';
+import logoBright from '../../../static/logoBright.png';
+
 
 const axios = require('axios');
 
@@ -40,8 +44,16 @@ class UploadCertificates extends React.Component {
       files: [],
       uploadedArr: [],
       loading: false,
+      openDialog: false,
     };
   }
+  handleOpen = () => {
+    this.setState({ openDialog: true });
+  };
+
+  handleClose = () => {
+    this.setState({ openDialog: false });
+  };
   certsUpload = async () => {
     let url = '';
     const { files } = this.state;
@@ -84,11 +96,63 @@ class UploadCertificates extends React.Component {
           }
         }
       });
+    } else {
+      this.setState({
+        openDialog: true,
+        socialMessage: 'Niste uploadovali nijedan sertifikat. Ukoliko imate sertifikate kliknite na dugme Nazad i prenesite slike sertifikata ukoliko nemate sertifikate kliknite Dalje. Hvala!',
+      });
     }
   }
   render() {
+    const actions = [
+      <RaisedButton
+        label="Nazad"
+        labelColor="#fff"
+        labelStyle={{ fontWeight: '700' }}
+        backgroundColor="#1da9ec"
+        onClick={this.handleClose}
+      />,
+      <RaisedButton
+        label="Dalje"
+        labelColor="#fff"
+        labelStyle={{ fontWeight: '700' }}
+        backgroundColor="#1da9ec"
+        onClick={() => this.props.history.push(`/moreSkills/${parseInt(this.props.match.params.userId)}`)}
+      />,
+    ];
     return (
       <div>
+        <Dialog
+          title={(
+            <img
+              alt="FIT NET"
+              src={logoBright}
+              width="150px"
+              height="75px"
+              style={{
+                borderRadius: '50%',
+              }}
+            />
+          )}
+          paperProps={{
+            zDepth: 3,
+            style: {
+              backgroundColor: '#15233c',
+            },
+          }}
+          actions={actions}
+          modal={false}
+          open={this.state.openDialog}
+          onRequestClose={this.handleClose}
+        >
+          <h4
+            style={{
+              color: '#fff',
+            }}
+          >
+            {this.state.socialMessage}
+          </h4>
+        </Dialog>
         {
           this.state.loading ?
             <div
@@ -134,6 +198,8 @@ class UploadCertificates extends React.Component {
                 <h2
                   style={{
                     color: '#fff',
+                    textAlign: 'center',
+                    margin: '10px',
                   }}
                 >
                   Mozete ubaciti do 10 sertifikata. Ukoliko niste sertifikovani pritisnite dalje da nastavite sa registracijom
@@ -150,10 +216,7 @@ class UploadCertificates extends React.Component {
                 }}
               >
                 <div
-                  style={{
-                    display: 'flex',
-                    margin: '0 auto',
-                  }}
+                  className={css.uploadButtonsContainer}
                 >
                   <div
                     className={css.sendParams}
@@ -188,7 +251,16 @@ class UploadCertificates extends React.Component {
                       marginTop: '25px',
                       cursor: 'pointer',
                     }}
-                    onClick={() => this.props.history.push(`/moreSkills/${this.props.match.params.userId}`)}
+                    onClick={() => {
+                      if (this.state.files.length) {
+                        this.certsUpload();
+                      } else {
+                        this.setState({
+                          openDialog: true,
+                          socialMessage: 'Niste uploadovali nijedan sertifikat. Ukoliko zelite da se vasi sertifikati prikazu potencijalnim klijentima kliknite Nazad i uploadujte sertifikate, ukoliko nemate sertifikate kliknite Dalje',
+                        })
+                      }
+                    }}
                   >
                     <div
                       style={{

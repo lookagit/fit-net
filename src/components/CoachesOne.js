@@ -422,22 +422,12 @@ class CoachesOne extends React.Component {
                             >
                               Tip
                             </th>
-                            <th
-                              style={{
-                                paddingTop: '25px',
-                                paddingBottom: '25px',
-                                fontSize: '22px',
-                                color: '#fff',
-                              }}
-                            >
-                              Kategorija
-                            </th>
                           </tr>
                         </thead>
                         <tbody className="table-hover">
                           {
-                            this.props.data.onePresonCl.personCounties.map((item, key) => (  
-                              <tr>
+                            this.props.data.onePresonCl.personCounties.map((item, key) => (
+                              <tr key={key}>
                                 <td>{`${item.county.countyName}`}</td>
                                 <td>{`${item.address}`}</td>
                                 <td>{`${item.price}`}</td>

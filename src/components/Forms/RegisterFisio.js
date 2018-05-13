@@ -76,7 +76,7 @@ class RegisterFisio extends React.Component {
       passwordRepeat: null,
       birthPlace: '',
       date: '',
-      about: null,
+      about: 'Nema',
       facebookLink: '',
       instagramLink: '',
       phone: '+381',

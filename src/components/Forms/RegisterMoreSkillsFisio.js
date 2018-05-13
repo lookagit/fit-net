@@ -49,9 +49,6 @@ import { blue800, white } from 'material-ui/styles/colors';
   mutation createFisioCounty($price: Float, $address: String, $fisioClId: Int,$countyId: Int) {
     createFisioCounty(price: $price, address: $address, fisioClId: $fisioClId, countyId: $countyId) {
       id
-      fisioCategory {
-        id
-      }
       fisioCounty{
         id
       }
