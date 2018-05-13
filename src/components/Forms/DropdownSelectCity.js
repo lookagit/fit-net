@@ -7,9 +7,13 @@ const DropdownSelectCity = ({ array, handleClick, styles, firstOption, label, se
     <select onChange={handleClick}>
       <option selected={selected === '' ? 'selected' : null}>{firstOption}</option>
       {
-        array.map((item, key) => (
-          <option value={item.id} key={key} selected={selected === item.id ? 'selected' : null}>{item.cityName}</option>
-        ))
+        array !== undefined
+        ?
+          array.map((item, key) => (
+            <option value={item.id} key={key} selected={selected === item.id ? 'selected' : null}>{item.cityName}</option>
+          ))
+        :
+          null
       }
     </select>
   </div>
