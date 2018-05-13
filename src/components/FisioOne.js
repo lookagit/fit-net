@@ -392,6 +392,7 @@ class FisioOne extends React.Component {
                                 <div
                                   style={{
                                     padding: '10px',
+                                    cursor: 'pointer',
                                   }}
                                   onClick={() => {
                                     this.selecetThisForModal(certItem.certUrl);

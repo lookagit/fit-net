@@ -8,7 +8,7 @@ const DropdownSelectCity = ({ array, handleClick, styles, firstOption, label, se
       <option selected={selected === '' ? 'selected' : null}>{firstOption}</option>
       {
         array.map((item, key) => (
-          <option value={item.id} key={key}>{item.cityName}</option>
+          <option value={item.id} key={key} selected={selected === item.id ? 'selected' : null}>{item.cityName}</option>
         ))
       }
     </select>
