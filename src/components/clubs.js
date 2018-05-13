@@ -45,7 +45,7 @@ class Clubs extends React.Component {
       arrayCities: [],
       arrayCounties: [],
       visibleCounties: false,
-      cityId: 1,
+      cityId: '',
     };
   }
 
@@ -79,6 +79,7 @@ class Clubs extends React.Component {
     this.setState({
       visibleCounties: true,
       cityId: id,
+      countiesId: '',
     });
   }
 
