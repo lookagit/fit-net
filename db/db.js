@@ -25,9 +25,9 @@ import {
 var db;
 
 if (process.env.NODE_ENV == 'production') {
-  db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r');
+  db = new Sequelize('postgres://vevjmnfzdnxkai:239107f41b534dc80a92fe41e630f4e1670c70ca0ada2fc68369417c81456af6@ec2-79-125-117-53.eu-west-1.compute.amazonaws.com:5432/ddt717png528r2');
 } else {
-  db = new Sequelize('postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r', {
+  db = new Sequelize('postgres://vevjmnfzdnxkai:239107f41b534dc80a92fe41e630f4e1670c70ca0ada2fc68369417c81456af6@ec2-79-125-117-53.eu-west-1.compute.amazonaws.com:5432/ddt717png528r2', {
     dialect: 'postgres',
     dialectOptions: {
       ssl: true,
