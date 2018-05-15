@@ -10,7 +10,7 @@ export function getServerURL(host = process.env.HOST, port = process.env.PORT, a
 
     // If we're on port 443, that's 'regular' SSL so no need to specify port
     if (process.env.SSL_PORT === '443') return stub;
-    return `https://fit-net.herokuapp.com`;
+    return `http://apps.fit-net.rs/`;
   }
 
   // Plain HTTP

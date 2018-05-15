@@ -179,7 +179,7 @@ class RegisterPerson extends React.Component {
         const fileType = file.type.split('/').pop();
         uniqueNameForImg = `${fakerUuid}.${fileType}`;
         if (process.env.NODE_ENV === 'production') {
-          url = 'https://honesty-app.herokuapp.com/ping/';
+          url = 'http://apps.fit-net.rs/ping/';
         } else {
           url = 'http://localhost:8081/ping/';
         }
