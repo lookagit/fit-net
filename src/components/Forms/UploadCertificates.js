@@ -53,7 +53,6 @@ class UploadCertificates extends React.Component {
   handleClose = () => {
     this.setState({ openDialog: false });
   };
-  
   certsUpload = async () => {
     let url = '';
     const { files } = this.state;
