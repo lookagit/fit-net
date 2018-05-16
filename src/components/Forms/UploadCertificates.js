@@ -46,6 +46,14 @@ class UploadCertificates extends React.Component {
       socialMessage: '',
     };
   }
+  handleOpen = () => {
+    this.setState({ openDialog: true });
+  };
+
+  handleClose = () => {
+    this.setState({ openDialog: false });
+  };
+  
   certsUpload = async () => {
     let url = '';
     const { files } = this.state;
@@ -57,37 +65,31 @@ class UploadCertificates extends React.Component {
           hasCerificates: true,
         },
       });
-      files.map(async item => {
-        const fakerUuid = faker.random.uuid();
-        const fileType = item.type.split('/').pop();
-        const uniqueNameForImg = `${fakerUuid}.${fileType}`;
-        if (process.env.NODE_ENV === 'production') {
-          url = 'http://apps.fit-net.rs/ping/';
-        } else {
-          url = 'http://localhost:8081/ping/';
-        }
-        const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${item.type}`);
-        if (axiosStuff) {
-          const signedUrl = axiosStuff.data;
-          const options = {
-            'Content-Type': item.type,
-          };
-          const putOnServer = await axios.put(signedUrl, item, options);
-          if (putOnServer) {
-            this.setState({
-              uploadedArr: [...this.state.uploadedArr, putOnServer],
-            });
-            await this.props.certCreate({
-              variables: {
-                name: 'Certificate for fisio Fit-net.rs',
-                certUrl: `https://s3.eu-central-1.amazonaws.com/zaluku/${uniqueNameForImg}`,
-                fisioClId: parseInt(this.props.match.params.userId),
-              },
-            });
-            this.props.history.push(`/moreSkillsFisio/${parseInt(this.props.match.params.userId)}`);
-          }
+      const uploadFiles = await files.map(async item => {
+        const cloudUrl = `https://api.cloudinary.com/v1_1/drama/upload`;
+        const cloudPreset = `ioxmokvx`;
+        const formData = new FormData();
+        formData.append('file', item);
+        formData.append('upload_preset', cloudPreset);
+        const uploadNow = await axios({
+          url: cloudUrl,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          data: formData,
+        });
+        if (uploadNow.status === 200) {
+          await this.props.certCreate({
+            variables: {
+              name: 'nekoImeStaTiJaZnam',
+              certUrl: `${uploadNow.data.secure_url}`,
+              fisioClId: parseInt(this.props.match.params.userId),
+            },
+          });
         }
       });
+      Promise.all(uploadFiles).then(() => this.props.history.push(`/moreSkillsFisio/${parseInt(this.props.match.params.userId)}`));
     } else {
       this.setState({
         openDialog: true,

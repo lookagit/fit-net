@@ -73,11 +73,11 @@ class RegisterPerson extends React.Component {
       firstName: '',
       lastName: '',
       email: '',
-      password: null,
-      passwordRepeat: null,
+      password: '',
+      passwordRepeat: '',
       birthPlace: '',
       dateSelected: Moment(),
-      date: 'Nema',
+      date: '',
       about: '',
       facebookLink: '',
       instagramLink: '',
@@ -112,6 +112,13 @@ class RegisterPerson extends React.Component {
       this.setState({
         snackOpen: true,
         snackMessage: 'Prezime ne sme biti prazno i mora imati više od 2 karaktera',
+      });
+      return;
+    }
+    if (this.state.birthPlace === '') {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Mesto rodjenja ne sme biti prazno!',
       });
       return;
     }
@@ -164,6 +171,7 @@ class RegisterPerson extends React.Component {
         snackOpen: true,
         snackMessage: 'Šifra mora imati više od 5 karaktera!',
       });
+      return;
     }
     const { password, passwordRepeat } = this.state;
     if (password === passwordRepeat) {
@@ -173,26 +181,23 @@ class RegisterPerson extends React.Component {
       const { file } = this.state;
       let uniqueNameForImg = '';
       let fileOk = false;
-      if (this.state.file) {
-        let url;
-        const fakerUuid = faker.random.uuid();
-        const fileType = file.type.split('/').pop();
-        uniqueNameForImg = `${fakerUuid}.${fileType}`;
-        if (process.env.NODE_ENV === 'production') {
-          url = 'http://apps.fit-net.rs/ping/';
-        } else {
-          url = 'http://localhost:8081/ping/';
-        }
-        const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${file.type}`);
-        if (axiosStuff) {
-          const signedUrl = axiosStuff.data;
-          const options = {
-            'Content-Type': file.type,
-          };
-          const putOnServer = await axios.put(signedUrl, file, options);
-          if (putOnServer) {
-            fileOk = true;
-          }
+      if (file) {
+        const cloudUrl = `https://api.cloudinary.com/v1_1/drama/upload`;
+        const cloudPreset = `ioxmokvx`;
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', cloudPreset);
+        const uploadNow = await axios({
+          url: cloudUrl,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          data: formData,
+        });
+        if (uploadNow.status === 200) {
+          fileOk = true;
+          uniqueNameForImg = uploadNow.data.secure_url;
         }
       }
       const mutation = await this.props.registerMe(
@@ -210,7 +215,7 @@ class RegisterPerson extends React.Component {
             hasCerificates: this.state.hasCerificates,
             about: this.state.about,
             personClub: this.state.personClub,
-            imageUrl: fileOk ? `https://s3.eu-central-1.amazonaws.com/zaluku/${uniqueNameForImg}` : 'https://s3.eu-central-1.amazonaws.com/zaluku/person-placeholder.jpg',
+            imageUrl: fileOk ? `${uniqueNameForImg}` : 'http://res.cloudinary.com/drama/image/upload/v1526508620/smiljkoHolder_ovuulk.png',
             skillsArr: this.state.skillArr,
           },
         },
@@ -219,6 +224,11 @@ class RegisterPerson extends React.Component {
         const { id } = mutation.data.updateOrCreateUser;
         this.props.history.push(`/register-certificate-person/${id}`);
       }
+    } else {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Šifre se moraju poklapati!',
+      });
     }
   }
   addToSkillArr = skillId => {

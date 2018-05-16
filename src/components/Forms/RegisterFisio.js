@@ -74,7 +74,7 @@ class RegisterFisio extends React.Component {
       lastName: '',
       email: '',
       password: '',
-      passwordRepeat: null,
+      passwordRepeat: '',
       birthPlace: '',
       date: '',
       about: 'Nema',
@@ -130,6 +130,13 @@ class RegisterFisio extends React.Component {
       });
       return;
     }
+    if (this.state.birthPlace === '') {
+      this.setState({
+        snackOpen: true,
+        snackMessage: 'Mesto rodjenja ne sme biti prazno!',
+      });
+      return;
+    }
     if (this.state.date === '') {
       this.setState({
         snackOpen: true,
@@ -165,6 +172,7 @@ class RegisterFisio extends React.Component {
         snackOpen: true,
         snackMessage: 'Šifra mora imati više od 5 karaktera!',
       });
+      return;
     }
     if (password === passwordRepeat) {
       this.setState({
@@ -173,26 +181,23 @@ class RegisterFisio extends React.Component {
       const { file } = this.state;
       let uniqueNameForImg = '';
       let fileOk = false;
-      if (this.state.file) {
-        let url;
-        const fakerUuid = faker.random.uuid();
-        const fileType = file.type.split('/').pop();
-        uniqueNameForImg = `${fakerUuid}.${fileType}`;
-        if (process.env.NODE_ENV === 'production') {
-          url = 'http://apps.fit-net.rs/ping/';
-        } else {
-          url = 'http://localhost:8081/ping/';
-        }
-        const axiosStuff = await axios.get(`${url}${uniqueNameForImg}/${file.type}`);
-        if (axiosStuff) {
-          const signedUrl = axiosStuff.data;
-          const options = {
-            'Content-Type': file.type,
-          };
-          const putOnServer = await axios.put(signedUrl, file, options);
-          if (putOnServer) {
-            fileOk = true;
-          }
+      if (file) {
+        const cloudUrl = `https://api.cloudinary.com/v1_1/drama/upload`;
+        const cloudPreset = `ioxmokvx`;
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', cloudPreset);
+        const uploadNow = await axios({
+          url: cloudUrl,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          data: formData,
+        });
+        if (uploadNow.status === 200) {
+          fileOk = true;
+          uniqueNameForImg = uploadNow.data.secure_url;
         }
       }
       const mutation = await this.props.registerNewFisio(
@@ -209,7 +214,7 @@ class RegisterFisio extends React.Component {
             birthDay: this.state.date,
             hasCertificates: this.state.hasCerificates,
             about: this.state.about,
-            imageUrl: fileOk ? `https://s3.eu-central-1.amazonaws.com/zaluku/${uniqueNameForImg}` : 'https://s3.eu-central-1.amazonaws.com/zaluku/person-placeholder.jpg',
+            imageUrl: fileOk ? `${uniqueNameForImg}` : 'http://res.cloudinary.com/drama/image/upload/v1526508620/smiljkoHolder_ovuulk.png',
             comesHome: this.state.comesHome,
             fisioSkillsArr: this.state.skillArr,
           },
@@ -222,7 +227,8 @@ class RegisterFisio extends React.Component {
       }
     } else {
       this.setState({
-        warrnMess: 'Šifre se ne poklapaju. Molimo vas unesite šifre ponovo!' // eslint-disable-line
+        snackOpen: true,
+        snackMessage: 'Šifre se ne poklapaju!',
       });
     }
   }
