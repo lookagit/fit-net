@@ -117,17 +117,14 @@ class CoachesOne extends React.Component {
           <div>
             <div style={{ width: '100%', display: 'flex', paddingTop: '40px' }}>
               <div
-                style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'row', paddingRight: '5px', paddingLeft: '5px' }}
+                className={css.coachesOneWrapper}
               >
                 <div
-                  style={{
-                    width: '300px',
-                  }}
+                  className={css.coachesImg}
                 >
                   <div
+                    className={css.coachesImgWrapper}
                     style={{
-                      width: '300px',
-                      height: '300px',
                       backgroundImage: `url(${this.props.data.onePresonCl.imageUrl})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
@@ -268,7 +265,7 @@ class CoachesOne extends React.Component {
                   </div>
                 </div>
                 <div
-                  style={{ marginLeft: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', width: '760px' }}
+                  className={css.otherWrapper}
                 >
                   <div
                     style={{
@@ -283,7 +280,7 @@ class CoachesOne extends React.Component {
                     }}
                   >
                     <div
-                      style={{ display: 'flex', flexDirection: 'row', width: '90%', justifyContent: 'space-between', alignItems: 'space-between', paddingBottom: '15px' }}
+                      className={css.iconsCouchesWrapper}
                     >
                       <div
                         style={{
@@ -296,15 +293,10 @@ class CoachesOne extends React.Component {
                         <img
                           src={score}
                           alt="Smiley face"
-                          height="90"
-                          width="90"
+                          className={css.iconsCouches}
                         />
                         <h4
-                          style={{
-                            color: '#fff',
-                            textAlign: 'center',
-                            marginTop: '5px',
-                          }}
+                          className={css.textWithImage}
                         >
                           {`Score: ${this.props.data.onePresonCl.score}`}
                         </h4>
@@ -320,15 +312,10 @@ class CoachesOne extends React.Component {
                         <img
                           alt="Fit net couch location"
                           src={locationImage}
-                          height="90"
-                          width="90"
+                          className={css.iconsCouches}
                         />
                         <h4
-                          style={{
-                            color: '#fff',
-                            textAlign: 'center',
-                            marginTop: '5px',
-                          }}
+                          className={css.textWithImage}
                         >
                           {`Lokacija: ${this.props.data.onePresonCl.birthPlace}`}
                         </h4>
@@ -344,15 +331,10 @@ class CoachesOne extends React.Component {
                         <img
                           src={skill}
                           alt="Smiley face"
-                          height="90"
-                          width="90"
+                          className={css.iconsCouches}
                         />
                         <h4
-                          style={{
-                            color: '#fff',
-                            textAlign: 'center',
-                            marginTop: '5px',
-                          }}
+                          className={css.textWithImage}
                         >
                           {`Veštine: ${this.props.data.onePresonCl.trainingPersonSkills.length}`}
                         </h4>
@@ -368,15 +350,10 @@ class CoachesOne extends React.Component {
                         <img
                           src={certificate}
                           alt="Smiley face"
-                          height="90"
-                          width="90"
+                          className={css.iconsCouches}
                         />
                         <h4
-                          style={{
-                            color: '#fff',
-                            textAlign: 'center',
-                            marginTop: '5px',
-                          }}
+                          className={css.textWithImage}
                         >
                           {`Sertifikati: ${this.props.data.onePresonCl.hasCerificates ? 'Da' : 'Ne'}` }
                         </h4>
@@ -395,15 +372,16 @@ class CoachesOne extends React.Component {
                       <div
                         style={{display: 'flex', flexDirection: 'column' }}
                       >
-                        <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500' }}>{`Opis: ${this.props.data.onePresonCl.about}`}</h3>
+                        <h3 className={css.textCoaches}>{`Opis: ${this.props.data.onePresonCl.about}`}</h3>
                       </div>
                       <div>
-                        <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500' }}>{`Sertifikati:`}</h3>
+                        <h3 className={css.textCoaches}>{`Sertifikati:`}</h3>
                         <div
                           style={{
                             display: 'flex',
                             webkitFlexWrap: 'wrap',
                             flexWrap: 'wrap',
+                            padding: 10,
                           }}
                         >
                           {
@@ -420,57 +398,36 @@ class CoachesOne extends React.Component {
                                 >
                                   <img
                                     alt="Fit-net.rs certificate"
-                                    width="80"
-                                    height="80"
+                                    className={css.iconsCouches}
                                     src={`${certItem.certUrl}`}
                                   />
                                 </div>
-                              )) : <h3 style={{ color: '#fff' }}>Ovaj korisnik nema sertifikate.</h3>
+                              )) : <h3 className={css.textCoaches}>Ovaj korisnik nema sertifikate.</h3>
                         }
                         </div>
                       </div>
                     </div>
-                    <div>
+                    <div style={{ overflowX: 'auto' }}>
                       <table className={css.tableFill}>
                         <thead>
                           <tr>
                             <th
-                              style={{
-                                paddingTop: '25px',
-                                paddingBottom: '25px',
-                                fontSize: '22px',
-                                color: '#fff',
-                              }}
+                              className={css.tableThTextCoaches}
                             >
                               Opština
                             </th>
                             <th
-                              style={{
-                                paddingTop: '25px',
-                                paddingBottom: '25px',
-                                fontSize: '22px',
-                                color: '#fff',
-                              }}
+                              className={css.tableThTextCoaches}
                             >
                               Adresa
                             </th>
                             <th
-                              style={{
-                                paddingTop: '25px',
-                                paddingBottom: '25px',
-                                fontSize: '22px',
-                                color: '#fff',
-                              }}
+                              className={css.tableThTextCoaches}
                             >
                               Cena
                             </th>
                             <th
-                              style={{
-                                paddingTop: '25px',
-                                paddingBottom: '25px',
-                                fontSize: '22px',
-                                color: '#fff',
-                              }}
+                              className={css.tableThTextCoaches}
                             >
                               Tip
                             </th>
