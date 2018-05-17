@@ -639,7 +639,7 @@ class RegisterPerson extends React.Component {
             addToSkillArr={this.addToSkillArr}
           />
         </div>
-        <div className={css.registerFisioOne} style={{ justifyContent: 'center' }}>
+        <div className={css.registerFisioOne} style={{ justifyContent: 'center', marginBottom: '20px' }}>
           <RaisedButton
             label="Registrujte se"
             fullWidth
