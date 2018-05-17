@@ -48,7 +48,7 @@ export default () => (
       <Header />
       {/* <GraphQLMessage /> */}
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={Coaches} />
         <Route path="/page/coaches" component={Coaches} />
         <Route path="/page/fizio" component={Fizio} />
         <Route path="/page/clubs" component={Clubs} />
