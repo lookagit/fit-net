@@ -1,7 +1,6 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import faker from 'faker';
 import { withRouter } from 'react-router-dom';
 import Moment from 'moment-timezone';
 import Loading from 'react-loading-components';
@@ -18,7 +17,6 @@ import logoBright from '../../../static/logoBright.png';
 import {
   validateStringNames,
   validateEmail,
-  validatePassword,
   validatePhone,
   validateBirthPlace,
   validateUrl,
@@ -264,6 +262,7 @@ class RegisterFisio extends React.Component {
   comingHomeFunc = comesHome => this.setState({ comesHome });
 
   render() {
+    console.log('JA SAM STATE ', this.state);
     const actions = [
       <RaisedButton
         label="Ok"
