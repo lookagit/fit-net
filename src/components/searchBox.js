@@ -211,10 +211,25 @@ class SearchBox extends React.Component {
     return (
       <div className={css.searchBoxWrapper}>
         <div
-          style={{display: this.state.modalCategories}}
+          style={{ display: this.state.modalCategories }}
           onClick={() => this.openModalCategories()}
-          className={css.modalCategoriesClass}>
+          className={css.modalCategoriesClass}
+        >
           <div className={css.categorieModal}>
+            <div
+              style={{
+                color: '#f00',
+                textAlign: 'right',
+              }}
+            >
+              <h1
+                style={{
+                  cursor: 'pointer',
+                }}
+              >
+                X
+              </h1>
+            </div>
             <div onClick={(e) => this.stopPropagation(e)} className={css.categorieModalWrapper}>
               {this.props.fizio ? fizio : categories}
             </div>

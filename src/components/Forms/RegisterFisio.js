@@ -102,6 +102,7 @@ class RegisterFisio extends React.Component {
 
   newFisio = async () => {
     const { password, passwordRepeat } = this.state;
+    console.log('PPASSS ', password, passwordRepeat);
     if (this.state.firstName === '' || !validateStringNames(this.state.firstName)) {
       this.setState({
         snackOpen: true,
@@ -229,6 +230,7 @@ class RegisterFisio extends React.Component {
       this.setState({
         snackOpen: true,
         snackMessage: 'Šifre se ne poklapaju!',
+        passErr: true,
       });
     }
   }
@@ -575,15 +577,17 @@ class RegisterFisio extends React.Component {
                 type="password"
                 className={css.brightFont}
                 onChange={(e, password) => {
-                  if (validatePassword(password)) {
+                  if (password === this.state.passwordRepeat) {
                     this.setState({
                       password,
+                      passErr: false,
                       snackOpen: false,
                     });
                   } else {
                     this.setState({
+                      password,
+                      passErr: true,
                       snackOpen: false,
-                      warrningMessage: 'Neispravan format šifre!',
                     });
                   }
                 }}
@@ -602,27 +606,17 @@ class RegisterFisio extends React.Component {
                 className={css.brightFont}
                 errorText={this.state.passErr ? 'Šifre se ne poklapaju!' : null}
                 onChange={(e, passwordRepeat) => {
-                  if (validatePassword(passwordRepeat)) {
-                    if (this.state.password !== passwordRepeat) {
-                      this.setState({
-                        passwordRepeat,
-                        passErr: true,
-                        snackOpen: false,
-                        warrningMessage: 'Šifre se ne poklapaju',
-                      });
-                    } else {
-                      this.setState({
-                        passwordRepeat: e.target.value,
-                        warrningMessage: null,
-                        snackOpen: false,
-                        passErr: false,
-                      });
-                    }
+                  if (this.state.password !== passwordRepeat) {
+                    this.setState({
+                      passwordRepeat,
+                      passErr: true,
+                      snackOpen: false,
+                    });
                   } else {
                     this.setState({
-                      warrningMessage: 'Neispravan format šifre',
+                      passwordRepeat: e.target.value,
                       snackOpen: false,
-                      passErr: true,
+                      passErr: false,
                     });
                   }
                 }}

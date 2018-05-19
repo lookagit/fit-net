@@ -4,7 +4,7 @@ export function validateEmail(email) {
 }
 
 export function validateStringNames(name) {
-  const regex = /^([A-Za-z ]{2,30})?$/;
+  const regex = /^([A-Za-zšđžčćŠĐĆČŽ ]{2,30})?$/;
   return regex.test(name);
 }
 

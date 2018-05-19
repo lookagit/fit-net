@@ -228,6 +228,7 @@ class RegisterPerson extends React.Component {
       this.setState({
         snackOpen: true,
         snackMessage: 'Šifre se moraju poklapati!',
+        passErr: true,
       });
     }
   }
@@ -550,13 +551,16 @@ class RegisterPerson extends React.Component {
                 type="password"
                 className={css.brightFont}
                 onChange={(e, password) => {
-                  if (validatePassword(password)) {
+                  if (password === this.state.passwordRepeat) {
                     this.setState({
                       password,
+                      passErr: false,
                       snackOpen: false,
                     });
                   } else {
                     this.setState({
+                      password,
+                      passErr: true,
                       snackOpen: false,
                     });
                   }
@@ -575,24 +579,17 @@ class RegisterPerson extends React.Component {
                 className={css.brightFont}
                 errorText={this.state.passErr ? 'Šifre se ne poklapaju!' : null}
                 onChange={(e, passwordRepeat) => {
-                  if (validatePassword(passwordRepeat)) {
-                    if (this.state.password !== passwordRepeat) {
-                      this.setState({
-                        passwordRepeat,
-                        passErr: true,
-                        snackOpen: false,
-                      });
-                    } else {
-                      this.setState({
-                        passwordRepeat: e.target.value,
-                        snackOpen: false,
-                        passErr: false,
-                      });
-                    }
+                  if (this.state.password !== passwordRepeat) {
+                    this.setState({
+                      passwordRepeat,
+                      passErr: true,
+                      snackOpen: false,
+                    });
                   } else {
                     this.setState({
+                      passwordRepeat: e.target.value,
                       snackOpen: false,
-                      passErr: true,
+                      passErr: false,
                     });
                   }
                 }}

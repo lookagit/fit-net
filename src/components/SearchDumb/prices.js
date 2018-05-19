@@ -22,8 +22,8 @@ class Prices extends React.Component {
                     padding: '10px 14px',
                     width: '48.5%',
                   }}
-                  placeholder="OD" 
-                  value={this.props.getPriceFrom != 0 ? this.props.getPriceFrom : 'OD'}
+                  placeholder="OD (RSD)" 
+                  value={this.props.getPriceFrom != 0 ? this.props.getPriceFrom : 'OD (RSD)'}
                   type="number" 
                   onChange={(val) => this.props.priceFromFunc(val.target.value)} />
                 <input
@@ -34,8 +34,8 @@ class Prices extends React.Component {
                     padding: '10px 14px',
                     width: '48.5%',
                   }}
-                  placeholder="DO" 
-                  value={this.props.getPriceTo != 0  ? this.props.getPriceTo : 'DO'}
+                  placeholder="DO (RSD)" 
+                  value={this.props.getPriceTo != 0  ? this.props.getPriceTo : 'DO (RSD)'}
                   type="number"
                   onChange={(val) => this.props.priceToFunc(val.target.value)} />
               </div>

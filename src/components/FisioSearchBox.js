@@ -81,6 +81,12 @@ class FisioSearchBox extends React.Component {
   sendParams = () => {
     this.props.getParams('poslato')
   }
+  closeModal = () => {
+    this.setState({
+      modalCategories: 'none',
+      modalCounties: 'none',
+    });
+  }
   render() {
     let categories = this.state.arrayCategories.map((item, key) => {
       return (
@@ -127,6 +133,9 @@ class FisioSearchBox extends React.Component {
       <div className={css.searchBoxWrapper}>
         <div onClick={() => this.openModalCategories()} style={modalCategoriesClass}>
           <div className={css.categorieModal}>
+            <div>
+              <h1>XXX</h1>
+            </div>
             <div onClick={(e) => this.stopPropagation(e)} className={css.categorieModalWrapper}>
               {categories}
             </div>

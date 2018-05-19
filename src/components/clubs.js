@@ -110,7 +110,7 @@ class Clubs extends React.Component {
           valueCounties={this.state.countiesId} //value for selected counties
           visibleCounties={this.state.visibleCounties} //value for visible counties dropdown
         />
-        <CoachesImg />
+        { /* <CoachesImg /> */ }
       </div>
     );
   }
