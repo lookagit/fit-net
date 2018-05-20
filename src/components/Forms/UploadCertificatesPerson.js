@@ -1,15 +1,17 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Loading from 'react-loading-components';
-import faker from 'faker';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
+import Compress from 'compress.js';
 import UppyCertificates from '../UppyCertificates';
 import css from '../styles/styles.scss';
 import logoBright from '../../../static/logoBright.png';
 
+
+const compress = new Compress();
 
 const axios = require('axios');
 
@@ -42,7 +44,6 @@ class UploadCertificates extends React.Component {
     super(props);
     this.state = {
       files: [],
-      uploadedArr: [],
       loading: false,
       openDialog: false,
       socialMessage: '',
@@ -66,11 +67,21 @@ class UploadCertificates extends React.Component {
           hasCerificates: true,
         },
       });
-      const filesUpload = await files.map(async item => {
+      const compressedFile = await compress.compress(files, {
+        size: 4, // the max size in MB, defaults to 2MB
+        quality: 0.55, // the quality of the image, max is 1,
+        maxWidth: 1920, // the max width of the output image, defaults to 1920px
+        maxHeight: 1920, // the max height of the output image, defaults to 1920px
+        resize: true, // defaults to true, set false
+      });
+      const filesUpload = await compressedFile.map(async item => {
         const cloudUrl = `https://api.cloudinary.com/v1_1/drama/upload`;
         const cloudPreset = `ioxmokvx`;
+        const base64Str = item.data;
+        const imgExt = item.ext;
+        const filer = Compress.convertBase64ToFile(base64Str, imgExt);
         const formData = new FormData();
-        formData.append('file', item);
+        formData.append('file', filer);
         formData.append('upload_preset', cloudPreset);
         const uploadNow = await axios({
           url: cloudUrl,

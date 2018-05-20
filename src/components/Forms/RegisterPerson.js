@@ -10,7 +10,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Loading from 'react-loading-components';
 import Dialog from 'material-ui/Dialog';
 import Snackbar from 'material-ui/Snackbar';
-import faker from 'faker';
 import logoBright from '../../../static/logoBright.png';
 import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
@@ -187,6 +186,7 @@ class RegisterPerson extends React.Component {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('upload_preset', cloudPreset);
+        formData.append('options', { width: 320, height: 320, crop: 'limit', format: 'jpg' });
         const uploadNow = await axios({
           url: cloudUrl,
           method: 'POST',
