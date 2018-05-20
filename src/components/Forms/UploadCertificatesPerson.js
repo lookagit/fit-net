@@ -182,8 +182,22 @@ class UploadCertificates extends React.Component {
                   color: '#fff',
                 }}
               >
-                Molimo sačekajte. Hvala!
+                Molimo sačekajte.
               </h3>
+              <h3
+                style={{
+                  color: '#fff',
+                }}
+              >
+                Upload može potrajati duže ako su slike veće rezolucije.
+              </h3>
+              <h4
+                style={{
+                  color: '#fff',
+                }}
+              >
+                Hvala na razumevanju!
+              </h4>
             </div>
             :
             <div

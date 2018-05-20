@@ -1,24 +1,5 @@
 const DEV_STRING = 'postgres://fitnetmaster:jebemtimater123@fitnetdb.c1xl4fohydwy.us-east-2.rds.amazonaws.com/fitnetdb';
 const PROD_STRING = 'postgres://xkiwtpkezxmdyr:211fd7770bb926a741e6084b5ffb6036ceca414bf5110d7f96387b3b7eb9509a@ec2-54-217-218-80.eu-west-1.compute.amazonaws.com:5432/deurq5499j4r5r';
-import faker from 'faker';
-// export const PersonArr = [...Array(10)].map(item => {
-//   return {
-//     password: faker.internet.password(),
-//     email: faker.internet.email(),
-//     firstName: faker.name.firstName(),
-//     lastName: faker.name.lastName(),
-//     birthPlace: faker.address.city(),
-//     birthDay: faker.date.past(),
-//     cellPhone: faker.phone.phoneNumber(),
-//     imageUrl: faker.internet.url(),
-//     skillsArr: [...Array(faker.random.number({ min: 2, max: 5 }))].map(i => faker.random.number({ min: 1, max: 18 })),
-//     countyArr: [...Array(faker.random.number({ min: 1, max: 3 }))].map(i => faker.random.number({ min: 1, max: 5 })),
-//     hasCerificates: faker.random.boolean(),
-//     score: faker.random.number({ min: 1, max: 10 }),
-//     instagramLink: faker.internet.url(),
-//     facebookLink: faker.internet.url(),
-//   }
-// })
 // export const PersonArr = [
 //   {
 //     password: '2131SDA1', 
