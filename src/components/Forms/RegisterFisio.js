@@ -13,7 +13,10 @@ import Snackbar from 'material-ui/Snackbar';
 import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
 import logoBright from '../../../static/logoBright.png';
-import RichTextEditor from 'react-rte';
+import SearchBox from '../searchBox';
+
+var RichTextEditor;
+if (process.env.BROWSER) { RichTextEditor = require('react-rte').default; }
 
 import {
   validateStringNames,
@@ -22,7 +25,7 @@ import {
   validateBirthPlace,
   validateUrl,
 } from './validationFuncs';
-import SearchBox from '../searchBox';
+
 
 const axios = require('axios');
 
@@ -76,7 +79,7 @@ class RegisterFisio extends React.Component {
       passwordRepeat: '',
       birthPlace: '',
       date: '',
-      about: RichTextEditor.createEmptyValue(),
+      about: RichTextEditor ? RichTextEditor.createEmptyValue() : {},
       aboutHtml: '',
       facebookLink: '',
       instagramLink: '',
@@ -655,11 +658,14 @@ class RegisterFisio extends React.Component {
                 });
               }}
             /> */}
-            <RichTextEditor
-              value={this.state.about}
-              rootStyle={{ width: '100%' }}
-              onChange={this.onChangeRte}
-            />
+            {
+              RichTextEditor ?
+                <RichTextEditor
+                  value={this.state.about}
+                  rootStyle={{ width: '100%' }}
+                  onChange={this.onChangeRte}
+              /> : null
+            }
           </div>
         </div>
         <div className={css.registerFisioOne}>

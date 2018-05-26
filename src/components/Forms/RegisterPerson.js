@@ -17,12 +17,13 @@ import SearchBox from '../searchBox';
 import {
   validateStringNames,
   validateEmail,
-  validatePassword,
   validatePhone,
   validateBirthPlace,
   validateUrl,
 } from './validationFuncs';
-import RichTextEditor from 'react-rte';
+
+var RichTextEditor;
+if (process.env.BROWSER) { RichTextEditor = require('react-rte').default; }
 
 const axios = require('axios');
 
@@ -78,7 +79,7 @@ class RegisterPerson extends React.Component {
       birthPlace: '',
       dateSelected: Moment(),
       date: '',
-      about: RichTextEditor.createEmptyValue(),
+      about: RichTextEditor ? RichTextEditor.createEmptyValue() : {},
       aboutHtml: '',
       facebookLink: '',
       instagramLink: '',
@@ -631,11 +632,14 @@ class RegisterPerson extends React.Component {
                 });
               }}
             /> */}
-            <RichTextEditor
-              value={this.state.about}
-              rootStyle={{ width: '100%' }}
-              onChange={this.onChangeRte}
-            />
+            {
+              RichTextEditor ?
+                <RichTextEditor
+                  value={this.state.about}
+                  rootStyle={{ width: '100%' }}
+                  onChange={this.onChangeRte}
+              /> : null
+            }
           </div>
         </div>
         <div className={css.registerFisioOne}>

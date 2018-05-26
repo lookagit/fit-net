@@ -4,7 +4,6 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Lightbox } from 'react-modal-image';
 import ToolTip from 'react-portal-tooltip';
-import RichTextEditor from 'react-rte';
 import css from './styles/styles.scss';
 import year from '../../static/year.png';
 import name from '../../static/name.png';
@@ -15,6 +14,9 @@ import locationImage from '../../static/location.png';
 import score from '../../static/score.png';
 import skill from '../../static/skill.png';
 import DumbDate from './DumbDate/DumbDateComponent';
+
+var RichTextEditor;
+if (process.env.BROWSER) { RichTextEditor = require('react-rte').default; }
 
 @connect(state => ({
   clubs: state.clubs,
@@ -89,7 +91,7 @@ class CoachesOne extends React.Component {
   }
   getValueForRTEditor = () => {
     const tmp = this.state.about || '';
-    return RichTextEditor.createValueFromString(tmp, 'html');
+    return RichTextEditor ? RichTextEditor.createValueFromString(tmp, 'html') : {};
   };
 
   showTooltip = () => this.setState({ isTooltipActive: true });
@@ -389,15 +391,18 @@ class CoachesOne extends React.Component {
                       }}
                     >
                       <div
-                        style={{display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}
+                        style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}
                       >
                         <h3 className={css.textCoaches}>{`Opis:`}</h3>
-                        <RichTextEditor
-                          value={this.getValueForRTEditor()}
-                          rootStyle={{ border: 'none', background: 'none' }}
-                          editorStyle={{ color: 'white' }}
-                          readOnly
-                        />
+                        {
+                          RichTextEditor ?
+                            <RichTextEditor
+                              value={this.getValueForRTEditor()}
+                              rootStyle={{ border: 'none', background: 'none' }}
+                              editorStyle={{ color: 'white' }}
+                              readOnly
+                            /> : null
+                        }
                       </div>
                       <div>
                         <h3 className={css.textCoaches}>{`Sertifikati:`}</h3>
