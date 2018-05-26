@@ -31,6 +31,7 @@ import FilteredDecisionCoach from './FilteredDecisionCoach';
         about
         birthPlace
         birthDay
+        score
         personClub
         trainingPersonSkills {
           trainSkillName

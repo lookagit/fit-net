@@ -2,12 +2,12 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import css from './styles/styles.scss';
-import AfterSearchItemFisio from './AfterSearchItemFisio';
+import AfterSearchItemCouch from './AfterSearchItemCouch';
 import LogoBright from '../../static/logoBright.png';
 
 @graphql(gql`
-  query fisoClFindAll {
-    fisoClFindAll {
+  query personClFindAll {
+    personClFindAll {
       id
       firstName
       lastName
@@ -17,13 +17,14 @@ import LogoBright from '../../static/logoBright.png';
       about
       birthPlace
       birthDay
+      personClub
       score
-      fisioSkillsNames {
-        fisioSkillName
+      trainingPersonSkills {
+        trainSkillName
       }
     }
   }`)
-class IfNoResultsFisio extends React.Component {
+class IfNoResultsPerson extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,7 +33,6 @@ class IfNoResultsFisio extends React.Component {
   }
 
   render() {
-    console.log('JA SAM PROPS', this.props.data);
     return (
       <div>
         <div
@@ -68,15 +68,15 @@ class IfNoResultsFisio extends React.Component {
             <h2
               style={{
                 color: '#fff',
-
+                
               }}
             >
               Top 10
             </h2>
             {
-              !this.props.data.loading && this.props.data.fisoClFindAll.length ?
-                this.props.data.fisoClFindAll.map((item, key) => (
-                  <AfterSearchItemFisio couchProp={item} key={key} />
+              !this.props.data.loading && this.props.data.personClFindAll.length ?
+                this.props.data.personClFindAll.map((item, key) => (
+                  <AfterSearchItemCouch couchProp={item} key={key} />
                 )) : null
             }
           </div>
@@ -85,4 +85,4 @@ class IfNoResultsFisio extends React.Component {
     );
   }
 }
-export default IfNoResultsFisio;
+export default IfNoResultsPerson;

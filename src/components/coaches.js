@@ -108,18 +108,7 @@ class Coaches extends React.Component {
   }
   // SUBMIT AND CHECKING SEARCH
   getParams = () => {
-    if (this.state.skillArr.length < 1) {
-      this.setState({
-        categoriesAlert: 'block',
-      });
-      if (this.state.countiesId == null) {
-        this.setState({
-          countiesAlert: 'block',
-        });
-      }
-    } else {
-      this.sendToRedux();
-    }
+    this.sendToRedux();
   }
 
   sendToRedux = () => {

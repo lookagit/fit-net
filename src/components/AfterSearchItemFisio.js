@@ -86,7 +86,7 @@ class AfterSearchItemCouch extends React.Component {
               {`${couchProp.firstName} ${couchProp.lastName}`}
             </h3>
             <h4 className={css.coacheBirthPlace}>
-              {`${couchProp.birthPlace}`}
+              {`Mesto rodjenja: ${couchProp.birthPlace}`}
             </h4>
             <DumbDate date={couchProp.birthDay} />
             <h4 className={css.coacheTags}>
@@ -97,7 +97,7 @@ class AfterSearchItemCouch extends React.Component {
         <div className={css.profileAboutWrapper}>
           <div className={css.profileAboutHolder}>
             <h5 className={css.coacheAbout}>
-              {`${couchProp.about}`}
+              {`Skor: ${couchProp.score}`}
             </h5>
             <Link
               to={`/fisio-one/${couchProp.id}`}

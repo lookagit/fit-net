@@ -122,7 +122,7 @@ class UploadCertificates extends React.Component {
         labelColor="#fff"
         labelStyle={{ fontWeight: '700', color: '#fff' }}
         style={{ color: '#fff' }}
-        onClick={() => this.props.history.push(`/moreSkills/${parseInt(this.props.match.params.userId)}`)}
+        onClick={() => this.props.history.push(`/moreSkillsFisio/${parseInt(this.props.match.params.userId)}`)}
       />,
     ];
     return (
