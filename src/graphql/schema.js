@@ -605,6 +605,42 @@ const Query = new GraphQLObjectType({
           return findClub;
         },
       },
+      clubClFindAll: {
+        type: new GraphQLList(ClubCl),
+        async resolve(root) {
+          const findClub = await db.models.clubCl.findAll({
+            limit: 10,
+            order: [
+              ['score', 'DESC'],
+            ],
+          });
+          return findClub;
+        },
+      },
+      personClFindAll: {
+        type: new GraphQLList(PersonCl),
+        async resolve(root) {
+          const findPerson = await db.models.personCl.findAll({
+            limit: 10,
+            order: [
+              ['score', 'DESC'],
+            ],
+          });
+          return findPerson;
+        },
+      },
+      fisoClFindAll: {
+        type: new GraphQLList(FisioCl),
+        async resolve(root) {
+          const findFisio = await db.models.fisioCl.findAll({
+            limit: 10,
+            order: [
+              ['score', 'DESC'],
+            ],
+          });
+          return findFisio;
+        },
+      },
       fisoCl: {
         type: new GraphQLList(FisioCl),
         args: {
