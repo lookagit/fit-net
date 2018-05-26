@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { graphql } from 'react-apollo';
 import { withRouter } from 'react-router-dom';
 import gql from 'graphql-tag';
@@ -22,6 +22,7 @@ import {
   validateBirthPlace,
   validateUrl,
 } from './validationFuncs';
+import RichTextEditor from 'react-rte';
 
 const axios = require('axios');
 
@@ -77,7 +78,8 @@ class RegisterPerson extends React.Component {
       birthPlace: '',
       dateSelected: Moment(),
       date: '',
-      about: '',
+      about: RichTextEditor.createEmptyValue(),
+      aboutHtml: '',
       facebookLink: '',
       instagramLink: '',
       phone: '+381',
@@ -91,6 +93,13 @@ class RegisterPerson extends React.Component {
       openDialog: false,
       loading: false,
     };
+  }
+  onChangeRte = value => {
+    const html = value.toString('html');
+    this.setState({
+      about: value,
+      aboutHtml: html,
+    });
   }
   handleOpen = () => {
     this.setState({ openDialog: true });
@@ -213,7 +222,7 @@ class RegisterPerson extends React.Component {
             birthPlace: this.state.birthPlace,
             birthDay: this.state.date,
             hasCerificates: this.state.hasCerificates,
-            about: this.state.about,
+            about: this.state.aboutHtml,
             personClub: this.state.personClub,
             imageUrl: fileOk ? `${uniqueNameForImg}` : 'http://res.cloudinary.com/drama/image/upload/v1526508620/smiljkoHolder_ovuulk.png',
             skillsArr: this.state.skillArr,
@@ -606,7 +615,7 @@ class RegisterPerson extends React.Component {
               width: '100%',
             }}
           >
-            <TextField
+            {/* <TextField
               hintText="Napišite nešto o sebi. Gde ste radili, koliko se dugo bavite ovim poslom, najvece uspehe, itd..."
               floatingLabelText="O sebi"
               multiLine
@@ -621,6 +630,11 @@ class RegisterPerson extends React.Component {
                   about,
                 });
               }}
+            /> */}
+            <RichTextEditor
+              value={this.state.about}
+              rootStyle={{ width: '100%' }}
+              onChange={this.onChangeRte}
             />
           </div>
         </div>
@@ -651,4 +665,5 @@ class RegisterPerson extends React.Component {
     );
   }
 }
+
 export default RegisterPerson;

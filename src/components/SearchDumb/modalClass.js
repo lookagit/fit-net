@@ -57,7 +57,6 @@ class ModalClass extends React.Component {
         gToken: accessToken,
       });
       const id = null;
-      console.log('GET USER ', getUser);
       if (id) {
         this.props.dispatch({ type: 'FACEBOOK_LOGIN', accessToken: { ...getUser.data.userLogin } });
         window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...getUser.data.userLogin } }));

@@ -154,7 +154,6 @@ class Fizio extends React.Component {
   comingHomeFunc = comingHome => this.setState({ comingHome });
 
   render() {
-    console.log('THISA STATE ', this.state);
     return (
       <div className={css.coaches}>
         <SearchBox

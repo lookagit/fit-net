@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Lightbox } from 'react-modal-image';
 import ToolTip from 'react-portal-tooltip';
+import RichTextEditor from 'react-rte';
 import css from './styles/styles.scss';
 import year from '../../static/year.png';
 import name from '../../static/name.png';
@@ -68,12 +69,29 @@ class CoachesOne extends React.Component {
       selectedImageForModal: '',
       modalImageVisible: false,
       isTooltipActive: true,
+      about: '',
     };
   }
 
   componentDidMount() {
     setTimeout(() => this.setState({ isTooltipActive: false }), 1700);
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.data.onePresonCl !== undefined && !nextProps.data.loading) {
+      const { data } = nextProps;
+      const { onePresonCl } = data;
+      const { about } = onePresonCl;
+      this.setState({
+        about,
+      });
+    }
+  }
+  getValueForRTEditor = () => {
+    const tmp = this.state.about || '';
+    return RichTextEditor.createValueFromString(tmp, 'html');
+  };
+
   showTooltip = () => this.setState({ isTooltipActive: true });
 
   hideTooltip = () => this.setState({ isTooltipActive: false });
@@ -366,13 +384,20 @@ class CoachesOne extends React.Component {
                         display: 'flex',
                         flexDirection: 'column',
                         borderRadius: '5px',
-                        padding: '10px',
+                        paddingTop: '10px',
+                        paddingBottom: '10px',
                       }}
                     >
                       <div
-                        style={{display: 'flex', flexDirection: 'column' }}
+                        style={{display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}
                       >
-                        <h3 className={css.textCoaches}>{`Opis: ${this.props.data.onePresonCl.about}`}</h3>
+                        <h3 className={css.textCoaches}>{`Opis:`}</h3>
+                        <RichTextEditor
+                          value={this.getValueForRTEditor()}
+                          rootStyle={{ border: 'none', background: 'none' }}
+                          editorStyle={{ color: 'white' }}
+                          readOnly
+                        />
                       </div>
                       <div>
                         <h3 className={css.textCoaches}>{`Sertifikati:`}</h3>
