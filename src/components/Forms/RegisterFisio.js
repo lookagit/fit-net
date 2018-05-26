@@ -13,6 +13,7 @@ import Snackbar from 'material-ui/Snackbar';
 import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
 import logoBright from '../../../static/logoBright.png';
+import RichTextEditor from 'react-rte';
 
 import {
   validateStringNames,
@@ -75,7 +76,8 @@ class RegisterFisio extends React.Component {
       passwordRepeat: '',
       birthPlace: '',
       date: '',
-      about: 'Nema',
+      about: RichTextEditor.createEmptyValue(),
+      aboutHtml: '',
       facebookLink: '',
       instagramLink: '',
       phone: '+381',
@@ -90,6 +92,14 @@ class RegisterFisio extends React.Component {
     };
   }
 
+  onChangeRte = value => {
+    const html = value.toString('html');
+    this.setState({
+      about: value,
+      aboutHtml: html,
+    });
+  }
+
   handleOpen = () => {
     this.setState({ openDialog: true });
   };
@@ -100,7 +110,6 @@ class RegisterFisio extends React.Component {
 
   newFisio = async () => {
     const { password, passwordRepeat } = this.state;
-    console.log('PPASSS ', password, passwordRepeat);
     if (this.state.firstName === '' || !validateStringNames(this.state.firstName)) {
       this.setState({
         snackOpen: true,
@@ -212,7 +221,7 @@ class RegisterFisio extends React.Component {
             birthPlace: this.state.birthPlace,
             birthDay: this.state.date,
             hasCertificates: this.state.hasCerificates,
-            about: this.state.about,
+            about: this.state.aboutHtml,
             imageUrl: fileOk ? `${uniqueNameForImg}` : 'http://res.cloudinary.com/drama/image/upload/v1526508620/smiljkoHolder_ovuulk.png',
             comesHome: this.state.comesHome,
             fisioSkillsArr: this.state.skillArr,
@@ -221,7 +230,6 @@ class RegisterFisio extends React.Component {
       );
       if (mutation) {
         const { id } = mutation.data.updateOrCreateFisio;
-        console.log('mutation ', mutation);
         this.props.history.push(`/register-certificate/${id}`);
       }
     } else {
@@ -262,7 +270,6 @@ class RegisterFisio extends React.Component {
   comingHomeFunc = comesHome => this.setState({ comesHome });
 
   render() {
-    console.log('JA SAM STATE ', this.state);
     const actions = [
       <RaisedButton
         label="Ok"
@@ -632,7 +639,7 @@ class RegisterFisio extends React.Component {
               width: '100%',
             }}
           >
-            <TextField
+            {/* <TextField
               hintText="Napišite nešto o sebi. Gde ste radili, koliko se dugo bavite ovim poslom, najvece uspehe, itd..."
               floatingLabelText="O sebi"
               multiLine
@@ -647,6 +654,11 @@ class RegisterFisio extends React.Component {
                   about,
                 });
               }}
+            /> */}
+            <RichTextEditor
+              value={this.state.about}
+              rootStyle={{ width: '100%' }}
+              onChange={this.onChangeRte}
             />
           </div>
         </div>

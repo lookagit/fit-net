@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Lightbox } from 'react-modal-image';
 import ToolTip from 'react-portal-tooltip';
+import RichTextEditor from 'react-rte';
 import css from './styles/styles.scss';
 import year from '../../static/year.png';
 import name from '../../static/name.png';
@@ -67,11 +68,29 @@ class FisioOne extends React.Component {
       modalImageVisible: false,
       selectedImageForModal: '',
       isTooltipActive: true,
+      about: '',
     };
   }
   componentDidMount() {
     setTimeout(() => this.setState({ isTooltipActive: false }), 1700);
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.data.oneFisioCl !== undefined && !nextProps.data.loading) {
+      const { data } = nextProps;
+      const { oneFisioCl } = data;
+      const { about } = oneFisioCl;
+      this.setState({
+        about,
+      });
+    }
+  }
+
+  getValueForRTEditor = () => {
+    const tmp = this.state.about || '';
+    return RichTextEditor.createValueFromString(tmp, 'html');
+  };
+
   showTooltip = () => this.setState({ isTooltipActive: true });
 
   hideTooltip = () => this.setState({ isTooltipActive: false });
@@ -396,13 +415,20 @@ class FisioOne extends React.Component {
                         display: 'flex',
                         flexDirection: 'column',
                         borderRadius: '5px',
-                        padding: '10px',
+                        paddingTop: '10px',
+                        paddingBottom: '10px',
                       }}
                     >
                       <div
                         style={{ marginBottom: '15px', display: 'flex', flexDirection: 'column' }}
                       >
-                        <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500' }}>{`Opis: ${this.props.data.oneFisioCl.about}`}</h3>
+                        <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500' }}>{`Opis:`}</h3>
+                        <RichTextEditor
+                          value={this.getValueForRTEditor()}
+                          rootStyle={{ border: 'none', background: 'none' }}
+                          editorStyle={{ color: 'white' }}
+                          readOnly
+                        />
                       </div>
                       <div>
                         <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500'}}>{`Sertifikati:`}</h3>
