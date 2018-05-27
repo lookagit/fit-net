@@ -68,7 +68,7 @@ class IfNoResultsFisio extends React.Component {
             <h2
               style={{
                 color: '#fff',
-
+                marginBottom: '10px',
               }}
             >
               Top 10

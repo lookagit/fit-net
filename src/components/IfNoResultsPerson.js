@@ -68,10 +68,10 @@ class IfNoResultsPerson extends React.Component {
             <h2
               style={{
                 color: '#fff',
-                
+                marginBottom: '10px',
               }}
             >
-              Top 10
+              Top 10 trenera
             </h2>
             {
               !this.props.data.loading && this.props.data.personClFindAll.length ?
