@@ -17,6 +17,7 @@ import score from '../../static/score.png';
 import skill from '../../static/skill.png';
 import DumbDate from './DumbDate/DumbDateComponent';
 
+
 const TextEditorDiabled = Loadable({
   loader: () => import('./Forms/TextEditorDisabled'),
   loading: Loading,
