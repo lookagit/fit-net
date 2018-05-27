@@ -1083,5 +1083,5 @@ html {
   cursor: default;
 }
 .react-modal-image-download {
-  display: none;
+  display: none !important;
 }

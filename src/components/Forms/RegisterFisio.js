@@ -3,6 +3,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { withRouter } from 'react-router-dom';
 import Moment from 'moment-timezone';
+import Loadable from 'react-loadable';
 import Loading from 'react-loading-components';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
@@ -15,8 +16,10 @@ import css from '../styles/styles.scss';
 import logoBright from '../../../static/logoBright.png';
 import SearchBox from '../searchBox';
 
-var RichTextEditor;
-if (process.env.BROWSER) { RichTextEditor = require('react-rte').default; }
+const TextEditor = Loadable({
+  loader: () => import('./TextEditor'),
+  loading: Loading,
+});
 
 import {
   validateStringNames,
@@ -79,7 +82,7 @@ class RegisterFisio extends React.Component {
       passwordRepeat: '',
       birthPlace: '',
       date: '',
-      about: RichTextEditor ? RichTextEditor.createEmptyValue() : {},
+      about: '',
       aboutHtml: '',
       facebookLink: '',
       instagramLink: '',
@@ -93,14 +96,6 @@ class RegisterFisio extends React.Component {
       openDialog: false,
       loading: false,
     };
-  }
-
-  onChangeRte = value => {
-    const html = value.toString('html');
-    this.setState({
-      about: value,
-      aboutHtml: html,
-    });
   }
 
   handleOpen = () => {
@@ -658,14 +653,13 @@ class RegisterFisio extends React.Component {
                 });
               }}
             /> */}
-            {
-              RichTextEditor ?
-                <RichTextEditor
-                  value={this.state.about}
-                  rootStyle={{ width: '100%' }}
-                  onChange={this.onChangeRte}
-              /> : null
-            }
+            <TextEditor
+              getValue={value => {
+                this.setState({
+                  aboutHtml: value,
+                });
+              }}
+            />
           </div>
         </div>
         <div className={css.registerFisioOne}>

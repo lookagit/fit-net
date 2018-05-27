@@ -7,8 +7,9 @@ import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import { blue800, white } from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
-import Loading from 'react-loading-components';
 import Dialog from 'material-ui/Dialog';
+import Loadable from 'react-loadable';
+import Loading from 'react-loading-components';
 import Snackbar from 'material-ui/Snackbar';
 import logoBright from '../../../static/logoBright.png';
 import Uppy from '../Uppy';
@@ -22,8 +23,11 @@ import {
   validateUrl,
 } from './validationFuncs';
 
-var RichTextEditor;
-if (process.env.BROWSER) { RichTextEditor = require('react-rte').default; }
+
+const TextEditor = Loadable({
+  loader: () => import('./TextEditor'),
+  loading: Loading,
+});
 
 const axios = require('axios');
 
@@ -79,7 +83,7 @@ class RegisterPerson extends React.Component {
       birthPlace: '',
       dateSelected: Moment(),
       date: '',
-      about: RichTextEditor ? RichTextEditor.createEmptyValue() : {},
+      about: '',
       aboutHtml: '',
       facebookLink: '',
       instagramLink: '',
@@ -95,13 +99,7 @@ class RegisterPerson extends React.Component {
       loading: false,
     };
   }
-  onChangeRte = value => {
-    const html = value.toString('html');
-    this.setState({
-      about: value,
-      aboutHtml: html,
-    });
-  }
+
   handleOpen = () => {
     this.setState({ openDialog: true });
   };
@@ -632,14 +630,13 @@ class RegisterPerson extends React.Component {
                 });
               }}
             /> */}
-            {
-              RichTextEditor ?
-                <RichTextEditor
-                  value={this.state.about}
-                  rootStyle={{ width: '100%' }}
-                  onChange={this.onChangeRte}
-              /> : null
-            }
+            <TextEditor
+              getValue={value => {
+                this.setState({
+                  aboutHtml: value,
+                });
+              }}
+            />
           </div>
         </div>
         <div className={css.registerFisioOne}>

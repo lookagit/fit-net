@@ -4,6 +4,8 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Lightbox } from 'react-modal-image';
 import ToolTip from 'react-portal-tooltip';
+import Loadable from 'react-loadable';
+import Loading from 'react-loading-components';
 import css from './styles/styles.scss';
 import year from '../../static/year.png';
 import name from '../../static/name.png';
@@ -15,8 +17,10 @@ import score from '../../static/score.png';
 import skill from '../../static/skill.png';
 import DumbDate from './DumbDate/DumbDateComponent';
 
-var RichTextEditor;
-if (process.env.BROWSER) { RichTextEditor = require('react-rte').default; }
+const TextEditorDiabled = Loadable({
+  loader: () => import('./Forms/TextEditorDisabled'),
+  loading: Loading,
+});
 
 @connect(state => ({
   clubs: state.clubs,
@@ -425,16 +429,9 @@ class FisioOne extends React.Component {
                         style={{ marginBottom: '15px', display: 'flex', flexDirection: 'column' }}
                       >
                         <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500' }}>{`Opis:`}</h3>
-                        {
-                          RichTextEditor ?
-                            <RichTextEditor
-                              value={this.getValueForRTEditor()}
-                              rootStyle={{ border: 'none', background: 'none' }}
-                              editorStyle={{ color: 'white' }}
-                              readOnly
-                          /> : null
-
-                        }
+                        <TextEditorDiabled
+                          text={this.state.about}
+                        />
                       </div>
                       <div>
                         <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500'}}>{`Sertifikati:`}</h3>
