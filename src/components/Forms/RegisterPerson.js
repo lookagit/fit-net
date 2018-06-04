@@ -8,13 +8,13 @@ import DatePicker from 'material-ui/DatePicker';
 import { blue800, white } from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
-import Loadable from 'react-loadable';
 import Loading from 'react-loading-components';
 import Snackbar from 'material-ui/Snackbar';
 import logoBright from '../../../static/logoBright.png';
 import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
 import SearchBox from '../searchBox';
+import TextEditor from './TextEditor';
 import {
   validateStringNames,
   validateEmail,
@@ -22,12 +22,6 @@ import {
   validateBirthPlace,
   validateUrl,
 } from './validationFuncs';
-
-
-const TextEditor = Loadable({
-  loader: () => import('./TextEditor'),
-  loading: Loading,
-});
 
 const axios = require('axios');
 

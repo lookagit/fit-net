@@ -3,7 +3,6 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { withRouter } from 'react-router-dom';
 import Moment from 'moment-timezone';
-import Loadable from 'react-loadable';
 import Loading from 'react-loading-components';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
@@ -15,11 +14,7 @@ import Uppy from '../Uppy';
 import css from '../styles/styles.scss';
 import logoBright from '../../../static/logoBright.png';
 import SearchBox from '../searchBox';
-
-const TextEditor = Loadable({
-  loader: () => import('./TextEditor'),
-  loading: Loading,
-});
+import TextEditor from './TextEditor';
 
 import {
   validateStringNames,

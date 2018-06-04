@@ -1,24 +1,28 @@
-import React from 'react'
-import RichTextEditor from 'react-rte';
+import React from 'react';
+
+var RichTextEditor;
+if (!SERVER) { RichTextEditor = require('react-rte').default; }
 
 class TextEditorDisabled extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  getValueForRTEditor = (value) => {
+  getValueForRTEditor = value => {
     const tmp = value || '';
     return RichTextEditor.createValueFromString(tmp, 'html');
   };
 
   render() {
+    if (RichTextEditor) {
+      return (
+        <RichTextEditor
+          value={this.getValueForRTEditor(this.props.text)}
+          rootStyle={{ border: 'none', background: 'none' }}
+          editorStyle={{ color: 'white' }}
+          readOnly
+        />
+      );
+    }
     return (
-      <RichTextEditor
-        value={this.getValueForRTEditor(this.props.text)}
-        rootStyle={{ border: 'none', background: 'none' }}
-        editorStyle={{ color: 'white' }}
-        readOnly
-      />
+      <div>
+      </div>
     );
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
-import RichTextEditor from 'react-rte';
 
+var RichTextEditor;
+if (!SERVER) { RichTextEditor = require('react-rte').default; }
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -17,12 +18,18 @@ class TextEditor extends React.Component {
   }
 
   render() {
+    if (RichTextEditor) {
+      return (
+        <RichTextEditor
+          value={this.state.value}
+          rootStyle={{ width: '100%' }}
+          onChange={this.onChangeRte}
+        />
+      );
+    }
     return (
-      <RichTextEditor
-        value={this.state.value}
-        rootStyle={{ width: '100%' }}
-        onChange={this.onChangeRte}
-      />
+      <div>
+      </div>
     );
   }
 }

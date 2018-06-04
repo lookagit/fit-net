@@ -4,8 +4,6 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Lightbox } from 'react-modal-image';
 import ToolTip from 'react-portal-tooltip';
-import Loadable from 'react-loadable';
-import Loading from 'react-loading-components';
 import css from './styles/styles.scss';
 import year from '../../static/year.png';
 import name from '../../static/name.png';
@@ -16,11 +14,7 @@ import locationImage from '../../static/location.png';
 import score from '../../static/score.png';
 import skill from '../../static/skill.png';
 import DumbDate from './DumbDate/DumbDateComponent';
-
-const TextEditorDiabled = Loadable({
-  loader: () => import('./Forms/TextEditorDisabled'),
-  loading: Loading,
-});
+import TextEditorDiabled from './Forms/TextEditorDisabled';
 
 @connect(state => ({
   clubs: state.clubs,
@@ -426,7 +420,7 @@ class FisioOne extends React.Component {
                       }}
                     >
                       <div
-                        style={{ marginBottom: '15px', display: 'flex', flexDirection: 'column' }}
+                        style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}
                       >
                         <h3 style={{ color: '#fff', fontSize: '19px', fontWeight: '500' }}>{`Opis:`}</h3>
                         <TextEditorDiabled
@@ -466,7 +460,7 @@ class FisioOne extends React.Component {
                         </div>
                       </div>
                     </div>
-                    <div>
+                    <div style={{ overflowX: 'auto', marginBottom: '50px' }}>
                       <table className={css.tableFill}>
                         <thead>
                           <tr>
