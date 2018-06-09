@@ -224,6 +224,20 @@ class SearchBox extends React.Component {
           onClick={() => this.openModalCounties()}
           className={css.modalCountiesClass}>
           <div  className={css.categorieModal}>
+            <div
+              style={{
+                color: '#f00',
+                textAlign: 'right',
+              }}
+            >
+              <h1
+                style={{
+                  cursor: 'pointer',
+                }}
+              >
+                X
+              </h1>
+            </div>
             <div className={css.categorieModalWrapper} onClick={(e) => this.stopPropagation(e)}>
               {counties}
             </div>
