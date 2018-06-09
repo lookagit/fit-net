@@ -2,11 +2,12 @@ import React from 'react';
 
 var RichTextEditor;
 if (!SERVER) { RichTextEditor = require('react-rte').default; }
+
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: RichTextEditor.createEmptyValue(),
+      value: RichTextEditor ? RichTextEditor.createEmptyValue() : null,
     };
   }
   onChangeRte = value => {
