@@ -251,27 +251,35 @@ export const CountyArr = [
   {
     countyName: 'Ada',
   },
+
   {
     countyName: 'Aleksandrovac',
   },
+
   {
     countyName: 'Aleksinac',
   },
+
   {
     countyName: 'Alibunar',
   },
+
   {
     countyName: 'Apatin',
   },
+
   {
     countyName: 'Arandjelovac',
   },
+
   {
     countyName: 'Arilje',
   },
+
   {
     countyName: 'Azanja',
   },
+
   {
     countyName: 'Babušnica',
   },
