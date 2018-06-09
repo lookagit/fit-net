@@ -482,19 +482,8 @@ const Query = new GraphQLObjectType({
       },
       getCounties: {
         type: new GraphQLList(County),
-        args: {
-          cityId: {
-            type: GraphQLInt,
-          },
-        },
-        async resolve(root, args) {
-          const { cityId } = args;
-          const counties = await db.models.county.findAll({
-            where: {
-              cityId,
-            },
-          });
-          return counties;
+        async resolve(root) {
+          return db.models.county.findAll();
         },
       },
       userLogin: {

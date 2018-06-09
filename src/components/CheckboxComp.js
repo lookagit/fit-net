@@ -23,7 +23,7 @@ class CheckboxComp extends React.Component {
         'rgba(61, 75, 105, .8)' : 'rgba(61, 75, 105, .3)'}`}}
         onClick={()=>this.toggleChange()}
         className={css.categorieModalItem}>
-        <label 
+        <label
           style={{
           cursor:'pointer',
           color:`${this.state.checked ? '#fff' :

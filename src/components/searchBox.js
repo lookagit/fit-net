@@ -32,15 +32,7 @@ import DropdownSelectCounties from './Forms/DropdownSelectCounties';
 
 @graphql(
   gql`
-  query getCounties(
-    $cityId: Int
-  ) {
-    getCounties(
-      cityId: $cityId,
-    ) {
-      id
-      countyName
-    }
+  query getCounties {
     counties {
       id
       countyName
@@ -67,7 +59,6 @@ import DropdownSelectCounties from './Forms/DropdownSelectCounties';
     }),
   },
 )
-
 class SearchBox extends React.Component {
   constructor(props) {
     super(props);
@@ -249,7 +240,7 @@ class SearchBox extends React.Component {
           <div className={css.searchBox}>
             {
             this.props.categories ?
-              <Categorie 
+              <Categorie
                 openModal={this.openModalCategories}
                 categoriesAlert={this.props.categoriesAlert}
                 nameInCategorie={this.state.nameInCategorie}
@@ -266,6 +257,14 @@ class SearchBox extends React.Component {
             : null
             }
             {
+              this.props.counties ?
+                <Countie
+                  openModal={this.openModalCounties}
+                  countiesAlert={this.props.countiesAlert}
+                  nameInCounties={this.state.nameInCounties} />
+              : null
+            }
+            {/* {
               this.props.visibleCounties
               ?
                 <div>
@@ -305,7 +304,7 @@ class SearchBox extends React.Component {
                 </div>
                 :
                   null
-            }
+            } */}
             {
               this.props.group ?
                 <GroupTrening

@@ -158,8 +158,6 @@ const City = db.define('city', {
   },
 });
 
-City.hasMany(County);
-
 const PersonCounty = db.define('personCounty', {
   price: {
     type: Sequelize.INTEGER,

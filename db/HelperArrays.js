@@ -247,87 +247,546 @@ export const TrainingSkillArr = [
   },
 ];
 
-export const CityArr = [
-  {
-    cityName: 'Beograd',
-  },
-  {
-    cityName: 'Novi Sad',
-  },
-];
-
 export const CountyArr = [
   {
-    countyName: 'Zvezdara',
-    cityId: 1,
+    countyName: 'Ada',
   },
   {
-    countyName: 'Savski venac',
-    cityId: 1,
+    countyName: 'Aleksandrovac',
   },
   {
-    countyName: 'Voždovac',
-    cityId: 1,
+    countyName: 'Aleksinac',
   },
   {
-    countyName: 'Vračar',
-    cityId: 1,
+    countyName: 'Alibunar',
   },
   {
-    countyName: 'Grocka',
-    cityId: 1,
+    countyName: 'Apatin',
   },
   {
-    countyName: 'Zemun',
-    cityId: 1,
+    countyName: 'Arandjelovac',
+  },
+  {
+    countyName: 'Arilje',
+  },
+  {
+    countyName: 'Azanja',
+  },
+  {
+    countyName: 'Babušnica',
+  },
+  {
+    countyName: 'Bač',
+  },
+  {
+    countyName: 'Bačka Palanka',
+  },
+  {
+    countyName: 'Bačka Topola',
+  },
+  {
+    countyName: 'Bački Petrovac',
+  },
+  {
+    countyName: 'Bačko Petrovo Selo',
+  },
+  {
+    countyName: 'Bajina Bašta',
+  },
+  {
+    countyName: 'Banatski Karlovac',
+  },
+  {
+    countyName: 'Banatsko Novo Selo',
+  },
+  {
+    countyName: 'Banja Koviljača',
+  },
+  {
+    countyName: 'Barajevo',
+  },
+  {
+    countyName: 'Batajnica',
+  },
+  {
+    countyName: 'Batočina',
+  },
+  {
+    countyName: 'Bečej',
+  },
+  {
+    countyName: 'Bela Crkva',
+  },
+  {
+    countyName: 'Bela Palanka',
+  },
+  {
+    countyName: 'Beočin',
+  },
+  {
+    countyName: 'Beograd | Zvezdara',
+  },
+  {
+    countyName: 'Beograd | Savski venac',
+  },
+  {
+    countyName: 'Beograd | Voždovac',
+  },
+  {
+    countyName: 'Beograd | Vračar',
+  },
+  {
+    countyName: 'Beograd | Grocka',
+  },
+  {
+    countyName: 'Beograd | Zemun',
+  },
+  {
+    countyName: 'Beograd | Mladenovac',
+  },
+  {
+    countyName: 'Beograd | Novi Beograd',
+  },
+  {
+    countyName: 'Beograd | Palilula',
+  },
+  {
+    countyName: 'Beograd | Rakovica',
+  },
+  {
+    countyName: 'Beograd | Stari grad',
+  },
+  {
+    countyName: 'Beograd | Surčin',
+  },
+  {
+    countyName: 'Beograd | Čukarica',
+  },
+  {
+    countyName: 'Beograd | Borča',
+  },
+  {
+    countyName: 'Beška',
+  },
+  {
+    countyName: 'Blace',
+  },
+  {
+    countyName: 'Bogatić',
+  },
+  {
+    countyName: 'Bojnik',
+  },
+  {
+    countyName: 'Boljevac',
+  },
+  {
+    countyName: 'Bosilegrad',
+  },
+  {
+    countyName: 'Brus',
+  },
+  {
+    countyName: 'Crvenka',
+  },
+  {
+    countyName: 'Čačak',
+  },
+  {
+    countyName: 'Čelarevo',
+  },
+  {
+    countyName: 'Čoka',
+  },
+  {
+    countyName: 'Čurug',
+  },
+  {
+    countyName: 'Ćićevac',
+  },
+  {
+    countyName: 'Ćuprija',
+  },
+  {
+    countyName: 'Despotovac',
+  },
+  {
+    countyName: 'Dimitrovgrad',
+  },
+  {
+    countyName: 'Dolovo',
+  },
+  {
+    countyName: 'Doljevac',
+  },
+  {
+    countyName: 'Feketić',
+  },
+  {
+    countyName: 'Futog',
+  },
+  {
+    countyName: 'Gornji Milanovac',
+  },
+  {
+    countyName: 'Horgoš',
+  },
+  {
+    countyName: 'Indjija',
+  },
+  {
+    countyName: 'Irig',
+  },
+  {
+    countyName: 'Ivanjica',
+  },
+  {
+    countyName: 'Jagodina',
+  },
+  {
+    countyName: 'Kačarevo',
+  },
+  {
+    countyName: 'Kać',
+  },
+  {
+    countyName: 'Kanjiža',
+  },
+  {
+    countyName: 'Kikinda',
+  },
+  {
+    countyName: 'Kladovo',
+  },
+  {
+    countyName: 'Knić',
+  },
+  {
+    countyName: 'Knjaževac',
+  },
+  {
+    countyName: 'Koceljeva',
+  },
+  {
+    countyName: 'Kopaonik',
+  },
+  {
+    countyName: 'Kosjerić',
+  },
+  {
+    countyName: 'Kosovska Mitrovica',
+  },
+  {
+    countyName: 'Kostolac',
+  },
+  {
+    countyName: 'Kovačica',
+  },
+  {
+    countyName: 'Kovilj',
+  },
+  {
+    countyName: 'Kovin',
+  },
+  {
+    countyName: 'Kragujevac',
+  },
+  {
+    countyName: 'Kraljevo',
+  },
+  {
+    countyName: 'Krupanj',
+  },
+  {
+    countyName: 'Kruševac',
+  },
+  {
+    countyName: 'Kučevo',
+  },
+  {
+    countyName: 'Kula',
+  },
+  {
+    countyName: 'Kuršumlija',
+  },
+  {
+    countyName: 'Lajkovac',
+  },
+  {
+    countyName: 'Lapovo',
+  },
+  {
+    countyName: 'Lazarevac',
+  },
+  {
+    countyName: 'Lebane',
+  },
+  {
+    countyName: 'Leposavić',
+  },
+  {
+    countyName: 'Leskovac',
+  },
+  {
+    countyName: 'Loznica',
+  },
+  {
+    countyName: 'Lučani',
+  },
+  {
+    countyName: 'Ljig',
+  },
+  {
+    countyName: 'Majdanpek',
+  },
+  {
+    countyName: 'Mali Zvornik',
+  },
+  {
+    countyName: 'Medvedja',
+  },
+  {
+    countyName: 'Melenci',
+  },
+  {
+    countyName: 'Merošina',
+  },
+  {
+    countyName: 'Mionica',
   },
   {
     countyName: 'Mladenovac',
-    cityId: 1,
   },
   {
-    countyName: 'Novi Beograd',
-    cityId: 1,
+    countyName: 'Negotin',
   },
   {
-    countyName: 'Palilula',
-    cityId: 1,
+    countyName: 'Niš',
   },
   {
-    countyName: 'Rakovica',
-    cityId: 1,
+    countyName: 'Nova Pazova',
   },
   {
-    countyName: 'Stari grad',
-    cityId: 1,
+    countyName: 'Nova Varoš',
   },
   {
-    countyName: 'Surčin',
-    cityId: 1,
+    countyName: 'Novi Banovci',
   },
   {
-    countyName: 'Čukarica',
-    cityId: 1,
+    countyName: 'Novi Bečej',
   },
   {
-    countyName: 'Avijatičarsko naselje',
-    cityId: 2,
+    countyName: 'Novi Kneževac',
   },
   {
-    countyName: 'Adamovićevo naselje',
-    cityId: 2,
+    countyName: 'Novi Pazar',
   },
   {
-    countyName: 'Adice',
-    cityId: 2,
+    countyName: 'Novi Sad',
   },
   {
-    countyName: 'Grbavica',
-    cityId: 2,
+    countyName: 'Obrenovac',
   },
   {
-    countyName: 'Liman',
-    cityId: 2,
+    countyName: 'Odžaci',
+  },
+  {
+    countyName: 'Omoljica',
+  },
+  {
+    countyName: 'Opovo',
+  },
+  {
+    countyName: 'Palić',
+  },
+  {
+    countyName: 'Pančevo',
+  },
+  {
+    countyName: 'Petrovac Na Mlavi',
+  },
+  {
+    countyName: 'Petrovaradin',
+  },
+  {
+    countyName: 'Pirot',
+  },
+  {
+    countyName: 'Plandište',
+  },
+  {
+    countyName: 'Požarevac',
+  },
+  {
+    countyName: 'Požega',
+  },
+  {
+    countyName: 'Preševo',
+  },
+  {
+    countyName: 'Priboj',
+  },
+  {
+    countyName: 'Prijepolje',
+  },
+  {
+    countyName: 'Prokuplje',
+  },
+  {
+    countyName: 'Pukovac',
+  },
+  {
+    countyName: 'Raška',
+  },
+  {
+    countyName: 'Ruma',
+  },
+  {
+    countyName: 'Rumenka',
+  },
+  {
+    countyName: 'Senta',
+  },
+  {
+    countyName: 'Sevojno',
+  },
+  {
+    countyName: 'Sjenica',
+  },
+  {
+    countyName: 'Smederevo',
+  },
+  {
+    countyName: 'Smederevska Palanka',
+  },
+  {
+    countyName: 'Sokobanja',
+  },
+  {
+    countyName: 'Sombor',
+  },
+  {
+    countyName: 'Sopot',
+  },
+  {
+    countyName: 'Srbobran',
+  },
+  {
+    countyName: 'Sremska Kamenica',
+  },
+  {
+    countyName: 'Sremska Mitrovica',
+  },
+  {
+    countyName: 'Sremski Karlovci',
+  },
+  {
+    countyName: 'Stara Pazova',
+  },
+  {
+    countyName: 'Starčevo',
+  },
+  {
+    countyName: 'Stari Banovci',
+  },
+  {
+    countyName: 'Subotica',
+  },
+  {
+    countyName: 'Surdulica',
+  },
+  {
+    countyName: 'Svilajnac',
+  },
+  {
+    countyName: 'Svrljig',
+  },
+  {
+    countyName: 'Šabac',
+  },
+  {
+    countyName: 'Šid',
+  },
+  {
+    countyName: 'Temerin',
+  },
+  {
+    countyName: 'Titel',
+  },
+  {
+    countyName: 'Topola',
+  },
+  {
+    countyName: 'Trstenik',
+  },
+  {
+    countyName: 'Tutin',
+  },
+  {
+    countyName: 'Ub',
+  },
+  {
+    countyName: 'Užice',
+  },
+  {
+    countyName: 'Valjevo',
+  },
+  {
+    countyName: 'Varvarin',
+  },
+  {
+    countyName: 'Velika Plana',
+  },
+  {
+    countyName: 'Veliko Gradište',
+  },
+  {
+    countyName: 'Veternik',
+  },
+  {
+    countyName: 'Vinča',
+  },
+  {
+    countyName: 'Vladičin Han',
+  },
+  {
+    countyName: 'Vladimirci',
+  },
+  {
+    countyName: 'Vranje',
+  },
+  {
+    countyName: 'Vrbas',
+  },
+  {
+    countyName: 'Vrnjačka Banja',
+  },
+  {
+    countyName: 'Vršac',
+  },
+  {
+    countyName: 'Zaječar',
+  },
+  {
+    countyName: 'Zlatibor',
+  },
+  {
+    countyName: 'Zrenjanin',
+  },
+  {
+    countyName: 'Zubin Potok',
+  },
+  {
+    countyName: 'Zvečan',
+  },
+  {
+    countyName: 'Žabalj',
+  },
+  {
+    countyName: 'Žagubica',
+  },
+  {
+    countyName: 'Žitoradja',
   },
 ];
 // export const PersonCountyHelper = [
