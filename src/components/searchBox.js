@@ -51,13 +51,6 @@ import DropdownSelectCounties from './Forms/DropdownSelectCounties';
     }
   }
   `,
-  {
-    options: props => ({
-      variables: {
-        cityId: 1,
-      },
-    }),
-  },
 )
 class SearchBox extends React.Component {
   constructor(props) {
