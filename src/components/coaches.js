@@ -11,12 +11,8 @@ import { history } from 'kit/lib/routing';
 
 @graphql(
   gql`
-  query getCounties(
-    $cityId: Int
-  ) {
-    getCounties(
-      cityId: $cityId,
-    ) {
+  query getCounties{
+    getCounties {
       id
       countyName
     }
@@ -26,13 +22,6 @@ import { history } from 'kit/lib/routing';
     }
   }
   `,
-  {
-    options: props => ({
-      variables: {
-        cityId: 1,
-      },
-    }),
-  },
 )
 
 class Coaches extends React.Component {
@@ -126,7 +115,7 @@ class Coaches extends React.Component {
 
   selectCity = async e => {
     let id = parseInt(e.target.value); //eslint-disable-line
-    await this.props.data.refetch({ cityId: id });
+    await this.props.data.refetch();
     this.setState({
       visibleCounties: true,
       cityId: id,

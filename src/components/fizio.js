@@ -11,12 +11,8 @@ import { history } from 'kit/lib/routing';
 
 @graphql(
   gql`
-  query getCounties(
-    $cityId: Int
-  ) {
-    getCounties(
-      cityId: $cityId,
-    ) {
+  query getCounties {
+    getCounties {
       id
       countyName
     }
@@ -26,13 +22,6 @@ import { history } from 'kit/lib/routing';
     }
   }
   `,
-  {
-    options: props => ({
-      variables: {
-        cityId: 1,
-      },
-    }),
-  },
 )
 
 class Fizio extends React.Component {
@@ -137,10 +126,9 @@ class Fizio extends React.Component {
 
   selectCity = async e => {
     let id = parseInt(e.target.value); //eslint-disable-line
-    await this.props.data.refetch({ cityId: id });
+    await this.props.data.refetch();
     this.setState({
       visibleCounties: true,
-      cityId: id,
       countiesId: '',
     });
   }
@@ -175,11 +163,8 @@ class Fizio extends React.Component {
           comingHomeParams={this.state.comingHome}
           certifiedField={this.state.certified}
           certifiedFunc={this.certifiedFunc}
-          arrayForCity={this.state.arrayCities} //list of city for select city in searchBox
           arrayForCounties={this.state.arrayCounties} //list of counties refetched when select city
-          handleCityClick={this.selectCity} //func for select cityId
           handleCounties={this.selectCounties} //func for select couniesId
-          valueCity={this.state.cityId} //value for selected city
           valueCounties={this.state.countiesId} //value for selected counties
           visibleCounties={this.state.visibleCounties} //value for visible counties dropdown
         />

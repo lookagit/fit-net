@@ -397,6 +397,11 @@ if (process.env.NODE_ENV === 'production') {
     // PersonTrainingSkillArr.map(async item => {
     //   await PersonTrainingSkill.create(item);
     // });
+
+    FisioCategoriesArr.map(async item => {
+      await FisioCategories.create(item);
+    });
+
     CityArr.map(async item => {
       await City.create(item);
     });
@@ -421,10 +426,6 @@ if (process.env.NODE_ENV === 'production') {
     // FisioArr.map(async item => {
     //   await FisioCl.create(item);
     // });
-
-    FisioCategoriesArr.map(async item => {
-      await FisioCategories.create(item);
-    });
 
     // FisioCountyArr.map(async item => {
     //   await FisioCounty.create(item);
