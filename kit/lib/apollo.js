@@ -42,7 +42,7 @@ export function getNetworkInterface(uri, opt) {
 export function browserClient() {
   // If we have an internal GraphQL server, we need to append it with a
   // call to `getServerURL()` to add the correct host (in dev + production)
-  const uri = 'http://apps.fit-net.rs/graphql';
+  const uri = 'https://apps.fit-net.rs/graphql';
 
   return createClient({
     networkInterface: getNetworkInterface(uri),
