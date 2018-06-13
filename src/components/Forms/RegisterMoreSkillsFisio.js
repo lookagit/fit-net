@@ -17,12 +17,8 @@ import { blue800, white } from 'material-ui/styles/colors';
 
 @graphql(
   gql`
-  query getCounties(
-    $cityId: Int
-  ) {
-    getCounties(
-      cityId: $cityId,
-    ) {
+  query getCounties {
+    counties {
       id
       countyName
     }
@@ -36,13 +32,6 @@ import { blue800, white } from 'material-ui/styles/colors';
     }
   }
   `,
-  {
-    options: props => ({
-      variables: {
-        cityId: 1,
-      },
-    }),
-  },
 )
 @graphql(
   gql`
@@ -63,13 +52,11 @@ class RegisterMoreSkillsFisio extends React.Component {
     super(props);
     this.state = {
       skillId: 0,
-      cityId: 0,
       countiesId: '',
       address: '',
       price: '',
       arrayCategories: [],
       arrayCounties: [],
-      arrayCities: [],
       visibleCounties: false,
       itemId: 0,
       moreItems: false,
@@ -78,14 +65,11 @@ class RegisterMoreSkillsFisio extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (typeof nextProps.data.fisioCategories !== 'undefined') {
-      this.setState({ arrayCategories: nextProps.data.fisioCategories });
-    }
     if (typeof nextProps.data.getCities !== 'undefined') {
       this.setState({ arrayCities: nextProps.data.getCities });
     }
-    if (typeof nextProps.data.getCounties !== 'undefined') {
-      this.setState({ arrayCounties: nextProps.data.getCounties });
+    if (typeof nextProps.data.counties !== 'undefined') {
+      this.setState({ arrayCounties: nextProps.data.counties });
     }
   }
 
@@ -100,12 +84,6 @@ class RegisterMoreSkillsFisio extends React.Component {
       address,
     });
   }
-
-  setSalonName = salonName => {
-    this.setState({
-      salonName,
-    });
-  }
   selectCategory = e => {
     this.setState({
       skillId: e.target.value,
@@ -114,10 +92,9 @@ class RegisterMoreSkillsFisio extends React.Component {
 
   selectCity = async e => {
     let id = parseInt(e.target.value); //eslint-disable-line
-    await this.props.data.refetch({ cityId: id });
+    await this.props.data.refetch();
     this.setState({
       visibleCounties: true,
-      cityId: id,
     });
   }
 
@@ -134,28 +111,23 @@ class RegisterMoreSkillsFisio extends React.Component {
   }
 
   moreItem = async () => {
-    if (this.state.countiesId !== '' && this.state.price !== '' && this.state.cityId !== '' && this.state.address) {
-      const { price, skillId, countiesId, cityId, address } = this.state;
+    if (this.state.countiesId !== '' && this.state.price !== '' && this.state.address) {
+      const { price, skillId, countiesId, address } = this.state;
       const obj = {};
       obj.price = price;
       const [filteredNameSkillId] = this.state.arrayCategories.filter(item => (
         item.id == skillId
       ));
-      const [filteredNameCityId] = this.state.arrayCities.filter(item => (
-        item.id === cityId
-      ));
       const [filteredNameCounties] = this.state.arrayCounties.filter(item => (
         item.id == countiesId
       ));
       obj.skillId = { ...filteredNameSkillId };
-      obj.cityId = { ...filteredNameCityId };
       obj.counties = { ...filteredNameCounties };
       obj.address = address;
       obj.id = this.state.itemId;
       this.setState({
         price: '',
         countiesId: '',
-        cityId: '',
         skillId: '',
         address: '',
         moreItems: true,
@@ -183,7 +155,7 @@ class RegisterMoreSkillsFisio extends React.Component {
   }
 
   saveSkills = () => {
-    if (this.state.countiesId !== '' && this.state.price !== '' && this.state.cityId !== '' && this.state.address) {
+    if (this.state.countiesId !== '' && this.state.price !== '' && this.state.address) {
       this.moreItem();
     }
     const { id } = this.props.match.params;
@@ -210,14 +182,12 @@ class RegisterMoreSkillsFisio extends React.Component {
           handleCityClick={this.selectCity}
           handleCounties={this.selectCounties}
           valueCategory={this.state.skillId}
-          valueCity={this.state.cityId}
           valueCounties={this.state.countiesId}
           valuePrice={this.state.price}
           valueAddress={this.state.address}
           getValueFromInput={this.setPrice}
           getValueFromAddress={this.setAddress}
           arrayForCategoryes={this.state.arrayCategories}
-          arrayForCity={this.state.arrayCities}
           arrayForCounties={this.state.arrayCounties}
           visibleCounties={this.state.visibleCounties}
         />
@@ -232,7 +202,6 @@ class RegisterMoreSkillsFisio extends React.Component {
                 salonName={item.salonName}
                 counti={item.counties}
                 skill={item.skillId}
-                city={item.cityId}
                 prices={item.price}
                 address={item.address}
               />
@@ -266,31 +235,15 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
     <div className={css.registerFisio}>
       <div className={css.searchBoxWrapper} style={{ paddingTop: 5 }}>
         <div className={css.searchBox} style={{ paddingTop: 0, paddingBottom: 5 }}>
-          <DropdownSelectCity
-            array={arrayForCity}
-            selected={valueCity}
-            firstOption="Izaberite grad"
-            label="Grad"
+          <DropdownSelectCounties
+            array={arrayForCounties}
+            selected={valueCounties}
+            firstOption="Izaberite opštinu"
+            label="Opštine"
             styles={{ margin: '0 auto' }}
-            handleClick={handleCityClick}
+            handleClick={handleCounties}
           />
         </div>
-        {
-          visibleCounties
-          ?
-            <div className={css.searchBox} style={{ paddingTop: 0, paddingBottom: 5 }}>
-              <DropdownSelectCounties
-                array={arrayForCounties}
-                selected={valueCounties}
-                firstOption="Izaberite opštinu"
-                label="Opštine"
-                styles={{ margin: '0 auto' }}
-                handleClick={handleCounties}
-              />
-            </div>
-          :
-           null
-        }
       </div>
       <div
         className={css.inputMoreSkills}
@@ -329,22 +282,13 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
   </div>
 );
 
-const DisabledBox = ({ id, skill, counti, prices, city, removeMe, address }) => (
+const DisabledBox = ({ id, skill, counti, prices, removeMe, address }) => (
   <div className={css.searchBoxWrapper} style={{}}>
     <div style={{ marginTop: 20, marginBottom: 45 }}>
       <div style={{ opacity: 0.96 }}>
         <div className={css.searchBox}>
           <div className={css.recycleItem}>
             <img alt="delete" src={RecycleItem} width="30" height="30" onClick={() => removeMe(id)} style={{ cursor: 'pointer' }} />
-          </div>
-          <div className={css.categorie}>
-            <div className={css.categorieTitle}>
-              <p style={{ marginTop: 0, color: '#fff', fontSize: '17px', fontWeight: 'bold' }}>GRAD</p>
-            </div>
-            <div
-              className={css.categorieButton}>
-              <h3 style={{ color: '#a9a9a9', fontWeight: 'bold' }}>{city.cityName}</h3>
-            </div>
           </div>
           <div className={css.categorie}>
             <div className={css.categorieTitle}>
