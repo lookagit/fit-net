@@ -603,8 +603,9 @@ class RegisterPerson extends React.Component {
           <div
             style={{
               display: 'flex',
+              flexDirection: 'column',
               justifyContent: 'center',
-              alignItems: 'center',
+              alignItems: 'flex-start',
               width: '100%',
             }}
           >
