@@ -627,8 +627,9 @@ class RegisterFisio extends React.Component {
           <div
             style={{
               display: 'flex',
+              flexDirection: 'column',
               justifyContent: 'center',
-              alignItems: 'center',
+              alignItems: 'flex-start',
               width: '100%',
             }}
           >
@@ -648,6 +649,11 @@ class RegisterFisio extends React.Component {
                 });
               }}
             /> */}
+            <h3
+              style={{ color: '#fff' }}
+            >
+              Opis:
+            </h3>
             <TextEditor
               getValue={value => {
                 this.setState({

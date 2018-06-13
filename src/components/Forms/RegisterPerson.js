@@ -608,6 +608,11 @@ class RegisterPerson extends React.Component {
               width: '100%',
             }}
           >
+            <h3
+              style={{ color: '#fff' }}
+            >
+              Opis:
+            </h3>
             {/* <TextField
               hintText="Napišite nešto o sebi. Gde ste radili, koliko se dugo bavite ovim poslom, najvece uspehe, itd..."
               floatingLabelText="O sebi"

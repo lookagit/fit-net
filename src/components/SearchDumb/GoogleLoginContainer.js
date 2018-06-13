@@ -33,6 +33,7 @@ class GoogleLoginContainer extends React.Component {
     };
   }
   responseGoogle = async response => {
+    console.log("JA SAM RESPONSE ", response);
     if (response.profileObj) {
       const { accessToken } = response;
       const getUser = await this.props.data.refetch({
