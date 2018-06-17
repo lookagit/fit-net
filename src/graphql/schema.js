@@ -431,6 +431,24 @@ const UserCl = new GraphQLObjectType({
           return userCl.email;
         },
       },
+      password: {
+        type: GraphQLString,
+        resolve(userCl) {
+          return userCl.password;
+        },
+      },
+      isCouch: {
+        type: GraphQLInt,
+        resolve(userCl) {
+          return userCl.isCouch;
+        },
+      },
+      isClub: {
+        type: GraphQLInt,
+        resolve(userCl) {
+          return userCl.isClub;
+        },
+      },
       token: {
         type: GraphQLString,
         resolve(userCl) {
