@@ -1,5 +1,4 @@
 import React from 'react';
-import { GoogleLogin } from 'react-google-login';
 import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -7,6 +6,7 @@ import css from '../styles/styles.scss';
 import logoBright from '../../../static/logoBright.png';
 import FacebookLoginContainer from './FacebookLoginContainer';
 import GoogleLoginContainer from './GoogleLoginContainer';
+import LoginForm from './LoginForm';
 
 @connect(state => ({ login: state.login }))
 @graphql(gql`
@@ -83,15 +83,7 @@ class ModalClass extends React.Component {
               width="185px"
               height="90px"
             />
-            <h3
-              style={{
-                marginTop: '14px',
-                color: 'white',
-              }}
-            >
-             Zbog bezbednosnih razloga FIT-NET trenutno podrzava
-             login preko drustvenih mreza. Hvala na razumevanju.
-            </h3>
+            <LoginForm />
           </div>
           <div
             className={css.socialContainerButton}

@@ -104,6 +104,22 @@ p {
   background: #DD4B39;
   text-align: center;
 }
+.loginBtnCust {
+  box-sizing: border-box;
+  position: relative;
+  /* width: 13em;  - apply for fixed size */
+  margin: 0.2em;
+  padding: 0 15px 0 15px;
+  border: none;
+  text-align: left;
+  line-height: 34px;
+  white-space: nowrap;
+  border-radius: 0.2em;
+  font-size: 16px;
+  color: #FFF;
+  background: #00c0ff;
+  text-align: center;
+}
 .loginBtnGoogle:hover,
 .loginBtnGoogle:focus {
   background: #E74B37; 
@@ -199,6 +215,7 @@ a{
   flex: 1;
   display: flex;
   padding-left: 20px;
+  align-items: center;
 }
 .logoBox h1{
   color: blue;
@@ -496,7 +513,6 @@ a{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 45%;
   height: 40px;
 }
 

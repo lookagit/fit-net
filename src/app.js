@@ -27,7 +27,7 @@ import Clubs from 'reducers/clubs';
 import Fizio from 'reducers/fizio';
 import Login from 'reducers/login';
 import Modal from 'reducers/modal';
-
+import Drawer from 'reducers/drawer';
 // Main component -- i.e. the 'root' React component in our app
 import Main from 'components/main';
 
@@ -49,6 +49,7 @@ config.addReducer('clubs', Clubs);
 config.addReducer('fizio', Fizio);
 config.addReducer('login', Login);
 config.addReducer('modal', Modal, { isVisible: false, modalClass: '' });
+config.addReducer('drawer', Drawer, { drawerOpen: false });
 
 /* GRAPHQL */
 

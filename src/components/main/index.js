@@ -9,7 +9,7 @@ import {
 
 // <Helmet> component for setting the page title/meta tags
 import Helmet from 'react-helmet';
-
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 /* ReactQL */
 
 // NotFound 404 handler for unknown routes, and the app-wide `history` object
@@ -36,7 +36,8 @@ import RegisterFisio from '../Forms/RegisterFisio';
 import RegisterMoreSkillsFisio from '../Forms/RegisterMoreSkillsFisio';
 import css from '../styles/styles.scss';
 import RegisterMoreSkillsContainer from '../Forms/RegisterMoreSkillsContainer';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+
 export default () => (
   <div className={css.mainWrapper}>
     <MuiThemeProvider>

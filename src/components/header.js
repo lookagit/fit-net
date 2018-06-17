@@ -6,19 +6,14 @@ import Navigation from './navigation';
 import Login from './login';
 import LogedInOrNot from './SearchDumb/LogedInOrNot';
 import logoBright from '../../static/logoBright.png';
+import menuIcon from '../../static/menuIcon.png';
 
 @connect(state => ({
   login: state.login,
   modal: state.modal,
+  drawer: state.drawer,
 }))
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modal: false,
-      modalClass: null,
-    };
-  }
   modalOn = e => {
     this.props.dispatch({ type: 'MODAL_VISIBLE', isVisible: true, modalClass: e });
   }
@@ -36,15 +31,15 @@ class Header extends React.Component {
     return (
       <div className={css.header}>
         <div className={css.headerBox1}>
-          <div className={css.logoBox}>
+          <div
+            onClick={() => this.props.dispatch({type: 'DRAWER_OPEN'})}
+            className={css.logoBox}
+          >
             <img
               alt="FIT NET"
               src={logoBright}
               width="150px"
               height="75px"
-              style={{
-                borderRadius: '50%',
-              }}
             />
           </div>
           <div className={css.loginBox}>

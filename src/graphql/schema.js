@@ -506,6 +506,7 @@ const Query = new GraphQLObjectType({
           return userControll.userLogin(args);
         },
       },
+      
       allCertificates: {
         type: new GraphQLList(Certification),
         async resolve() {
@@ -697,6 +698,12 @@ const Query = new GraphQLObjectType({
           return findFisio;
         },
       },
+      getAllUsers: {
+        type: new GraphQLList(UserCl),
+        async resolve(root) {
+          return db.models.userCl.findAll();
+        },
+      },
       personCl: {
         type: new GraphQLList(PersonCl),
         args: {
@@ -874,7 +881,7 @@ const Mutation = new GraphQLObjectType({
             type: new GraphQLList(GraphQLInt),
           },
         },
-        async resolve(root, { email, ...args }) {
+        async resolve(root, { email, password, ...args }) {
           const findOrCreateUser = await db.models.personCl.findOne({
             where: {
               email,
@@ -888,6 +895,11 @@ const Mutation = new GraphQLObjectType({
             ...args,
           });
           if (createPersonCl) {
+            await db.models.userCl.upsert({
+              email,
+              password,
+              isCouch: 1,
+            });
             return createPersonCl;
           }
           return { error: 'Database issue' };
@@ -1016,142 +1028,147 @@ const Mutation = new GraphQLObjectType({
           return { error: 'Database issue' };
         },
       },
-            createMembershipFees: {
-                type: MemberShip,
-                args: {
-                    price: {
-                        type: GraphQLFloat,
-                    },
-                    clubClId: {
-                        type: GraphQLInt,
-                    },
-                    trainingSkillId: {
-                        type: GraphQLInt,
-                    },
-                },
-                async resolve(root, {price, clubClId, trainingSkillId}) {
-                    return await db.models.membershipFees.create({
-                        price,
-                        clubClId,
-                        trainingSkillId,
-                    });
-                },
+      createMembershipFees: {
+        type: MemberShip,
+        args: {
+          price: {
+            type: GraphQLFloat,
+          },
+          clubClId: {
+            type: GraphQLInt,
+          },
+          trainingSkillId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, { price, clubClId, trainingSkillId }) {
+          return db.models.membershipFees.create({
+            price,
+            clubClId,
+            trainingSkillId,
+          });
+        },
+      },
+      createWorkingTimeClub: {
+        type: WorkingTimes,
+        args: {
+          workDayFrom: {
+            type: GraphQLInt,
+          },
+          workDayTo: {
+            type: GraphQLInt,
+          },
+          satFrom: {
+            type: GraphQLInt,
+          },
+          satTo: {
+            type: GraphQLInt,
+          },
+          sunFrom: {
+            type: GraphQLInt,
+          },
+          sunTo: {
+            type: GraphQLInt,
+          },
+          clubClId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, args) {
+          return db.models.workingTimeClub.create(args);
+        },
+      },
+      addImageInGalleryClub: {
+        type: GalleryImgs,
+        args: {
+          fileUrl: {
+            type: GraphQLString,
+          },
+          clubClId: {
+            type: GraphQLString,
+          },
+        },
+        async resolve(root, args) {
+          return db.models.gallery.create(args);
+        },
+      },
+      updateOrCreateFisio: {
+        type: FisioCl,
+        args: {
+          password: {
+            type: GraphQLString,
+          },
+          email: {
+            type: GraphQLString,
+          },
+          firstName: {
+            type: GraphQLString,
+          },
+          lastName: {
+            type: GraphQLString,
+          },
+          facebookLink: {
+            type: GraphQLString,
+          },
+          instagramLink: {
+            type: GraphQLString,
+          },
+          imageUrl: {
+            type: GraphQLString,
+          },
+          cellPhone: {
+            type: GraphQLString,
+          },
+          about: {
+            type: GraphQLString,
+          },
+          birthPlace: {
+            type: GraphQLString,
+          },
+          birthDay: {
+            type: GraphQLString,
+          },
+          hasCerificates: {
+            type: GraphQLBoolean,
+          },
+          confirmed: {
+            type: GraphQLBoolean,
+          },
+          fisioSkillsArr: {
+            type: new GraphQLList(GraphQLInt),
+          },
+          countyArr: {
+            type: new GraphQLList(GraphQLInt),
+          },
+          comesHome: {
+            type: GraphQLBoolean,
+          },
+          score: {
+            type: GraphQLFloat,
+          },
+        },
+        async resolve(root, { email, password, ...args }) {
+          let letsFindFisio = await db.models.fisioCl.findAll({
+            where: {
+              email,
             },
-            createWorkingTimeClub: {
-                type: WorkingTimes,
-                args: {
-                    workDayFrom: {
-                        type: GraphQLInt,
-                    },
-                    workDayTo: {
-                        type: GraphQLInt,
-                    },
-                    satFrom: {
-                        type: GraphQLInt,
-                    },
-                    satTo: {
-                        type: GraphQLInt,
-                    },
-                    sunFrom: {
-                        type: GraphQLInt,
-                    },
-                    sunTo: {
-                        type: GraphQLInt,
-                    },
-                    clubClId: {
-                        type: GraphQLInt,
-                    },
-                },
-                async resolve(root, args) {
-                    return await db.models.workingTimeClub.create(args);
-                },
-            },
-            addImageInGalleryClub: {
-                type: GalleryImgs,
-                args: {
-                    fileUrl: {
-                        type: GraphQLString,
-                    },
-                    clubClId: {
-                        type: GraphQLString,
-                    },
-                },
-                async resolve(root, args) {
-                    return await db.models.gallery.create(args);
-                },
-            },
-            updateOrCreateFisio: {
-                type: FisioCl,
-                args: {
-                    password: {
-                        type: GraphQLString,
-                    },
-                    email: {
-                        type: GraphQLString,
-                    },
-                    firstName: {
-                        type: GraphQLString,
-                    },
-                    lastName: {
-                        type: GraphQLString,
-                    },
-                    facebookLink: {
-                        type: GraphQLString,
-                    },
-                    instagramLink: {
-                        type: GraphQLString,
-                    },
-                    imageUrl: {
-                        type: GraphQLString,
-                    },
-                    cellPhone: {
-                        type: GraphQLString,
-                    },
-                    about: {
-                        type: GraphQLString,
-                    },
-                    birthPlace: {
-                        type: GraphQLString,
-                    },
-                    birthDay: {
-                        type: GraphQLString,
-                    },
-                    hasCerificates: {
-                        type: GraphQLBoolean,
-                    },
-                    confirmed: {
-                        type: GraphQLBoolean,
-                    },
-                    fisioSkillsArr: {
-                        type: new GraphQLList(GraphQLInt),
-                    },
-                    countyArr: {
-                        type: new GraphQLList(GraphQLInt),
-                    },
-                    comesHome: {
-                        type: GraphQLBoolean,
-                    },
-                    score: {
-                        type: GraphQLFloat,
-                    },
-                },
-                async resolve(root, {email, ...args}) {
-                    let letsFindFisio = await db.models.fisioCl.findAll({
-                        where: {
-                            email,
-                        },
-                    });
-                    if(letsFindFisio.length) {
-                        return {error: 'We alredy have that fisio in DATABASE'}
-                    } else {
-                        let letsCreate = await db.models.fisioCl.create({
-                            email,
-                            ...args
-                        });
-                        return letsCreate;
-                    }
-                },
-            },
+          });
+          if (letsFindFisio.length) {
+            return { error: 'We alredy have that fisio in DATABASE' };
+          }
+          await db.models.userCl.upsert({
+            email,
+            password,
+            isFisio: 1,
+          });
+          let letsCreate = await db.models.fisioCl.create({
+            email,
+            password,
+            ...args,
+          });
+          return letsCreate;
+        },
+      },
             createFisioCounty: {
                 type: FisioCounty,
                 args: {
