@@ -35,7 +35,6 @@ import UploadCertificatesPerson from '../Forms/UploadCertificatesPerson';
 import RegisterFisio from '../Forms/RegisterFisio';
 import RegisterMoreSkillsFisio from '../Forms/RegisterMoreSkillsFisio';
 import css from '../styles/styles.scss';
-import DrawerContainer from './DrawerContainer';
 import RegisterMoreSkillsContainer from '../Forms/RegisterMoreSkillsContainer';
 
 @connect(state => ({ drawer: state.drawer }))

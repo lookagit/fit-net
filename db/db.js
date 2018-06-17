@@ -399,24 +399,24 @@ PersonCl.hasMany(Certification);
 FisioCl.hasMany(Certification);
 
 if (process.env.NODE_ENV === 'production') {
-  db.sync().then(() => {
+  db.sync({ force: true }).then(() => {
     // PersonArr.map(async item => {
     //   await PersonCl.create(item);
     // });
-    // TrainingSkillArr.map(async item => {
-    //   await TrainingSkill.create(item);
-    // });
+    TrainingSkillArr.map(async item => {
+      await TrainingSkill.create(item);
+    });
     // PersonTrainingSkillArr.map(async item => {
     //   await PersonTrainingSkill.create(item);
     // });
 
-    // FisioCategoriesArr.map(async item => {
-    //   await FisioCategories.create(item);
-    // });
+    FisioCategoriesArr.map(async item => {
+      await FisioCategories.create(item);
+    });
 
-    // CountyArr.map(async item => {
-    //   await County.create(item);
-    // });
+    CountyArr.map(async item => {
+      await County.create(item);
+    });
     // PersonCountyHelper.map(async item => {
     //   await PersonCounty.create(item);
     // });
@@ -435,6 +435,9 @@ if (process.env.NODE_ENV === 'production') {
     // FisioArr.map(async item => {
     //   await FisioCl.create(item);
     // });
+
+
+
     // FisioCountyArr.map(async item => {
     //   await FisioCounty.create(item);
     // });
