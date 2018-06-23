@@ -899,7 +899,7 @@ const Mutation = new GraphQLObjectType({
             type: new GraphQLList(GraphQLInt),
           },
         },
-        async resolve(root, { email, password, ...args }) {
+        async resolve(root, { email, password, firstName, lastName, imageUrl, ...args }) {
           const findOrCreateUser = await db.models.personCl.findOne({
             where: {
               email,
@@ -910,12 +910,19 @@ const Mutation = new GraphQLObjectType({
           }
           const createPersonCl = await db.models.personCl.create({
             email,
+            password,
+            imageUrl,
+            firstName,
+            lastName,
             ...args,
           });
           if (createPersonCl) {
             await db.models.userCl.upsert({
               email,
               password,
+              firstName,
+              lastName,
+              imageUrl,
               isCouch: 1,
             });
             return createPersonCl;
@@ -1165,7 +1172,7 @@ const Mutation = new GraphQLObjectType({
             type: GraphQLFloat,
           },
         },
-        async resolve(root, { email, password, ...args }) {
+        async resolve(root, { email, password, firstName, lastName, imageUrl, ...args }) {
           let letsFindFisio = await db.models.fisioCl.findAll({
             where: {
               email,
@@ -1177,11 +1184,17 @@ const Mutation = new GraphQLObjectType({
           await db.models.userCl.upsert({
             email,
             password,
+            firstName,
+            lastName,
+            imageUrl,
             isFisio: 1,
           });
           let letsCreate = await db.models.fisioCl.create({
             email,
             password,
+            firstName,
+            lastName,
+            imageUrl,
             ...args,
           });
           return letsCreate;
