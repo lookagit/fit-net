@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 @withRouter
 @connect(state => ({ login: state.login }))
 @graphql(gql`
-  query userLoginRegular($emal: String, $password: String) 
+  query userLoginRegular($email: String, $password: String) 
   {
     userLoginRegular(email: $email, password: $password) { 
       id,

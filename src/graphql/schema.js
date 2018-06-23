@@ -497,6 +497,26 @@ const Query = new GraphQLObjectType({
           return getMessage();
         },
       },
+      userLoginRegular: {
+        type: UserCl,
+        args: {
+          email: {
+            type: GraphQLString,
+          },
+          password: {
+            type: GraphQLString,
+          },
+        },
+        async resolve(root, {email, password}) {
+          const userLogin = await db.models.userCl.findOne({
+            where: {
+              email,
+              password
+            }
+          });
+          if (userLogin) return userLogin;
+        }
+      },
       getCities: {
         type: new GraphQLList(City),
         async resolve() {
