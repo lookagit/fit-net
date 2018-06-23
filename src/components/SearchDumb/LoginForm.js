@@ -38,7 +38,12 @@ class LoginForm extends React.Component {
       email: this.state.email,
       password: this.state.password
     });
-    console.log("JA SAM DATA ", data);
+    if (data.userLoginRegular) {
+      const { email, id } = data.userLoginRegular;
+      await localStorage.setItem('logedInEmail', email);
+      this.props.dispatch({ type: 'FACEBOOK_LOGIN', accessToken: { ...data.userLoginRegular } })
+      this.props.history.push(`/user-loged-in/${id}`);
+    }
   }
   render() {
     return (
@@ -56,7 +61,7 @@ class LoginForm extends React.Component {
           floatingLabelStyle={{ color: '#FFF' }}
           underlineFocusStyle={{ borderColor: '#FFF' }}
           onChange={e => this.setState({ email: e.target.value })}
-          className={css.biggerFont}
+          className={css.brightFont}
         />
         <TextField
           hintText="Unesite šifru"
@@ -67,7 +72,7 @@ class LoginForm extends React.Component {
           onChange={e => this.setState({ password: e.target.value })}
           floatingLabelStyle={{ color: '#FFF' }}
           underlineFocusStyle={{ borderColor: '#FFF' }}
-          className={css.biggerFont}
+          className={css.brightFont}
         />
         <div
           onClick={() => this.letsLogin()}

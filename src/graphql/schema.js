@@ -88,6 +88,8 @@ const FisioCounty = new GraphQLObjectType({
   },
 });
 
+
+
 const FisioCl = new GraphQLObjectType({
   name: 'FisioCl',
   description: 'Query for Fisos',
@@ -200,7 +202,6 @@ const GalleryImgs = new GraphQLObjectType({
     };
   },
 });
-
 
 const WorkingTimes = new GraphQLObjectType({
   name: 'WorkingTimes',
@@ -460,6 +461,34 @@ const UserCl = new GraphQLObjectType({
         resolve(userCl) {
           return userCl.token;
         },
+      },
+      userFisio: {
+        type: FisioCl,
+        async resolve({ email }) {
+          return db.models.fisioCl.findOne({
+            where: {
+              email,
+            }
+          })
+        },
+      },
+      userClub: {
+        type: ClubCl,
+        async resolve({ email }) {
+          return db.models.clubCl.findOne({
+            where: {
+              email,
+            }
+          })
+        },
+      },
+      userPerson: {
+        type: PersonCl,
+        resolve: async ({ email }) => db.models.clubCl.findOne({
+          where: {
+            email,
+          }
+        })
       },
     };
   },

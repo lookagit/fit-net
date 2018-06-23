@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+@connect(state => ({ login: state.login }))
 
 class UserLogedIn extends React.Component {
     constructor(props) {
