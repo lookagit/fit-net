@@ -56,6 +56,9 @@ const UserCl = db.define('userCl', {
   lastName: {
     type: Sequelize.STRING,
   },
+  password: {
+    type: Sequelize.STRING,
+  },
   imageUrl: {
     type: Sequelize.STRING,
     allowNull: true,

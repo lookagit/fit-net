@@ -202,6 +202,7 @@ class RegisterPerson extends React.Component {
           uniqueNameForImg = uploadNow.data.secure_url;
         }
       }
+      console.log("JA SAM STATE ", this.state);
       const mutation = await this.props.registerMe(
         {
           variables: {
