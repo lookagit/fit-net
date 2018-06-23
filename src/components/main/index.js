@@ -34,6 +34,7 @@ import UploadCertificates from '../Forms/UploadCertificates';
 import UploadCertificatesPerson from '../Forms/UploadCertificatesPerson';
 import RegisterFisio from '../Forms/RegisterFisio';
 import RegisterMoreSkillsFisio from '../Forms/RegisterMoreSkillsFisio';
+import UserLogedIn from '../Routes/UserLogedIn';
 import css from '../styles/styles.scss';
 import RegisterMoreSkillsContainer from '../Forms/RegisterMoreSkillsContainer';
 
@@ -66,6 +67,7 @@ export default () => (
         <Route path="/moreSkills/:id" component={RegisterMoreSkillsContainer} />
         <Route path="/moreSkillsFisio/:id" component={RegisterMoreSkillsFisio} />
         <Route path="/profile-choose" component={ChooseProfileMake} />
+        <Route path="/user-loged-in/:userId" component={UserLogedIn} />
         <Redirect from="/old/path" to="/new/path" />
         <Route component={WhenNotFound} />
       </Switch>
