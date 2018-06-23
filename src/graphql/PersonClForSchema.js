@@ -97,6 +97,12 @@ export const PersonCl = new GraphQLObjectType({
           return personCl.score;
         },
       },
+      password: {
+        type: GraphQLString,
+        resolve(personCl) {
+          return personCl.password;
+        },
+      },
       personClub: {
         type: GraphQLString,
         resolve(personCl) {

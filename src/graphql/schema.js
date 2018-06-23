@@ -449,6 +449,12 @@ const UserCl = new GraphQLObjectType({
           return userCl.isClub;
         },
       },
+      isFisio: {
+        type: GraphQLInt,
+        resolve(userCl) {
+          return userCl.isFisio;
+        },
+      },
       token: {
         type: GraphQLString,
         resolve(userCl) {
