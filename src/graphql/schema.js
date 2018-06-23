@@ -484,11 +484,13 @@ const UserCl = new GraphQLObjectType({
       },
       userPerson: {
         type: PersonCl,
-        resolve: async ({ email }) => db.models.clubCl.findOne({
-          where: {
-            email,
-          }
-        })
+        async resolve({ email }) {
+          return db.models.personCl.findOne({
+            where: {
+              email,
+            }
+          })
+        },
       },
     };
   },

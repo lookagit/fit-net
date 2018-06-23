@@ -17,6 +17,12 @@ import { connect } from 'react-redux';
       firstName,
       email,
       imageUrl,
+      userPerson {
+        email
+      }
+      userFisio {
+        email
+      }
     }
   }`)
 class LoginForm extends React.Component {
