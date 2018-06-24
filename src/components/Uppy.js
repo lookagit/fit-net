@@ -45,10 +45,12 @@ export default class S3Uploader extends React.Component {
   }
 
   render() {
+    const { imageProp } = this.props;
     return (
       <div
         style={{
           display: 'flex',
+          width: '100%',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
@@ -80,13 +82,16 @@ export default class S3Uploader extends React.Component {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            height: '100px',
-            width: '700px',
+            height: imageProp ? '290px' : '100px',
+            width: imageProp ? '290px' : '700px',
             border: '3px white dashed',
+            backgroundImage: imageProp ? `url(${imageProp})` : 'none',
+            backgroundPosition: 'center',
+            backgroundSize: 'contain'
         }}>
           <div>
             <h3 style={{ color: '#fff' }}>
-              Postavite profilnu sliku
+              {imageProp ? 'Promenite profilnu sliku' : 'Postavite profilnu sliku'}
             </h3>
           </div>
         </Dropzone>

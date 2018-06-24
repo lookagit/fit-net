@@ -30,6 +30,7 @@ import ChooseProfileMake from '../ChooseProfileMake';
 import FisioOne from '../FisioOne';
 import Proba from '../proba';
 import RegisterPerson from '../Forms/RegisterPerson';
+import EditUser from '../Routes/EditUser';
 import UploadCertificates from '../Forms/UploadCertificates';
 import UploadCertificatesPerson from '../Forms/UploadCertificatesPerson';
 import RegisterFisio from '../Forms/RegisterFisio';
@@ -68,6 +69,7 @@ export default () => (
         <Route path="/moreSkillsFisio/:id" component={RegisterMoreSkillsFisio} />
         <Route path="/profile-choose" component={ChooseProfileMake} />
         <Route path="/user-loged-in/:userId" component={UserLogedIn} />
+        <Route path="/edit-user" component={EditUser} />
         <Redirect from="/old/path" to="/new/path" />
         <Route component={WhenNotFound} />
       </Switch>

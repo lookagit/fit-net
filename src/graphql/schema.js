@@ -963,7 +963,13 @@ const Mutation = new GraphQLObjectType({
             },
           });
           if (findOrCreateUser) {
-            return { error: 'We have user with that email' };
+            const updateUser = await db.models.personCl.upsert({
+              email,
+              firstName,
+              lastName,
+              imageUrl,
+              ...args
+            })
           }
           const createPersonCl = await db.models.personCl.create({
             email,

@@ -17,11 +17,31 @@ import { connect } from 'react-redux';
       firstName,
       email,
       imageUrl,
+      isFisio
+      isCouch
+      isClub
       userPerson {
         email
+        password
+        firstName
+        lastName
+        personClub
+        facebookLink
+        instagramLink
+        cellPhone
+        birthPlace
+        birthDay
+        hasCerificates
+        about
+        imageUrl
+        skillsArr
       }
       userFisio {
+        id
         email
+        imageUrl
+        firstName
+        lastName
       }
     }
   }`)
@@ -33,10 +53,6 @@ class LoginForm extends React.Component {
       password: null,
     };
   }
-  
-  componentWillReceiveProps(nextProps) {
-    console.log("JA SAM NEXT PROPS", nextProps);
-  }
 
   letsLogin = async () => {
     const { email, password } = this.state;
@@ -46,7 +62,7 @@ class LoginForm extends React.Component {
     });
     if (data.userLoginRegular) {
       const { email, id } = data.userLoginRegular;
-      await localStorage.setItem('logedInEmail', email);
+      window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...data.userLoginRegular } }));
       this.props.dispatch({ type: 'FACEBOOK_LOGIN', accessToken: { ...data.userLoginRegular } })
       this.props.history.push(`/user-loged-in/${id}`);
     }
