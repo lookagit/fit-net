@@ -35,6 +35,7 @@ import logoBright from '../../../static/logoBright.png';
     $hasCerificates: Boolean,
     $about: String,
     $imageUrl: String,
+    $personClub: String,
     $skillsArr: [Int]
   ) {
     updateOrCreateUser(
@@ -49,9 +50,10 @@ import logoBright from '../../../static/logoBright.png';
       hasCerificates: $hasCerificates,
       about: $about,
       imageUrl: $imageUrl,
+      personClub: $personClub,
       skillsArr: $skillsArr
     ) {
-      id
+      lastName
     }
   }`,
 {
@@ -160,16 +162,17 @@ class EditUser extends React.Component {
             lastName: this.state.userPerson.lastName,
             facebookLink: this.state.userPerson.facebookLink,
             instagramLink: this.state.userPerson.instagramLink,
-            cellPhone: this.state.userPerson.cellPhone,
+            cellPhone: this.state.userPerson.cellPhone.toString(),
             birthPlace: this.state.userPerson.birthPlace,
-            birthDay: this.state.userPerson.date,
-            about: this.state.userPerson.about,
+            birthDay: this.state.userPerson.birthDay.toString(),
+            about: this.state.userPerson.about.toString(),
             imageUrl: this.state.userPerson.imageUrl,
             skillsArr: this.state.userPerson.skillArr,
+            personClub: this.state.userPerson.personClub,
           },
         },
       );
-      console.log("JA SAM MUTATION ", mutation);
+      this.props.history.push(`user-loged-in/${this.state.userPerson.id}`)
     }
 
     render() {

@@ -970,6 +970,7 @@ const Mutation = new GraphQLObjectType({
               imageUrl,
               ...args
             })
+            return updateUser;
           }
           const createPersonCl = await db.models.personCl.create({
             email,
