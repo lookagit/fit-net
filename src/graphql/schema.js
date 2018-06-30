@@ -264,6 +264,27 @@ const MemberShip = new GraphQLObjectType({
   },
 });
 
+const BasicResponse = new GraphQLObjectType({
+  name: 'BasicResponse',
+  description: 'BasicResponse',
+  fields() {
+    return {
+      status: {
+        type: GraphQLInt,
+        resolve(root) {
+          return root.status;
+        },
+      },
+      message: {
+        type: GraphQLString,
+        resolve(root) {
+          return root.message;
+        },
+      },
+    };
+  },
+});
+
 const ClubCl = new GraphQLObjectType({
   name: 'ClubCl',
   description: 'Query struct for clubs',
@@ -870,6 +891,29 @@ const Mutation = new GraphQLObjectType({
   description: 'Mutation for fitnet.com',
   fields() {
     return {
+      removeUserCertificates: {
+        type: BasicResponse,
+        args: {
+          certificateId: {
+            type: GraphQLString,
+          },
+          personID: {
+            type: GraphQLInt,
+          },
+          async resolve(root, { certificateId, personID }) {
+            const deleted = await db.models.certification.destroy({
+              where: {
+                id: certificateId,
+                personClId: personID,
+              },
+            });
+            if (deleted) {
+              return { status: 200, message: 'successfuly deleted'};
+            }
+            return { status: 500, message: 'error on deleting certificates'};
+          },
+        },
+      },
       updateUserCertificates: {
         type: PersonCl,
         args: {

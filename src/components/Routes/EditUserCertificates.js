@@ -9,6 +9,7 @@ import Compress from 'compress.js';
 import UppyCertificates from '../UppyCertificates';
 import css from '../styles/styles.scss';
 import logoBright from '../../../static/logoBright.png';
+import removeImg from '../../../static/remove.png';
 
 const compress = new Compress();
 
@@ -47,12 +48,15 @@ class EditUserCertificates extends React.Component {
       loading: false,
       openDialog: false,
       socialMessage: '',
-      hasCerificates: false,
+      myCertificates: [],
+      upload: false,
+      id: null,
     };
   }
 
   componentDidMount() {
     this.getUser();
+    this.changeCertificatesInLocal();
   }
 
   getUser = async () => {
@@ -62,10 +66,12 @@ class EditUserCertificates extends React.Component {
         const { accessToken } = JSON.parse(isLogedIn);
         if (accessToken) {
           const { userPerson } = accessToken;
-          const { hasCerificates } = userPerson;
+          const { hasCerificates, myCertificates, id } = userPerson;
           this.setState({
             userPerson,
             hasCerificates,
+            myCertificates,
+            id,
           });
         }
       }
@@ -78,19 +84,24 @@ class EditUserCertificates extends React.Component {
 
   handleClose = () => {
     this.setState({ openDialog: false });
+    this.props.history.goBack();
   };
+
   certsUpload = async () => {
     let url = '';
-    const { files } = this.state;
-    if (files.length) {
+    const { myCertificates } = this.state;
+    const justNewCer = myCertificates.filter(item => (
+      item.personClId === undefined
+    ));
+    if (justNewCer.length) {
       this.setState({ loading: true });
       await this.props.updateHasCertificates({
         variables: {
-          userId: parseInt(this.props.match.params.userId),
+          userId: parseInt(this.state.id),
           hasCerificates: true,
         },
       });
-      const compressedFile = await compress.compress(files, {
+      const compressedFile = await compress.compress(justNewCer, {
         size: 4, // the max size in MB, defaults to 2MB
         quality: 0.55, // the quality of the image, max is 1,
         maxWidth: 1920, // the max width of the output image, defaults to 1920px
@@ -119,39 +130,59 @@ class EditUserCertificates extends React.Component {
             variables: {
               name: 'nekoImeStaTiJaZnam',
               certUrl: `${uploadNow.data.secure_url}`,
-              personClId: parseInt(this.props.match.params.userId),
+              personClId: parseInt(this.state.id),
             },
           });
         }
       });
-      Promise.all(filesUpload).then(() => this.props.history.push(`/moreSkills/${parseInt(this.props.match.params.userId)}`));
+      Promise.all(filesUpload).then(() => {
+        this.changeCertificatesInLocal();
+        this.setState({
+          openDialog: true,
+          socialMessage: 'Uspesno ste uloadovali sertifikate. Hvala!',
+        });
+      });
     } else {
       this.setState({
         openDialog: true,
-        socialMessage: 'Niste uploadovali nijedan sertifikat. Ukoliko imate sertifikate kliknite na dugme Nazad i prenesite slike sertifikata ukoliko nemate sertifikate kliknite Dalje. Hvala!',
+        socialMessage: 'Niste uploadovali nijedan sertifikat. Hvala!',
       });
     }
   }
 
+  removeCertificate = certUrl => {
+    const myCertificates = this.state.myCertificates.filter(item => (
+      item.certUrl !== certUrl
+    ));
+    this.setState({
+      myCertificates,
+    });
+  }
+
+  changeCertificatesInLocal = async () => {
+    const isLogedIn = await window.localStorage.getItem('fbToken');
+    if (isLogedIn) {
+      const { accessToken } = JSON.parse(isLogedIn);
+      if (accessToken) {
+        const { userPerson } = accessToken;
+        userPerson.myCertificates = [...this.state.myCertificates];
+        await window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...accessToken, userPerson } }));
+      }
+    }
+  }
+
+
   render() {
     const actions = [
       <FlatButton
-        label="Nazad"
+        label="Hvala"
         labelColor="#fff"
         labelStyle={{ fontWeight: '700', color: '#fff' }}
         style={{ color: '#fff' }}
         keyboardFocused
         onClick={this.handleClose}
       />,
-      <FlatButton
-        label="Snimite"
-        labelColor="#fff"
-        labelStyle={{ fontWeight: '700', color: '#fff' }}
-        style={{ color: '#fff' }}
-        onClick={() => console.log("smini ovde")}
-      />,
     ];
-    console.log("Evo ti cer", this.state.hasCerificates)
     return (
       <div>
         <Dialog
@@ -248,10 +279,45 @@ class EditUserCertificates extends React.Component {
                     margin: '10px',
                   }}
                 >
-                  Mozete ubaciti do 10 sertifikata. Ukoliko niste sertifikovani pritisnite dalje da nastavite sa registracijom
+                  Mozete ubaciti do 10 sertifikata.
                 </h2>
               </div>
-              <UppyCertificates setRegister={files => this.setState({ files })} />
+              <div style={{ display: 'flex', marginBottom: 10 }}>
+                {
+                  this.state.myCertificates.map((item, key) => (
+                    <div
+                      style={{
+                        width: '150px',
+                        height: '150px',
+                        paddingRight: '10px',
+                      }}
+                      key={key}
+                    >
+                      <div
+                        style={{
+                          position: 'absolute',
+                        }}
+                        onClick={() => {
+                          this.removeCertificate(item.certUrl);
+                        }}
+                      >
+                        <img src={removeImg} width={25} height={25} />
+                      </div>
+                      <img src={item.certUrl} width={150} height={150} />
+                    </div>
+                  ))
+                  }
+              </div>
+              <UppyCertificates
+                setRegister={myCertificates => {
+                  const [first] = myCertificates;
+                  first.certUrl = first.preview;
+                  this.setState(prevState => ({
+                    myCertificates: [...prevState.myCertificates, first],
+                  }));
+                }}
+                edit
+              />
               <div
                 style={{
                   width: '100%',
@@ -298,12 +364,12 @@ class EditUserCertificates extends React.Component {
                       cursor: 'pointer',
                     }}
                     onClick={() => {
-                      if (this.state.files.length) {
+                      if (this.state.myCertificates.length) {
                         this.certsUpload();
                       } else {
                         this.setState({
                           openDialog: true,
-                          socialMessage: 'Niste uploadovali nijedan sertifikat. Ukoliko želite da se vaši sertifikati prikažu potencijalnim klijentima kliknite Nazad i uploadujte sertifikate, ukoliko nemate sertifikate kliknite Dalje. Hvala!',
+                          socialMessage: 'Niste uploadovali nijedan sertifikat. Hvala!',
                         })
                       }
                     }}
