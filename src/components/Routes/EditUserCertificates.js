@@ -20,8 +20,10 @@ const axios = require('axios');
   gql`
   mutation certificateCreate($name: String, $certUrl: String, $personClId: Int) {
     certificateCreate(name: $name, certUrl: $certUrl, personClId: $personClId) {
+      id
       name
       certUrl
+      personClId
     }
   }`,
   {
@@ -56,20 +58,16 @@ class EditUserCertificates extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userPerson: null,
-      files: [],
       loading: false,
       openDialog: false,
       socialMessage: '',
       myCertificates: [],
-      upload: false,
       id: null,
     };
   }
 
   componentDidMount() {
     this.getUser();
-    this.changeCertificatesInLocal();
   }
 
   getUser = async () => {
@@ -81,8 +79,6 @@ class EditUserCertificates extends React.Component {
           const { userPerson } = accessToken;
           const { hasCerificates, myCertificates, id } = userPerson;
           this.setState({
-            userPerson,
-            hasCerificates,
             myCertificates,
             id,
           });
@@ -91,14 +87,44 @@ class EditUserCertificates extends React.Component {
     }
   }
 
-  handleOpen = () => {
-    this.setState({ openDialog: true });
-  };
 
-  handleClose = () => {
-    this.setState({ openDialog: false });
-    this.props.history.goBack();
-  };
+  setCertificatesInLocal = async certificates => {
+    const isLogedIn = await window.localStorage.getItem('fbToken');
+    if (isLogedIn) {
+      const { accessToken } = JSON.parse(isLogedIn);
+      if (accessToken) {
+        const { userPerson } = accessToken;
+        userPerson.myCertificates = [...userPerson.myCertificates, ...certificates];
+        await window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...accessToken, userPerson } }));
+      }
+    }
+  }
+
+  removeCertificate = async cerItem => {
+    const myCertificates = this.state.myCertificates.filter(item => (
+      item.certUrl !== cerItem.certUrl
+    ));
+    this.setState({
+      myCertificates,
+    });
+    const { data } = await this.props.removeCertificate({
+      variables: {
+        certUrl: cerItem.certUrl,
+      },
+    });
+    const { removeUserCertificates } = data;
+    if (removeUserCertificates.status === 200) {
+      const isLogedIn = await window.localStorage.getItem('fbToken');
+      if (isLogedIn) {
+        const { accessToken } = JSON.parse(isLogedIn);
+        if (accessToken) {
+          const { userPerson } = accessToken;
+          userPerson.myCertificates = [...myCertificates];
+          await window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...accessToken, userPerson } }));
+        }
+      }
+    }
+  }
 
   certsUpload = async () => {
     let url = '';
@@ -139,62 +165,42 @@ class EditUserCertificates extends React.Component {
           data: formData,
         });
         if (uploadNow.status === 200) {
-          await this.props.certCreate({
+          const { data } = await this.props.certCreate({
             variables: {
-              name: 'nekoImeStaTiJaZnam',
+              name: 'UploadedFitNetPersonCertify',
               certUrl: `${uploadNow.data.secure_url}`,
               personClId: parseInt(this.state.id),
             },
           });
+          const { certificateCreate } = data;
+          if (certificateCreate) {
+            return certificateCreate;
+          }
         }
       });
-      Promise.all(filesUpload).then(() => {
-        this.changeCertificatesInLocal();
+      Promise.all(filesUpload).then(certify => {  //eslint-disable-line
+        this.setCertificatesInLocal(certify);
         this.setState({
           openDialog: true,
-          socialMessage: 'Uspesno ste uloadovali sertifikate. Hvala!',
+          socialMessage: 'Uspesno ste uploadovali sertifikate. Hvala!',
         });
       });
     } else {
       this.setState({
         openDialog: true,
-        socialMessage: 'Niste uploadovali nijedan sertifikat. Hvala!',
+        socialMessage: 'Uspesno sacuvani sertifikati. Hvala!',
       });
     }
   }
 
-  removeCertificate = async cerItem => {
-    const myCertificates = this.state.myCertificates.filter(item => (
-      item.certUrl !== cerItem.certUrl
-    ));
-    this.setState({
-      myCertificates,
-    });
-    if (cerItem.id) {
-      const { data } = await this.props.removeCertificate({
-        variables: {
-          certUrl: cerItem.certUrl,
-        },
-      });
-      const { removeUserCertificates } = data;
-      if (removeUserCertificates.status === 200) {
-        this.changeCertificatesInLocal();
-      }
-    }
-  }
+  handleOpen = () => {
+    this.setState({ openDialog: true });
+  };
 
-  changeCertificatesInLocal = async () => {
-    const isLogedIn = await window.localStorage.getItem('fbToken');
-    if (isLogedIn) {
-      const { accessToken } = JSON.parse(isLogedIn);
-      if (accessToken) {
-        const { userPerson } = accessToken;
-        userPerson.myCertificates = [...this.state.myCertificates];
-        await window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...accessToken, userPerson } }));
-      }
-    }
-  }
-
+  handleClose = () => {
+    this.setState({ openDialog: false });
+    this.props.history.goBack();
+  };
 
   render() {
     const actions = [
@@ -325,9 +331,9 @@ class EditUserCertificates extends React.Component {
                           this.removeCertificate(item);
                         }}
                       >
-                        <img src={removeImg} width={25} height={25} />
+                        <img src={removeImg} width={25} height={25} alt="remove" />
                       </div>
-                      <img src={item.certUrl} width={150} height={150} />
+                      <img src={item.certUrl} width={150} height={150} alt="certificate" />
                     </div>
                   ))
                   }
@@ -393,7 +399,7 @@ class EditUserCertificates extends React.Component {
                       } else {
                         this.setState({
                           openDialog: true,
-                          socialMessage: 'Niste uploadovali nijedan sertifikat. Hvala!',
+                          socialMessage: 'Uspesno sacuvani sertifikati. Hvala!',
                         })
                       }
                     }}
