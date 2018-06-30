@@ -187,8 +187,8 @@ class EditUser extends React.Component {
       );
       const userLogedIn = window.localStorage.getItem('fbToken');
       const parsedLogin = JSON.parse(userLogedIn);
-      console.log("JA SAM SMISLJA ", mutation);
-      console.log("JA ", parsedLogin);
+      const updatedUser = {...parsedLogin.accessToken, userPerson: { ...mutation.data.updateOrCreateUser }}
+      console.log("JA ", mutation.data.updateOrCreateUser);
       
       this.props.history.push(`user-loged-in/${this.state.userPerson.id}`)
     }
