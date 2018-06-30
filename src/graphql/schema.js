@@ -900,18 +900,18 @@ const Mutation = new GraphQLObjectType({
           personID: {
             type: GraphQLInt,
           },
-          async resolve(root, { certificateId, personID }) {
-            const deleted = await db.models.certification.destroy({
-              where: {
-                id: certificateId,
-                personClId: personID,
-              },
-            });
-            if (deleted) {
-              return { status: 200, message: 'successfuly deleted'};
-            }
-            return { status: 500, message: 'error on deleting certificates'};
-          },
+        },
+        async resolve(root, { certificateId, personID }) {
+          const deleted = await db.models.certification.destroy({
+            where: {
+              id: certificateId,
+              personClId: personID,
+            },
+          });
+          if (deleted) {
+            return { status: 200, message: 'successfuly deleted'};
+          }
+          return { status: 500, message: 'error on deleting certificates'};
         },
       },
       updateUserCertificates: {
