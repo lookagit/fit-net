@@ -38,7 +38,7 @@ import RegisterMoreSkillsFisio from '../Forms/RegisterMoreSkillsFisio';
 import UserLogedIn from '../Routes/UserLogedIn';
 import css from '../styles/styles.scss';
 import RegisterMoreSkillsContainer from '../Forms/RegisterMoreSkillsContainer';
-
+import EditUserCertificates from '../Routes/EditUserCertificates';
 
 export default () => (
   <div className={css.mainWrapper}>
@@ -70,6 +70,7 @@ export default () => (
         <Route path="/profile-choose" component={ChooseProfileMake} />
         <Route path="/user-loged-in/:userId" component={UserLogedIn} />
         <Route path="/edit-user" component={EditUser} />
+        <Route path="/edit-user-certificates" component={EditUserCertificates} />
         <Redirect from="/old/path" to="/new/path" />
         <Route component={WhenNotFound} />
       </Switch>

@@ -244,24 +244,15 @@ class EditUser extends React.Component {
                               className={css.biggerFont}
                               errorText={this.state.nameErr ? 'Ime mora imati više od 2 karakera i ne sme sadržati brojeve!' : null}
                               onChange={(e, firstName) => {
-                                console.log("JA SAM FIRST NAME ", firstName);
-                                if (validateStringNames(firstName)) {
-                                  console.log("JA SAM FIRST NAME idddddd", firstName);
                                   const { userPerson } = this.state;
                                   this.setState({
-                                    snackOpen: false,
-                                    nameErr: false,
                                     userPerson: {
                                       ...userPerson,
                                       firstName: e.target.value,
                                     },
-                                  });
-                                } else {
-                                  this.setState({
+                                    instaErr: false,
                                     snackOpen: false,
-                                    nameErr: true,
                                   });
-                                }
                               }}
                             />
                           </div>
@@ -276,21 +267,14 @@ class EditUser extends React.Component {
                               errorText={this.state.lastNameErr ? 'Ime mora imati više od 2 karakera i ne sme sadržati brojeve!' : null}
                               onChange={(e, lastName) => {
                                 const { userPerson } = this.state;
-                                if (validateStringNames(lastName)) {
                                   this.setState({
-                                    snackOpen: false,
-                                    lastNameErr: null,
                                     userPerson: {
                                       ...userPerson,
                                       lastName: e.target.value,
                                     },
-                                  });
-                                } else {
-                                  this.setState({
+                                    instaErr: false,
                                     snackOpen: false,
-                                    lastNameErr: true,
                                   });
-                                }
                               }}
                             />
                           </div>
@@ -308,21 +292,14 @@ class EditUser extends React.Component {
                                 errorText={this.state.emailErr ? 'Molimo unesite ispravan format email-a' : null}
                                 onChange={(e, email) => {
                                   const { userPerson } = this.state;
-                                  if (validateEmail(email)) {
                                     this.setState({
-                                      emailErr: false,
-                                      snackOpen: false,
                                       userPerson: {
                                         ...userPerson,
                                         email: e.target.value,
                                       },
-                                    });
-                                  } else {
-                                    this.setState({
-                                      emailErr: true,
+                                      instaErr: false,
                                       snackOpen: false,
                                     });
-                                  }
                                 }}
                               />
                             </div>
@@ -350,21 +327,14 @@ class EditUser extends React.Component {
                                 errorText={this.state.phoneErr ? 'Molimo unesite ispravan broj telefona (npr. +381691112233)' : null}
                                 onChange={(e, phone) => {
                                   const { userPerson } = this.state;
-                                  if (validatePhone(phone)) {
-                                    this.setState({
-                                      snackOpen: false,
-                                      phoneErr: false,
-                                      userPerson: {
-                                        ...userPerson,
-                                        cellPhone: e.target.value,
-                                      },
-                                    });
-                                  } else {
-                                    this.setState({
-                                      snackOpen: false,
-                                      phoneErr: true,
-                                    });
-                                  }
+                                  this.setState({
+                                    userPerson: {
+                                      ...userPerson,
+                                      cellPhone: e.target.value,
+                                    },
+                                    instaErr: false,
+                                    snackOpen: false,
+                                  });
                                 }}
                               />
                             </div>
@@ -379,21 +349,14 @@ class EditUser extends React.Component {
                                 errorText={this.state.birthErr ? 'Molimo unesti ispravno mesto rodjenja (npr. Beograd, Zrenjanin, Budva...)' : null}
                                 onChange={(e, birthPlace) => {
                                   const { userPerson } = this.state;
-                                  if (validateBirthPlace(birthPlace)) {
-                                    this.setState({
-                                      userPerson: {
-                                        ...userPerson,
-                                        birthPlace: e.target.value,
-                                      },
-                                      snackOpen: false,
-                                      birthErr: false,
-                                    });
-                                  } else {
-                                    this.setState({
-                                      snackOpen: false,
-                                      birthErr: true,
-                                    });
-                                  }
+                                  this.setState({
+                                    userPerson: {
+                                      ...userPerson,
+                                      birthPlace: e.target.value,
+                                    },
+                                    instaErr: false,
+                                    snackOpen: false,
+                                  });
                                 }}
                               />
                             </div>
@@ -410,21 +373,14 @@ class EditUser extends React.Component {
                                errorText={this.state.fbErr ? 'Format linka neispravan' : null}
                                onChange={(e, facebookLink) => {
                                  const { userPerson } = this.state;
-                                 if (validateUrl(facebookLink)) {
-                                   this.setState({
-                                    userPerson: {
-                                      ...userPerson,
-                                      facebookLink: e.target.value,
-                                    },
-                                     fbErr: false,
-                                     snackOpen: false,
-                                   });
-                                 } else {
-                                   this.setState({
-                                     fbErr: true,
-                                     snackOpen: false,
-                                   });
-                                 }
+                                  this.setState({
+                                  userPerson: {
+                                    ...userPerson,
+                                    facebookLink: e.target.value,
+                                  },
+                                  instaErr: false,
+                                  snackOpen: false,
+                                  });
                                }}
                              />
                            </div>
@@ -440,21 +396,14 @@ class EditUser extends React.Component {
                                errorText={this.state.instaErr ? 'Format linka neispravan' : null}
                                onChange={(e, instagramLink) => {
                                  const { userPerson } = this.state;
-                                 if (validateUrl(instagramLink)) {
-                                   this.setState({
-                                    userPerson: {
-                                      ...userPerson,
-                                      instagramLink: e.target.value,
-                                    },
-                                     instaErr: false,
-                                     snackOpen: false,
-                                   });
-                                 } else {
-                                   this.setState({
-                                     instaErr: true,
-                                     snackOpen: false,
-                                   });
-                                 }
+                                  this.setState({
+                                  userPerson: {
+                                    ...userPerson,
+                                    instagramLink: e.target.value,
+                                  },
+                                    instaErr: false,
+                                    snackOpen: false,
+                                  });
                                }}
                              />
                            </div>
@@ -499,6 +448,8 @@ class EditUser extends React.Component {
                                           ...userPerson,
                                           about: value,
                                         },
+                                      instaErr: false,
+                                      snackOpen: false,
                                       });
                                     }}
                                   />

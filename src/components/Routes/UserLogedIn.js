@@ -25,7 +25,7 @@ class UserLogedIn extends React.Component {
                 const { accessToken } = JSON.parse(isLogedIn);
                 if (accessToken) {
                     console.log(accessToken);
-                    const { userPerson, userFisio, userClub } = accessToken
+                    const { userPerson, userFisio, userClub, id } = accessToken
                     this.setState({
                         userPerson,
                         userFisio,
@@ -36,7 +36,7 @@ class UserLogedIn extends React.Component {
         }
     }
     render() {
-        const { userPerson, userFisio, userClub } = this.state;
+        const { userPerson, userFisio, userClub, id } = this.state;
         return (
             <div
               style={{
@@ -128,12 +128,20 @@ class UserLogedIn extends React.Component {
                                 style={{
                                     flex: 2,
                                     padding: '30px 10px',
+                                    justifyContent: 'flex-end'
                                 }}>
                                     <div
                                         style={{
                                             display: 'flex',
-                                            justifyContent: 'flex-end'
+                                            flexDirection: 'column',
+                                            alignItems: 'flex-end',
                                         }}
+                                    >
+                                    <div 
+                                        style={{
+                                          flexDirection: 'row',
+                                          paddingBottom: '10px'
+                                          }}
                                     >
                                         <RaisedButton
                                             label="Editujte profil"
@@ -144,6 +152,22 @@ class UserLogedIn extends React.Component {
                                               this.props.history.push('/edit-user');
                                             }}
                                         />
+                                    </div>
+                                    <div 
+                                        style={{
+                                          flexDirection: 'row',
+                                          }}
+                                    >
+                                        <RaisedButton
+                                            label="Editujte sertifikate"
+                                            labelColor="#fff"
+                                            labelStyle={{ fontWeight: '700' }}
+                                            backgroundColor="#1da9ec"
+                                            onClick={() => {
+                                              this.props.history.push(`/edit-user-certificates`);
+                                            }}
+                                        />
+                                    </div>
                                     </div>
                             </div>   
                         </div> : null
