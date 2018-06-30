@@ -36,6 +36,13 @@ import { connect } from 'react-redux';
         about
         imageUrl
         skillsArr
+        myCertificates {
+          id
+          name
+          certUrl
+          personClId
+          fisioClId
+        }
       }
       userFisio {
         id

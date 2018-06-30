@@ -15,7 +15,11 @@ export default class S3Uploader extends React.Component {
       this.setState({
         prevArray: [...this.state.prevArray, ...files],
       });
-      this.props.setRegister([...this.state.prevArray, ...files]);
+      if (!this.props.edit) {
+        this.props.setRegister([...this.state.prevArray, ...files]);
+      } else {
+        this.props.setRegister([...files]);
+      }
     }
   }
   render() {
@@ -28,25 +32,32 @@ export default class S3Uploader extends React.Component {
           alignItems: 'center',
         }}
       >
-        <div
-          style={{
-            paddingBottom: '15px',
-          }}
-        >
-          {
-            this.state.prevArray.length ?
-              this.state.prevArray.map((item, index) => (
-                <img
-                  key={index}
-                  alt="jojo"
-                  width="130"
-                  height="130"
-                  src={item.preview}
-                />
-              ))
-              : null
-          }
-        </div>
+        {
+          !this.props.edit
+          ?
+            <div
+              style={{
+                paddingBottom: '15px',
+              }}
+            >
+              {
+                this.state.prevArray.length ?
+                  this.state.prevArray.map((item, index) => (
+                    <img
+                      key={index}
+                      alt="jojo"
+                      width="130"
+                      height="130"
+                      src={item.preview}
+                    />
+                  ))
+                  : null
+              }
+            </div>
+          :
+          null
+        }
+
         <Dropzone onDrop={this.onDrop} size={150}>
           <div
             style={{
