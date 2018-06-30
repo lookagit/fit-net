@@ -45,11 +45,19 @@ import { connect } from 'react-redux';
         }
       }
       userFisio {
-        id
         email
-        imageUrl
+        password
         firstName
         lastName
+        facebookLink
+        instagramLink
+        cellPhone
+        birthPlace
+        birthDay
+        hasCerificates
+        about
+        imageUrl
+        fisioSkillsArr
       }
     }
   }`)

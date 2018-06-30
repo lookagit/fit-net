@@ -1007,14 +1007,15 @@ const Mutation = new GraphQLObjectType({
             },
           });
           if (findOrCreateUser) {
-            const updateUser = await db.models.personCl.upsert({
+            const [updateUser] = await db.models.personCl.upsert({
               email,
               firstName,
               lastName,
               imageUrl,
               ...args
-            })
-            return updateUser;
+            },{ returning: true })
+            console.log("JANKULOVSKI ", updateUser);
+            return updateUser.dataValues;
           }
           const createPersonCl = await db.models.personCl.create({
             email,
@@ -1032,7 +1033,7 @@ const Mutation = new GraphQLObjectType({
               lastName,
               imageUrl,
               isCouch: 1,
-            });
+            }, { returning: true });
             return createPersonCl;
           }
           return { error: 'Database issue' };
