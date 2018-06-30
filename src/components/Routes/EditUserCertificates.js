@@ -163,19 +163,24 @@ class EditUserCertificates extends React.Component {
     }
   }
 
-  removeCertificate = async certUrl => {
+  removeCertificate = async cerItem => {
     const myCertificates = this.state.myCertificates.filter(item => (
-      item.certUrl !== certUrl.certUrl
+      item.certUrl !== cerItem.certUrl
     ));
     this.setState({
       myCertificates,
     });
-    const bla = await this.props.removeCertificate({
-      variables: {
-        certUrl: certUrl.certUrl,
-      },
-    });
-    console.log(bla);
+    if (cerItem.id) {
+      const { data } = await this.props.removeCertificate({
+        variables: {
+          certUrl: cerItem.certUrl,
+        },
+      });
+      const { removeUserCertificates } = data;
+      if (removeUserCertificates.status === 200) {
+        this.changeCertificatesInLocal();
+      }
+    }
   }
 
   changeCertificatesInLocal = async () => {
