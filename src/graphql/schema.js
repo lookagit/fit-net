@@ -969,7 +969,7 @@ const Mutation = new GraphQLObjectType({
               lastName,
               imageUrl,
               ...args
-            })
+            },{ returning: true })
             return updateUser;
           }
           const createPersonCl = await db.models.personCl.create({
@@ -988,7 +988,7 @@ const Mutation = new GraphQLObjectType({
               lastName,
               imageUrl,
               isCouch: 1,
-            });
+            }, { returning: true });
             return createPersonCl;
           }
           return { error: 'Database issue' };

@@ -53,7 +53,20 @@ import logoBright from '../../../static/logoBright.png';
       personClub: $personClub,
       skillsArr: $skillsArr
     ) {
-      lastName
+      email
+        password
+        firstName
+        lastName
+        personClub
+        facebookLink
+        instagramLink
+        cellPhone
+        birthPlace
+        birthDay
+        hasCerificates
+        about
+        imageUrl
+        skillsArr
     }
   }`,
 {
@@ -172,6 +185,11 @@ class EditUser extends React.Component {
           },
         },
       );
+      const userLogedIn = window.localStorage.getItem('fbToken');
+      const parsedLogin = JSON.parse(userLogedIn);
+      console.log("JA SAM SMISLJA ", mutation);
+      console.log("JA ", parsedLogin);
+      
       this.props.history.push(`user-loged-in/${this.state.userPerson.id}`)
     }
 

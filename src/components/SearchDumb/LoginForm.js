@@ -37,11 +37,19 @@ import { connect } from 'react-redux';
         skillsArr
       }
       userFisio {
-        id
         email
-        imageUrl
+        password
         firstName
         lastName
+        facebookLink
+        instagramLink
+        cellPhone
+        birthPlace
+        birthDay
+        hasCerificates
+        about
+        imageUrl
+        fisioSkillsArr
       }
     }
   }`)
