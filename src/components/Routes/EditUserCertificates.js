@@ -39,6 +39,19 @@ const axios = require('axios');
     name: 'updateHasCertificates',
   },
 )
+@graphql(
+  gql`
+  mutation removeUserCertificates($certUrl: String) {
+    removeUserCertificates(certUrl: $certUrl) {
+      status
+      message
+    }
+  }`,
+  {
+    name: 'removeCertificate',
+  },
+)
+
 class EditUserCertificates extends React.Component {
   constructor(props) {
     super(props);
@@ -150,13 +163,19 @@ class EditUserCertificates extends React.Component {
     }
   }
 
-  removeCertificate = certUrl => {
+  removeCertificate = async certUrl => {
     const myCertificates = this.state.myCertificates.filter(item => (
-      item.certUrl !== certUrl
+      item.certUrl !== certUrl.certUrl
     ));
     this.setState({
       myCertificates,
     });
+    const bla = await this.props.removeCertificate({
+      variables: {
+        certUrl: certUrl.certUrl,
+      },
+    });
+    console.log(bla);
   }
 
   changeCertificatesInLocal = async () => {
@@ -298,7 +317,7 @@ class EditUserCertificates extends React.Component {
                           position: 'absolute',
                         }}
                         onClick={() => {
-                          this.removeCertificate(item.certUrl);
+                          this.removeCertificate(item);
                         }}
                       >
                         <img src={removeImg} width={25} height={25} />

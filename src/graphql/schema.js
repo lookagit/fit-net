@@ -894,18 +894,14 @@ const Mutation = new GraphQLObjectType({
       removeUserCertificates: {
         type: BasicResponse,
         args: {
-          certificateId: {
+          certUrl: {
             type: GraphQLString,
           },
-          personID: {
-            type: GraphQLInt,
-          },
         },
-        async resolve(root, { certificateId, personID }) {
+        async resolve(root, { certUrl }) {
           const deleted = await db.models.certification.destroy({
             where: {
-              id: certificateId,
-              personClId: personID,
+              certUrl,
             },
           });
           if (deleted) {
