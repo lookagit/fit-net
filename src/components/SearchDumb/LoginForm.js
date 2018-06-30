@@ -21,6 +21,7 @@ import { connect } from 'react-redux';
       isCouch
       isClub
       userPerson {
+        id
         email
         password
         firstName
@@ -37,6 +38,7 @@ import { connect } from 'react-redux';
         skillsArr
       }
       userFisio {
+        id
         email
         password
         firstName

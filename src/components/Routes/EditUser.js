@@ -21,6 +21,8 @@ import {
 } from '../Forms/validationFuncs';
 import logoBright from '../../../static/logoBright.png';
 
+const axios = require('axios');
+
 @withRouter
 @graphql(gql`
   mutation updateOrCreateUser(
@@ -53,7 +55,8 @@ import logoBright from '../../../static/logoBright.png';
       personClub: $personClub,
       skillsArr: $skillsArr
     ) {
-      email
+        id
+        email
         password
         firstName
         lastName
@@ -76,10 +79,12 @@ class EditUser extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            file: null,
             userPerson: null,
             snackOpen: false,
             openDialog: false,
             phoneErr: false,
+            loading: null,
             snackMessage: 'Greska!!',
         }
     }
@@ -167,6 +172,34 @@ class EditUser extends React.Component {
         });
         return;
       }
+      this.setState(() => {
+        return {
+          loading : true,
+        };
+      });
+      const { file } = this.state;
+      let uniqueNameForImg = '';
+      let fileOk = false;
+      if (file) {
+        const cloudUrl = `https://api.cloudinary.com/v1_1/drama/upload`;
+        const cloudPreset = `ioxmokvx`;
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', cloudPreset);
+        formData.append('options', { width: 320, height: 320, crop: 'limit', format: 'jpg' });
+        const uploadNow = await axios({
+          url: cloudUrl,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          data: formData,
+        });
+        if (uploadNow.status === 200) {
+          fileOk = true;
+          uniqueNameForImg = uploadNow.data.secure_url;
+        }
+      }
       const mutation = await this.props.updateMe(
         {
           variables: {
@@ -179,7 +212,7 @@ class EditUser extends React.Component {
             birthPlace: this.state.userPerson.birthPlace,
             birthDay: this.state.userPerson.birthDay.toString(),
             about: this.state.userPerson.about.toString(),
-            imageUrl: this.state.userPerson.imageUrl,
+            imageUrl: fileOk ? `${uniqueNameForImg}` : this.state.userPerson.imageUrl,
             skillsArr: this.state.userPerson.skillArr,
             personClub: this.state.userPerson.personClub,
           },
@@ -187,15 +220,20 @@ class EditUser extends React.Component {
       );
       const userLogedIn = window.localStorage.getItem('fbToken');
       const parsedLogin = JSON.parse(userLogedIn);
-      const updatedUser = {...parsedLogin.accessToken, userPerson: { ...mutation.data.updateOrCreateUser }}
-      console.log("JA ", mutation.data.updateOrCreateUser);
-      
-      this.props.history.push(`user-loged-in/${this.state.userPerson.id}`)
+      const updatedUser = {accessToken: {...parsedLogin.accessToken, userPerson: { ...mutation.data.updateOrCreateUser }}}
+      window.localStorage.setItem('fbToken', JSON.stringify(updatedUser));
+      console.log("state ", this.state.userPerson);
+      this.setState(() => {
+        return {
+          loading : false,
+        };
+      });
+      this.props.history.push(`user-loged-in/${mutation.data.updateOrCreateUser.id}`);
     }
 
     render() {
         console.log("STATE", this.state);
-        const { userPerson } = this.state;
+        const { userPerson, loading } = this.state;
         const actions = [
           <RaisedButton
             label="Ok"
@@ -205,7 +243,7 @@ class EditUser extends React.Component {
             onClick={this.handleClose}
           />,
         ];
-        if (!userPerson) return <LoadingComponent />
+        if (!userPerson || loading) return <LoadingComponent />
         return (
             <div className={css.registerFisioWrapper}>
                 <Snackbar
@@ -475,6 +513,7 @@ class EditUser extends React.Component {
                             </div>
                             <div className={css.registerFisioOne}>
                                 <Uppy
+                                    file={this.state.file}
                                     imageProp={userPerson.imageUrl}
                                     setRegister={injectFile => this.setState({ file: injectFile })}
                                 />

@@ -18,6 +18,7 @@ class UserLogedIn extends React.Component {
     componentDidMount() {
         this.isLogedIn();
     }
+    
     isLogedIn = async () => {
         if (window) {
             const isLogedIn = await window.localStorage.getItem('fbToken');
