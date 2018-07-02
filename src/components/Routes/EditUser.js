@@ -5,6 +5,7 @@ import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 import { graphql } from 'react-apollo';
 import { withRouter } from 'react-router-dom';
+import Moment from 'moment-timezone';
 import gql from 'graphql-tag';
 import { blue800, white } from 'material-ui/styles/colors';
 import DatePicker from 'material-ui/DatePicker';
@@ -104,6 +105,20 @@ class EditUser extends React.Component {
                 }
             }
         }
+    }
+
+    handleChange = (bla, date) => {
+      const { userPerson } = this.state;
+      const d1 = Moment(date).format(); // eslint-disable-line
+      const dateformated = d1.slice(0, 10);
+      this.setState({
+        userPerson: {
+          ...userPerson,
+          birthDay: dateformated
+        },
+        instaErr: false,
+        snackOpen: false,
+      });
     }
 
     addNewUser = async () => {

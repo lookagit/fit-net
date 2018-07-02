@@ -4,6 +4,7 @@ import Dialog from 'material-ui/Dialog';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 import { graphql } from 'react-apollo';
+import Moment from 'moment-timezone';
 import { withRouter } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { blue800, white } from 'material-ui/styles/colors';
@@ -102,6 +103,22 @@ class EditFisio extends React.Component {
             }
         }
     }
+
+
+    handleChange = (bla, date) => {
+      const { userFisio } = this.state;
+      const d1 = Moment(date).format(); // eslint-disable-line
+      const dateformated = d1.slice(0, 10);
+      this.setState({
+        userFisio: {
+          ...userFisio,
+          birthDay: dateformated
+        },
+        instaErr: false,
+        snackOpen: false,
+      });
+    }
+
 
     addNewUser = async () => {
       if (this.state.userFisio.firstName === '' || !validateStringNames(this.state.userFisio.firstName)) {

@@ -171,8 +171,29 @@ class UserLogedIn extends React.Component {
                                     </div>
                                     </div>
                             </div>   
-                        </div> : null
+                        </div> : 
+                        <h3
+                            style={{
+                                color: '#fff'
+                            }}
+                        >
+                          Nemate profil
+                        </h3>
                 }
+                <div
+                        style={{
+                            padding: '10px 0',
+                            marginTop: '10px'
+                        }}
+                    >
+                       <h3
+                           style={{
+                               color: '#fff'
+                           }}
+                       >
+                           Fizijatar:
+                       </h3>
+                    </div>
                 {   userFisio ?
                     <div
                       style={{
@@ -180,7 +201,8 @@ class UserLogedIn extends React.Component {
                           flexDirection: 'row',
                           backgroundColor: '#3f4668',
                           borderRadius: '10px',
-                          padding: '10px'
+                          padding: '10px',
+                          marginTop: '10px'
                       }}
                     >
                         <div 
