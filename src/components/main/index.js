@@ -31,6 +31,7 @@ import FisioOne from '../FisioOne';
 import Proba from '../proba';
 import RegisterPerson from '../Forms/RegisterPerson';
 import EditUser from '../Routes/EditUser';
+import EditFisio from '../Routes/EditFisio';
 import UploadCertificates from '../Forms/UploadCertificates';
 import UploadCertificatesPerson from '../Forms/UploadCertificatesPerson';
 import RegisterFisio from '../Forms/RegisterFisio';
@@ -49,7 +50,6 @@ export default () => (
         {/* <base href="http://localhost:8081/" /> */}
       </Helmet>
       <Header />
-      {/* <GraphQLMessage /> */}
       <Switch>
         <Route exact path="/" component={Coaches} />
         <Route path="/page/coaches" component={Coaches} />
@@ -70,6 +70,7 @@ export default () => (
         <Route path="/profile-choose" component={ChooseProfileMake} />
         <Route path="/user-loged-in/:userId" component={UserLogedIn} />
         <Route path="/edit-user" component={EditUser} />
+        <Route path="/edit-fisio" component={EditFisio} />
         <Route path="/edit-user-certificates" component={EditUserCertificates} />
         <Redirect from="/old/path" to="/new/path" />
         <Route component={WhenNotFound} />

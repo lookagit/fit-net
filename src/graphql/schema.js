@@ -1304,8 +1304,15 @@ const Mutation = new GraphQLObjectType({
               email,
             },
           });
-          if (letsFindFisio.length) {
-            return { error: 'We alredy have that fisio in DATABASE' };
+          if (findOrCreateUser) {
+            const [updateUser] = await db.models.fisioCl.upsert({
+              email,
+              firstName,
+              lastName,
+              imageUrl,
+              ...args
+            },{ returning: true })
+            return updateUser.dataValues;
           }
           await db.models.userCl.upsert({
             email,
