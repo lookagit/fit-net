@@ -215,6 +215,7 @@ class EditFisio extends React.Component {
           },
         },
       );
+      console.log("JALLOP MAMA ", mutation.data.updateOrCreateFisio);
       const userLogedIn = window.localStorage.getItem('fbToken');
       const parsedLogin = JSON.parse(userLogedIn);
       const updatedUser = {accessToken: {...parsedLogin.accessToken, userFisio: { ...mutation.data.updateOrCreateFisio }}}

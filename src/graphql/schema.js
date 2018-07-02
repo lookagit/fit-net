@@ -1299,12 +1299,12 @@ const Mutation = new GraphQLObjectType({
           },
         },
         async resolve(root, { email, password, firstName, lastName, imageUrl, ...args }) {
-          let letsFindFisio = await db.models.fisioCl.findAll({
+          let letsFindFisio = await db.models.fisioCl.findOne({
             where: {
               email,
             },
           });
-          if (findOrCreateUser) {
+          if (letsFindFisio) {
             const [updateUser] = await db.models.fisioCl.upsert({
               email,
               firstName,
