@@ -1010,7 +1010,6 @@ const Mutation = new GraphQLObjectType({
               imageUrl,
               ...args
             },{ returning: true })
-            console.log("JANKULOVSKI ", updateUser);
             return updateUser.dataValues;
           }
           const createPersonCl = await db.models.personCl.create({
@@ -1062,6 +1061,28 @@ const Mutation = new GraphQLObjectType({
             return createCounty;
           }
           return { error: 'Database issue, check createCounty' };
+        },
+      },
+      PersonCountyRemove: {
+        type: BasicResponse,
+        args: {
+          personCountyId: {
+            type: GraphQLInt,
+          }
+        },
+        async resolve(root, { personCountyId }) {
+          const deleteCounty = await db.models.personCounty.destroy({
+            where: {
+              id: personCountyId,
+            },
+          });
+          if (deleteCounty) {
+            return {
+              status: 200,
+              message: "Succesfuly"
+            };
+          }
+          return { error: 'Database issue, check deleteCounty' };
         },
       },
       certificateCreate: {
