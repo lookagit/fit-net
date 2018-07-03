@@ -40,6 +40,7 @@ import UserLogedIn from '../Routes/UserLogedIn';
 import css from '../styles/styles.scss';
 import RegisterMoreSkillsContainer from '../Forms/RegisterMoreSkillsContainer';
 import EditUserCertificates from '../Routes/EditUserCertificates';
+import EditFisioCertificates from '../Routes/EditFisioCertificates';
 
 export default () => (
   <div className={css.mainWrapper}>
@@ -72,6 +73,7 @@ export default () => (
         <Route path="/edit-user" component={EditUser} />
         <Route path="/edit-fisio" component={EditFisio} />
         <Route path="/edit-user-certificates" component={EditUserCertificates} />
+        <Route path="/edit-fisio-certificates" component={EditFisioCertificates} />
         <Redirect from="/old/path" to="/new/path" />
         <Route component={WhenNotFound} />
       </Switch>

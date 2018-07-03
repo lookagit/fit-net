@@ -59,6 +59,13 @@ import { connect } from 'react-redux';
         about
         imageUrl
         fisioSkillsArr
+        allCertificates {
+          id
+          name
+          certUrl
+          personClId
+          fisioClId
+        }
       }
     }
   }`)

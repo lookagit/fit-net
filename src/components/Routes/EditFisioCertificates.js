@@ -18,12 +18,12 @@ const axios = require('axios');
 @withRouter
 @graphql(
   gql`
-  mutation certificateCreate($name: String, $certUrl: String, $personClId: Int) {
-    certificateCreate(name: $name, certUrl: $certUrl, personClId: $personClId) {
+  mutation certificateCreate($name: String, $certUrl: String, $fisioClId: Int) {
+    certificateCreate(name: $name, certUrl: $certUrl, fisioClId: $fisioClId) {
       id
       name
       certUrl
-      personClId
+      fisioClId
     }
   }`,
   {
@@ -32,8 +32,8 @@ const axios = require('axios');
 )
 @graphql(
   gql`
-  mutation updateUserCertificates($userId: Int, $hasCerificates: Boolean) {
-    updateUserCertificates(userId: $userId, hasCerificates: $hasCerificates) {
+  mutation updateFisioCertificates($fisioId: Int, $hasCerificates: Boolean) {
+    updateFisioCertificates(fisioId: $fisioId, hasCerificates: $hasCerificates) {
       id
     }
   }`,
@@ -54,7 +54,7 @@ const axios = require('axios');
   },
 )
 
-class EditUserCertificates extends React.Component {
+class EditFisioCertificates extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -76,10 +76,10 @@ class EditUserCertificates extends React.Component {
       if (isLogedIn) {
         const { accessToken } = JSON.parse(isLogedIn);
         if (accessToken) {
-          const { userPerson } = accessToken;
-          const { myCertificates, id } = userPerson;
+          const { userFisio } = accessToken;
+          const { allCertificates, id } = userFisio;
           this.setState({
-            myCertificates,
+            myCertificates: allCertificates,
             id,
           });
         }
@@ -93,9 +93,9 @@ class EditUserCertificates extends React.Component {
     if (isLogedIn) {
       const { accessToken } = JSON.parse(isLogedIn);
       if (accessToken) {
-        const { userPerson } = accessToken;
-        userPerson.myCertificates = [...userPerson.myCertificates, ...certificates];
-        await window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...accessToken, userPerson } }));
+        const { userFisio } = accessToken;
+        userFisio.allCertificates = [...userFisio.allCertificates, ...certificates];
+        await window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...accessToken, userFisio } }));
       }
     }
   }
@@ -118,9 +118,9 @@ class EditUserCertificates extends React.Component {
       if (isLogedIn) {
         const { accessToken } = JSON.parse(isLogedIn);
         if (accessToken) {
-          const { userPerson } = accessToken;
-          userPerson.myCertificates = [...myCertificates];
-          await window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...accessToken, userPerson } }));
+          const { userFisio } = accessToken;
+          userFisio.allCertificates = [...myCertificates];
+          await window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...accessToken, userFisio } }));
         }
       }
     }
@@ -136,7 +136,7 @@ class EditUserCertificates extends React.Component {
       this.setState({ loading: true });
       await this.props.updateHasCertificates({
         variables: {
-          userId: parseInt(this.state.id),
+          fisioId: parseInt(this.state.id),
           hasCerificates: true,
         },
       });
@@ -169,7 +169,7 @@ class EditUserCertificates extends React.Component {
             variables: {
               name: 'UploadedFitNetPersonCertify',
               certUrl: `${uploadNow.data.secure_url}`,
-              personClId: parseInt(this.state.id),
+              fisioClId: parseInt(this.state.id),
             },
           });
           const { certificateCreate } = data;
@@ -431,4 +431,4 @@ class EditUserCertificates extends React.Component {
   }
 }
 
-export default withRouter(EditUserCertificates);
+export default withRouter(EditFisioCertificates);
