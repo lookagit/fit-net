@@ -41,6 +41,7 @@ import css from '../styles/styles.scss';
 import RegisterMoreSkillsContainer from '../Forms/RegisterMoreSkillsContainer';
 import EditUserCertificates from '../Routes/EditUserCertificates';
 import EditFisioCertificates from '../Routes/EditFisioCertificates';
+import HomePage from '../Routes/HomePage';
 
 export default () => (
   <div className={css.mainWrapper}>
@@ -52,7 +53,7 @@ export default () => (
       </Helmet>
       <Header />
       <Switch>
-        <Route exact path="/" component={Coaches} />
+        <Route exact path="/" component={HomePage} />
         <Route path="/page/coaches" component={Coaches} />
         <Route path="/page/fizio" component={Fizio} />
         <Route path="/page/clubs" component={Clubs} />

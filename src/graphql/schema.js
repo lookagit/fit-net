@@ -1085,6 +1085,28 @@ const Mutation = new GraphQLObjectType({
           return { error: 'Database issue, check deleteCounty' };
         },
       },
+      FisioCountyRemove: {
+        type: BasicResponse,
+        args: {
+          fisioCountyId: {
+            type: GraphQLInt,
+          }
+        },
+        async resolve(root, { personCountyId }) {
+          const deleteCounty = await db.models.fisioCounty.destroy({
+            where: {
+              id: fisioCountyId,
+            },
+          });
+          if (deleteCounty) {
+            return {
+              status: 200,
+              message: "Succesfuly"
+            };
+          }
+          return { error: 'Database issue, check deleteCounty' };
+        },
+      },
       certificateCreate: {
         type: Certification,
         args: {
@@ -1333,28 +1355,28 @@ const Mutation = new GraphQLObjectType({
           return letsCreate;
         },
       },
-            createFisioCounty: {
-                type: FisioCounty,
-                args: {
-                    price: {
-                        type: GraphQLFloat,
-                    },
-                    address: {
-                        type: GraphQLString,
-                    },
-                    fisioClId: {
-                        type: GraphQLInt,
-                    },
-                    countyId: {
-                        type: GraphQLInt,
-                    },
-                },
-                async resolve(root, args) {
-                    return await db.models.fisioCounty.create(args);
-                },
-            },
-        };
-    },
+      createFisioCounty: {
+          type: FisioCounty,
+          args: {
+              price: {
+                  type: GraphQLFloat,
+              },
+              address: {
+                  type: GraphQLString,
+              },
+              fisioClId: {
+                  type: GraphQLInt,
+              },
+              countyId: {
+                  type: GraphQLInt,
+              },
+          },
+          async resolve(root, args) {
+              return await db.models.fisioCounty.create(args);
+          },
+      },
+    };
+  },
 });
 
 export default new GraphQLSchema({
