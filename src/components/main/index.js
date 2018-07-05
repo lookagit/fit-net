@@ -41,10 +41,7 @@ import css from '../styles/styles.scss';
 import RegisterMoreSkillsContainer from '../Forms/RegisterMoreSkillsContainer';
 import EditUserCertificates from '../Routes/EditUserCertificates';
 import EditFisioCertificates from '../Routes/EditFisioCertificates';
-<<<<<<< HEAD
-=======
 import EditUserPriceAndLocation from '../Routes/EditUserPriceAndLocation';
->>>>>>> d5f98cf... added editing price and location
 import HomePage from '../Routes/HomePage';
 
 export default () => (
