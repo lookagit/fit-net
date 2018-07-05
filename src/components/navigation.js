@@ -6,13 +6,21 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: 'Treneri',
+      active: 'NONE',
     }
   }
   hangleNavColor(linkItem) {
     this.setState({
       active: linkItem,
     });
+    this.props.stateSet();
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isActive) {
+      this.setState({
+        active: 'NONE'
+      })
+    }
   }
   render() {
     return(

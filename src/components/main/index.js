@@ -53,7 +53,7 @@ export default () => (
       </Helmet>
       <Header />
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={Coaches} />
         <Route path="/page/coaches" component={Coaches} />
         <Route path="/page/fizio" component={Fizio} />
         <Route path="/page/clubs" component={Clubs} />
