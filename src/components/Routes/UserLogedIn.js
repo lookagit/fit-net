@@ -141,7 +141,7 @@ class UserLogedIn extends React.Component {
                                     <div 
                                         style={{
                                           flexDirection: 'row',
-                                          paddingBottom: '10px'
+                                          paddingBottom: '5px'
                                           }}
                                     >
                                         <RaisedButton
@@ -157,6 +157,7 @@ class UserLogedIn extends React.Component {
                                     <div 
                                         style={{
                                           flexDirection: 'row',
+                                          paddingBottom: '5px'
                                           }}
                                     >
                                         <RaisedButton
@@ -166,6 +167,21 @@ class UserLogedIn extends React.Component {
                                             backgroundColor="#1da9ec"
                                             onClick={() => {
                                               this.props.history.push(`/edit-user-certificates`);
+                                            }}
+                                        />
+                                    </div>
+                                    <div 
+                                        style={{
+                                          flexDirection: 'row',
+                                          }}
+                                    >
+                                        <RaisedButton
+                                            label="Editujte lokacije i cene"
+                                            labelColor="#fff"
+                                            labelStyle={{ fontWeight: '700' }}
+                                            backgroundColor="#1da9ec"
+                                            onClick={() => {
+                                              this.props.history.push(`/edit-user-price-location`);
                                             }}
                                         />
                                     </div>

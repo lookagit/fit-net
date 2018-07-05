@@ -41,6 +41,10 @@ import css from '../styles/styles.scss';
 import RegisterMoreSkillsContainer from '../Forms/RegisterMoreSkillsContainer';
 import EditUserCertificates from '../Routes/EditUserCertificates';
 import EditFisioCertificates from '../Routes/EditFisioCertificates';
+<<<<<<< HEAD
+=======
+import EditUserPriceAndLocation from '../Routes/EditUserPriceAndLocation';
+>>>>>>> d5f98cf... added editing price and location
 import HomePage from '../Routes/HomePage';
 
 export default () => (
@@ -75,6 +79,7 @@ export default () => (
         <Route path="/edit-fisio" component={EditFisio} />
         <Route path="/edit-user-certificates" component={EditUserCertificates} />
         <Route path="/edit-fisio-certificates" component={EditFisioCertificates} />
+        <Route path="/edit-user-price-location" component={EditUserPriceAndLocation} />
         <Redirect from="/old/path" to="/new/path" />
         <Route component={WhenNotFound} />
       </Switch>
