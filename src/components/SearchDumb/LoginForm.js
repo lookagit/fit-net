@@ -43,6 +43,16 @@ import { connect } from 'react-redux';
           personClId
           fisioClId
         }
+        personCounties {
+          id
+          price
+          groupTraining
+          address
+          county {
+            id
+            countyName
+          }
+        }
       }
       userFisio {
         id
@@ -65,6 +75,15 @@ import { connect } from 'react-redux';
           certUrl
           personClId
           fisioClId
+        }
+        fisioCounties {
+          id
+          price
+          address
+          fisioCounty {
+            id
+            countyName
+          }
         }
       }
     }

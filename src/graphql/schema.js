@@ -1092,7 +1092,7 @@ const Mutation = new GraphQLObjectType({
             type: GraphQLInt,
           }
         },
-        async resolve(root, { personCountyId }) {
+        async resolve(root, { fisioCountyId }) {
           const deleteCounty = await db.models.fisioCounty.destroy({
             where: {
               id: fisioCountyId,
