@@ -92,18 +92,14 @@ class EditUserPriceAndLocation extends React.Component {
     }
   }
 
-  setItemsInLocal = async (tmp, remove) => {
+  setItemsInLocal = async tmp => {
     const isLogedIn = await window.localStorage.getItem('fbToken');
     if (isLogedIn) {
       const { accessToken } = JSON.parse(isLogedIn);
       if (accessToken) {
         const { userFisio } = accessToken;
         if (tmp.length) {
-          if (remove) {
-            userFisio.fisioCounties = [...tmp];
-          } else {
-            userFisio.fisioCounties = [...userFisio.fisioCounties, ...tmp];
-          }
+          userFisio.fisioCounties = [...userFisio.fisioCounties, ...tmp];
         } else {
           userFisio.fisioCounties = [];
         }
@@ -176,7 +172,7 @@ class EditUserPriceAndLocation extends React.Component {
     }
   }
 
-  moreItem = async () => {
+  moreItem = () => {
     if (this.state.countiesId !== '' && this.state.price !== '' && this.state.address) {
       const { price, skillId, countiesId, address } = this.state;
       const obj = {};
@@ -223,26 +219,29 @@ class EditUserPriceAndLocation extends React.Component {
           items,
         });
       }
+      this.setItemsInLocal(items);
     } else {
-      const indexFind = items.map(item => (item.id)).indexOf(id);
-      items.splice(indexFind, 1);
-      if (!items.length) {
-        this.setState({
-          items,
-          moreItems: false,
-        });
-      } else {
-        this.setState({
-          items,
-        });
-      }
-      await this.props.removeItemMutation({
+      const { data } = await this.props.removeItemMutation({
         variables: {
           fisioCountyId: id,
         },
       });
+      if (data.FisioCountyRemove.status === 200) {
+        const indexFind = items.map(item => (item.id)).indexOf(id);
+        items.splice(indexFind, 1);
+        if (!items.length) {
+          this.setState({
+            items,
+            moreItems: false,
+          });
+        } else {
+          this.setState({
+            items,
+          });
+        }
+      }
+      this.setItemsInLocal(items);
     }
-    this.setItemsInLocal(items, true);
   }
 
   saveSkills = () => {
@@ -261,7 +260,7 @@ class EditUserPriceAndLocation extends React.Component {
     });
     Promise.all(sendOnServer).then(itemsOnServer => {
       const arrayForMe = itemsOnServer.map(item => ({ ...item.data.createFisioCounty }));
-      this.setItemsInLocal(arrayForMe, false);
+      this.setItemsInLocal(arrayForMe);
       this.setState({
         moreItems: false,
       });
@@ -269,6 +268,7 @@ class EditUserPriceAndLocation extends React.Component {
   }
 
   render() {
+    console.log("evo tatta", this.state);
     return (
       <div>
         <div style={{ marginBottom: this.state.items.length ? 0 : 50 }}>

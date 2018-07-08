@@ -93,18 +93,14 @@ class EditUserPriceAndLocation extends React.Component {
     }
   }
 
-  setItemsInLocal = async (tmp, remove) => {
+  setItemsInLocal = async tmp => {
     const isLogedIn = await window.localStorage.getItem('fbToken');
     if (isLogedIn) {
       const { accessToken } = JSON.parse(isLogedIn);
       if (accessToken) {
         const { userPerson } = accessToken;
         if (tmp.length) {
-          if (remove) {
-            userPerson.personCounties = [...tmp];
-          } else {
-            userPerson.personCounties = [...userPerson.personCounties, ...tmp];
-          }
+          userPerson.personCounties = [...userPerson.personCounties, ...tmp];
         } else {
           userPerson.personCounties = [];
         }
@@ -177,7 +173,7 @@ class EditUserPriceAndLocation extends React.Component {
     }
   }
 
-  moreItem = async () => {
+  moreItem = () => {
     if (this.state.countiesId !== '' && this.state.price !== '' && this.state.address) {
       const { price, skillId, countiesId, groupTraining, address } = this.state;
       const obj = {};
@@ -225,26 +221,29 @@ class EditUserPriceAndLocation extends React.Component {
           items,
         });
       }
+      this.setItemsInLocal(items);
     } else {
-      const indexFind = items.map(item => (item.id)).indexOf(id);
-      items.splice(indexFind, 1);
-      if (!items.length) {
-        this.setState({
-          items,
-          moreItems: false,
-        });
-      } else {
-        this.setState({
-          items,
-        });
-      }
-      await this.props.removeItemMutation({
+      const { data } = await this.props.removeItemMutation({
         variables: {
           personCountyId: id,
         },
       });
+      if (data.PersonCountyRemove.status === 200) {
+        const indexFind = items.map(item => (item.id)).indexOf(id);
+        items.splice(indexFind, 1);
+        if (!items.length) {
+          this.setState({
+            items,
+            moreItems: false,
+          });
+        } else {
+          this.setState({
+            items,
+          });
+        }
+        this.setItemsInLocal(items);
+      }
     }
-    this.setItemsInLocal(items, true);
   }
 
   saveSkills = () => {
@@ -264,7 +263,7 @@ class EditUserPriceAndLocation extends React.Component {
     });
     Promise.all(sendOnServer).then(itemsOnServer => {
       const arrayForMe = itemsOnServer.map(item => ({ ...item.data.PersonCountyCreate }));
-      this.setItemsInLocal(arrayForMe, false);
+      this.setItemsInLocal(arrayForMe);
       this.setState({
         moreItems: false,
       });
