@@ -93,14 +93,18 @@ class EditUserPriceAndLocation extends React.Component {
     }
   }
 
-  setItemsInLocal = async tmp => {
+  setItemsInLocal = async (tmp, remove) => {
     const isLogedIn = await window.localStorage.getItem('fbToken');
     if (isLogedIn) {
       const { accessToken } = JSON.parse(isLogedIn);
       if (accessToken) {
         const { userPerson } = accessToken;
         if (tmp.length) {
-          userPerson.personCounties = [...userPerson.personCounties, ...tmp];
+          if (remove) {
+            userPerson.personCounties = [...tmp];
+          } else {
+            userPerson.personCounties = [...userPerson.personCounties, ...tmp];
+          }
         } else {
           userPerson.personCounties = [];
         }
@@ -240,7 +244,7 @@ class EditUserPriceAndLocation extends React.Component {
         },
       });
     }
-    this.setItemsInLocal(items);
+    this.setItemsInLocal(items, true);
   }
 
   saveSkills = () => {
@@ -260,7 +264,7 @@ class EditUserPriceAndLocation extends React.Component {
     });
     Promise.all(sendOnServer).then(itemsOnServer => {
       const arrayForMe = itemsOnServer.map(item => ({ ...item.data.PersonCountyCreate }));
-      this.setItemsInLocal(arrayForMe);
+      this.setItemsInLocal(arrayForMe, false);
       this.setState({
         moreItems: false,
       });

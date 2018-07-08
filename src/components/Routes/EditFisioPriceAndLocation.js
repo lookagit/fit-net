@@ -92,14 +92,18 @@ class EditUserPriceAndLocation extends React.Component {
     }
   }
 
-  setItemsInLocal = async tmp => {
+  setItemsInLocal = async (tmp, remove) => {
     const isLogedIn = await window.localStorage.getItem('fbToken');
     if (isLogedIn) {
       const { accessToken } = JSON.parse(isLogedIn);
       if (accessToken) {
         const { userFisio } = accessToken;
         if (tmp.length) {
-          userFisio.fisioCounties = [...userFisio.fisioCounties, ...tmp];
+          if (remove) {
+            userFisio.fisioCounties = [...tmp];
+          } else {
+            userFisio.fisioCounties = [...userFisio.fisioCounties, ...tmp];
+          }
         } else {
           userFisio.fisioCounties = [];
         }
@@ -238,7 +242,7 @@ class EditUserPriceAndLocation extends React.Component {
         },
       });
     }
-    this.setItemsInLocal(items);
+    this.setItemsInLocal(items, true);
   }
 
   saveSkills = () => {
@@ -257,7 +261,7 @@ class EditUserPriceAndLocation extends React.Component {
     });
     Promise.all(sendOnServer).then(itemsOnServer => {
       const arrayForMe = itemsOnServer.map(item => ({ ...item.data.createFisioCounty }));
-      this.setItemsInLocal(arrayForMe);
+      this.setItemsInLocal(arrayForMe, false);
       this.setState({
         moreItems: false,
       });
@@ -265,7 +269,6 @@ class EditUserPriceAndLocation extends React.Component {
   }
 
   render() {
-    console.log("evo tatta", this.state);
     return (
       <div>
         <div style={{ marginBottom: this.state.items.length ? 0 : 50 }}>
