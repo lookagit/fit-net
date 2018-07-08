@@ -24,6 +24,7 @@ class Header extends React.Component {
       firstName: null,
       imageUrl: null,
       loggedIn: false,
+      isActive: null,
     }
   }
 
@@ -37,7 +38,6 @@ class Header extends React.Component {
     e.stopPropagation();
   }
   logoutNow = () => {
-    console.log("EVO JA LOGOUT")
     window.localStorage.removeItem('fbToken');
     this.props.dispatch({ type: 'FACEBOOK_LOGIN', accessToken: undefined });
     this.props.history.push('/');
@@ -88,7 +88,12 @@ class Header extends React.Component {
       <div className={css.header}>
         <div className={css.headerBox1}>
           <div
-            onClick={() => this.props.dispatch({type: 'DRAWER_OPEN'})}
+            onClick={() => {
+              this.props.history.push('/')
+              this.setState({
+                isActive: true,
+              })
+            }}
             className={css.logoBox}
           >
             <img
@@ -178,7 +183,10 @@ class Header extends React.Component {
           </div>
         </div>
         <div className={css.headerBox2}>
-          <Navigation />
+          <Navigation 
+            isActive={this.state.isActive}
+            stateSet={() => this.setState({isActive: null})}
+          />
         </div>
         <div
           onClick={() => this.modalOff()}
@@ -187,6 +195,24 @@ class Header extends React.Component {
           <div 
             onClick={(e) => this.stopProp(e)}
             className={css.loginModalHolder}>
+            <div
+              onClick={() => this.modalOff()}
+              style={{
+                position: 'absolute',
+                color: 'rgb(255, 0, 0)',
+                textAlign: 'right',
+                right: 0,
+                top: '-35px'
+              }}
+            >
+              <h1
+                style={{
+                  cursor: 'pointer',
+                }}
+              >
+                X
+              </h1>
+            </div>
               <LogedInOrNot />
           </div>
         </div>

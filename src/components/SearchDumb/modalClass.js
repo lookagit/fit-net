@@ -66,33 +66,33 @@ class ModalClass extends React.Component {
 
   render() {
     return (
-      <div className={css.modalClass}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-          }}
-        >
-          <div style={{ textAlign: 'center', margin: '0 auto', marginBottom: '35px' }}>
-            <img
-              alt="FIT-NET Logo"
-              src={logoBright}
-              width="185px"
-              height="90px"
-            />
-            <LoginForm />
-          </div>
+        <div className={css.modalClass}>
           <div
-            className={css.socialContainerButton}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+            }}
           >
-            <FacebookLoginContainer />
-            <GoogleLoginContainer />
+            <div style={{ textAlign: 'center', margin: '0 auto', marginBottom: '35px' }}>
+              <img
+                alt="FIT-NET Logo"
+                src={logoBright}
+                width="185px"
+                height="90px"
+              />
+              <LoginForm />
+            </div>
+            <div
+              className={css.socialContainerButton}
+            >
+              <FacebookLoginContainer />
+              <GoogleLoginContainer />
+            </div>
           </div>
         </div>
-      </div>
     );
   }
 }
