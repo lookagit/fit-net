@@ -76,6 +76,15 @@ import { connect } from 'react-redux';
           personClId
           fisioClId
         }
+        fisioCounties {
+          id
+          price
+          address
+          fisioCounty {
+            id
+            countyName
+          }
+        }
       }
     }
   }`)

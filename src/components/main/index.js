@@ -42,6 +42,7 @@ import RegisterMoreSkillsContainer from '../Forms/RegisterMoreSkillsContainer';
 import EditUserCertificates from '../Routes/EditUserCertificates';
 import EditFisioCertificates from '../Routes/EditFisioCertificates';
 import EditUserPriceAndLocation from '../Routes/EditUserPriceAndLocation';
+import EditFisioPriceAndLocation from '../Routes/EditFisioPriceAndLocation';
 import HomePage from '../Routes/HomePage';
 
 export default () => (
@@ -77,6 +78,7 @@ export default () => (
         <Route path="/edit-user-certificates" component={EditUserCertificates} />
         <Route path="/edit-fisio-certificates" component={EditFisioCertificates} />
         <Route path="/edit-user-price-location" component={EditUserPriceAndLocation} />
+        <Route path="/edit-fisio-price-location" component={EditFisioPriceAndLocation} />
         <Redirect from="/old/path" to="/new/path" />
         <Route component={WhenNotFound} />
       </Switch>
