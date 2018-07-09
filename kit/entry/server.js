@@ -11,11 +11,7 @@
 
 // For pre-pending a `<!DOCTYPE html>` stream to the server response
 import { PassThrough } from 'stream';
-var aws = require('aws-sdk');
-aws.config.update({
-  accessKeyId: 'AKIAJWJPWC6HGBPXQ4AQ',
-  secretAccessKey: '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',
-});
+
 // HTTP & SSL servers.  We can use `config.enableSSL|disableHTTP()` to enable
 // HTTPS and disable plain HTTP respectively, so we'll use Node's core libs
 // for building both server types.
@@ -237,21 +233,6 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
 // Koa route handlers
 
 const router = (new KoaRouter())
-  .get('/ping/:id/:indi/:type', async ctx => {
-    var s3 = new aws.S3({
-      signatureVersion: 'v4',
-      region: 'eu-central-1',
-    });
-    var params = {
-      Bucket: 'zaluku',
-      Key: ctx.params.id,
-      Expires: 600,
-      ContentType: ctx.params.indi + '/' + ctx.params.type,
-      ACL: 'public-read',
-    };
-    let asa = await s3.getSignedUrl('putObject', params);
-    ctx.body = asa;
-  })
   .get('/favicon.ico', async ctx => {
     ctx.status = 204;
   });

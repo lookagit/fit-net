@@ -22,6 +22,9 @@ import {
   // TrainingPersonSkill,
 } from './PersonClForSchema';
 import userControll from './userLoginFunctions';
+import emailFunction from './emailParse';
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey('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');
 
 async function getMessage() {
   return {
@@ -909,6 +912,29 @@ const Mutation = new GraphQLObjectType({
           }
           return { status: 500, message: 'error on deleting certificates'};
         },
+      },
+      sendEmail: {
+        type: BasicResponse,
+        args: {
+          email: {
+            type: GraphQLString,
+          }
+        },
+        async resolve(root, { email }) {
+          const findUser = await db.models.userCl.findOne({
+            where: {
+              email,
+            }
+          });
+          const msg = {
+            to: email,
+            from: 'fitnetsrbija@gmail.com',
+            subject: 'Molimo Vas potvrdite svoj email',
+            html: emailFunction(`http://fit-net.rs/register-confirm/${Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)}`),
+          };
+          const letSend = await sgMail.send(msg);
+          console.log('lets', letSend);
+        }
       },
       updateUserCertificates: {
         type: PersonCl,

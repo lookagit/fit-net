@@ -66,6 +66,13 @@ const UserCl = db.define('userCl', {
       isUrl: true,
     },
   },
+  confirmed: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+  codeForConfirm: {
+    type: Sequelize.String,
+  },
   isFisio: {
     type: Sequelize.INTEGER,
     defaultValue: 0,
