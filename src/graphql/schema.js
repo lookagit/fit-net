@@ -24,7 +24,7 @@ import {
 import userControll from './userLoginFunctions';
 import emailFunction from './emailParse';
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('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');
+sgMail.setApiKey(process.env.SENDGRID_SECRET);
 
 async function getMessage() {
   return {
