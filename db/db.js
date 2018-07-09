@@ -71,7 +71,7 @@ const UserCl = db.define('userCl', {
     defaultValue: false,
   },
   codeForConfirm: {
-    type: Sequelize.String,
+    type: Sequelize.STRING,
   },
   isFisio: {
     type: Sequelize.INTEGER,
