@@ -221,7 +221,6 @@ class EditUserPriceAndLocation extends React.Component {
           items,
         });
       }
-      this.setItemsInLocal(items);
     } else {
       const { data } = await this.props.removeItemMutation({
         variables: {
@@ -229,6 +228,17 @@ class EditUserPriceAndLocation extends React.Component {
         },
       });
       if (data.PersonCountyRemove.status === 200) {
+        const isLogedIn = await window.localStorage.getItem('fbToken');
+        if (isLogedIn) {
+          const { accessToken } = JSON.parse(isLogedIn);
+          if (accessToken) {
+            const { userPerson } = accessToken;
+            const indexFind = userPerson.personCounties.map(item => (item.id)).indexOf(id);
+            userPerson.personCounties.splice(indexFind, 1);
+            userPerson.personCounties = [...userPerson.personCounties];
+            await window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...accessToken, userPerson } }));
+          }
+        }
         const indexFind = items.map(item => (item.id)).indexOf(id);
         items.splice(indexFind, 1);
         if (!items.length) {
@@ -241,7 +251,6 @@ class EditUserPriceAndLocation extends React.Component {
             items,
           });
         }
-        this.setItemsInLocal(items);
       }
     }
   }
@@ -251,6 +260,7 @@ class EditUserPriceAndLocation extends React.Component {
       this.moreItem();
     }
     const sendOnServer = this.state.items.filter(itemm => itemm.onServer === true).map(async item => {
+      console.log("evo ovoliko ide na server");
       return this.props.createMoreSkills({
         variables: {
           price: parseInt(item.price), //eslint-disable-line
@@ -271,6 +281,7 @@ class EditUserPriceAndLocation extends React.Component {
   }
 
   render() {
+    console.log("evo items", this.state.items)
     return (
       <div>
         <div style={{ marginBottom: this.state.items.length ? 0 : 50 }}>

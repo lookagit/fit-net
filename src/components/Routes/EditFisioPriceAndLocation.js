@@ -219,7 +219,6 @@ class EditUserPriceAndLocation extends React.Component {
           items,
         });
       }
-      this.setItemsInLocal(items);
     } else {
       const { data } = await this.props.removeItemMutation({
         variables: {
@@ -227,6 +226,17 @@ class EditUserPriceAndLocation extends React.Component {
         },
       });
       if (data.FisioCountyRemove.status === 200) {
+        const isLogedIn = await window.localStorage.getItem('fbToken');
+        if (isLogedIn) {
+          const { accessToken } = JSON.parse(isLogedIn);
+          if (accessToken) {
+            const { userFisio } = accessToken;
+            const indexFind = userFisio.fisioCounties.map(item => (item.id)).indexOf(id);
+            userFisio.fisioCounties.splice(indexFind, 1);
+            userFisio.fisioCounties = [...userFisio.fisioCounties];
+            await window.localStorage.setItem('fbToken', JSON.stringify({ accessToken: { ...accessToken, userFisio } }));
+          }
+        }
         const indexFind = items.map(item => (item.id)).indexOf(id);
         items.splice(indexFind, 1);
         if (!items.length) {
@@ -240,7 +250,6 @@ class EditUserPriceAndLocation extends React.Component {
           });
         }
       }
-      this.setItemsInLocal(items);
     }
   }
 
@@ -268,7 +277,6 @@ class EditUserPriceAndLocation extends React.Component {
   }
 
   render() {
-    console.log("evo tatta", this.state);
     return (
       <div>
         <div style={{ marginBottom: this.state.items.length ? 0 : 50 }}>
