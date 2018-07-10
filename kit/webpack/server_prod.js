@@ -65,7 +65,7 @@ export default new WebpackConfig().extend({
         HOST: JSON.stringify(process.env.HOST || 'localhost'),
         PORT: JSON.stringify(process.env.PORT || '4000'),
         SSL_PORT: process.env.SSL_PORT ? JSON.stringify(process.env.SSL_PORT) : null,
-
+        SENDGRID_SECRET: process.env.SENDGRID_SECRET,
         // React constantly checking process.env.NODE_ENV causes massive
         // slowdowns during rendering. Replacing process.env.NODE_ENV
         // with a string not only removes this expensive check, it allows
