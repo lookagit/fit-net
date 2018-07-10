@@ -921,19 +921,26 @@ const Mutation = new GraphQLObjectType({
           }
         },
         async resolve(root, { email }) {
+          console.log("EVO ME OVDE");
           const findUser = await db.models.userCl.findOne({
             where: {
               email,
             }
           });
+          console.log("EVCO ME ISPOD FIND ", findUser);
           const msg = {
             to: email,
             from: 'fitnetsrbija@gmail.com',
             subject: 'Molimo Vas potvrdite svoj email',
             html: emailFunction(`http://fit-net.rs/register-confirm/${Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)}`),
           };
+          console.log("EVO ME SALJEM")
           const letSend = await sgMail.send(msg);
           console.log('lets', letSend);
+          return {
+            message: null,
+            status: null,
+          }
         }
       },
       updateUserCertificates: {
