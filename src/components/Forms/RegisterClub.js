@@ -2,10 +2,8 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { withRouter } from 'react-router-dom';
-import Moment from 'moment-timezone';
 import Loading from 'react-loading-components';
 import TextField from 'material-ui/TextField';
-import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import { blue800, white } from 'material-ui/styles/colors';
@@ -322,8 +320,8 @@ class RegisterFisio extends React.Component {
                 style={{ width: '100%', textTransform: 'capitalize' }}
                 className={css.biggerFont}
                 errorText={this.state.nameErr ? 'Ime mora imati više od 2 karakera i ne sme sadržati brojeve!' : null}
-                onChange={(e, firstName) => {
-                  if (validateStringNames(firstName)) {
+                onChange={(e, name) => {
+                  if (validateStringNames(name)) {
                     this.setState({
                       warrningMessage: null,
                       snackOpen: false,
@@ -343,27 +341,27 @@ class RegisterFisio extends React.Component {
             <div className={css.inputWrapperForm}>
               {/* <label className={css.labelsRegister}>Last name</label> */}
               <TextField
-                hintText="Unesite prezime"
+                hintText="Unesite web adresu"
                 hintStyle={{ color: blue800 }}
                 floatingLabelText="Prezime"
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
                 className={css.biggerFont}
                 style={{ width: '100%', textTransform: 'capitalize' }}
-                errorText={this.state.lastNameErr ? 'Ime mora imati više od 2 karakera i ne sme sadržati brojeve!' : null}
-                onChange={(e, lastName) => {
-                  if (validateStringNames(lastName)) {
+                errorText={this.state.webAddressErr ? 'Morate uneti ispravan link' : null}
+                onChange={(e, webAddress) => {
+                    if (validateUrl(webAddress)) {
                     this.setState({
                       snackOpen: false,
                       warrningMessage: null,
-                      lastName,
-                      lastNameErr: null,
+                      webAddress,
+                      webAddress: null,
                     });
                   } else {
                     this.setState({
                       snackOpen: false,
-                      warrningMessage: 'Neispravan format prezimena!',
-                      lastNameErr: true,
+                      warrningMessage: 'Neispravan format linka!',
+                      webAddress: true,
                     });
                   }
                 }}
@@ -401,82 +399,38 @@ class RegisterFisio extends React.Component {
               />
             </div>
             <div className={css.inputWrapperForm}>
-              {/* <label className={css.labelsRegister}>Birtday Date</label> */}
-              <DatePicker
-                floatingLabelText="Datum rodjenja"
-                hintText="Open to Year"
-                openToYearSelection
-                className={css.brightFont}
-                floatingLabelStyle={{ color: white }}
-                textFieldStyle={{ width: '100%' }}
-                onChange={this.handleChange} />
+              <TextField
+                  hintText="Unesite broj telefona"
+                  hintStyle={{ color: blue800 }}
+                  floatingLabelText="Broj telefona"
+                  floatingLabelStyle={{ color: white }}
+                  underlineFocusStyle={{ borderColor: blue800 }}
+                  style={{ width: '100%' }}
+                  type="number"
+                  className={css.brightFont}
+                  errorText={this.state.phoneErr ? 'Molimo unesite ispravan broj telefona (npr. +381691112233)' : null}
+                  value={this.state.phone}
+                  onChange={(e, phone) => {
+                    if (validatePhone(phone)) {
+                      this.setState({
+                        snackOpen: false,
+                        warrningMessage: null,
+                        phoneErr: false,
+                        phone,
+                      });
+                    } else {
+                      this.setState({
+                        snackOpen: false,
+                        warrningMessage: true,
+                        phoneErr: true,
+                      });
+                    }
+                  }}
+                />
             </div>
           </div>
           <div className={css.registerFisioOne}>
             <div className={css.inputWrapperForm}>
-              {/* <label className={css.labelsRegister}>Phone</label> */}
-              <TextField
-                hintText="Unesite broj telefona"
-                hintStyle={{ color: blue800 }}
-                floatingLabelText="Broj telefona"
-                floatingLabelStyle={{ color: white }}
-                underlineFocusStyle={{ borderColor: blue800 }}
-                style={{ width: '100%' }}
-                type="email"
-                className={css.brightFont}
-                errorText={this.state.phoneErr ? 'Molimo unesite ispravan broj telefona (npr. +381691112233)' : null}
-                value={this.state.phone}
-                onChange={(e, phone) => {
-                  if (validatePhone(phone)) {
-                    this.setState({
-                      snackOpen: false,
-                      warrningMessage: null,
-                      phoneErr: false,
-                      phone,
-                    });
-                  } else {
-                    this.setState({
-                      snackOpen: false,
-                      warrningMessage: true,
-                      phoneErr: true,
-                    });
-                  }
-                }}
-              />
-            </div>
-            <div className={css.inputWrapperForm}>
-              {/* <label className={css.labelsRegister}>Birtday Place</label> */}
-              <TextField
-                hintText="Unesite mesto rodjenja"
-                hintStyle={{ color: blue800 }}
-                floatingLabelText="Mesto rodjenja"
-                floatingLabelStyle={{ color: white }}
-                underlineFocusStyle={{ borderColor: blue800 }}
-                style={{ width: '100%' }}
-                className={css.biggerFont}
-                errorText={this.state.birthErr ? 'Molimo unesti ispravno mesto rodjenja (npr. Beograd, Zrenjanin, Budva...)' : null}
-                onChange={(e, birthPlace) => {
-                  if (validateBirthPlace(birthPlace)) {
-                    this.setState({
-                      birthPlace,
-                      snackOpen: false,
-                      birthErr: false,
-                      warrningMessage: false,
-                    });
-                  } else {
-                    this.setState({
-                      snackOpen: false,
-                      warrningMessage: true,
-                      birthErr: true
-                    });
-                  }
-                }}
-              />
-            </div>
-          </div>
-          <div className={css.registerFisioOne}>
-            <div className={css.inputWrapperForm}>
-              {/* <label className={css.labelsRegister}>Facebook Link</label> */}
               <TextField
                 hintText="https://www.facebook.com/primer123"
                 hintStyle={{ color: blue800 }}
@@ -505,7 +459,6 @@ class RegisterFisio extends React.Component {
               />
             </div>
             <div className={css.inputWrapperForm}>
-              {/* <label className={css.labelsRegister}>Instagram Link</label> */}
               <TextField
                 hintText="https://www.instagram.com/primer123"
                 hintStyle={{ color: blue800 }}
@@ -593,6 +546,40 @@ class RegisterFisio extends React.Component {
               />
             </div>
           </div>
+          <div className={css.registerFisioOne}>
+            <div className={css.inputWrapperForm}>
+              <TextField
+                  hintText="Unesite adresu"
+                  hintStyle={{ color: blue800 }}
+                  floatingLabelText="Unesite adresu"
+                  floatingLabelStyle={{ color: white }}
+                  underlineFocusStyle={{ borderColor: blue800 }}
+                  style={{ width: '100%' }}
+                  type="text"
+                  className={css.brightFont}
+                  errorText={this.state.addressErr ? 'Adresa mora imati više karaktera' : null}
+                  onChange={(e, address) => {
+                    if (address.length > 2) {
+                        this.setState({
+                          warrningMessage: null,
+                          snackOpen: false,
+                          addressErr: false,
+                          address
+                        });
+                      } else {
+                        this.setState({
+                          snackOpen: false,
+                          nameErr: true,
+                          warrningMessage: 'Adresa mora imati više od 2 karakera',
+                        });
+                      }
+                  }}
+                />
+            </div>
+            <div className={css.inputWrapperForm}>
+            </div>
+          </div> 
+         
         </div>
         <div className={css.registerFisioOne}>
           <div
