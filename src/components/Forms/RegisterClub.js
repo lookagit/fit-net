@@ -40,7 +40,7 @@ const axios = require('axios');
     $profileImageUrl: String,
     $skillsArr: [Int]
   ) {
-    updateOrCreateFisio(
+    updateOrCreateClub(
       email: $email,
       password: $password,
       name: $name,
@@ -58,7 +58,7 @@ const axios = require('axios');
   }`, {
   name: 'registerNewClub',
 })
-class RegisterFisio extends React.Component {
+class RegisterClub extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -91,7 +91,7 @@ class RegisterFisio extends React.Component {
     this.setState({ openDialog: false });
   };
 
-  newFisio = async () => {
+  newClub = async () => {
     const { password, passwordRepeat } = this.state;
     if (this.state.name === '') {
       this.setState({
@@ -641,11 +641,11 @@ class RegisterFisio extends React.Component {
             labelStyle={{ fontWeight: '700' }}
             backgroundColor="#1da9ec"
             onClick={() => {
-              this.newFisio();
+              this.newClub();
             }} />
         </div>
       </div>
     );
   }
 }
-export default RegisterFisio;
+export default RegisterClub;

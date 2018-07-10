@@ -59,7 +59,7 @@ class ChooseProfileMake extends React.Component {
           >
             <h3 style={{color: '#fff'}}>Napravite profil za fizio</h3>
             <Link
-              to={`/registerFisio`}
+              to={`/register-fisio`}
             >
               <div className={css.coacheMoreButton}>
                 <h3 className={css.coacheButton}>
@@ -82,7 +82,7 @@ class ChooseProfileMake extends React.Component {
           >
             <h3 style={{color: '#fff'}}>Napravite profil za klub</h3>
             <Link
-              to={`/registerFisio`}
+              to={`/register-club`}
             >
               <div className={css.coacheMoreButton}>
                 <h3 className={css.coacheButton}>

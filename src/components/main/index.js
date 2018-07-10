@@ -35,6 +35,7 @@ import EditFisio from '../Routes/EditFisio';
 import UploadCertificates from '../Forms/UploadCertificates';
 import UploadCertificatesPerson from '../Forms/UploadCertificatesPerson';
 import RegisterFisio from '../Forms/RegisterFisio';
+import RegisterClub from '../Forms/RegisterClub';
 import RegisterMoreSkillsFisio from '../Forms/RegisterMoreSkillsFisio';
 import UserLogedIn from '../Routes/UserLogedIn';
 import css from '../styles/styles.scss';
@@ -68,7 +69,8 @@ export default () => (
         <Route path="/register" component={RegisterPerson} />
         <Route path="/register-certificate/:userId" component={UploadCertificates} />
         <Route path="/register-certificate-person/:userId" component={UploadCertificatesPerson} />
-        <Route path="/registerFisio" component={RegisterFisio} />
+        <Route path="/register-fisio" component={RegisterFisio} />
+        <Route path="/register-club" component={RegisterClub} />
         <Route path="/moreSkills/:id" component={RegisterMoreSkillsContainer} />
         <Route path="/moreSkillsFisio/:id" component={RegisterMoreSkillsFisio} />
         <Route path="/profile-choose" component={ChooseProfileMake} />
