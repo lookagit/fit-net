@@ -936,7 +936,11 @@ const Mutation = new GraphQLObjectType({
             html: emailFunction(`http://fit-net.rs/register-confirm/${Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)}`),
           };
           console.log("EVO ME SALJEM")
-          const letSend = await sgMail.send(msg);
+          try {
+            const letSend = await sgMail.send(msg);
+          } catch (e) {
+            console.log("ULOVLJEN", e);
+          }
           console.log('lets', letSend);
           return {
             message: null,
