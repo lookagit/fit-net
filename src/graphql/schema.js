@@ -928,6 +928,7 @@ const Mutation = new GraphQLObjectType({
             }
           });
           console.log("EVCO ME ISPOD FIND ", findUser);
+          console.log("IOZZ HERE", process.env.SENDGRID_SECRET);
           const msg = {
             to: email,
             from: 'fitnetsrbija@gmail.com',
