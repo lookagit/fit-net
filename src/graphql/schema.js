@@ -1264,22 +1264,22 @@ const Mutation = new GraphQLObjectType({
         type: WorkingTimes,
         args: {
           workDayFrom: {
-            type: GraphQLInt,
+            type: GraphQLString,
           },
           workDayTo: {
-            type: GraphQLInt,
+            type: GraphQLString,
           },
           satFrom: {
-            type: GraphQLInt,
+            type: GraphQLString,
           },
           satTo: {
-            type: GraphQLInt,
+            type: GraphQLString,
           },
           sunFrom: {
-            type: GraphQLInt,
+            type: GraphQLString,
           },
           sunTo: {
-            type: GraphQLInt,
+            type: GraphQLString,
           },
           clubClId: {
             type: GraphQLInt,

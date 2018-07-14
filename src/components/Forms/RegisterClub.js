@@ -32,13 +32,13 @@ const axios = require('axios');
     $password: String,
     $name: String,
     $address: String,
-    $lastName: String,
     $facebookLink: String,
     $instagramLink: String,
     $phone: String,
     $about: String,
     $profileImageUrl: String,
-    $skillsArr: [Int]
+    $skillsArr: [Int],
+    $webAddress: String
   ) {
     updateOrCreateClub(
       email: $email,
@@ -185,7 +185,7 @@ class RegisterClub extends React.Component {
           uniqueNameForImg = uploadNow.data.secure_url;
         }
       }
-      const mutation = await this.props.registerNewFisio(
+      const mutation = await this.props.registerNewClub(
         {
           variables: {
             name: this.state.name,
@@ -203,7 +203,7 @@ class RegisterClub extends React.Component {
         },
       );
       if (mutation) {
-        const { id } = mutation.data.updateOrCreateFisio;
+        const { id } = mutation.data.updateOrCreateClub;
         this.props.history.push(`/work-times-club/${id}`);
       }
     } else {
@@ -326,7 +326,7 @@ class RegisterClub extends React.Component {
                       warrningMessage: null,
                       snackOpen: false,
                       nameErr: false,
-                      firstName,
+                      name,
                     });
                   } else {
                     this.setState({
@@ -343,11 +343,11 @@ class RegisterClub extends React.Component {
               <TextField
                 hintText="Unesite web adresu"
                 hintStyle={{ color: blue800 }}
-                floatingLabelText="Prezime"
+                floatingLabelText="Web adresa"
                 floatingLabelStyle={{ color: white }}
                 underlineFocusStyle={{ borderColor: blue800 }}
-                className={css.biggerFont}
-                style={{ width: '100%', textTransform: 'capitalize' }}
+                className={css.brightFont}
+                style={{ width: '100%', }}
                 errorText={this.state.webAddressErr ? 'Morate uneti ispravan link' : null}
                 onChange={(e, webAddress) => {
                     if (validateUrl(webAddress)) {
@@ -406,7 +406,7 @@ class RegisterClub extends React.Component {
                   floatingLabelStyle={{ color: white }}
                   underlineFocusStyle={{ borderColor: blue800 }}
                   style={{ width: '100%' }}
-                  type="number"
+                  type="text"
                   className={css.brightFont}
                   errorText={this.state.phoneErr ? 'Molimo unesite ispravan broj telefona (npr. +381691112233)' : null}
                   value={this.state.phone}
@@ -569,7 +569,7 @@ class RegisterClub extends React.Component {
                       } else {
                         this.setState({
                           snackOpen: false,
-                          nameErr: true,
+                          addressErr: true,
                           warrningMessage: 'Adresa mora imati više od 2 karakera',
                         });
                       }

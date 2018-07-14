@@ -9,14 +9,14 @@ html, body{
   padding: 0;
   font-family: 'Work Sans', sans-serif;
   font-weight: 600;
-  background-color: #063758;
+  background-color: #1a4a76;
 }
 .mainWrapper{
   height: 100%;
   background-image: url('../../static/mainBg.jpg');
   background-position-x: left;
   background-position-y: top;
-  background-size: cover;
+  background-size: 100% 100%;
 
 }
 
@@ -749,6 +749,8 @@ button {
 }
 .inputWrapperForm {
   width: 340px;
+  display: flex;
+  flex-direction: column;
 }
 .registerFisioOne:nth-child(1){
   margin-top: 20px;

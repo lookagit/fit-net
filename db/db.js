@@ -276,22 +276,22 @@ ClubsCl.hasMany(Gallery);
 
 const WorkingTimeClub = db.define('workingTimeClub', {
   workDayFrom: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
   },
   workDayTo: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
   },
   satFrom: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
   },
   satTo: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
   },
   sunFrom: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
   },
   sunTo: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
   },
 });
 
@@ -410,24 +410,24 @@ FisioCl.hasMany(Certification);
 
 if (process.env.NODE_ENV === 'production') {
   //db.sync({ force: true }).then(() => {
-  db.sync().then(() => {
+  db.sync({ force: true }).then(() => {
     // PersonArr.map(async item => {
     //   await PersonCl.create(item);
     // });
-    // TrainingSkillArr.map(async item => {
-    //   await TrainingSkill.create(item);
-    // });
-    // PersonTrainingSkillArr.map(async item => {
-    //   await PersonTrainingSkill.create(item);
-    // });
+    TrainingSkillArr.map(async item => {
+      await TrainingSkill.create(item);
+    });
+    PersonTrainingSkillArr.map(async item => {
+      await PersonTrainingSkill.create(item);
+    });
 
-    // FisioCategoriesArr.map(async item => {
-    //   await FisioCategories.create(item);
-    // });
+    FisioCategoriesArr.map(async item => {
+      await FisioCategories.create(item);
+    });
 
-    // CountyArr.map(async item => {
-    //   await County.create(item);
-    // });
+    CountyArr.map(async item => {
+      await County.create(item);
+    });
     // PersonCountyHelper.map(async item => {
     //   await PersonCounty.create(item);
     // });
