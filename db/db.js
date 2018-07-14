@@ -417,20 +417,20 @@ if (process.env.NODE_ENV === 'production') {
     // PersonArr.map(async item => {
     //   await PersonCl.create(item);
     // });
-    // TrainingSkillArr.map(async item => {
-    //   await TrainingSkill.create(item);
-    // });
-    // PersonTrainingSkillArr.map(async item => {
-    //   await PersonTrainingSkill.create(item);
-    // });
+    TrainingSkillArr.map(async item => {
+      await TrainingSkill.create(item);
+    });
+    PersonTrainingSkillArr.map(async item => {
+      await PersonTrainingSkill.create(item);
+    });
 
-    // FisioCategoriesArr.map(async item => {
-    //   await FisioCategories.create(item);
-    // });
+    FisioCategoriesArr.map(async item => {
+      await FisioCategories.create(item);
+    });
 
-    // CountyArr.map(async item => {
-    //   await County.create(item);
-    // });
+    CountyArr.map(async item => {
+      await County.create(item);
+    });
     // PersonCountyHelper.map(async item => {
     //   await PersonCounty.create(item);
     // });
