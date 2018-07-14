@@ -261,6 +261,9 @@ const MembershipFees = db.define('membershipFees', {
   price: {
     type: Sequelize.FLOAT,
   },
+  description: {
+    type: Sequelize.STRING,
+  },
 });
 
 ClubsCl.hasMany(MembershipFees);
@@ -410,24 +413,24 @@ FisioCl.hasMany(Certification);
 
 if (process.env.NODE_ENV === 'production') {
   //db.sync({ force: true }).then(() => {
-  db.sync({ force: true }).then(() => {
+  db.sync().then(() => {
     // PersonArr.map(async item => {
     //   await PersonCl.create(item);
     // });
-    TrainingSkillArr.map(async item => {
-      await TrainingSkill.create(item);
-    });
-    PersonTrainingSkillArr.map(async item => {
-      await PersonTrainingSkill.create(item);
-    });
+    // TrainingSkillArr.map(async item => {
+    //   await TrainingSkill.create(item);
+    // });
+    // PersonTrainingSkillArr.map(async item => {
+    //   await PersonTrainingSkill.create(item);
+    // });
 
-    FisioCategoriesArr.map(async item => {
-      await FisioCategories.create(item);
-    });
+    // FisioCategoriesArr.map(async item => {
+    //   await FisioCategories.create(item);
+    // });
 
-    CountyArr.map(async item => {
-      await County.create(item);
-    });
+    // CountyArr.map(async item => {
+    //   await County.create(item);
+    // });
     // PersonCountyHelper.map(async item => {
     //   await PersonCounty.create(item);
     // });

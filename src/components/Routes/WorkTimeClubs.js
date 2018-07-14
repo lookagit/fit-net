@@ -13,7 +13,7 @@ import gql from 'graphql-tag';
     $satTo: String,
     $sunFrom: String,
     $sunTo: String,
-    $clubClId: String
+    $clubClId: Int
   ) {
     createWorkingTimeClub(
       workDayFrom: $workDayFrom,
@@ -42,6 +42,7 @@ class WorkTimeClubs extends React.Component {
       }
   }
   sendToServer = async () => {
+    const { clubId } = this.props.match.params;
     const mutation = await this.props.workingTimeClub(
         {
           variables: {
@@ -51,7 +52,7 @@ class WorkTimeClubs extends React.Component {
             satTo: this.state.toSat.toString().slice(16, 21),
             sunFrom: this.state.fromSan.toString().slice(16, 21),
             sunTo: this.state.toSan.toString().slice(16, 21),
-            clubClId: this.props.match.params.clubId
+            clubClId: parseInt(clubId),
           },
         },
       );

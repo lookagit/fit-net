@@ -253,6 +253,12 @@ const MemberShip = new GraphQLObjectType({
           return memberShip.price;
         },
       },
+      description: {
+        type: GraphQLString,
+        resolve(memberShip) {
+          return memberShip.description;
+        },
+      },
       trainingSkill: {
         type: TrainingSkill,
         async resolve(memberShip) {
@@ -1251,12 +1257,16 @@ const Mutation = new GraphQLObjectType({
           trainingSkillId: {
             type: GraphQLInt,
           },
+          description: {
+            type: GraphQLString,
+          }
         },
-        async resolve(root, { price, clubClId, trainingSkillId }) {
+        async resolve(root, { price, clubClId, trainingSkillId, description }) {
           return db.models.membershipFees.create({
             price,
             clubClId,
             trainingSkillId,
+            description
           });
         },
       },
