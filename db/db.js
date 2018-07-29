@@ -431,10 +431,10 @@ if (process.env.NODE_ENV === 'production') {
     CountyArr.map(async item => {
       await County.create(item);
     });
-    
-    PersonCountyHelper.map(async item => {
-      await PersonCounty.create(item);
-    });
+
+    // PersonCountyHelper.map(async item => {
+    //   await PersonCounty.create(item);
+    // });
     // ClubsHelperArr.map(async item => {
     //   await ClubsCl.create(item);
     // });
