@@ -420,9 +420,9 @@ if (process.env.NODE_ENV === 'production') {
     TrainingSkillArr.map(async item => {
       await TrainingSkill.create(item);
     });
-    PersonTrainingSkillArr.map(async item => {
-      await PersonTrainingSkill.create(item);
-    });
+    // PersonTrainingSkillArr.map(async item => {
+    //   await PersonTrainingSkill.create(item);
+    // });
 
     FisioCategoriesArr.map(async item => {
       await FisioCategories.create(item);
