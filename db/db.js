@@ -266,6 +266,7 @@ const MembershipFees = db.define('membershipFees', {
   },
 });
 
+County.hasMany(MembershipFees);
 ClubsCl.hasMany(MembershipFees);
 TrainingSkill.hasMany(MembershipFees);
 

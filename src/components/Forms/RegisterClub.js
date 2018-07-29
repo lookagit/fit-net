@@ -204,6 +204,7 @@ class RegisterClub extends React.Component {
       );
       if (mutation) {
         const { id } = mutation.data.updateOrCreateClub;
+        console.log("JA SAM MUTATION ", mutation.data);
         this.props.history.push(`/work-times-club/${id}`);
       }
     } else {
@@ -355,13 +356,12 @@ class RegisterClub extends React.Component {
                       snackOpen: false,
                       warrningMessage: null,
                       webAddress,
-                      webAddress: null,
                     });
                   } else {
                     this.setState({
                       snackOpen: false,
                       warrningMessage: 'Neispravan format linka!',
-                      webAddress: true,
+                      webAddress: null,
                     });
                   }
                 }}

@@ -657,6 +657,25 @@ const Query = new GraphQLObjectType({
           return {};
         },
       },
+      oneClubCl: {
+        type: ClubCl,
+        args: {
+          clubClId: {
+            type: GraphQLInt,
+          },
+        },
+        async resolve(root, { clubClId }) {
+          const club = await db.models.clubCl.findOne({
+            where: {
+              id: clubClId,
+            },
+          });
+          if (club) {
+            return club;
+          }
+          return {};
+        },
+      },
       fisioCategories: {
         type: new GraphQLList(FisioCategories),
         async resolve() {

@@ -27,7 +27,7 @@ import { blue800, white } from 'material-ui/styles/colors';
 )
 @graphql(
   gql`
-  mutation createMembershipFees($price: Int, $clubClId: Int, $trainingSkillId: Int, $description: String) {
+  mutation createMembershipFees($price: Float, $clubClId: Int, $trainingSkillId: Int, $description: String) {
     createMembershipFees(price: $price, clubClId: $clubClId, trainingSkillId: $trainingSkillId, description: $description) {
       id
     }
@@ -43,6 +43,7 @@ class MembershipCreate extends React.Component {
       skillId: 0,
       countiesId: '',
       address: '',
+      description: '',
       groupTraining: false,
       price: '',
       arrayCategories: [],
@@ -62,10 +63,27 @@ class MembershipCreate extends React.Component {
       this.setState({ arrayCounties: nextProps.data.counties });
     }
   }
+  setAddress = address => {
+    this.setState({
+      address,
+    });
+  }
+
+  setDescription = description => {
+    this.setState({
+      description,
+    });
+  }
 
   setPrice = price => {
     this.setState({
       price,
+    });
+  }
+  
+  selectCounties = e => {
+    this.setState({
+      countiesId: e.target.value,
     });
   }
 
@@ -82,8 +100,10 @@ class MembershipCreate extends React.Component {
   }
 
   moreItem = async () => {
+    console.log("EVO MEEEEEEE", this.state.countiesId, this.state.price, this.state.address);
     if (this.state.countiesId !== '' && this.state.price !== '' && this.state.address) {
-      const { price, skillId, countiesId, groupTraining, address } = this.state;
+      
+      const { price, skillId, countiesId, groupTraining, address, description } = this.state;
       const obj = {};
       obj.price = price;
       const [filteredNameSkillId] = this.state.arrayCategories.filter(item => (
@@ -97,12 +117,14 @@ class MembershipCreate extends React.Component {
       obj.groupTraining = groupTraining;
       obj.address = address;
       obj.id = this.state.itemId;
+      obj.description = description;
       this.setState({
         price: '',
         countiesId: '',
         groupTraining: false,
         trainingSkillId: '',
         address: '',
+        description: '',
         moreItems: true,
         visibleCounties: false,
         itemId: this.state.itemId + 1,
@@ -132,19 +154,17 @@ class MembershipCreate extends React.Component {
       this.moreItem();
     }
     if (this.state.items.length) {
-      this.props.changeToLoad();
       const { clubId } = this.props.match.params;
       this.state.items.map(async item => {
-        await this.props.createMoreSkills({
+        await this.props.createMembership({
           variables: {
-            price: parseInt(item.price), //eslint-disable-line
-            clubClId: parseInt(clubClId), //eslint-disable-line
-            trainingSkillId: parseInt(item.trainingSkillId), //eslint-disable-line
-            description: '',
+            price: parseFloat(item.price), //eslint-disable-line
+            clubClId: parseInt(clubId), //eslint-disable-line
+            description: item.description,
           },
         });
       });
-      this.props.history.push(`/clubs-one/${id}`);
+      this.props.history.push(`/create-gallery/${clubId}`);
     }
   }
 
@@ -164,6 +184,8 @@ class MembershipCreate extends React.Component {
             groupTraining={this.state.groupTraining}
             getValueFromInput={this.setPrice}
             getValueFromAddress={this.setAddress}
+            valueDescription={this.state.description}
+            setDescription={this.setDescription}
             arrayForCategoryes={this.state.arrayCategories}
             arrayForCity={this.state.arrayCities}
             arrayForCounties={this.state.arrayCounties}
@@ -182,6 +204,7 @@ class MembershipCreate extends React.Component {
                   skill={item.skillId}
                   prices={item.price}
                   address={item.address}
+                  description={item.description}
                 />
               ))
             :
@@ -209,7 +232,7 @@ class MembershipCreate extends React.Component {
   }
 }
 
-const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAddress, handleCategoryClick, handleCityClick, handleCounties, handleTraning, groupTraining, getValueFromInput, getValueFromAddress, arrayForCategoryes, arrayForCity, arrayForCounties, visibleCounties }) => (
+const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAddress, handleCategoryClick, handleCityClick, handleCounties, handleTraning, groupTraining, getValueFromInput, getValueFromAddress, arrayForCategoryes, arrayForCity, arrayForCounties, visibleCounties, setDescription, valueDescription }) => (
   <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 20 }}>
     <div className={css.registerFisio}>
       <div className={css.searchBoxWrapper}>
@@ -241,12 +264,23 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
           }}
         />
       </div>
-      <SearchBox
-        disableMargin
-        group
-        groupTraining={groupTraining}
-        groupTrainingFunc={handleTraning}
-      />
+      <div
+        className={css.inputMoreSkills}
+      >
+        <TextField
+          hintText="Kardio, Bodybuilding..."
+          hintStyle={{ color: blue800 }}
+          floatingLabelText="Opis"
+          className={css.brightFont}
+          floatingLabelStyle={{ color: white }}
+          value={valueDescription}
+          underlineFocusStyle={{ borderColor: blue800 }}
+          style={{ width: '100%' }}
+          onChange={(e, address) => {
+            setDescription(address);
+          }}
+        />
+      </div>
       <div
         className={css.inputMoreSkills}
       >
@@ -267,7 +301,7 @@ const OneItem = ({ valueCategory, valueCity, valueCounties, valuePrice, valueAdd
   </div>
 );
 
-const DisabledBox = ({ id, skill, trening, counti, prices, removeMe, address }) => (
+const DisabledBox = ({ id, skill, trening, counti, prices, removeMe, address, description }) => (
   <div className={css.searchBoxWrapper} style={{}}>
     <div style={{ marginTop: 20, marginBottom: 45 }}>
       <div style={{ opacity: 0.96 }}>
@@ -296,46 +330,17 @@ const DisabledBox = ({ id, skill, trening, counti, prices, removeMe, address }) 
               style={{ width: '100%' }}
             />
           </div>
-          <div className={css.sertifikat}>
-            <div className={css.sertifikatBox1}>
-              <p style={{ fontSize: '18px', fontWeight: 'bold' }}>TRENINZI</p>
-            </div>
-            <div className={css.sertifikatBox2}>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <label
-                  className={css.labelStyle}
-                >
-                  GRUPNI
-                </label>
-                <div
-                  className={css.radio}
-                >
-                  <div className={`${!trening ? css.radioOn : css.radioOff}`}>
-                  </div>
-                </div>
-              </div>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-                <label className={css.labelStyle}>PERSONALNI</label>
-                <div
-                  className={css.radio}
-                >
-                  <div className={`${trening ? css.radioOn : css.radioOff}`}>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div style={{ paddingRight: 20 }}>
+            <TextField
+              disabled
+              hintStyle={{ color: blue800 }}
+              floatingLabelText="Opis"
+              className={css.brightFont}
+              floatingLabelStyle={{ color: white }}
+              value={`${description}`} //eslint-disable-line
+              underlineFocusStyle={{ borderColor: blue800 }}
+              style={{ width: '100%' }}
+            />
           </div>
           <div style={{ paddingRight: 20 }}>
             <TextField
