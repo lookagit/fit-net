@@ -47,6 +47,7 @@ import EditFisioPriceAndLocation from '../Routes/EditFisioPriceAndLocation';
 import WorkTimeClubs from '../Routes/WorkTimeClubs';
 import MembershipCreate from '../Routes/MembershipCreate';
 import UploadImagesForGalleryClubs from '../Forms/UploadImagesForGalleryClubs';
+import OneClub from '../ClubOne';
 import HomePage from '../Routes/HomePage';
 
 export default () => (
@@ -87,6 +88,7 @@ export default () => (
         <Route path="/work-times-club/:clubId" component={WorkTimeClubs} />
         <Route path="/create-gallery/:clubId" component={UploadImagesForGalleryClubs} />
         <Route path="/club-create-membership/:clubId" component={MembershipCreate} />
+        <Route path="/club-one/:id" component={OneClub} />
         <Redirect from="/old/path" to="/new/path" />
         <Route component={WhenNotFound} />
       </Switch>
