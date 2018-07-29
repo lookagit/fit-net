@@ -45,6 +45,7 @@ import EditFisioCertificates from '../Routes/EditFisioCertificates';
 import EditUserPriceAndLocation from '../Routes/EditUserPriceAndLocation';
 import EditFisioPriceAndLocation from '../Routes/EditFisioPriceAndLocation';
 import WorkTimeClubs from '../Routes/WorkTimeClubs';
+import MembershipCreate from '../Routes/MembershipCreate';
 import HomePage from '../Routes/HomePage';
 
 export default () => (
@@ -83,6 +84,7 @@ export default () => (
         <Route path="/edit-user-price-location" component={EditUserPriceAndLocation} />
         <Route path="/edit-fisio-price-location" component={EditFisioPriceAndLocation} />
         <Route path="/work-times-club/:clubId" component={WorkTimeClubs} />
+        <Route path="/club-create-membership/:clubId" component={MembershipCreate} />
         <Redirect from="/old/path" to="/new/path" />
         <Route component={WhenNotFound} />
       </Switch>

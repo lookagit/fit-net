@@ -2,6 +2,7 @@ import React from 'react';
 import css from '../styles/styles.scss';
 import TimeInput from 'material-ui-time-picker';
 import RaisedButton from 'material-ui/RaisedButton';
+import Loading from 'react-loading-components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -33,6 +34,7 @@ class WorkTimeClubs extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
+          loading: false,
           fromMonFri: new Date("Sat Jul 14 2018 00:00:51 GMT+0200 (Central European Summer Time)"),
           toMonFri: new Date("Sat Jul 14 2018 00:00:51 GMT+0200 (Central European Summer Time)"),
           fromSat: new Date("Sat Jul 14 2018 00:00:51 GMT+0200 (Central European Summer Time)"),
@@ -42,6 +44,9 @@ class WorkTimeClubs extends React.Component {
       }
   }
   sendToServer = async () => {
+    this.setState({
+      loading: true,
+    })
     const { clubId } = this.props.match.params;
     const mutation = await this.props.workingTimeClub(
         {
@@ -56,10 +61,38 @@ class WorkTimeClubs extends React.Component {
           },
         },
       );
-    console.log("JA SAM PROPS ", this.props.match.params);
-    console.log("JA SAM MUTATION", mutation);
+    if (mutation) {
+      this.props.history.push(`/club-create-membership/${clubId}`);
+    }
   }
   render() {
+    if (this.state.loading) {
+      return (
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Loading
+            type="puff"
+            width={150}
+            height={150}
+            fill="#f44242"
+          />
+          <h3
+            style={{
+              color: '#fff',
+            }}
+          >
+            Molimo sačekajte. Hvala!
+          </h3>
+        </div>
+      );
+    }
     return (
         <div className={css.registerFisioWrapper}>
           <div className={css.registerFisio}>
